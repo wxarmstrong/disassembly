@@ -1,0 +1,117 @@
+$8A8B - Stage 1 BGM
+(+8)
+$8A93 - Intro / Opening cutscene / Level start jingle / Boss theme
+(+8)
+(+8)
+(+8)
+(+8)
+(+8)
+$8ABB - Opening cutscene intro jingle
+
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8A80                                  1F 11 A0 04 00
+8A90 00 00 00
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8A90          1F 1C B0 04 00 00 00 00
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8A90                                  1F 0E C0 05 CE
+8AA0 07 00 00
+
+================================================================
+FUNCTION $80D8
+Input: X (Range #$00-#$03)
+
+Sets the following values:
+$4000: Pulse 1: constant volume flag = #$30
+$4004: Pulse 2: constant volume flag = #$30
+$4008: Triangle counters = #$00
+$400C: Noise length counter halt + constant volume flag = #$30
+                                             
+ 05:80D8:8A        TXA       (00)  (01)  (10)  (11)
+ 05:80D9:29 03     AND #$03  (00)  (01)  (10)  (11)
+ 05:80DB:49 03     EOR #$03  (11)  (10)  (01)  (00)
+ 05:80DD:0A        ASL       (110) (100) (010) (000)
+ 05:80DE:0A        ASL      (1100)(1000)(0100)(0000)
+ 05:80DF:A8        TAY
+ 05:80E0:A9 30     LDA #$30
+ 05:80E2:C0 08     CPY #$08
+ 05:80E4:D0 02     BNE $80E8
+ 05:80E6:A9 00     LDA #$00
+ 05:80E8:99 00 40  STA $4000,Y
+ 05:80EB:60        RTS -----------------------------------------
+================================================================
+FUNCTION $81E4
+Triggers every time a piece of audio begins.
+
+ 05:81E4:A9 00     LDA #$00
+ 05:81E6:A2 03     LDX #$03
+ 05:81E8:9D 54 07  STA $0754,X
+ 05:81EB:9D 50 07  STA $0750,X
+ 05:81EE:CA        DEX
+ 05:81EF:10 F7     BPL $81E8   ; Set range $0750-$0757 to zero
+ 
+ 05:81F1:A5 CF     LDA $00CF
+ 05:81F3:48        PHA
+ 
+ 05:81F4:A2 03     LDX #$03
+ 
+ 05:81F6:46 CF     LSR $00CF      ; Shift one bit right
+ 05:81F8:B0 10     BCS $820A      ; Skip if bit is occupied
+ 
+ 05:81FA:20 D8 80  JSR $80D8      ; Initialize channel flags
+ 
+ 05:81FD:BD 54 07  LDA $0754,X
+ 05:8200:1D 50 07  ORA $0750,X
+ 05:8203:F0 05     BEQ $820A      ; Skip if both are blank
+ 
+ 05:8205:A9 FF     LDA #$FF
+ 05:8207:9D 7C 07  STA $077C,X
+ 
+ 05:820A:CA        DEX
+ 05:820B:10 E9     BPL $81F6
+ 
+ 05:820D:68        PLA
+ 05:820E:85 CF     STA $00CF      ; Restore value of $CF
+ 
+ 05:8210:A9 08     LDA #$08
+ 05:8212:8D 01 40  STA SQ1_SWEEP  ; Set negate flag (+frequency)
+ 05:8215:8D 05 40  STA SQ2_SWEEP  ; Set negate flag (+frequency)
+ 05:8218:A9 0F     LDA #$0F
+ 05:821A:8D 15 40  STA APU_STATUS ; Open all channels (SQ1,SQ2,TRI,NOISE)
+ 05:821D:60        RTS -----------------------------------------
+================================================================
+FUNCTION $866F
+ 05:866F:E6 C3     INC $00C3
+ 05:8671:A5 C3     LDA $00C3
+ 05:8673:DD 00 07  CMP $0700,X
+ 05:8676:F0 28     BEQ $86A0
+ 
+ if
+	 05:8678:9D 00 07  STA $0700,X
+	 05:867B:A8        TAY
+	 05:867C:BD 04 07  LDA $0704,X
+	 05:867F:09 08     ORA #$08
+	 05:8681:9D 04 07  STA $0704,X
+	 05:8684:88        DEY
+	 05:8685:A9 00     LDA #$00
+	 05:8687:85 C3     STA $00C3
+	 05:8689:98        TYA
+	 05:868A:0A        ASL
+	 05:868B:26 C3     ROL $00C3
+	 05:868D:0A        ASL
+	 05:868E:26 C3     ROL $00C3
+	 05:8690:0A        ASL
+	 05:8691:26 C3     ROL $00C3
+	 05:8693:18        CLC
+	 05:8694:6D 42 8A  ADC $8A42 = #$8B
+	 05:8697:85 C5     STA $00C5
+	 05:8699:A5 C3     LDA $00C3
+	 05:869B:6D 41 8A  ADC $8A41 = #$8A
+	 05:869E:85 C6     STA $00C6
+	 
+ 05:86A0:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Table $8B8A

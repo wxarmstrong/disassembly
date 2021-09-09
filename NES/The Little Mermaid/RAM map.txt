@@ -1,0 +1,288 @@
+ Address |  Size |
+---------+-------+
+$0000    |4 bytes|
+
+
+0003 - Code for tile to draw from appropriate section?
+0006 - Code for tile to draw from appropriate section?
+
+0011 - Vertical positioning of next sprite?
+0012 - Horizontal positioning of next sprite?
+
+0022 - Screen x-pos
+
+0027 - Direction of screen scroll
+       1 = Right, 2 = Left
+	   4 = Down,  8 = Up
+0030 - Ariel phase
+	   00 - Normal
+	   01 - Turning
+	   02 - 
+	   03 - Tossing bubble/item
+	   04 - 
+	   05 - On land
+	   06 - Reentering water
+	   07 - Damage
+	   08 - 
+	   09 - Entering new stage
+	   
+0031 - DPAD input
+003B - Attack timer
+
+003D - Bubble power 
+
+006E/006F = Pointer to
+0070/0071 = Pointer to 
+0072/0073 = Pointer to
+
+0074/0075 = Pointer to address used for x-middle values
+0076/0077 = Pointer to address used for y-middle values
+0078/0079 = Pointer to address used for hex code retrieving data from various tables
+
+007A = Direction of current @ Ursula 2
+007B = Speed of current @ Ursula 2
+
+007D = Ticks up during current @ Ursula 2
+007E = TIcks down during current @ Ursula 2
+
+
+00B0 - Lives 
+00B1 - Health
+
+00B4 - Power
+00B5 - Range 
+
+00DC Start of table?
+
+00E4-00E7 Random Number Generator
+
+00E9 - Stage #
+
+00EF - Current object slot being looked at 
+
+00FA - Vertical screen scroll?
+
+00FE - PPU_MASK (Mirrored value)
+00FF - PPU_CTRL (Mirrored value)
+
+0120-013F - Table
+0140-015F - Table
+
+01FD,X
+01FF,X
+0200,X
+
+
+
+0300- : Table of entities on-screen
+
+0300,X = Current Phase
+         Flag #$80 = Exists
+0310,X = Action Loop 
+
+0320,X = X-position subpixel (lowest)
+0330,X = X-position          (middle)
+0340,X = X-position          ( high )
+
+0350,X = Y-position subpixel (lowest)
+0360,X = Y-position          (middle)
+0370,X = Y-position          ( high )
+
+0380,X = X-speed             (lowest)
+0390,X = X-speed             ( high )
+
+03A0,X = Y-speed             (lowest)
+03B0,X = Y-speed             ( high )
+
+03C0,X = Attributes
+         Flags 0001 1111 = ?
+         #$20 = able to be bubbled
+         #$40 = hitbox (doing and taking damage) 
+		        can still be bubbled if off
+03D0,X = Sets direction of movement
+0011 flags used to prepare change to $0400,X (Orientation)?
+         Flag #$01 set = moving left, Flag #$02 set = moving right 
+		 Flags #$03 set = ???
+		 Flags #$06 set = ???
+03E0,X = Flags 00000111 = position in table $FE85
+         Flags 11111000 = position in table $0130
+03F0,X = HP
+0400,X = Orientation 
+        +#$80
+		+#$40 Flip sprite horizontally (face left)
+		+#$20
+		+#$10
+		
+        +#$08		
+		+#$04 Invisible flag
+		+#$02 
+		+#$01 
+		
+0418,X = Position in animation loop
+0430,X = Animation Loop
+0448,X = Position in ??? (set at same time as $418)
+0460,X = Bound 1 (varies by function)
+0470,X = Bound 2 (varies by function)
+0480,X = Bound 3? (related to Bound 2?)
+0490,X = 
+04A0,X = Existence timer for bubbles?
+         Stun timer for enemies? (all action/animation paused)
+
+0620-063F: Current palettes
+
+06C0 upper  left corner (8x8 pixel) of current 16x16 tile
+06C1 upper right corner (8x8 pixel) of current 16x16 tile
+06C4 bottom left corner (8x8 pixel) of current 16x16 tile
+06C5 bottomright corner (8x8 pixel) of current 16x16 tile
+
+0430 Animation Loops
+00 = Blank
+01 = Ariel  1
+02 = Ariel  2
+03 = Ariel  3
+04 = Ariel  4
+05 = Ariel  5
+06 = Ariel  6
+07 = Ariel  7
+08 = Ariel  8
+09 = Ariel  9 (attacking)
+0A = Ariel 10 (holding item right)
+0B = Ariel 11 (on land) (hair moves?)
+0C = Ariel 12
+0D = Ariel 13
+0E = Ariel 14
+0F = Ariel 15
+10 = Bubble 1
+11 = Bubble 2
+12 = Bubble 3
+13 = Splash
+14 = Smoke (from Stage 4 boss's cannons) or hitting enemy
+15 = Ariel 16
+16 = Ariel 17 (on land, hopping?)
+17 = Bubbles    (attack 1)
+18 = Bubbles    (attack 2)
+19 = Red Bubble (attack 3)
+1A = Sparkle 1
+1B = GLITCHED on Level 1
+1C = GLITCHED on Level 1
+1D = GLITCHED on Level 1
+1E = GLITCHED on Level 1 
+1F = GLITCHED on Level 1
+20 = Fish
+21 = GLITCHED on Level 1
+22 = Frozen fish 
+23 = Urchin 1
+24 = Urchin 2
+25 = Crab 1
+26 = Crab 2 
+27 = Crab 3 (laying down)
+28 = GLITCHED on Level 1
+29 = GLITCHED on Level 1
+2A = Green shell shining 1
+2B = Green shell shining 2
+2C = GLITCHED on Level 1
+2D = GLITCHED on Level 1
+2E = GLITCHED on Level 1
+2F = GLITCHED on Level 1
+30 = Seahorse 1
+31 = GLITCHED on Level 1
+32 = Starfish 1
+33 = Tiny Fish
+34 = Seahorse 2
+35 = GLITCHED on Level 1
+36 = Urchin 3
+37 = Spitting fish (normal)
+38 = Spitting fish (spitting)
+39 = GLITCHED on Level 1
+3A = GLITCHED on Level 1
+3B = GLITCHED on Level 1
+3C = GLITCHED on Level 1
+3D = Starfish 2
+3E = Ghost Fish 
+3F = GLITCHED on Level 1
+40 = Green shell
+41 = Boulder
+42 = Large boulder
+43 = Barrel 
+44 = Eel boss - just head 
+45 = GLITCHED on Level 1
+46 = Heart
+47 = Tiny heart
+48 = 1-Up
+49 = Jar
+4A = Red Orb
+4B = Green Orb
+4C = Fork
+4D = Pipe
+4E = Barrel (rolling)
+4F = Bubble/Smoke?
+50 = GLITCHED on Level 1
+51 = Sparkle 2
+52 = GLITCHED on Level 1
+53 = GLITCHED on Level 1
+54 = GLITCHED on Level 1
+55 = Seahorse boss 
+56 = GLITCHED on Level 1
+57 = Walrus Boss (Normal)
+58 = Walrus Boss (Kicking item)
+59 = Eel Boss - Eyes
+5A = Eel Boss - Halway in hole
+5B = Eel Boss - Outside hole
+5C = Shark Boss (Sending Fish)
+5D = Shark Boss (Dashing)
+5E = GLITCHED on Level 1
+5F = Anemone
+60 = Dead Fish 
+61 = Dead Urchin 
+62 = Dead Crab
+63 = Dead Octopus 
+64 = Cannon (Stage 4 boss)
+65 = GLITCHED on Level 1
+66 = 
+67 = 
+68 = 
+69 = GLITCHED on Level 1
+6A = GLITCHED on Level 1
+6B = GLITCHED on Level 1
+6C = GLITCHED on Level 1
+6D = 
+6E = GLITCHED on Level 1
+
+6F = Fish in bubble (red) 
+70 = Crab in bubble (red) 
+71 = Seahorse in bubble (red) 
+72 = Tiny fish in bubble (red) 
+73 = GLITCHED on Level 1
+74 = GLITCHED on Level 1
+75 = GLITCHED on Level 1
+76 = Octopus in bubble (red) 
+77 = Cannon firing (Stage 4 boss)
+78 = GLITCHED on Level 1
+79 = GLITCHED on Level 1
+7A = Ursula 1 death
+7B = Fish in bubble (green)
+7C = Crab in bubble (green) 
+7D = Seahorse in bubble (green)
+7E = Tiny fish in bubble (green)
+7F = GLITCHED on Level 1
+80 = GLITCHED on Level 1
+81 = Ursula 2 death 
+82 = Octopus in bubble (green)
+83 = Ursula's trident (handle)
+84 = Ariel 
+85 = GLITCHED on Level 1
+86 = 
+87 = Rock from octopus
+88 = Seaweed @ Ursula 2 (normal)
+89 = Seaweed @ Ursula 2 (blowing)
+8A = String of bubbles (indicates current @ Ursula 2)
+8B =
+8C =
+8D =
+8E =
+8F = 
+90 = 
+
+
+
+

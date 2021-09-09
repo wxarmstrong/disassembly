@@ -1,0 +1,5253 @@
+Location in ROM: 0x1C010
+================================================================
+FUNCTION $C000
+----------------------------------------------------------------
+ 07:C000:08        PHP
+ 07:C001:48        PHA
+ 07:C002:8A        TXA
+ 07:C003:48        PHA
+ 07:C004:98        TYA
+ 07:C005:48        PHA
+ 
+ 07:C006:A5 EE     LDA $00EE
+ 07:C008:05 9A     ORA $009A
+ 07:C00A:D0 73     BNE $C07F    ; Jump ahead if either $EE or $9A is nonzero
+ 
+ 07:C00C:A5 FF     LDA $00FF    ; 
+ 07:C00E:29 78     AND #$78     ;
+ 07:C010:8D 00 20  STA PPU_CTRL ; Turn off 0x80 flag
+ 07:C013:AD 02 20  LDA PPU_STATUS = #$50
+ 07:C016:A9 00     LDA #$00
+ 07:C018:8D 01 20  STA PPU_MASK = #$1E
+ 07:C01B:8D 03 20  STA PPU_OAM_ADDR = #$00
+ 07:C01E:A9 02     LDA #$02
+ 07:C020:8D 14 40  STA OAM_DMA = #$02
+ 07:C023:A5 19     LDA $0019 = #$00
+ 07:C025:F0 03     BEQ $C02A
+ 07:C027:20 CB C0  JSR $C0CB
+ 07:C02A:A5 1A     LDA $001A = #$00
+ 07:C02C:F0 09     BEQ $C037
+ 07:C02E:A9 00     LDA #$00
+ 07:C030:85 1A     STA $001A = #$00
+ 07:C032:A2 40     LDX #$40
+ 07:C034:20 CF C0  JSR $C0CF
+ 07:C037:A5 18     LDA $0018 = #$00
+ 07:C039:F0 29     BEQ $C064
+ 07:C03B:A2 00     LDX #$00
+ 07:C03D:86 18     STX $0018 = #$00
+ 
+ 07:C03F:AD 02 20  LDA PPU_STATUS
+ 07:C042:A9 3F     LDA #$3F
+ 07:C044:8D 06 20  STA PPU_ADDRESS
+ 07:C047:8E 06 20  STX PPU_ADDRESS
+ 07:C04A:A0 20     LDY #$20
+ 07:C04C:BD 00 06  LDA $0600,X
+ 07:C04F:8D 07 20  STA PPU_DATA = #$00
+ 07:C052:E8        INX
+ 07:C053:88        DEY
+ 07:C054:D0 F6     BNE $C04C
+ 
+ 07:C056:A9 3F     LDA #$3F
+ 07:C058:8D 06 20  STA PPU_ADDRESS
+ 07:C05B:8C 06 20  STY PPU_ADDRESS
+ 07:C05E:8C 06 20  STY PPU_ADDRESS
+ 07:C061:8C 06 20  STY PPU_ADDRESS
+ 07:C064:AD 02 20  LDA PPU_STATUS
+ 07:C067:A5 FC     LDA $00FC
+ 07:C069:8D 05 20  STA PPU_SCROLL
+ 07:C06C:A5 FA     LDA $00FA
+ 07:C06E:8D 05 20  STA PPU_SCROLL
+ 07:C071:A5 FE     LDA $00FE
+ 07:C073:8D 01 20  STA PPU_MASK
+ 07:C076:A5 FD     LDA $00FD
+ 07:C078:29 01     AND #$01
+ 07:C07A:05 FF     ORA $00FF = #$90
+ 07:C07C:8D 00 20  STA PPU_CTRL = #$90
+ 
+ 
+ 07:C07F:E6 92     INC $0092 = #$DB
+ 07:C081:A2 FF     LDX #$FF
+ 07:C083:86 90     STX $0090 = #$00
+ 07:C085:E8        INX
+ 07:C086:A0 04     LDY #$04
+ 07:C088:B5 80     LDA $80,X @ $008F = #$00
+ 07:C08A:C9 01     CMP #$01
+ 07:C08C:D0 08     BNE $C096
+ 07:C08E:D6 81     DEC $81,X @ $0090 = #$00
+ 07:C090:D0 04     BNE $C096
+ 07:C092:A9 04     LDA #$04
+ 07:C094:95 80     STA $80,X @ $008F = #$00
+ 07:C096:E8        INX
+ 07:C097:E8        INX
+ 07:C098:E8        INX
+ 07:C099:E8        INX
+ 07:C09A:88        DEY
+ 07:C09B:D0 EB     BNE $C088
+ 
+ 07:C09D:A9 05     LDA #$05
+ 07:C09F:20 C8 FF  JSR $FFC8 -> Set RAM bank to Page 05
+ 
+ while
+	 07:C0A2:A6 DB     LDX $00DB
+	 07:C0A4:B5 DC     LDA $DC,X
+	 07:C0A6:C9 88     CMP #$88
+	 07:C0A8:F0 12     BEQ $C0BC
+ 
+ do
+	 07:C0AA:48        PHA
+	 07:C0AB:A9 88     LDA #$88
+	 07:C0AD:95 DC     STA $DC,X
+	 07:C0AF:E8        INX
+	 07:C0B0:8A        TXA
+	 07:C0B1:29 07     AND #$07
+	 07:C0B3:85 DB     STA $00DB
+	 07:C0B5:68        PLA
+	 07:C0B6:20 03 80  JSR $8003
+	 07:C0B9:4C A2 C0  JMP $C0A2
+	 
+ 07:C0BC:20 00 80  JSR $8000
+ 07:C0BF:A5 BF     LDA $00BF
+ 07:C0C1:20 C8 FF  JSR $FFC8
+ 07:C0C4:68        PLA
+ 07:C0C5:A8        TAY
+ 07:C0C6:68        PLA
+ 07:C0C7:AA        TAX
+ 07:C0C8:68        PLA
+ 07:C0C9:28        PLP
+ 07:C0CA:40        RTI
+================================================================
+FUNCTION $C0CB / $C0CF
+---------------------------------------------------------------- 
+ 07:C0CB:A2 00     LDX #$00
+ 07:C0CD:86 19     STX $0019
+ 07:C0CF:BD 80 07  LDA $0780,X
+ 07:C0D2:30 1B     BMI $C0EF
+ 07:C0D4:8D 06 20  STA PPU_ADDRESS
+ 07:C0D7:BD 81 07  LDA $0781,X
+ 07:C0DA:8D 06 20  STA PPU_ADDRESS
+ 07:C0DD:BC 82 07  LDY $0782,X
+ 07:C0E0:BD 83 07  LDA $0783,X
+ 07:C0E3:8D 07 20  STA PPU_DATA
+ 07:C0E6:E8        INX
+ 07:C0E7:88        DEY
+ 07:C0E8:10 F6     BPL $C0E0
+ 07:C0EA:E8        INX
+ 07:C0EB:E8        INX
+ 07:C0EC:E8        INX
+ 07:C0ED:D0 E0     BNE $C0CF
+ 07:C0EF:60        RTS -----------------------------------------
+================================================================
+FUNCTION $C0F0
+Not used?
+
+ 07:C0F0:A5 FF     LDA $00FF = #$90
+ 07:C0F2:29 11     AND #$11
+ 07:C0F4:85 FF     STA $00FF = #$90
+ 07:C0F6:8D 00 20  STA PPU_CTRL = #$90
+ 07:C0F9:60        RTS -----------------------------------------
+================================================================
+FUNCTION $C0FA
+Generate an interrupt
+Not used?
+
+ 07:C0FA:A5 FF     LDA $00FF = #$90
+ 07:C0FC:09 80     ORA #$80
+ 07:C0FE:85 FF     STA $00FF = #$90
+ 07:C100:8D 00 20  STA PPU_CTRL = #$90
+ 07:C103:60        RTS -----------------------------------------
+================================================================
+FUNCTION $C104
+ 07:C104:E6 EE     INC $00EE = #$01
+ 07:C106:A9 00     LDA #$00
+ 07:C108:85 FE     STA $00FE = #$1E
+ 07:C10A:8D 01 20  STA PPU_MASK = #$1E
+ 07:C10D:60        RTS -----------------------------------------
+================================================================
+FUNCTION $C10E
+ 07:C10E:C6 EE     DEC $00EE
+ 07:C110:A9 1E     LDA #$1E
+ 07:C112:85 FE     STA $00FE
+ 07:C114:8D 01 20  STA PPU_MASK
+ 07:C117:60        RTS -----------------------------------------
+================================================================
+FUNCTION $C118
+ 07:C118:A2 01     LDX #$01
+ 07:C11A:8E 16 40  STX JOY1 ; Probe controller 2
+ 07:C11D:CA        DEX
+ 07:C11E:8E 16 40  STX JOY1 ; Probe controller 1
+ 
+ 07:C121:A2 08     LDX #$08
+ 07:C123:AD 16 40  LDA JOY1
+ 07:C126:4A        LSR
+ 07:C127:26 14     ROL $0014
+ 07:C129:4A        LSR
+ 07:C12A:26 00     ROL $0000
+ 07:C12C:AD 17 40  LDA JOY2_FRAME
+ 07:C12F:4A        LSR
+ 07:C130:26 15     ROL $0015
+ 07:C132:4A        LSR
+ 07:C133:26 01     ROL $0001
+ 07:C135:CA        DEX
+ 07:C136:D0 EB     BNE $C123
+ 
+ 07:C138:A5 00     LDA $0000
+ 07:C13A:05 14     ORA $0014
+ 07:C13C:85 14     STA $0014
+ 07:C13E:A5 01     LDA $0001
+ 07:C140:05 15     ORA $0015
+ 07:C142:85 15     STA $0015
+ 07:C144:A2 01     LDX #$01
+ 07:C146:B5 14     LDA $14,X
+ 07:C148:A8        TAY
+ 07:C149:55 16     EOR $16,X
+ 07:C14B:35 14     AND $14,X
+ 07:C14D:95 14     STA $14,X
+ 07:C14F:94 16     STY $16,X
+ 07:C151:CA        DEX
+ 07:C152:10 F2     BPL $C146
+ 07:C154:A2 03     LDX #$03
+ 07:C156:B5 14     LDA $14,X
+ 07:C158:29 0C     AND #$0C
+ 07:C15A:C9 0C     CMP #$0C
+ 07:C15C:F0 08     BEQ $C166
+ 07:C15E:B5 14     LDA $14,X
+ 07:C160:29 03     AND #$03
+ 07:C162:C9 03     CMP #$03
+ 07:C164:D0 06     BNE $C16C
+ 07:C166:B5 14     LDA $14,X
+ 07:C168:29 F0     AND #$F0
+ 07:C16A:95 14     STA $14,X
+ 07:C16C:CA        DEX
+ 07:C16D:10 E7     BPL $C156
+ 07:C16F:60        RTS -----------------------------------------
+================================================================
+FUNCTION $C170
+Input: A,X,Y
+
+Prints X 256*Y times to PPU address A00
+
+ 07:C170:85 00     STA $0000      ; PPU address
+ 07:C172:86 01     STX $0001      ; PPU data
+ 07:C174:84 02     STY $0002      ; # of times to post data
+                                    (only used if address is below #$2000)
+ 
+ 07:C176:AD 02 20  LDA PPU_STATUS ; reset address latch
+ 07:C179:A5 FF     LDA $00FF
+ 07:C17B:29 FE     AND #$FE
+ 07:C17D:8D 00 20  STA PPU_CTRL   ; set $FF as PPUCTRL data (except for LSB)
+                                  ; does not set LSB of base nametable address 
+ 07:C180:A5 00     LDA $0000
+ 07:C182:8D 06 20  STA PPU_ADDRESS
+ 07:C185:A0 00     LDY #$00
+ 07:C187:8C 06 20  STY PPU_ADDRESS ; PPU address = $00__
+ 07:C18A:A2 04     LDX #$04
+ 07:C18C:C9 20     CMP #$20
+ 07:C18E:B0 02     BCS $C192
+ 
+ 07:C190:A6 02     LDX $0002
+ 
+ 07:C192:A0 00     LDY #$00
+ 07:C194:A5 01     LDA $0001
+ 07:C196:8D 07 20  STA PPU_DATA
+ 07:C199:88        DEY
+ 07:C19A:D0 FA     BNE $C196
+ 07:C19C:CA        DEX
+ 07:C19D:D0 F7     BNE $C196
+ 
+ 
+ 07:C19F:A4 02     LDY $0002 = #$FF
+ 07:C1A1:A5 00     LDA $0000 = #$F4
+ 07:C1A3:C9 20     CMP #$20
+ 07:C1A5:90 12     BCC $C1B9
+ 07:C1A7:69 02     ADC #$02
+ 07:C1A9:8D 06 20  STA PPU_ADDRESS
+ 07:C1AC:A9 C0     LDA #$C0
+ 07:C1AE:8D 06 20  STA PPU_ADDRESS
+ 07:C1B1:A2 40     LDX #$40
+ 07:C1B3:8C 07 20  STY PPU_DATA
+ 07:C1B6:CA        DEX
+ 07:C1B7:D0 FA     BNE $C1B3
+ 07:C1B9:A6 01     LDX $0001
+ 07:C1BB:60        RTS -----------------------------------------
+================================================================
+FUNCTION $C1BC 
+
+ 07:C1BC:A6 97     LDX $0097 
+ 07:C1BE:E0 04     CPX #$04
+ 07:C1C0:D0 05     BNE $C1C7
+ 07:C1C2:A9 F8     LDA #$F8
+ 07:C1C4:8D 00 02  STA $0200
+ 07:C1C7:A9 F8     LDA #$F8
+ 07:C1C9:9D 00 02  STA $0200,X @ $0204 = #$18
+ 07:C1CC:E8        INX
+ 07:C1CD:E8        INX
+ 07:C1CE:E8        INX
+ 07:C1CF:E8        INX
+ 07:C1D0:D0 F7     BNE $C1C9
+ 07:C1D2:60        RTS -----------------------------------------
+================================================================
+Function $C1D3
+Clear all object slots
+
+ 07:C1D3:A2 0F     LDX #$0F
+ 07:C1D5:A9 00     LDA #$00
+ 07:C1D7:9D 00 03  STA $0300,X
+ 07:C1DA:9D A0 04  STA $04A0,X
+ 07:C1DD:A9 FF     LDA #$FF
+ 07:C1DF:9D E0 03  STA $03E0,X
+ 07:C1E2:CA        DEX
+ 07:C1E3:D0 F0     BNE $C1D5
+ 07:C1E5:60        RTS -----------------------------------------
+================================================================
+FUNCTION $C1E6/$C1EC
+ 07:C1E6:A9 30     LDA #$30
+ 07:C1E8:A2 F0     LDX #$F0
+ 07:C1EA:D0 03     BNE $C1EF
+
+ 07:C1EC:A9 10     LDA #$10
+ 07:C1EE:AA        TAX
+ 
+ 07:C1EF:85 0F     STA $000F
+ 07:C1F1:86 0D     STX $000D
+ 07:C1F3:A0 04     LDY #$04
+ 07:C1F5:84 0E     STY $000E
+ 07:C1F7:A0 1F     LDY #$1F
+ 
+ Loop:
+	 07:C1F9:B9 20 06  LDA $0620,Y
+	 07:C1FC:99 00 06  STA $0600,Y ; Transfer palette data to $600-$61F
+	 07:C1FF:88        DEY
+	 07:C200:10 F7     BPL $C1F9
+ 
+ 07:C202:A0 1F     LDY #$1F
+ 07:C204:B9 00 06  LDA $0600,Y 
+ 07:C207:38        SEC
+ 07:C208:E5 0F     SBC $000F
+ 07:C20A:10 02     BPL $C20E
+ 07:C20C:A9 0F     LDA #$0F
+ 07:C20E:99 00 06  STA $0600,Y
+ 07:C211:88        DEY
+ 07:C212:10 F0     BPL $C204
+ 07:C214:84 18     STY $0018
+ 07:C216:A5 0E     LDA $000E
+ 07:C218:48        PHA
+ 07:C219:20 AD FF  JSR $FFAD
+ 07:C21C:68        PLA
+ 07:C21D:38        SEC
+ 07:C21E:E9 01     SBC #$01
+ 07:C220:D0 F6     BNE $C218
+ 07:C222:A5 0F     LDA $000F = #$50
+ 07:C224:18        CLC
+ 07:C225:65 0D     ADC $000D = #$10
+ 07:C227:85 0F     STA $000F = #$50
+ 07:C229:C9 50     CMP #$50
+ 07:C22B:F0 04     BEQ $C231
+ 07:C22D:A5 0F     LDA $000F = #$50
+ 07:C22F:10 C6     BPL $C1F7
+ 07:C231:60        RTS -----------------------------------------
+================================================================
+FUNCTION $C250
+Advance random number generator
+
+ 07:C250:A2 00     LDX #$00
+ 07:C252:A0 04     LDY #$04
+ 07:C254:B5 E4     LDA $E4,X
+ 07:C256:29 02     AND #$02
+ 07:C258:85 00     STA $0000
+ 07:C25A:B5 E5     LDA $E5,X
+ 07:C25C:29 02     AND #$02
+ 07:C25E:45 00     EOR $0000
+ 07:C260:18        CLC
+ 07:C261:F0 01     BEQ $C264
+ 07:C263:38        SEC
+ 07:C264:76 E4     ROR $E4,X
+ 07:C266:E8        INX
+ 07:C267:88        DEY
+ 07:C268:D0 FA     BNE $C264
+ 07:C26A:60        RTS -----------------------------------------
+================================================================
+FUNCTION $C26B
+ 07:C26B:A5 FF     LDA $00FF
+ 07:C26D:29 FE     AND #$FE
+ 07:C26F:8D 00 20  STA PPU_CTRL
+ 
+ 07:C272:BD C4 C2  LDA $C2C4,X
+ 07:C275:85 02     STA $0002
+ 07:C277:BD E4 C2  LDA $C2E4,X
+ 07:C27A:85 03     STA $0003
+ 07:C27C:A0 00     LDY #$00
+ 07:C27E:B1 02     LDA ($02),Y
+ 07:C280:30 41     BMI $C2C3
+ 07:C282:20 CD FF  JSR $FFCD
+ 
+ 07:C285:C8        INY
+ 07:C286:B1 02     LDA ($02),Y @ $C401 = #$02
+ 07:C288:85 04     STA $0004 = #$00
+ 07:C28A:C8        INY
+ 07:C28B:B1 02     LDA ($02),Y @ $C401 = #$02
+ 07:C28D:85 06     STA $0006 = #$C0
+ 07:C28F:A2 00     LDX #$00
+ 07:C291:86 05     STX $0005 = #$00
+ 07:C293:C8        INY
+ 07:C294:AD 02 20  LDA PPU_STATUS
+ 07:C297:B1 02     LDA ($02),Y
+ 07:C299:8D 06 20  STA PPU_ADDRESS
+ 07:C29C:8E 06 20  STX PPU_ADDRESS
+ 07:C29F:84 07     STY $0007
+ 07:C2A1:A0 00     LDY #$00
+ 07:C2A3:B1 05     LDA ($05),Y
+ 07:C2A5:8D 07 20  STA PPU_DATA = #$00
+ 07:C2A8:C8        INY
+ 07:C2A9:C0 10     CPY #$10
+ 07:C2AB:D0 F6     BNE $C2A3
+ 07:C2AD:A5 05     LDA $0005 = #$00
+ 07:C2AF:18        CLC
+ 07:C2B0:69 10     ADC #$10
+ 07:C2B2:85 05     STA $0005 = #$00
+ 07:C2B4:A5 06     LDA $0006 = #$C0
+ 07:C2B6:69 00     ADC #$00
+ 07:C2B8:85 06     STA $0006 = #$C0
+ 07:C2BA:C6 04     DEC $0004 = #$00
+ 07:C2BC:D0 E3     BNE $C2A1
+ 07:C2BE:A4 07     LDY $0007 = #$13
+ 07:C2C0:C8        INY
+ 07:C2C1:D0 BB     BNE $C27E
+ 07:C2C3:60        RTS -----------------------------------------
+================================================================
+DATA TABLE $C2C4/$C2E4
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+C2C0             04 1D 36 53 68 81 A2 AF B8 D5 E2 E7
+C2D0 FC 01 16 2B 3C 41 46 4B 50 55 5E 7B 94 B5 CE 36
+C2E0 E7 00 81 29
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+C2E0             C3 C3 C3 C3 C3 C3 C3 C3 C3 C3 C3 C3
+C2F0 C3 C4 C4 C4 C4 C4 C4 C4 C4 C4 C4 C4 C4 C4 C4 C3
+C300 C4 C5 C3 C5
+
+1) Go to RAM page
+2) Store first line to given PPU address
+
+           RAM Page
+	       /  $0004
+	      /  /  $0006
+         /  /  /  PPU_ADDR XX00
+	    /  /  /  /
+00 C304 02 C0 80 00 02 10 8C 0C 02 10 91 0D 02 10 96 0E 02 10 BB 0F 03 00 80 10 FF
+01 C31D 02 C0 80 00 02 10 8C 0C 02 10 91 0D 02 20 AE 0E 03 40 80 10 03 C0 90 14 FF
+02 C336 02 C0 80 00 02 10 98 0C 02 10 8D 0D 02 10 96 0E 02 10 8F 0F 03 40 80 10 03 C0 9C 14 FF
+03 C353 02 C0 80 00 02 10 B0 0C 02 30 9D 0D 03 40 80 10 03 C0 A8 14 FF
+04 C368 02 C0 80 00 02 20 A0 0C 02 10 96 0E 02 10 A3 0F 03 40 80 10 03 C0 B4 14 FF
+05 C381 02 10 8C 0C 02 10 B1 0D 02 10 BE 0E 02 10 B3 0F 03 10 80 10 01 30 A9 11 03 10 BF 14 01 80 98 18 FF
+06 C3A2 02 10 8C 0C 02 30 99 0D 00 80 AD 18 FF
+07 C3AF 02 C0 80 00 03 80 B8 18 FF
+08 C3B8 02 10 B6 0B 02 10 8C 0C 02 10 B5 0D 02 10 A2 0E 02 10 B7 0F 03 40 B8 18 01 40 AC 1C FF
+09 C3D5 02 20 A0 0C 02 10 96 0E 02 10 A3 0F FF
+0A C3E2 02 40 94 0C FF
+0B C3E7 03 10 80 10 05 30 B5 11 05 10 BB 14 01 10 BA 15 01 20 B8 16 FF
+0C C3FC 03 40 80 10 FF
+0D C401 02 40 A8 0C 03 10 80 10 05 30 B5 11 05 10 BB 14 02 80 B8 18 FF
+0E C416 05 40 BC 0C 03 10 80 10 05 30 B5 11 05 10 BB 14 01 80 B0 18 FF
+0F C42B 02 C0 80 00 01 10 BC 04 02 40 B0 0C 05 C0 B0 10 FF
+10 C43C 03 40 84 14 FF
+11 C441 03 40 90 14 FF
+12 C446 03 40 9C 14 FF
+13 C44B 03 40 A8 14 FF
+14 C450 03 40 B4 14 FF
+15 C455 01 30 A9 11 03 10 BF 14 FF
+16 C45E 02 10 B6 0B 02 10 B5 0D 02 10 B7 0F 03 10 80 10 05 30 B5 11 05 10 BB 14 01 40 AC 18 FF
+17 C47B 02 40 B4 0C 03 10 80 10 05 30 B5 11 05 10 BB 14 01 40 A0 18 02 40 AC 1C FF
+18 C494 02 10 9C 0C 02 10 99 0D 02 10 B2 0E 02 10 8F 0F 03 10 80 10 05 30 B5 11 05 10 BB 14 01 80 A4 18 FF
+19 C4B5 02 C0 80 00 02 10 8C 0C 02 10 91 0D 02 20 96 0E 02 10 BB 0F 03 00 80 10 FF
+1A C4CE 02 C0 80 00 02 10 8C 0C 02 10 91 0D 02 20 AE 0E 03 40 80 10 03 C0 90 14 FF
+1B C336 02 C0 80 00 02 10 98 0C 02 10 8D 0D 02 10 96 0E 02 10 8F 0F 03 40 80 10 03 C0 9C 14 FF
+1C C4E7 02 C0 80 00 02 10 B0 0C 02 30 9D 0D 03 40 80 10 03 40 A8 14 00 80 AD 18 FF
+1D C500 02 C0 80 00 02 10 B6 0B 02 10 8C 0C 02 10 B5 0D 02 10 A2 0E 02 10 B7 0F 03 40 80 10 03 40 B4 14 03 40 B8 18 01 40 AC 1C FF
+1E C381 02 10 8C 0C 02 10 B1 0D 02 10 BE 0E 02 10 B3 0F 03 10 80 10 01 30 A9 11 03 10 BF 14 01 80 98 18 FF
+1F C529 FF
+
+================================================================
+FUNCTION $C52A
+Loads tile set Y for next room 
+ 07:C52A:84 A0     STY $00A0
+ 07:C52C:B9 19 C6  LDA $C619,Y
+ 07:C52F:85 A2     STA $00A2
+ 07:C531:B9 29 C6  LDA $C629,Y
+ 07:C534:85 A3     STA $00A3
+ 07:C536:A9 00     LDA #$00
+ 07:C538:85 A1     STA $00A1
+ 07:C53A:85 A5     STA $00A5
+ 07:C53C:60        RTS -----------------------------------------
+================================================================
+FUNCTION $C53D
+Populate tile set?
+ 07:C53D:A5 A5     LDA $00A5
+ 07:C53F:D0 20     BNE $C561
+ 07:C541:A4 A1     LDY $00A1
+ 07:C543:B1 A2     LDA ($A2),Y
+ 07:C545:30 61     BMI $C5A8
+ 07:C547:85 A4     STA $00A4
+ 07:C549:C8        INY
+ 07:C54A:B1 A2     LDA ($A2),Y
+ 07:C54C:85 A5     STA $00A5
+ 07:C54E:C8        INY
+ 07:C54F:A9 00     LDA #$00
+ 07:C551:85 A6     STA $00A6
+ 07:C553:85 A8     STA $00A8
+ 07:C555:B1 A2     LDA ($A2),Y
+ 07:C557:85 A7     STA $00A7
+ 07:C559:C8        INY
+ 07:C55A:B1 A2     LDA ($A2),Y
+ 07:C55C:85 A9     STA $00A9
+ 07:C55E:C8        INY
+ 07:C55F:84 A1     STY $00A1
+ 07:C561:A5 A9     LDA $00A9
+ 07:C563:8D C0 07  STA $07C0
+ 07:C566:A5 A8     LDA $00A8
+ 07:C568:8D C1 07  STA $07C1
+ 07:C56B:A5 A4     LDA $00A4
+ 07:C56D:20 CD FF  JSR $FFCD
+ 07:C570:A0 00     LDY #$00
+ 07:C572:B1 A6     LDA ($A6),Y @ $AC04 = #$FF
+ 07:C574:99 C3 07  STA $07C3,Y @ $07C7 = #$00
+ 07:C577:C8        INY
+ 07:C578:98        TYA
+ 07:C579:29 0F     AND #$0F
+ 07:C57B:D0 F5     BNE $C572
+ 07:C57D:C6 A5     DEC $00A5 = #$00
+ 07:C57F:F0 04     BEQ $C585
+ 07:C581:C0 20     CPY #$20
+ 07:C583:D0 ED     BNE $C572
+ 07:C585:A9 FF     LDA #$FF
+ 07:C587:99 C3 07  STA $07C3,Y @ $07C7 = #$00
+ 07:C58A:98        TYA
+ 07:C58B:18        CLC
+ 07:C58C:65 A6     ADC $00A6 = #$00
+ 07:C58E:85 A6     STA $00A6 = #$00
+ 07:C590:A5 A7     LDA $00A7 = #$AC
+ 07:C592:69 00     ADC #$00
+ 07:C594:85 A7     STA $00A7 = #$AC
+ 07:C596:98        TYA
+ 07:C598:65 A8     ADC $00A8 = #$00
+ 07:C59A:85 A8     STA $00A8 = #$00
+ 07:C59C:A5 A9     LDA $00A9 = #$10
+ 07:C59E:69 00     ADC #$00
+ 07:C5A0:85 A9     STA $00A9 = #$10
+ 07:C5A2:88        DEY
+ 07:C5A3:8C C2 07  STY $07C2 = #$1F
+ 07:C5A6:84 1A     STY $001A = #$00
+ 07:C5A8:60        RTS -----------------------------------------
+================================================================
+TABLE $C619
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+C610                            A9 BA BF C8 CD D6 DF
+C620 E4 F5 06 13 13 13 13 13 18
+
+TABLE $C629
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+C620                            C5 C5 C5 C5 C5 C5 C5
+C630 C5 C5 C6 C6 C6 C6 C6 C6 C6
+================================================================
+FUNCTION $C639
+ 07:C639:A2 BF     LDX #$BF
+ 07:C63B:9A        TXS         ; Set stack range
+ 
+ 07:C63C:A5 FF     LDA $00FF
+ 07:C63E:8D 00 20  STA PPU_CTRL
+ 
+ 07:C641:20 AD FF  JSR $FFAD
+ 
+ 07:C644:A9 88     LDA #$88
+ 07:C646:85 E4     STA $00E4 ; Initialize RNG seed
+ 
+ 07:C648:20 DB F2  JSR $F2DB
+ 
+ 07:C64B:A9 00     LDA #$00
+ 07:C64D:85 E9     STA $00E9 ; Set current level to zero
+ 
+ 07:C64F:A9 02     LDA #$02
+ 07:C651:85 B0     STA $00B0 ; Set lives to two
+ 
+ 07:C653:A9 03     LDA #$03
+ 07:C655:85 B1     STA $00B1 ; Set health to three
+ 
+ 07:C657:A9 05     LDA #$05
+ 07:C659:85 BA     STA $00BA ; Set max health to five
+ 
+ 07:C65B:20 18 C8  JSR $C818
+ 
+ 07:C65E:A5 30     LDA $0030
+ 07:C660:C9 07     CMP #$07  ; Check if Ariel is in damage animation
+ 07:C662:F0 18     BEQ $C67C ; Jump ahead if so
+ 
+ 07:C664:A5 14     LDA $0014 ; PAD1 new input
+ 07:C666:29 10     AND #$10  ; Check if Start has been pressed
+ 07:C668:F0 12     BEQ $C67C ; Jump ahead if so
+ 
+ 07:C66A:A9 F3     LDA #$F3
+ 07:C66C:20 A0 FC  JSR $FCA0 
+ 07:C66F:A9 1C     LDA #$1C
+ 07:C671:20 A0 FC  JSR $FCA0
+ 07:C674:20 A2 EA  JSR $EAA2
+ 07:C677:A9 F4     LDA #$F4
+ 07:C679:20 A0 FC  JSR $FCA0
+ 
+ 07:C67C:20 7E E8  JSR $E87E
+ 07:C67F:20 C5 C9  JSR $C9C5
+ 07:C682:20 FB DB  JSR $DBFB
+ 07:C685:20 6D E0  JSR $E06D
+ 07:C688:20 17 E7  JSR $E717
+ 07:C68B:20 16 E8  JSR $E816
+ 07:C68E:A5 E9     LDA $00E9 = #$00
+ 07:C690:C9 03     CMP #$03
+ 07:C692:D0 0C     BNE $C6A0
+ 07:C694:A5 FD     LDA $00FD = #$00
+ 07:C696:18        CLC
+ 07:C697:65 FB     ADC $00FB = #$00
+ 07:C699:C9 0E     CMP #$0E
+ 07:C69B:D0 03     BNE $C6A0
+ 07:C6A2:20 CD FF  JSR $FFCD
+ 07:C6A5:20 00 80  JSR $8000
+ 07:C6A8:A5 E9     LDA $00E9 = #$00
+ 07:C6AA:C9 05     CMP #$05
+ 07:C6AC:D0 06     BNE $C6B4
+ 07:C6AE:A5 30     LDA $0030 = #$00
+ 07:C6B0:C9 09     CMP #$09
+ 07:C6B2:F0 08     BEQ $C6BC
+ 07:C6B4:A9 04     LDA #$04
+ 07:C6B6:20 CD FF  JSR $FFCD
+ 07:C6B9:20 00 B6  JSR $B600
+ 
+ 07:C6BC:AD 30 03  LDA $0330 ; x-pos low byte
+ 07:C6BF:85 32     STA $0032
+ 
+ 07:C6C1:AD 40 03  LDA $0340 ; x-pos high byte
+ 07:C6C4:85 33     STA $0033
+ 
+ 07:C6C6:A5 FC     LDA $00FC ; screen x-pos high byte
+ 07:C6C8:85 F7     STA $00F7
+ 
+ 07:C6CA:AD 60 03  LDA $0360 ; y-pos low byte
+ 07:C6CD:85 34     STA $0034
+ 
+ 07:C6CF:AD 70 03  LDA $0370 ; y-pos high byte
+ 07:C6D2:85 35     STA $0035
+ 
+ 07:C6D4:A5 FA     LDA $00FA ; screen y-pos high byte
+ 07:C6D6:85 F8     STA $00F8
+ 
+ 07:C6D8:A9 04     LDA #$04
+ 07:C6DA:85 97     STA $0097
+ 
+ 07:C6DC:20 CD FF  JSR $FFCD
+ 07:C6DF:20 BC C1  JSR $C1BC
+ 07:C6E2:20 03 80  JSR $8003
+ 07:C6E5:A9 00     LDA #$00
+ 07:C6E7:85 EE     STA $00EE
+ 07:C6E9:20 50 C2  JSR $C250
+ 07:C6EC:20 AD FF  JSR $FFAD
+ 07:C6EF:E6 EE     INC $00EE = #$00
+ 07:C6F1:A5 2F     LDA $002F = #$00
+ 07:C6F3:F0 10     BEQ $C705
+ 07:C6F5:C6 2F     DEC $002F = #$00
+ 07:C6F7:D0 0C     BNE $C705
+ 
+ 07:C6F9:A5 E9     LDA $00E9 ; Current level
+ 07:C6FB:C9 05     CMP #$05
+ 07:C6FD:F0 03     BEQ $C702
+ 07:C6FF:4C 9C EC  JMP $EC9C
+ 07:C702:4C A4 F4  JMP $F4A4
+ 07:C705:4C 5E C6  JMP $C65E
+================================================================ 
+FUNCTION $C708
+
+ 07:C708:A9 00     LDA #$00
+ 07:C70A:85 53     STA $0053 = #$00
+ 
+ 07:C70C:E6 E9     INC $00E9 ; Advance to next level
+ 07:C70E:A5 E9     LDA $00E9
+ 07:C710:C9 06     CMP #$06
+ 07:C712:D0 02     BNE $C716
+ 07:C714:A9 00     LDA #$00  ; If at Ursula 2, set level to zero
+ 07:C716:85 E9     STA $00E9 
+ 07:C718:C9 05     CMP #$05
+ 07:C71A:F0 03     BEQ $C71F
+ 
+ 07:C71C:20 19 F4  JSR $F419 ; For all stages but Ursula's castle
+ 
+ 07:C71F:A9 03     LDA #$03
+ 07:C721:85 B1     STA $00B1 ; Set health to 3
+ 07:C723:A9 00     LDA #$00
+ 07:C725:85 3A     STA $003A ; Clear held object slot
+ 07:C727:85 EE     STA $00EE 
+ 07:C729:85 B2     STA $00B2
+ 07:C72B:85 B3     STA $00B3
+ 07:C72D:85 B4     STA $00B4 ; Clear bubble power (restored later?)
+ 07:C72F:85 B5     STA $00B5 ; Clear bubble range (restored later?)
+ 07:C731:A0 03     LDY #$03
+ 07:C733:99 07 05  STA $0507,Y ; Wipe range $507-$516 
+ 07:C736:99 0B 05  STA $050B,Y 
+ 07:C739:99 0F 05  STA $050F,Y
+ 07:C73C:99 13 05  STA $0513,Y
+ 07:C73F:88        DEY
+ 07:C740:10 F1     BPL $C733
+ 07:C742:20 BA CB  JSR $CBBA
+ 07:C745:4C 5B C6  JMP $C65B
+================================================================
+DATA TABLE $C748
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+C740                         xx
+C750                      xx
+
+C759
+================================================================
+FUNCTION $C818 
+ 07:C818:20 EC C1  JSR $C1EC
+ 07:C81B:20 AD FF  JSR $FFAD
+ 07:C81E:20 D3 C1  JSR $C1D3    ; Wipe all object slots
+ 07:C821:A9 04     LDA #$04
+ 07:C823:85 97     STA $0097
+ 07:C825:20 BC C1  JSR $C1BC
+ 07:C828:20 AD FF  JSR $FFAD
+ 07:C82B:20 04 C1  JSR $C104
+ 07:C82E:A4 53     LDY $0053 = #$00
+ 07:C830:84 9E     STY $009E = #$00
+ 07:C832:84 9F     STY $009F = #$00
+ 07:C834:84 B8     STY $00B8 = #$00
+ 07:C836:F0 18     BEQ $C850
+ 07:C838:A9 04     LDA #$04
+ 07:C83A:20 CD FF  JSR $FFCD
+ 07:C83D:A6 E9     LDX $00E9 = #$00
+ 07:C83F:BD A0 BF  LDA $BFA0,X @ $BFA0 = #$00
+ 07:C842:85 9E     STA $009E = #$00
+ 07:C844:85 9F     STA $009F = #$00
+ 07:C846:A5 E9     LDA $00E9 ; Current level
+ 07:C848:18        CLC
+ 07:C849:69 01     ADC #$01
+ 07:C84B:0A        ASL
+ 07:C84C:0A        ASL
+ 07:C84D:A8        TAY
+ 07:C84E:85 B8     STA $00B8 = #$00
+ 07:C850:B9 A9 C9  LDA $C9A9,Y @ $C9AD = #$07
+ 07:C853:85 FD     STA $00FD = #$00
+ 07:C855:8D 40 03  STA $0340 = x-pos (high)
+ 07:C858:85 33     STA $0033 = #$00
+ 07:C85A:B9 AA C9  LDA $C9AA,Y @ $C9AE = #$02
+ 07:C85D:85 FB     STA $00FB = #$00
+ 07:C85F:8D 70 03  STA $0370 ; y-pos (high)
+ 07:C862:85 35     STA $0035 = #$00
+ 07:C864:18        CLC
+ 07:C865:65 FD     ADC $00FD ; screen x-pos (high)
+ 07:C867:85 20     STA $0020 = #$00
+ 07:C869:A5 FD     LDA $00FD = #$00
+ 07:C86B:29 01     AND #$01
+ 07:C86D:4A        LSR
+ 07:C86E:6A        ROR
+ 07:C86F:4A        LSR
+ 07:C870:85 22     STA $0022 = #$00
+ 07:C872:A9 00     LDA #$00
+ 07:C874:85 FC     STA $00FC = #$00
+ 07:C876:85 FA     STA $00FA = #$00
+ 07:C878:20 7F D9  JSR $D97F
+ 07:C87B:20 D3 C1  JSR $C1D3
+ 07:C87E:A9 60     LDA #$60
+ 07:C880:85 0E     STA $000E = #$04
+ 07:C882:A9 01     LDA #$01
+ 07:C884:85 01     STA $0001 = #$00
+ 07:C886:85 27     STA $0027 = #$00
+ 07:C888:20 BD D6  JSR $D6BD
+ 07:C88B:20 CB C0  JSR $C0CB
+ 07:C88E:C6 0E     DEC $000E = #$04
+ 07:C890:D0 F0     BNE $C882
+ 07:C892:A5 53     LDA $0053 = #$00
+ 07:C894:F0 1B     BEQ $C8B1
+ 07:C896:A5 E9     LDA $00E9 = #$00
+ 07:C898:C9 03     CMP #$03
+ 07:C89A:90 15     BCC $C8B1
+ 07:C89C:E9 03     SBC #$03
+ 07:C89E:0A        ASL
+ 07:C89F:0A        ASL
+ 07:C8A0:0A        ASL
+ 07:C8A1:0A        ASL
+ 07:C8A2:A8        TAY
+ 07:C8A3:A2 00     LDX #$00
+ 07:C8A5:B9 4D E0  LDA $E04D,Y @ $E051 = #$0F
+ 07:C8A8:9D 20 06  STA $0620,X @ $0620 = #$0F
+ 07:C8AB:C8        INY
+ 07:C8AC:E8        INX
+ 07:C8AD:E0 10     CPX #$10
+ 07:C8AF:D0 F4     BNE $C8A5
+ 07:C8B1:A2 0F     LDX #$0F
+ 07:C8B3:BD 48 C7  LDA $C748,X @ $C748 = #$11
+ 07:C8B6:9D 30 06  STA $0630,X @ $0630 = #$0F
+ 07:C8B9:CA        DEX
+ 07:C8BA:10 F7     BPL $C8B3
+ 07:C8BC:AD 20 06  LDA $0620 = #$0F
+ 07:C8BF:8D 30 06  STA $0630 = #$0F
+ 07:C8C2:A5 E9     LDA $00E9 = #$00
+ 07:C8C4:0A        ASL
+ 07:C8C5:0A        ASL
+ 07:C8C6:0A        ASL
+ 07:C8C7:A8        TAY
+ 07:C8C8:A2 00     LDX #$00
+ 07:C8CA:B9 78 C7  LDA $C778,Y @ $C77C = #$0F
+ 07:C8CD:9D 38 06  STA $0638,X @ $0638 = #$0F
+ 07:C8D0:C8        INY
+ 07:C8D1:E8        INX
+ 07:C8D2:E0 08     CPX #$08
+ 07:C8D4:D0 F4     BNE $C8CA
+ 07:C8D6:A5 53     LDA $0053 = #$00
+ 07:C8D8:F0 23     BEQ $C8FD
+ 07:C8DA:A6 B8     LDX $00B8 = #$00
+ 07:C8DC:A4 E9     LDY $00E9 = #$00
+ 07:C8DE:B9 FF DA  LDA $DAFF,Y @ $DB03 = #$17
+ 07:C8E1:18        CLC
+ 07:C8E2:7D AB C9  ADC $C9AB,X @ $C9AB = #$00
+ 07:C8E5:A8        TAY
+ 07:C8E6:B9 24 DB  LDA $DB24,Y @ $DB28 = #$00
+ 07:C8E9:F0 12     BEQ $C8FD
+ 07:C8EB:0A        ASL
+ 07:C8EC:0A        ASL
+ 07:C8ED:0A        ASL
+ 07:C8EE:A8        TAY
+ 07:C8EF:A2 00     LDX #$00
+ 07:C8F1:B9 9B DB  LDA $DB9B,Y @ $DB9F = #$0F
+ 07:C8F4:9D 38 06  STA $0638,X @ $0638 = #$0F
+ 07:C8F7:C8        INY
+ 07:C8F8:E8        INX
+ 07:C8F9:E0 08     CPX #$08
+ 07:C8FB:D0 F4     BNE $C8F1
+ 07:C8FD:20 0E C1  JSR $C10E
+ 07:C900:20 AD FF  JSR $FFAD
+ 07:C903:20 E6 C1  JSR $C1E6
+ 07:C906:A5 E9     LDA $00E9 = #$00
+ 07:C908:48        PHA
+ 07:C909:18        CLC
+ 07:C90A:69 02     ADC #$02
+ 07:C90C:C9 07     CMP #$07
+ 07:C90E:D0 02     BNE $C912
+ 07:C910:A9 09     LDA #$09
+ 07:C912:20 9E FC  JSR $FC9E
+ 07:C915:68        PLA
+ 07:C916:0A        ASL
+ 07:C917:0A        ASL
+ 07:C918:AA        TAX
+ 07:C919:A0 00     LDY #$00
+ 07:C91B:BD A8 C7  LDA $C7A8,X @ $C7A8 = #$00
+ 07:C91E:99 00 01  STA $0100,Y @ $0104 = #$00
+ 07:C921:F0 08     BEQ $C92B
+ 07:C923:A9 00     LDA #$00
+ 07:C925:99 04 01  STA $0104,Y @ $0108 = #$00
+ 07:C928:99 08 01  STA $0108,Y @ $010C = #$00
+ 07:C92B:E8        INX
+ 07:C92C:C8        INY
+ 07:C92D:C0 04     CPY #$04
+ 07:C92F:D0 EA     BNE $C91B
+ 07:C931:A0 1F     LDY #$1F
+ 07:C933:A9 00     LDA #$00
+ 07:C935:85 1D     STA $001D = #$00
+ 07:C937:99 10 01  STA $0110,Y @ $0114 = #$00
+ 07:C93A:99 30 01  STA $0130,Y @ $0134 = #$00
+ 07:C93D:88        DEY
+ 07:C93E:10 F7     BPL $C937
+ 07:C940:A9 02     LDA #$02
+ 07:C942:8D 30 04  STA $0430 = #$00
+ 07:C945:A9 00     LDA #$00
+ 07:C947:8D 48 04  STA $0448 = #$00
+ 07:C94A:8D 18 04  STA $0418 = #$00
+ 07:C94D:85 F7     STA $00F7 = #$00
+ 07:C94F:85 F8     STA $00F8 = #$00
+ 07:C951:85 52     STA $0052 = #$00
+ 07:C953:8D 60 03  STA $0360 = #$00
+ 07:C956:85 34     STA $0034 = #$00
+ 07:C958:A9 09     LDA #$09
+ 07:C95A:85 30     STA $0030 ; Set Ariel status to "entering new stage"
+ 07:C95C:20 BA CB  JSR $CBBA
+ 07:C95F:A5 53     LDA $0053 = #$00
+ 07:C961:F0 0B     BEQ $C96E
+ 07:C963:A5 E9     LDA $00E9 = #$00
+ 07:C965:C9 03     CMP #$03
+ 07:C967:D0 05     BNE $C96E
+ 07:C969:A9 00     LDA #$00
+ 07:C96B:8D 03 01  STA $0103 = #$00
+ 07:C96E:A9 C0     LDA #$C0
+ 07:C970:8D 00 03  STA $0300 = #$00
+ 07:C973:09 10     ORA #$10
+ 07:C975:8D 00 04  STA $0400 = #$00
+ 07:C978:A9 40     LDA #$40
+ 07:C97A:8D 30 03  STA $0330 = #$00
+ 07:C97D:85 32     STA $0032 = #$00
+ 07:C97F:A9 01     LDA #$01
+ 07:C981:85 31     STA $0031 = #$00
+ 07:C983:85 27     STA $0027 = #$00
+ 07:C985:85 F9     STA $00F9 = #$00
+ 07:C987:A6 B8     LDX $00B8 = #$00
+ 07:C989:BC AB C9  LDY $C9AB,X @ $C9AB = #$00
+ 07:C98C:84 00     STY $0000 = #$00
+ 07:C98E:B1 70     LDA ($70),Y @ $0004 = #$00
+ 07:C990:48        PHA
+ 07:C991:29 1F     AND #$1F
+ 07:C993:85 51     STA $0051 = #$00
+ 07:C995:68        PLA
+ 07:C996:29 F0     AND #$F0
+ 07:C998:05 00     ORA $0000 = #$00
+ 07:C99A:85 50     STA $0050 = #$00
+ 07:C99C:29 C0     AND #$C0
+ 07:C99E:F0 08     BEQ $C9A8
+ 07:C9A0:A9 1D     LDA #$1D
+ 07:C9A2:85 22     STA $0022 = #$00
+ 07:C9A4:A9 08     LDA #$08
+ 07:C9A6:85 27     STA $0027 = #$00
+ 07:C9A8:60        RTS -----------------------------------------
+================================================================
+TABLE $C9A9
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+C9A0                            00 00 00 00 07 02 02
+C9B0 00 09 04 04 00 0D 02 04 00 0A 04 05 00 10 04 06
+C9C0 00 00 00 00
+
+Stage 1: C9AE
+Stage 2: C9B2 
+Stage 3: C9B6 
+Stage 4: C9BA
+Stage 5: C9BE 
+================================================================
+FUNCTION $C9C5
+
+POSSIBLE GLITCH CONDITION:
+$30 contains a value greater than #$09
+
+ 07:C9C5:A9 40     LDA #$40
+ 07:C9C7:85 99     STA $0099
+ 07:C9C9:A5 3B     LDA $003B 
+ 07:C9CB:F0 02     BEQ $C9CF ; If attack timer is nonzero,
+ 07:C9CD:C6 3B     DEC $003B ;  tick it down.
+ 07:C9CF:A5 B1     LDA $00B1
+ 07:C9D1:F0 06     BEQ $C9D9 ; Skip this section if health is zero 
+ 07:C9D3:A5 3F     LDA $003F ;  
+ 07:C9D5:F0 02     BEQ $C9D9 ; If $3F is nonzero,
+ 07:C9D7:C6 3F     DEC $003F ;  tick it down
+ 
+ 07:C9D9:A2 00     LDX #$00
+ 07:C9DB:E6 38     INC $0038
+ 
+ 07:C9DD:A4 30     LDY $0030 - Ariel's status
+ 07:C9DF:B9 EC C9  LDA $C9EC,Y
+ 07:C9E2:85 00     STA $0000
+ 07:C9E4:B9 F6 C9  LDA $C9F6,Y
+ 07:C9E7:85 01     STA $0001
+ 07:C9E9:6C 00 00  JMP ($0000)
+================================================================
+TABLE $C9EC
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+C9E0                                     00 DD 3E 12
+C9F0 9E 71 49 A5 64 74
+
+TABLE $C9F6
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+C9F0                   CA CC CE CF D0 D1 D2 D2 D3 D3
+
+00: $CA00 - Normal
+01: $CCDD - Turning
+02: $CE3E 
+03: $CF12 - Tossing bubble/item
+04: $D09E 
+05: $D171 - On land
+06: $D249 - Reentering water
+07: $D2A5 - Damage
+08: $D364 
+09: $D374 - Entering new stage
+================================================================
+FUNCTION $CA00
+ 07:CA00:A5 14     LDA $0014 ; Check input new to frame 
+ 07:CA02:29 80     AND #$80  ; Check if A has just been pressed
+ 07:CA04:D0 03     BNE $CA09 
+ 07:CA06:4C 71 CA  JMP $CA71
+ 
+ A PRESSED (THROW OBJECT)
+ 
+ 07:CA09:A0 03     LDY #$03
+ 07:CA0B:20 DF E3  JSR $E3DF
+ 07:CA0E:A5 10     LDA $0010
+ 07:CA10:D0 5F     BNE $CA71
+ 07:CA12:A6 3A     LDX $003A   ; Object held
+ 07:CA14:A9 00     LDA #$00
+ 07:CA16:85 3A     STA $003A   ; Remove object from "held" spot
+ 07:CA18:BD 30 04  LDA $0430,X
+ 07:CA1B:C9 40     CMP #$40
+ 07:CA1D:D0 2F     BNE $CA4E
+ 07:CA1F:A9 7E     LDA #$7E
+ 07:CA21:9D A0 03  STA $03A0,X
+ 07:CA24:A9 04     LDA #$04
+ 07:CA26:9D B0 03  STA $03B0,X
+ 07:CA29:A9 80     LDA #$80
+ 07:CA2B:9D 80 03  STA $0380,X
+ 07:CA2E:A9 01     LDA #$01
+ 07:CA30:9D 90 03  STA $0390,X
+ 07:CA33:A9 81     LDA #$81
+ 07:CA35:9D 00 03  STA $0300,X
+ 07:CA38:A9 01     LDA #$01
+ 07:CA3A:9D D0 03  STA $03D0,X ; Set direction of movement to left
+ 07:CA3D:A9 FF     LDA #$FF
+ 07:CA3F:9D 60 04  STA $0460,X
+ 07:CA42:AD 00 04  LDA $0400
+ 07:CA45:29 40     AND #$40    ; Check if Ariel is facing left
+ 07:CA47:D0 05     BNE $CA4E   ; Jump ahead if so
+ 
+ 07:CA49:A9 02     LDA #$02
+ 07:CA4B:9D D0 03  STA $03D0,X ; Set direction of movement to right
+ 
+ 07:CA4E:A2 00     LDX #$00
+ 07:CA50:A9 02     LDA #$02
+ 07:CA52:85 30     STA $0030 = #$00
+ 07:CA54:A9 1F     LDA #$1F
+ 07:CA56:8D 80 03  STA $0380 = #$00
+ 07:CA59:A9 01     LDA #$01
+ 07:CA5B:8D 90 03  STA $0390 = #$00
+ 07:CA5E:A9 7E     LDA #$7E
+ 07:CA60:8D A0 03  STA $03A0 = #$00
+ 07:CA63:A9 04     LDA #$04
+ 07:CA65:8D B0 03  STA $03B0 = #$00
+ 07:CA68:A9 08     LDA #$08
+ 07:CA6A:85 39     STA $0039 = #$00
+ 07:CA6C:A9 04     LDA #$04
+ 07:CA6E:4C 45 FC  JMP $FC45
+ 
+ A BUTTON NOT PRESSED
+ 
+ 07:CA71:A5 3B     LDA $003B ; Check timer between bubble shots
+ 07:CA73:D0 21     BNE $CA96
+ 07:CA75:A5 14     LDA $0014 = #$00
+ 07:CA77:29 80     AND #$80
+ 07:CA79:F0 1B     BEQ $CA96
+ 07:CA7B:20 20 CF  JSR $CF20
+ 07:CA7E:F0 16     BEQ $CA96
+ 07:CA80:A9 12     LDA #$12
+ 07:CA82:20 A0 FC  JSR $FCA0
+ 07:CA85:A9 1E     LDA #$1E
+ 07:CA87:85 3B     STA $003B = #$00
+ 07:CA89:A9 09     LDA #$09
+ 07:CA8B:20 45 FC  JSR $FC45
+ 07:CA8E:A9 03     LDA #$03
+ 07:CA90:85 30     STA $0030 ; Set Ariel status to "throwing object"
+ 07:CA92:A9 00     LDA #$00
+ 07:CA94:85 3A     STA $003A ; Set object held to null
+ 
+ 
+ 07:CA96:A5 16     LDA $0016
+ 07:CA98:29 03     AND #$03
+ 07:CA9A:F0 27     BEQ $CAC3
+ 
+ 07:CA9C:85 00     STA $0000
+ 07:CA9E:29 01     AND #$01
+ 07:CAA0:4A        LSR
+ 07:CAA1:6A        ROR
+ 07:CAA2:4A        LSR
+ 07:CAA3:85 01     STA $0001
+ 07:CAA5:AD 00 04  LDA $0400
+ 07:CAA8:29 40     AND #$40
+ 07:CAAA:C5 01     CMP $0001 = #$A4
+ 07:CAAC:F0 36     BEQ $CAE4
+ 07:CAAE:A5 31     LDA $0031 = #$00
+ 07:CAB0:29 0C     AND #$0C
+ 07:CAB2:05 00     ORA $0000 = #$02
+ 07:CAB4:85 31     STA $0031 = #$00
+ 07:CAB6:A9 01     LDA #$01
+ 07:CAB8:85 30     STA $0030 ; Set Ariel status to "turning"
+ 07:CABA:A9 00     LDA #$00
+ 07:CABC:85 3C     STA $003C = #$01
+ 07:CABE:A9 03     LDA #$03
+ 07:CAC0:4C 45 FC  JMP $FC45
+ 07:CAC3:AD 90 03  LDA $0390 = #$00
+ 07:CAC6:0D 80 03  ORA $0380
+ 07:CAC9:F0 10     BEQ $CADB
+ 07:CACB:20 CA D3  JSR $D3CA
+ 07:CACE:20 E2 D3  JSR $D3E2
+ 07:CAD1:B0 3B     BCS $CB0E
+ 07:CAD3:A9 00     LDA #$00
+ 07:CAD5:8D 80 03  STA $0380 = #$00
+ 07:CAD8:8D 90 03  STA $0390 = #$00
+ 07:CADB:A5 31     LDA $0031 = #$00
+ 07:CADD:29 0C     AND #$0C
+ 07:CADF:85 31     STA $0031 = #$00
+ 07:CAE1:4C 0E CB  JMP $CB0E
+ 07:CAE4:A5 31     LDA $0031 ; D-Pad input
+ 07:CAE6:29 0C     AND #$0C  ; 
+ 07:CAE8:05 00     ORA $0000
+ 07:CAEA:85 31     STA $0031
+ 07:CAEC:A5 16     LDA $0016
+ 07:CAEE:29 40     AND #$40
+ 07:CAF0:4A        LSR
+ 07:CAF1:4A        LSR
+ 07:CAF2:05 31     ORA $0031 = #$00
+ 07:CAF4:A8        TAY
+ 07:CAF5:AD 80 03  LDA $0380 = #$00
+ 07:CAF8:38        SEC
+ 07:CAF9:F9 5D CC  SBC $CC5D,Y
+ 07:CAFC:85 00     STA $0000
+ 07:CAFE:AD 90 03  LDA $0390
+ 07:CB01:F9 7D CC  SBC $CC7D,Y
+ 07:CB04:05 00     ORA $0000 = #$02
+ 07:CB06:F0 06     BEQ $CB0E
+ 07:CB08:20 1A D4  JSR $D41A
+ 07:CB0B:20 35 D4  JSR $D435
+ 07:CB0E:A5 16     LDA $0016 = #$00
+ 07:CB10:29 0C     AND #$0C
+ 07:CB12:F0 19     BEQ $CB2D
+ 07:CB14:85 00     STA $0000 = #$02
+ 07:CB16:A5 31     LDA $0031 ; D-Pad input
+ 07:CB18:29 0C     AND #$0C  ; Check for up-down
+ 07:CB1A:F0 2A     BEQ $CB46 ; Jump ahead if none
+ 
+ 07:CB1C:C5 00     CMP $0000 
+ 07:CB1E:F0 26     BEQ $CB46
+ 
+ 07:CB20:A5 31     LDA $0031 ; D-pad input
+ 07:CB22:29 03     AND #$03  ; Check for left-right
+ 07:CB24:05 00     ORA $0000 = #$02
+ 07:CB26:85 31     STA $0031 = #$00
+ 07:CB28:F0 03     BEQ $CB2D
+ 07:CB2A:4C 98 CB  JMP $CB98
+ 07:CB2D:AD B0 03  LDA $03B0
+ 07:CB30:0D A0 03  ORA $03A0
+ 07:CB33:F0 08     BEQ $CB3D ; Jump ahead if Ariel's y-speed is zero
+ 07:CB35:20 CA D3  JSR $D3CA
+ 07:CB38:20 FE D3  JSR $D3FE
+ 07:CB3B:B0 5B     BCS $CB98
+ 07:CB3D:A5 31     LDA $0031 ; D-Pad input
+ 07:CB3F:29 03     AND #$03
+ 07:CB41:85 31     STA $0031 ; Retain left-right input 
+ 07:CB43:4C 98 CB  JMP $CB98
+ 07:CB46:A5 31     LDA $0031 = #$00
+ 07:CB48:29 03     AND #$03
+ 07:CB4A:05 00     ORA $0000 = #$02
+ 07:CB4C:85 31     STA $0031 = #$00
+ 07:CB4E:A5 16     LDA $0016 = #$00
+ 07:CB50:29 40     AND #$40
+ 07:CB52:4A        LSR
+ 07:CB53:4A        LSR
+ 07:CB54:05 31     ORA $0031 = #$00
+ 07:CB56:A8        TAY
+ 07:CB57:20 1A D4  JSR $D41A
+ 07:CB5A:AD A0 03  LDA $03A0 = #$00
+ 07:CB5D:18        CLC
+ 07:CB5E:65 36     ADC $0036 = #$10
+ 07:CB60:8D A0 03  STA $03A0 = #$00
+ 07:CB63:AD B0 03  LDA $03B0 = #$00
+ 07:CB66:69 00     ADC #$00
+ 07:CB68:8D B0 03  STA $03B0 = #$00
+ 07:CB6B:B9 9D CC  LDA $CC9D,Y @ $CC9F = #$00
+ 07:CB6E:38        SEC
+ 07:CB6F:ED A0 03  SBC $03A0 = #$00
+ 07:CB72:B9 BD CC  LDA $CCBD,Y
+ 07:CB75:ED B0 03  SBC $03B0 = #$00
+ 07:CB78:B0 0F     BCS $CB89
+ 07:CB7A:B9 9D CC  LDA $CC9D,Y
+ 07:CB7D:8D A0 03  STA $03A0 
+ 07:CB80:B9 BD CC  LDA $CCBD,Y
+ 07:CB83:8D B0 03  STA $03B0 ; Set Ariel's y-speed
+ 07:CB86:4C 98 CB  JMP $CB98
+ 
+ 07:CB89:AD B0 03  LDA $03B0 = #$00
+ 07:CB8C:D0 0A     BNE $CB98
+ 07:CB8E:A9 66     LDA #$66
+ 07:CB90:CD A0 03  CMP $03A0 = #$00
+ 07:CB93:90 03     BCC $CB98
+ 07:CB95:8D A0 03  STA $03A0 = #$00
+ 
+ 07:CB98:AD 80 03  LDA $0380
+ 07:CB9B:0D 90 03  ORA $0390
+ 07:CB9E:D0 49     BNE $CBE9 ; Jump ahead if Ariel's x-speed is not zero
+ 07:CBA0:AD A0 03  LDA $03A0
+ 07:CBA3:0D B0 03  ORA $03B0 
+ 07:CBA6:D0 25     BNE $CBCD ; Jump ahead if Ariel's y-speed is not zero
+ 07:CBA8:20 A9 D5  JSR $D5A9
+ 07:CBAB:20 71 D4  JSR $D471
+ 07:CBAE:B0 0A     BCS $CBBA
+ 07:CBB0:A9 02     LDA #$02
+ 07:CBB2:CD 30 04  CMP $0430 ; Check Ariel's animation loop
+ 07:CBB5:F0 15     BEQ $CBCC
+ 07:CBB7:20 45 FC  JSR $FC45
+ 07:CBBA:A9 10     LDA #$10
+ 07:CBBC:85 36     STA $0036 = #$10
+ 07:CBBE:A9 00     LDA #$00
+ 07:CBC0:8D 80 03  STA $0380 
+ 07:CBC3:8D 90 03  STA $0390
+ 07:CBC6:8D A0 03  STA $03A0
+ 07:CBC9:8D B0 03  STA $03B0 ; Set Ariel's speed to zero
+ 07:CBCC:60        RTS -----------------------------------------
+ 07:CBCD:20 71 D4  JSR $D471
+ 07:CBD0:B0 37     BCS $CC09
+ 07:CBD2:A5 31     LDA $0031 = #$00
+ 07:CBD4:29 08     AND #$08
+ 07:CBD6:D0 04     BNE $CBDC
+ 07:CBD8:A9 02     LDA #$02
+ 07:CBDA:D0 02     BNE $CBDE
+ 07:CBDC:A9 15     LDA #$15
+ 07:CBDE:CD 30 04  CMP $0430 ; Ariel's animation loop
+ 07:CBE1:F0 26     BEQ $CC09
+ 07:CBE3:20 45 FC  JSR $FC45
+ 07:CBE6:4C 09 CC  JMP $CC09
+ 07:CBE9:20 71 D4  JSR $D471
+ 07:CBEC:B0 1B     BCS $CC09
+ 07:CBEE:A5 3A     LDA $003A
+ 07:CBF0:F0 0D     BEQ $CBFF
+ 
+	 07:CBF2:A9 0A     LDA #$0A
+	 07:CBF4:CD 30 04  CMP $0430
+	 07:CBF7:F0 10     BEQ $CC09
+	 07:CBF9:20 45 FC  JSR $FC45
+	 07:CBFC:4C 09 CC  JMP $CC09
+ 
+ 07:CBFF:A9 01     LDA #$01
+ 07:CC01:CD 30 04  CMP $0430 = #$02
+ 07:CC04:F0 03     BEQ $CC09
+ 07:CC06:20 45 FC  JSR $FC45
+ 07:CC09:A5 31     LDA $0031 = #$00
+ 07:CC0B:29 0C     AND #$0C
+ 07:CC0D:F0 28     BEQ $CC37
+ 07:CC0F:29 04     AND #$04
+ 07:CC11:D0 1F     BNE $CC32
+ 07:CC13:A0 03     LDY #$03
+ 07:CC15:20 33 F7  JSR $F733
+ 07:CC18:A5 10     LDA $0010 = #$40
+ 07:CC1A:29 10     AND #$10
+ 07:CC1C:D0 19     BNE $CC37
+ 07:CC1E:A0 02     LDY #$02
+ 07:CC20:20 DF E3  JSR $E3DF
+ 07:CC23:A5 43     LDA $0043 = #$10
+ 07:CC25:D0 10     BNE $CC37
+ 07:CC27:AD 60 03  LDA $0360 = #$78
+ 07:CC2A:85 11     STA $0011 = #$00
+ 07:CC2C:20 CD E6  JSR $E6CD
+ 07:CC2F:4C 37 CC  JMP $CC37
+ 07:CC32:A0 02     LDY #$02
+ 07:CC34:20 B1 F7  JSR $F7B1
+ 
+ 07:CC37:20 A9 D5  JSR $D5A9
+ 07:CC3A:90 14     BCC $CC50
+ 07:CC3C:A5 31     LDA $0031 = #$00
+ 07:CC3E:29 03     AND #$03
+ 07:CC40:F0 0E     BEQ $CC50
+ 07:CC42:29 01     AND #$01
+ 07:CC44:F0 05     BEQ $CC4B
+ 07:CC46:A0 04     LDY #$04
+ 07:CC48:4C 00 F6  JMP $F600
+ 07:CC4B:A0 05     LDY #$05
+ 07:CC4D:4C 75 F6  JMP $F675
+ 07:CC50:60        RTS -----------------------------------------
+
+================================================================
+TABLE $CC5D
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CC50                                        00 33 33
+CC60 00 00 D9 D9 00 D9 D9 00 00 00 00 00 00 00 00 00
+CC70 00 00 6A 6A 00 00 6A 6A 00 00 00 00 00
+
+TABLE $CC7D
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CC70                                        00 01 01
+CC80 00 00 00 00 00 00 00 00 00 00 00 00 00 00 02 02
+CC90 00 00 01 01 00 00 01 01 00 00 00 00 00
+
+01 (0000 0001) = 0133
+02 (0000 0010) = 0133
+
+05 (0000 0101) = 00D9
+06 (0000 0110) = 00D9
+08 (0000 1000) = 00D9
+09 (0000 1001) = 00D9
+
+11 (0001 0001) = 0200
+12 (0001 0010) = 0200
+
+15 (0001 0101) = 016A
+16 (0001 0110) = 016A
+19 (0001 1001) = 016A
+1A (0001 1010) = 016A
+================================================================
+FUNCTION $CCDD
+ 07:CCDD:AD 18 04  LDA $0418 ; Ariel's position in animation loop
+ 07:CCE0:C9 02     CMP #$02
+ 07:CCE2:F0 03     BEQ $CCE7
+ 07:CCE4:4C 82 CD  JMP $CD82
+ 07:CCE7:A5 14     LDA $0014
+ 07:CCE9:29 80     AND #$80
+ 07:CCEB:F0 46     BEQ $CD33
+ 07:CCED:AD 00 04  LDA $0400 ; Ariel's orientation/status flags
+ 07:CCF0:48        PHA
+ 07:CCF1:AD 30 04  LDA $0430 ; Ariel's animation loop
+ 07:CCF4:C9 03     CMP #$03
+ 07:CCF6:D0 08     BNE $CD00
+ 07:CCF8:AD 00 04  LDA $0400
+ 07:CCFB:49 40     EOR #$40
+ 07:CCFD:8D 00 04  STA $0400
+ 07:CD00:20 20 CF  JSR $CF20
+ 07:CD03:85 00     STA $0000
+ 07:CD05:68        PLA
+ 07:CD06:8D 00 04  STA $0400 = #$D0
+ 07:CD09:A5 00     LDA $0000 = #$02
+ 07:CD0B:F0 26     BEQ $CD33
+ 07:CD0D:AD 30 04  LDA $0430 = #$02
+ 07:CD10:C9 03     CMP #$03
+ 07:CD12:D0 08     BNE $CD1C
+ 07:CD14:AD 00 04  LDA $0400 = #$D0
+ 07:CD17:49 40     EOR #$40
+ 07:CD19:8D 00 04  STA $0400 = #$D0
+ 07:CD1C:A9 12     LDA #$12
+ 07:CD1E:20 A0 FC  JSR $FCA0
+ 07:CD21:A9 1E     LDA #$1E
+ 07:CD23:85 3B     STA $003B = #$00
+ 07:CD25:A9 09     LDA #$09
+ 07:CD27:20 45 FC  JSR $FC45
+ 07:CD2A:A9 03     LDA #$03
+ 07:CD2C:85 30     STA $0030 ; Set Ariel status to "throwing object"
+ 07:CD2E:A9 00     LDA #$00
+ 07:CD30:85 3A     STA $003A = #$00
+ 07:CD32:60        RTS ----------------------------------------- 
+ 07:CD33:AD 30 04  LDA $0430 = #$00
+ 07:CD36:C9 03     CMP #$03
+ 07:CD38:D0 0A     BNE $CD44
+ 07:CD3A:A9 06     LDA #$06
+ 07:CD3C:CD 48 04  CMP $0448 = #$00
+ 07:CD3F:90 03     BCC $CD44
+ 07:CD41:8D 48 04  STA $0448 = #$00
+ 07:CD44:AD 48 04  LDA $0448 = #$00
+ 07:CD47:C9 0A     CMP #$0A
+ 07:CD49:D0 37     BNE $CD82
+ 07:CD4B:AD 30 04  LDA $0430 = #$00
+ 07:CD4E:C9 03     CMP #$03
+ 07:CD50:D0 08     BNE $CD5A
+ 07:CD52:AD 00 04  LDA $0400 = #$00
+ 07:CD55:49 40     EOR #$40
+ 07:CD57:8D 00 04  STA $0400 = #$00
+ 07:CD5A:A9 01     LDA #$01
+ 07:CD5C:20 45 FC  JSR $FC45
+ 07:CD5F:A9 00     LDA #$00
+ 07:CD61:85 30     STA $0030 ; Set Ariel status to "normal"
+ 07:CD63:8D A0 03  STA $03A0 = #$00
+ 07:CD66:8D B0 03  STA $03B0 = #$00
+ 07:CD69:A5 16     LDA $0016 = #$00
+ 07:CD6B:29 03     AND #$03
+ 07:CD6D:85 00     STA $0000 = #$20
+ 07:CD6F:A5 31     LDA $0031 = #$00
+ 07:CD71:29 03     AND #$03
+ 07:CD73:F0 04     BEQ $CD79
+ 07:CD75:C5 00     CMP $0000 = #$20
+ 07:CD77:F0 08     BEQ $CD81
+ 07:CD79:A9 00     LDA #$00
+ 07:CD7B:8D 80 03  STA $0380 = #$00
+ 07:CD7E:8D 90 03  STA $0390 = #$00
+ 07:CD81:60        RTS -----------------------------------------
+ 07:CD82:A5 16     LDA $0016 = #$00
+ 07:CD84:29 03     AND #$03
+ 07:CD86:F0 2A     BEQ $CDB2
+ 07:CD88:85 00     STA $0000 = #$20
+ 07:CD8A:A5 31     LDA $0031 = #$00
+ 07:CD8C:29 03     AND #$03
+ 07:CD8E:C5 00     CMP $0000 = #$20
+ 07:CD90:F0 20     BEQ $CDB2
+ 07:CD92:A9 03     LDA #$03
+ 07:CD94:CD 30 04  CMP $0430 = #$00
+ 07:CD97:D0 02     BNE $CD9B
+ 07:CD99:A9 84     LDA #$84
+ 07:CD9B:8D 30 04  STA $0430 = #$00
+ 07:CD9E:AD 18 04  LDA $0418 = #$00
+ 07:CDA1:C9 01     CMP #$01
+ 07:CDA3:F0 05     BEQ $CDAA
+ 07:CDA5:49 02     EOR #$02
+ 07:CDA7:8D 18 04  STA $0418 = #$00
+ 07:CDAA:A5 31     LDA $0031 = #$00
+ 07:CDAC:29 0C     AND #$0C
+ 07:CDAE:05 00     ORA $0000 = #$20
+ 07:CDB0:85 31     STA $0031 = #$00
+ 07:CDB2:A5 3C     LDA $003C = #$00
+ 07:CDB4:D0 24     BNE $CDDA
+ 07:CDB6:20 CA D3  JSR $D3CA
+ 07:CDB9:20 E2 D3  JSR $D3E2
+ 07:CDBC:B0 0A     BCS $CDC8
+ 07:CDBE:E6 3C     INC $003C = #$00
+ 07:CDC0:A9 00     LDA #$00
+ 07:CDC2:8D 80 03  STA $0380 = #$00
+ 07:CDC5:8D 90 03  STA $0390 = #$00
+ 07:CDC8:AD 00 04  LDA $0400 = #$00
+ 07:CDCB:48        PHA
+ 07:CDCC:A5 31     LDA $0031 = #$00
+ 07:CDCE:49 03     EOR #$03
+ 07:CDD0:20 FF CE  JSR $CEFF
+ 07:CDD3:68        PLA
+ 07:CDD4:8D 00 04  STA $0400 = #$00
+ 07:CDD7:4C FD CD  JMP $CDFD
+ 07:CDDA:A5 16     LDA $0016 = #$00
+ 07:CDDC:29 03     AND #$03
+ 07:CDDE:85 00     STA $0000 = #$20
+ 07:CDE0:A5 31     LDA $0031 = #$00
+ 07:CDE2:29 03     AND #$03
+ 07:CDE4:C5 00     CMP $0000 = #$20
+ 07:CDE6:D0 15     BNE $CDFD
+ 07:CDE8:20 1A D4  JSR $D41A
+ 07:CDEB:20 2C D4  JSR $D42C
+ 07:CDEE:AD 00 04  LDA $0400 = #$00
+ 07:CDF1:48        PHA
+ 07:CDF2:A5 31     LDA $0031 = #$00
+ 07:CDF4:29 03     AND #$03
+ 07:CDF6:20 FF CE  JSR $CEFF
+ 07:CDF9:68        PLA
+ 07:CDFA:8D 00 04  STA $0400 = #$00
+ 07:CDFD:A9 00     LDA #$00
+ 07:CDFF:8D A0 03  STA $03A0 = #$00
+ 07:CE02:A9 01     LDA #$01
+ 07:CE04:8D B0 03  STA $03B0 = #$00
+ 07:CE07:A5 16     LDA $0016 = #$00
+ 07:CE09:29 0C     AND #$0C
+ 07:CE0B:F0 30     BEQ $CE3D
+ 07:CE0D:85 00     STA $0000 = #$20
+ 07:CE0F:A5 31     LDA $0031 = #$00
+ 07:CE11:29 03     AND #$03
+ 07:CE13:05 00     ORA $0000 = #$20
+ 07:CE15:29 04     AND #$04
+ 07:CE17:D0 1F     BNE $CE38
+ 07:CE19:A0 03     LDY #$03
+ 07:CE1B:20 33 F7  JSR $F733
+ 07:CE1E:A5 10     LDA $0010 = #$00
+ 07:CE20:29 10     AND #$10
+ 07:CE22:D0 19     BNE $CE3D
+ 07:CE24:A0 02     LDY #$02
+ 07:CE26:20 DF E3  JSR $E3DF
+ 07:CE29:A5 43     LDA $0043 = #$00
+ 07:CE2B:D0 10     BNE $CE3D
+ 07:CE2D:AD 60 03  LDA $0360 = #$00
+ 07:CE30:85 11     STA $0011 = #$00
+ 07:CE32:20 CD E6  JSR $E6CD
+ 07:CE35:4C 3D CE  JMP $CE3D
+ 07:CE38:A0 02     LDY #$02
+ 07:CE3A:20 B1 F7  JSR $F7B1
+ 07:CE3D:60        RTS -----------------------------------------
+================================================================
+Function $CE3E -> Ariel Phase 02
+
+ 07:CE3E:AD 30 04  LDA $0430
+ 07:CE41:29 03     AND #$03
+ 07:CE43:D0 10     BNE $CE55
+ 07:CE45:AD 18 04  LDA $0418
+ 07:CE48:F0 F3     BEQ $CE3D
+ 07:CE4A:EE 30 04  INC $0430
+ 07:CE4D:A9 00     LDA #$00
+ 07:CE4F:8D 48 04  STA $0448 = #$00
+ 07:CE52:8D 18 04  STA $0418 = #$00
+ 07:CE55:AD B0 03  LDA $03B0 = #$00
+ 07:CE58:30 2B     BMI $CE85
+ 07:CE5A:A5 39     LDA $0039 = #$00
+ 07:CE5C:F0 04     BEQ $CE62
+ 07:CE5E:C6 39     DEC $0039 = #$00
+ 07:CE60:D0 0C     BNE $CE6E
+ 07:CE62:A5 16     LDA $0016 = #$00
+ 07:CE64:29 80     AND #$80
+ 07:CE66:D0 06     BNE $CE6E
+ 07:CE68:8D A0 03  STA $03A0
+ 07:CE6B:8D B0 03  STA $03B0 = #$00
+ 07:CE6E:AD B0 03  LDA $03B0 = #$00
+ 07:CE71:D0 29     BNE $CE9C
+ 07:CE73:AD 30 04  LDA $0430 = #$00
+ 07:CE76:29 02     AND #$02
+ 07:CE78:D0 22     BNE $CE9C
+ 07:CE7A:8D 48 04  STA $0448 = #$00
+ 07:CE7D:8D 18 04  STA $0418 = #$00
+ 07:CE80:EE 30 04  INC $0430 = #$00
+ 07:CE83:D0 17     BNE $CE9C
+ 07:CE85:AD B0 03  LDA $03B0 = #$00
+ 07:CE88:C9 FF     CMP #$FF
+ 07:CE8A:F0 10     BEQ $CE9C
+ 07:CE8C:AD 30 04  LDA $0430 = #$00
+ 07:CE8F:29 01     AND #$01
+ 07:CE91:D0 09     BNE $CE9C
+ 07:CE93:8D 48 04  STA $0448 = #$00
+ 07:CE96:8D 18 04  STA $0418 = #$00
+ 07:CE99:EE 30 04  INC $0430 = #$00
+ 07:CE9C:A0 02     LDY #$02
+ 07:CE9E:20 2F F8  JSR $F82F
+ 07:CEA1:90 47     BCC $CEEA
+ 07:CEA3:A9 00     LDA #$00
+ 07:CEA5:8D 80 03  STA $0380 = #$00
+ 07:CEA8:A9 01     LDA #$01
+ 07:CEAA:8D 90 03  STA $0390 = #$00
+ 07:CEAD:A5 41     LDA $0041 = #$00
+ 07:CEAF:C9 70     CMP #$70
+ 07:CEB1:F0 0F     BEQ $CEC2
+ 07:CEB3:A9 16     LDA #$16
+ 07:CEB5:20 45 FC  JSR $FC45
+ 
+ 07:CEB8:A9 05     LDA #$05
+ 07:CEBA:85 30     STA $0030 ; Set Ariel status to "on land"
+ 
+ 07:CEBC:A9 17     LDA #$17
+ 07:CEBE:20 A0 FC  JSR $FCA0
+ 07:CEC1:60        RTS -----------------------------------------
+ 07:CEC2:A9 33     LDA #$33
+ 07:CEC4:85 5D     STA $005D = #$00
+ 07:CEC6:A9 02     LDA #$02
+ 07:CEC8:85 5E     STA $005E = #$00
+ 07:CECA:A9 30     LDA #$30
+ 07:CECC:85 36     STA $0036 = #$00
+ 07:CECE:A0 01     LDY #$01
+ 07:CED0:AD 00 04  LDA $0400 = #$00
+ 07:CED3:29 40     AND #$40
+ 07:CED5:D0 02     BNE $CED9
+ 07:CED7:A0 02     LDY #$02
+ 07:CED9:84 5C     STY $005C = #$00
+ 07:CEDB:A9 0B     LDA #$0B
+ 07:CEDD:20 45 FC  JSR $FC45
+ 07:CEE0:A9 04     LDA #$04
+ 07:CEE2:85 30     STA $0030 = #$00
+ 07:CEE4:A9 16     LDA #$16
+ 07:CEE6:20 A0 FC  JSR $FCA0
+ 07:CEE9:60        RTS -----------------------------------------
+ 07:CEEA:AD B0 03  LDA $03B0 = #$00
+ 07:CEED:10 0E     BPL $CEFD
+ 07:CEEF:A0 02     LDY #$02
+ 07:CEF1:20 DF E3  JSR $E3DF
+ 07:CEF4:A5 43     LDA $0043 = #$00
+ 07:CEF6:C9 40     CMP #$40
+ 07:CEF8:D0 03     BNE $CEFD
+ 07:CEFA:20 03 D2  JSR $D203
+ 07:CEFD:A5 16     LDA $0016 = #$00
+ 07:CEFF:29 03     AND #$03
+ 07:CF01:F0 0E     BEQ $CF11
+ 07:CF03:29 01     AND #$01
+ 07:CF05:F0 05     BEQ $CF0C
+ 07:CF07:A0 04     LDY #$04
+ 07:CF09:4C 00 F6  JMP $F600
+ 07:CF0C:A0 05     LDY #$05
+ 07:CF0E:4C 75 F6  JMP $F675
+ 07:CF11:60        RTS -----------------------------------------
+================================================================
+FUNCTION $CF12
+ 07:CF12:A9 03     LDA #$03
+ 07:CF14:CD 18 04  CMP $0418 ; Position in Ariel's animation loop
+ 07:CF17:D0 F8     BNE $CF11 ; Exit
+ 07:CF19:A9 00     LDA #$00
+ 07:CF1B:85 30     STA $0030 
+ 07:CF1D:4C BA CB  JMP $CBBA
+================================================================
+FUNCTION $CF20
+ 07:CF20:A4 3A     LDY $003A ; Held object
+ 07:CF22:D0 03     BNE $CF27
+ 07:CF24:4C 89 CF  JMP $CF89
+ 
+ 07:CF27:A9 00     LDA #$00
+ 07:CF29:85 3A     STA $003A
+ 07:CF2B:A5 16     LDA $0016
+ 07:CF2D:29 0B     AND #$0B
+ 07:CF2F:D0 11     BNE $CF42
+ 07:CF31:A9 01     LDA #$01
+ 07:CF33:85 00     STA $0000
+ 07:CF35:AD 00 04  LDA $0400 
+ 07:CF38:29 40     AND #$40  ;   Check if Ariel is facing left
+ 07:CF3A:D0 04     BNE $CF40
+ 07:CF3C:A9 02     LDA #$02
+ 07:CF3E:85 00     STA $0000 
+ 07:CF40:A5 00     LDA $0000 ;   Direction that Ariel is facing 
+ 07:CF42:99 D0 03  STA $03D0,Y ; Set same direction of movement
+ 07:CF45:A9 00     LDA #$00
+ 07:CF47:99 80 03  STA $0380,Y
+ 07:CF4A:99 A0 03  STA $03A0,Y 
+ 07:CF4D:A9 03     LDA #$03
+ 07:CF4F:99 90 03  STA $0390,Y ; Set speed to 0x300 diagonal
+ 07:CF52:99 B0 03  STA $03B0,Y
+ 07:CF55:A9 01     LDA #$01
+ 07:CF57:99 10 03  STA $0310,Y ; Set action loop to 01 (thrown object)
+ 07:CF5A:AD 00 04  LDA $0400
+ 07:CF5D:29 40     AND #$40    ; Check if Ariel is facing left
+ 07:CF5F:F0 14     BEQ $CF75
+ 07:CF61:AD 30 03  LDA $0330
+ 07:CF64:18        CLC
+ 07:CF65:69 0C     ADC #$0C
+ 07:CF67:99 30 03  STA $0330,Y
+ 07:CF6A:AD 40 03  LDA $0340
+ 07:CF6D:69 00     ADC #$00
+ 07:CF6F:99 40 03  STA $0340,Y
+ 07:CF72:A9 FF     LDA #$FF
+ 07:CF74:60        RTS -----------------------------------------
+ 07:CF75:AD 30 03  LDA $0330 = #$00
+ 07:CF78:38        SEC
+ 07:CF79:E9 0C     SBC #$0C
+ 07:CF7B:99 30 03  STA $0330,Y @ $033D = #$00
+ 07:CF7E:AD 40 03  LDA $0340 = #$00
+ 07:CF81:E9 00     SBC #$00
+ 07:CF83:99 40 03  STA $0340,Y @ $034D = #$00
+ 07:CF86:A9 FF     LDA #$FF
+ 07:CF88:60        RTS -----------------------------------------
+ 
+ 07:CF89:A0 04     LDY #$04
+ 07:CF8B:20 7F E2  JSR $E27F
+ 07:CF8E:A5 41     LDA $0041 = #$00
+ 07:CF90:C9 90     CMP #$90
+ 07:CF92:D0 75     BNE $D009
+ 07:CF94:20 83 D4  JSR $D483
+ 07:CF97:A0 00     LDY #$00
+ 07:CF99:20 44 FE  JSR $FE44
+ 07:CF9C:B0 66     BCS $D004
+ 07:CF9E:A9 14     LDA #$14
+ 07:CFA0:20 45 FC  JSR $FC45
+ 07:CFA3:A9 80     LDA #$80
+ 07:CFA5:9D 00 03  STA $0300,X @ $0300 = #$00
+ 07:CFA8:A9 94     LDA #$94
+ 07:CFAA:9D 00 04  STA $0400,X @ $0400 = #$00
+ 07:CFAD:A9 00     LDA #$00
+ 07:CFAF:9D C0 03  STA $03C0,X @ $03C0 = #$00
+ 07:CFB2:9D A0 04  STA $04A0,X @ $04A0 = #$00
+ 07:CFB5:A9 04     LDA #$04
+ 07:CFB7:9D 10 03  STA $0310,X @ $0310 = #$00
+ 07:CFBA:B9 89 D0  LDA $D089,Y @ $D096 = #$18
+ 07:CFBD:9D 60 04  STA $0460,X @ $0460 = #$00
+ 07:CFC0:AD 00 04  LDA $0400 = #$00
+ 07:CFC3:29 40     AND #$40
+ 07:CFC5:F0 15     BEQ $CFDC
+ 07:CFC7:AD 30 03  LDA $0330 = #$00
+ 07:CFCA:18        CLC
+ 07:CFCB:79 8C D0  ADC $D08C,Y @ $D099 = #$3C
+ 07:CFCE:9D 30 03  STA $0330,X @ $0330 = #$00
+ 07:CFD1:AD 40 03  LDA $0340 = #$00
+ 07:CFD4:69 00     ADC #$00
+ 07:CFD6:9D 40 03  STA $0340,X @ $0340 = #$00
+ 07:CFD9:4C EE CF  JMP $CFEE
+ 07:CFDC:AD 30 03  LDA $0330 = #$00
+ 07:CFDF:38        SEC
+ 07:CFE0:F9 8C D0  SBC $D08C,Y @ $D099 = #$3C
+ 07:CFE3:9D 30 03  STA $0330,X @ $0330 = #$00
+ 07:CFE6:AD 40 03  LDA $0340 = #$00
+ 07:CFE9:E9 00     SBC #$00
+ 07:CFEB:9D 40 03  STA $0340,X @ $0340 = #$00
+ 07:CFEE:A5 11     LDA $0011 = #$00
+ 07:CFF0:29 F0     AND #$F0
+ 07:CFF2:38        SEC
+ 07:CFF3:F9 8F D0  SBC $D08F,Y @ $D09C = #$18
+ 07:CFF6:9D 60 03  STA $0360,X @ $0360 = #$00
+ 07:CFF9:AD 70 03  LDA $0370 = #$00
+ 07:CFFC:9D 70 03  STA $0370,X @ $0370 = #$00
+ 07:CFFF:C8        INY
+ 07:D000:C0 03     CPY #$03
+ 07:D002:D0 95     BNE $CF99
+ 07:D004:A2 00     LDX #$00
+ 07:D006:A9 FF     LDA #$FF
+ 07:D008:60        RTS -----------------------------------------
+ 07:D009:A0 02     LDY #$02
+ 07:D00B:B9 00 03  LDA $0300,Y @ $030D = #$00
+ 07:D00E:10 04     BPL $D014
+ 07:D010:88        DEY
+ 07:D011:D0 F8     BNE $D00B
+ 07:D013:60        RTS -----------------------------------------
+ 07:D014:86 00     STX $0000 = #$20
+ 07:D016:A6 3E     LDX $003E = #$00
+ 07:D018:BD 96 D0  LDA $D096,X @ $D096 = #$18
+ 07:D01B:99 60 04  STA $0460,Y @ $046D = #$00
+ 07:D01E:A6 3D     LDX $003D = #$00
+ 07:D020:BD 92 D0  LDA $D092,X @ $D092 = #$26
+ 07:D023:99 10 03  STA $0310,Y @ $031D = #$00
+ 07:D026:BD 9A D0  LDA $D09A,X @ $D09A = #$17
+ 07:D029:A6 00     LDX $0000 = #$20
+ 07:D02B:20 51 FC  JSR $FC51
+ 07:D02E:A9 00     LDA #$00
+ 07:D030:99 C0 03  STA $03C0,Y @ $03CD = #$00
+ 07:D033:99 A0 04  STA $04A0,Y @ $04AD = #$00
+ 07:D036:99 70 04  STA $0470,Y @ $047D = #$00
+ 07:D039:99 80 04  STA $0480,Y
+ 07:D03C:B9 00 04  LDA $0400,Y
+ 07:D03F:29 BF     AND #$BF
+ 07:D041:99 00 04  STA $0400,Y
+ 07:D044:AD 60 03  LDA $0360
+ 07:D047:99 60 03  STA $0360,Y
+ 07:D04A:AD 70 03  LDA $0370
+ 07:D04D:99 70 03  STA $0370,Y
+ 07:D050:AD 00 04  LDA $0400   ; Ariel's orientation
+ 07:D053:29 40     AND #$40
+ 07:D055:0A        ASL
+ 07:D056:0A        ASL
+ 07:D057:2A        ROL
+ 07:D058:AA        TAX
+ 07:D059:48        PHA
+ 07:D05A:BD 83 D0  LDA $D083,X
+ 07:D05D:99 D0 03  STA $03D0,Y ; Set direction of movement to same as Ariel's orientation
+ 07:D060:68        PLA
+ 07:D061:0A        ASL
+ 07:D062:AA        TAX
+ 07:D063:AD 30 03  LDA $0330
+ 07:D066:18        CLC
+ 07:D067:7D 85 D0  ADC $D085,X @ $D085 = #$F6
+ 07:D06A:99 30 03  STA $0330,Y @ $033D = #$00
+ 07:D06D:AD 40 03  LDA $0340 = #$00
+ 07:D070:7D 86 D0  ADC $D086,X @ $D086 = #$FF
+ 07:D073:99 40 03  STA $0340,Y @ $034D = #$00
+ 07:D076:A2 00     LDX #$00
+ 07:D078:A9 00     LDA #$00
+ 07:D07A:99 80 03  STA $0380,Y @ $038D = #$00
+ 07:D07D:A9 02     LDA #$02
+ 07:D07F:99 90 03  STA $0390,Y @ $039D = #$00
+ 07:D082:60        RTS -----------------------------------------
+================================================================
+DATA TABLE $D083
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D080          02 01
+
+DATA TABLE $D085/$D086
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D080
+================================================================
+Function $D171 - Ariel on Land (Phase 05)
+
+ 07:D171:A0 02     LDY #$02
+ 07:D173:20 2F F8  JSR $F82F
+ 07:D176:90 64     BCC $D1DC
+ 
+ 07:D178:A5 41     LDA $0041
+ 07:D17A:C9 70     CMP #$70
+ 07:D17C:D0 25     BNE $D1A3
+ 
+ 07:D17E:A9 33     LDA #$33
+ 07:D180:85 5D     STA $005D
+ 07:D182:A9 02     LDA #$02
+ 07:D184:85 5E     STA $005E
+ 07:D186:A9 30     LDA #$30
+ 07:D188:85 36     STA $0036
+ 
+ 07:D18A:A0 01     LDY #$01
+ 07:D18C:AD 00 04  LDA $0400
+ 07:D18F:29 40     AND #$40
+ 07:D191:D0 02     BNE $D195
+ 
+ 07:D193:A0 02     LDY #$02
+ 
+ 07:D195:84 5C     STY $005C ; Direction that Ariel is facing
+ 
+ 07:D197:A9 0B     LDA #$0B
+ 07:D199:20 45 FC  JSR $FC45
+ 
+ 07:D19C:A9 04     LDA #$04
+ 07:D19E:85 30     STA $0030
+ 07:D1A0:4C C4 D0  JMP $D0C4
+ 
+ 07:D1A3:A5 14     LDA $0014
+ 07:D1A5:29 80     AND #$80
+ 07:D1A7:D0 28     BNE $D1D1
+ 
+ If player has not pressed A:
+	 07:D1A9:AD 18 04  LDA $0418
+	 07:D1AC:F0 05     BEQ $D1B3
+	 
+		 07:D1AE:A9 17     LDA #$17
+		 07:D1B0:20 A0 FC  JSR $FCA0
+	 
+	 07:D1B3:A9 00     LDA #$00
+	 07:D1B5:8D 48 04  STA $0448
+	 07:D1B8:8D 18 04  STA $0418
+	 
+	 07:D1BB:AD 00 04  LDA $0400
+	 07:D1BE:29 BF     AND #$BF
+	 07:D1C0:85 00     STA $0000
+	 
+	 07:D1C2:A5 16     LDA $0016
+	 07:D1C4:29 03     AND #$03
+	 07:D1C6:F0 08     BEQ $D1D0
+	 
+		 07:D1C8:4A        LSR
+		 07:D1C9:6A        ROR
+		 07:D1CA:6A        ROR
+		 07:D1CB:05 00     ORA $0000 ; If player is pressing L/R, 
+		 07:D1CD:8D 00 04  STA $0400 ; set Ariel's sprite to match
+	 
+	 07:D1D0:60        RTS -----------------------------------------
+	 
+ If player has pressed A:
+	 07:D1D1:A9 00     LDA #$00
+	 07:D1D3:8D A0 03  STA $03A0
+	 07:D1D6:A9 02     LDA #$02
+	 07:D1D8:8D B0 03  STA $03B0 ; set y-speed to 2 px/frame
+	 07:D1DB:60        RTS -----------------------------------------
+ 
+ 07:D1DC:A5 16     LDA $0016
+ 07:D1DE:29 03     AND #$03
+ 07:D1E0:F0 11     BEQ $D1F3
+ 
+ 07:D1E2:29 01     AND #$01
+ 07:D1E4:F0 08     BEQ $D1EE
+ 
+ if player is pressing left
+	 07:D1E6:A0 04     LDY #$04
+	 07:D1E8:20 00 F6  JSR $F600
+	 07:D1EB:4C F3 D1  JMP $D1F3
+ else if player is pressing right
+	 07:D1EE:A0 05     LDY #$05
+	 07:D1F0:20 75 F6  JSR $F675
+ 
+ 07:D1F3:AD B0 03  LDA $03B0
+ 07:D1F6:10 50     BPL $D248
+ 07:D1F8:A0 02     LDY #$02
+ 07:D1FA:20 DF E3  JSR $E3DF
+ 
+ 07:D1FD:A5 43     LDA $0043
+ 07:D1FF:C9 40     CMP #$40
+ 07:D201:D0 45     BNE $D248
+ 
+ 07:D203:20 54 FE  JSR $FE54 ; Locate next unoccupied slot
+ 07:D206:B0 2D     BCS $D235
+ 
+ If a slot was found:
+	 07:D208:A9 13     LDA #$13
+	 07:D20A:20 51 FC  JSR $FC51 ; Spawn a splash sprite
+	 
+	 07:D20D:B9 00 04  LDA $0400,Y
+	 07:D210:29 BF     AND #$BF
+	 07:D212:99 00 04  STA $0400,Y ; Clear "flip sprite" flag
+	 
+	 07:D215:BD 30 03  LDA $0330,X
+	 07:D218:99 30 03  STA $0330,Y
+	 07:D21B:BD 40 03  LDA $0340,X
+	 07:D21E:99 40 03  STA $0340,Y
+	 07:D221:BD 60 03  LDA $0360,X
+	 07:D224:99 60 03  STA $0360,Y
+	 07:D227:BD 70 03  LDA $0370,X
+	 07:D22A:99 70 03  STA $0370,Y @ $0370 = #$00
+	 07:D22D:A9 00     LDA #$00
+	 07:D22F:99 C0 03  STA $03C0,Y @ $03C0 = #$00
+	 07:D232:99 10 03  STA $0310,Y @ $0310 = #$00
+ 
+ 07:D235:A9 15     LDA #$15
+ 07:D237:20 A0 FC  JSR $FCA0
+ 07:D23A:A9 06     LDA #$06
+ 07:D23C:85 30     STA $0030 ; Set Ariel's status to "reentering water"
+ 
+ 07:D23E:A9 FC     LDA #$FC
+ 07:D240:CD B0 03  CMP $03B0
+ 07:D243:90 03     BCC $D248
+ 07:D245:8D B0 03  STA $03B0
+ 07:D248:60        RTS -----------------------------------------
+ ---------------------------------------------------------------
+ Function $D249 -> Reentering water (phase 06)
+ 07:D249:A0 00     LDY #$00
+ 
+ 07:D24B:AD A0 03  LDA $03A0
+ 07:D24E:18        CLC
+ 07:D24F:69 50     ADC #$50
+ 07:D251:8D A0 03  STA $03A0
+ 07:D254:AD B0 03  LDA $03B0
+ 07:D257:69 00     ADC #$00
+ 07:D259:8D B0 03  STA $03B0
+ 07:D25C:10 06     BPL $D264
+ 
+ If
+	 07:D25E:20 22 F9  JSR $F922
+	 07:D261:4C 72 D2  JMP $D272
+ Else
+	 07:D264:20 4A F9  JSR $F94A
+	 07:D267:C8        INY
+	 07:D268:A9 02     LDA #$02
+	 07:D26A:CD 30 04  CMP $0430
+	 07:D26D:F0 03     BEQ $D272
+	 
+	 If
+		07:D26F:20 45 FC  JSR $FC45
+ 
+ 07:D272:20 7F E2  JSR $E27F
+ 
+ 07:D275:A5 10     LDA $0010
+ 07:D277:29 10     AND #$10
+ 07:D279:F0 0E     BEQ $D289
+ 
+ If
+	 07:D27B:AD B0 03  LDA $03B0
+	 07:D27E:10 06     BPL $D286
+	 
+	 If
+		07:D280:20 EF E6  JSR $E6EF
+		07:D283:4C 89 D2  JMP $D289
+	 Else
+		07:D286:20 CD E6  JSR $E6CD
+ 
+ 07:D289:AD B0 03  LDA $03B0
+ 07:D28C:30 0A     BMI $D298
+ 
+ If
+	 07:D28E:A9 02     LDA #$02
+	 07:D290:CD 30 04  CMP $0430
+	 07:D293:F0 03     BEQ $D298
+	 
+	 If
+	 07:D295:20 45 FC  JSR $FC45
+ 
+ 07:D298:AD B0 03  LDA $03B0
+================================================================
+Function $D535
+
+ 07:D535:BD 00 04  LDA $0400,X
+ 07:D538:10 F9     BPL $D533   ; SEC
+ 07:D53A:86 01     STX $0001
+ 07:D53C:BD 60 03  LDA $0360,X ; y-pos (mid)
+ 07:D53F:38        SEC
+ 07:D540:E5 FA     SBC $00FA   ; screen y-pos (high)
+ 07:D542:B0 03     BCS $D547
+ 07:D544:E9 0F     SBC #$0F
+ 07:D546:18        CLC
+ 07:D547:85 00     STA $0000
+ 07:D549:BD 70 03  LDA $0370,X
+ 07:D54C:E5 FB     SBC $00FB   
+ 07:D54E:29 01     AND #$01
+ 07:D550:D0 E1     BNE $D533
+ 07:D552:4C 96 D4  JMP $D496
+================================================================
+Function $D555 -> Set seaweed to default animation (no current)
+
+07:D555:A0 0F     LDY #$0F
+ 
+For (Y = 15, Y > 2, Y--)
+	07:D557:B9 00 03  LDA $0300,Y
+	07:D55A:10 1C     BPL $D578
+	
+	If slot is occupied
+		07:D55C:B9 30 04  LDA $0430,Y
+		07:D55F:C9 89     CMP #$89
+		07:D561:D0 15     BNE $D578
+		
+		If object's animation = blowing seaweed
+			07:D563:B9 00 04  LDA $0400,Y
+			07:D566:29 BF     AND #$BF
+			07:D568:99 00 04  STA $0400,Y ; Clear horizontal flip flag if set
+			07:D56B:A9 88     LDA #$88
+			07:D56D:99 30 04  STA $0430,Y ; Set to regular seaweed animation
+			07:D570:A9 00     LDA #$00
+			07:D572:99 48 04  STA $0448,Y ; Go to start of animation
+			07:D575:99 18 04  STA $0418,Y ;
+		
+	07:D578:88        DEY
+	07:D579:C0 02     CPY #$02
+	07:D57B:D0 DA     BNE $D557
+	 
+07:D57D:60        RTS -----------------------------------------
+================================================================
+FUNCTION $D57E
+Turns off trident animation loop on the correct frame
+
+ 07:D57E:A0 0F     LDY #$0F
+ 07:D580:B9 00 03  LDA $0300,Y 
+ 07:D583:10 1E     BPL $D5A3
+ 07:D585:B9 30 04  LDA $0430,Y ; Animation loop 
+ 07:D588:C9 85     CMP #$85    ; Trident lighting animation
+ 07:D58A:D0 17     BNE $D5A3
+ 07:D58C:B9 00 04  LDA $0400,Y ; Orientation?
+ 07:D58F:29 04     AND #$04    ; Check if invisible 
+ 07:D591:D0 15     BNE $D5A8   ; Exit if so
+ 07:D593:B9 18 04  LDA $0418,Y ; Position in animation loop
+ 07:D596:C9 0B     CMP #$0B   
+ 07:D598:D0 0E     BNE $D5A8   ; Wait until #$0B
+ 07:D59A:B9 00 04  LDA $0400,Y ; Orientation
+ 07:D59D:09 04     ORA #$04
+ 07:D59F:99 00 04  STA $0400,Y ; Set to invisible
+ 07:D5A2:60        RTS -----------------------------------------
+ 07:D5A3:88        DEY
+ 07:D5A4:C0 02     CPY #$02
+ 07:D5A6:D0 D8     BNE $D580
+ 07:D5A8:60        RTS -----------------------------------------
+================================================================
+FUNCTION $D5A9 -> Code pertaining to current on Ursula 2
+SEC = no current
+CLC = current
+
+ 07:D5A9:A5 E9     LDA $00E9
+ 07:D5AB:C9 05     CMP #$05
+ 07:D5AD:D0 3E     BNE $D5ED ; SEC and exit if not on Ursula 2
+ 
+ If current stage = Ursula 2
+	 07:D5AF:20 7E D5  JSR $D57E ; End lighting animation loop if necessary
+	 
+	 07:D5B2:A5 7A     LDA $007A ; Direction of current
+	 07:D5B4:F0 37     BEQ $D5ED ; SEC and exit if no current 
+	 
+	 07:D5B6:20 69 D6  JSR $D669 ; Spawn bubbles
+	 
+	 07:D5B9:A5 7E     LDA $007E
+	 07:D5BB:F0 14     BEQ $D5D1
+	 
+	 07:D5BD:C6 7E     DEC $007E ; Tick down current timer 1
+	 07:D5BF:E6 7D     INC $007D ; Tick up current timer 2
+	 07:D5C1:A5 7B     LDA $007B 
+	 07:D5C3:18        CLC
+	 07:D5C4:65 7D     ADC $007D
+	 07:D5C6:C9 B3     CMP #$B3
+	 07:D5C8:90 02     BCC $D5CC
+	 07:D5CA:A9 B3     LDA #$B3
+	 07:D5CC:85 7B     STA $007B
+	 07:D5CE:4C EF D5  JMP $D5EF
+ 
+	 07:D5D1:C6 7D     DEC $007D
+	 07:D5D3:A9 01     LDA #$01
+	 07:D5D5:C5 7D     CMP $007D
+	 07:D5D7:90 02     BCC $D5DB
+	 07:D5D9:85 7D     STA $007D
+	 07:D5DB:A5 7B     LDA $007B
+	 07:D5DD:38        SEC
+	 07:D5DE:E5 7D     SBC $007D
+	 07:D5E0:B0 02     BCS $D5E4
+	 07:D5E2:A9 00     LDA #$00
+	 07:D5E4:85 7B     STA $007B
+	 07:D5E6:D0 07     BNE $D5EF
+ 
+	 If speed of current is now zero:
+		07:D5E8:85 7A     STA $007A ; Set current direction to "none"
+		07:D5EA:20 55 D5  JSR $D555 ; Set seaweed to default animation (no current)
+		07:D5ED:38        SEC
+		07:D5EE:60        RTS -----------------------------------------
+ 
+	 If there is a current:
+		 07:D5EF:A5 7A     LDA $007A
+		 07:D5F1:85 00     STA $0000 ; Direction of current
+		 07:D5F3:A5 7B     LDA $007B
+		 07:D5F5:85 01     STA $0001 ; Speed of current (low)
+		 07:D5F7:A9 00     LDA #$00
+		 07:D5F9:85 02     STA $0002 ; 
+		 
+		 07:D5FB:A5 31     LDA $0031 ; D-Pad input
+		 07:D5FD:29 03     AND #$03
+		 07:D5FF:F0 3F     BEQ $D640
+		 
+		 If player is pushing left/right
+			 07:D601:C5 7A     CMP $007A
+			 07:D603:F0 2A     BEQ $D62F
+			 
+			 If player is swimming against current:
+				 07:D605:85 00     STA $0000
+				 07:D607:AD 80 03  LDA $0380
+				 07:D60A:38        SEC
+				 07:D60B:E5 7B     SBC $007B
+				 07:D60D:85 01     STA $0001
+				 07:D60F:AD 90 03  LDA $0390
+				 07:D612:E9 00     SBC #$00
+				 07:D614:85 02     STA $0002 ; Subtract speed of current from player's speed
+				 07:D616:B0 28     BCS $D640
+				 
+				 If player is swimming faster than current:
+					 07:D618:A5 7A     LDA $007A
+					 07:D61A:85 00     STA $0000
+					 07:D61C:A5 01     LDA $0001
+					 07:D61E:49 FF     EOR #$FF
+					 07:D620:69 01     ADC #$01
+					 07:D622:85 01     STA $0001
+					 07:D624:A5 02     LDA $0002
+					 07:D626:49 FF     EOR #$FF
+					 07:D628:69 00     ADC #$00
+					 07:D62A:85 02     STA $0002
+					 07:D62C:4C 40 D6  JMP $D640
+					 
+			  Else (player is swimming with current):
+				 07:D62F:85 00     STA $0000
+				 07:D631:AD 80 03  LDA $0380
+				 07:D634:18        CLC
+				 07:D635:65 7B     ADC $007B
+				 07:D637:85 01     STA $0001
+				 07:D639:AD 90 03  LDA $0390
+				 07:D63C:69 00     ADC #$00
+				 07:D63E:85 02     STA $0002 ; Add speed of current to player's speed
+				 
+		 07:D640:AD 80 03  LDA $0380
+		 07:D643:48        PHA
+		 07:D644:AD 90 03  LDA $0390
+		 07:D647:48        PHA
+		 07:D648:AD 00 04  LDA $0400
+		 07:D64B:48        PHA       ; Save current speed/orientation
+		 
+		 07:D64C:A5 01     LDA $0001
+		 07:D64E:8D 80 03  STA $0380
+		 07:D651:A5 02     LDA $0002
+		 07:D653:8D 90 03  STA $0390 ; Set new horizontal speed
+		 
+		 07:D656:A5 00     LDA $0000
+		 07:D658:20 FF CE  JSR $CEFF ; Move horizontally
+		 
+		 07:D65B:68        PLA
+		 07:D65C:8D 00 04  STA $0400
+		 07:D65F:68        PLA
+		 07:D660:8D 90 03  STA $0390
+		 07:D663:68        PLA
+		 07:D664:8D 80 03  STA $0380 ; Restore speed/orientation
+		 
+		 07:D667:18        CLC       
+		 07:D668:60        RTS -----------------------------------------
+================================================================
+FUNCTION $D669
+ 07:D669:A5 7E     LDA $007E ; Timer for current
+ 07:D66B:F0 FB     BEQ $D668 ; Exit if zero
+ 07:D66D:29 3F     AND #$3F  00111111
+ 07:D66F:D0 F7     BNE $D668 ; Exit
+ 07:D671:20 54 FE  JSR $FE54 ; Check for empty object slot
+ 07:D674:B0 F2     BCS $D668 ; Exit if none
+ 07:D676:A9 8A     LDA #$8A  
+ 07:D678:20 51 FC  JSR $FC51 ; Spawn string of bubbles
+ 07:D67B:A9 00     LDA #$00
+ 07:D67D:99 40 03  STA $0340,Y @ $034D = #$00
+ 07:D680:99 70 03  STA $0370,Y @ $037D = #$00
+ 07:D683:99 C0 03  STA $03C0,Y @ $03CD = #$00
+ 07:D686:99 30 03  STA $0330,Y ; Set x-position to zero 
+ 07:D689:99 90 03  STA $0390,Y ; Set y-velocity to zero
+ 
+ 07:D68C:A9 B3     LDA #$B3
+ 07:D68E:99 80 03  STA $0380,Y ; Set x-speed to #$B3
+ 07:D691:A9 5D     LDA #$5D
+ 07:D693:99 10 03  STA $0310,Y ; Set Action loop to #$5D
+ 
+ 07:D696:A5 7A     LDA $007A   ; Direction of current
+ 07:D698:99 D0 03  STA $03D0,Y ; Set as direction of movement
+ 07:D69B:29 01     AND #$01
+ 07:D69D:D0 05     BNE $D6A4
+ 07:D69F:A9 FC     LDA #$FC
+ 07:D6A1:99 30 03  STA $0330,Y ; (If on right) Set x-position to #$FC
+ 07:D6A4:86 00     STX $0000 = #$00
+ 
+ 07:D6A6:A6 1C     LDX $001C    
+ 07:D6A8:BD BA D6  LDA $D6BA,X
+ 07:D6AB:99 60 03  STA $0360,Y ; Set y-position from table
+ 07:D6AE:E8        INX
+ 07:D6AF:E0 03     CPX #$03
+ 07:D6B1:D0 02     BNE $D6B5
+ 07:D6B3:A2 00     LDX #$00
+ 07:D6B5:86 1C     STX $001C
+ 07:D6B7:A6 00     LDX $0000
+ 07:D6B9:60        RTS -----------------------------------------
+================================================================
+TABLE $D6BA
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D6B0                               88 C8 A8
+================================================================ 
+FUNCTION $D6BD 
+ 07:D6BD:A5 01     LDA $0001 = #$A4
+ 07:D6BF:85 26     STA $0026 = #$00
+ 07:D6C1:F0 3A     BEQ $D6FD
+ 07:D6C3:A9 00     LDA #$00
+ 07:D6C5:85 04     STA $0004 = #$FF
+ 07:D6C7:A9 1F     LDA #$1F
+ 07:D6C9:85 05     STA $0005 = #$53
+ 07:D6CB:A5 22     LDA $0022 = #$00
+ 07:D6CD:48        PHA
+ 07:D6CE:29 07     AND #$07
+ 07:D6D0:0A        ASL
+ 07:D6D1:0A        ASL
+ 07:D6D2:0A        ASL
+ 07:D6D3:85 00     STA $0000 = #$00
+ 07:D6D5:68        PLA
+ 07:D6D6:29 38     AND #$38
+ 07:D6D8:4A        LSR
+ 07:D6D9:4A        LSR
+ 07:D6DA:4A        LSR
+ 07:D6DB:05 00     ORA $0000 = #$00
+ 07:D6DD:85 21     STA $0021 = #$16
+ 07:D6DF:20 C7 D8  JSR $D8C7
+ 07:D6E2:20 FE D6  JSR $D6FE
+ 07:D6E5:C6 26     DEC $0026 = #$00
+ 07:D6E7:F0 0B     BEQ $D6F4
+ 07:D6E9:A5 05     LDA $0005 = #$53
+ 07:D6EB:85 04     STA $0004 = #$FF
+ 07:D6ED:18        CLC
+ 07:D6EE:69 1F     ADC #$1F
+ 07:D6F0:85 05     STA $0005 = #$53
+ 07:D6F2:D0 D7     BNE $D6CB
+ 07:D6F4:A6 05     LDX $0005 = #$53
+ 07:D6F6:A9 FF     LDA #$FF
+ 07:D6F8:9D 80 07  STA $0780,X @ $0790 = #$00
+ 07:D6FB:85 19     STA $0019 = #$00
+ 07:D6FD:60        RTS -----------------------------------------
+================================================================
+FUNCTION $D6FE
+
+
+
+ 07:D6FE:A5 22     LDA $0022 ; Screen x-position
+ 07:D700:29 40     AND #$40
+ 07:D702:4A        LSR       
+ 07:D703:4A        LSR       
+ 07:D704:4A        LSR       
+ 07:D705:4A        LSR        
+ 07:D706:09 20     ORA #$20  ; #$20 or #$24
+ 07:D708:85 00     STA $0000 
+ 07:D70A:09 03     ORA #$03  ; #$20 or #$23 or #$24 or #$27
+ 07:D70C:A6 04     LDX $0004
+ 07:D70E:9D 9C 07  STA $079C,X
+ 
+ 07:D711:A5 22     LDA $0022 = #$00
+ 07:D713:48        PHA
+ 07:D714:29 07     AND #$07
+ 07:D716:4A        LSR
+ 07:D717:18        CLC
+ 07:D718:65 00     ADC $0000 = #$00
+ 07:D71A:85 00     STA $0000 = #$00
+ 07:D71C:68        PLA
+ 07:D71D:29 01     AND #$01
+ 07:D71F:F0 02     BEQ $D723
+ 07:D721:A9 80     LDA #$80
+ 07:D723:85 01     STA $0001 = #$A4
+ 07:D725:A5 22     LDA $0022 = #$00
+ 07:D727:29 38     AND #$38
+ 07:D729:4A        LSR
+ 07:D72A:05 01     ORA $0001 = #$A4
+ 07:D72C:85 01     STA $0001 = #$A4
+ 07:D72E:A9 00     LDA #$00
+ 07:D730:9D 9E 07  STA $079E,X @ $07AE = #$FF
+ 07:D733:A5 22     LDA $0022 = #$00
+ 07:D735:29 40     AND #$40
+ 07:D737:05 21     ORA $0021 = #$16
+ 07:D739:A8        TAY
+ 07:D73A:A5 10     LDA $0010 = #$40
+ 07:D73C:9D 9F 07  STA $079F,X @ $07AF = #$CE
+ 07:D73F:99 40 06  STA $0640,Y @ $0641 = #$FF
+ 07:D742:A5 21     LDA $0021 = #$16
+ 07:D744:09 C0     ORA #$C0
+ 07:D746:9D 9D 07  STA $079D,X @ $07AD = #$AA
+ 07:D749:A2 03     LDX #$03
+ 07:D74B:C9 F8     CMP #$F8
+ 07:D74D:90 17     BCC $D766
+ 07:D74F:A4 05     LDY $0005 = #$53
+ 07:D751:A2 03     LDX #$03
+ 07:D753:B9 80 07  LDA $0780,Y @ $0781 = #$8C
+ 07:D756:99 72 07  STA $0772,Y @ $0773 = #$00
+ 07:D759:88        DEY
+ 07:D75A:CA        DEX
+ 07:D75B:10 F6     BPL $D753
+ 07:D75D:A5 04     LDA $0004 = #$FF
+ 07:D75F:18        CLC
+ 07:D760:69 11     ADC #$11
+ 07:D762:85 05     STA $0005 = #$53
+ 07:D764:A2 01     LDX #$01
+ 07:D766:86 02     STX $0002 = #$AD
+ 07:D768:A2 00     LDX #$00
+ 07:D76A:A4 04     LDY $0004 = #$FF
+ 07:D76C:A5 00     LDA $0000 = #$00
+ 07:D76E:99 80 07  STA $0780,Y @ $0781 = #$8C
+ 07:D771:A5 01     LDA $0001 = #$A4
+ 07:D773:99 81 07  STA $0781,Y @ $0782 = #$03
+ 07:D776:18        CLC
+ 07:D777:69 20     ADC #$20
+ 07:D779:85 01     STA $0001 = #$A4
+ 07:D77B:A9 03     LDA #$03
+ 07:D77D:99 82 07  STA $0782,Y @ $0783 = #$21
+ 07:D780:BD C0 06  LDA $06C0,X @ $06D0 = #$00
+ 07:D783:99 83 07  STA $0783,Y @ $0784 = #$20
+ 07:D786:BD C1 06  LDA $06C1,X @ $06D1 = #$00
+ 07:D789:99 84 07  STA $0784,Y @ $0785 = #$21
+ 07:D78C:BD C2 06  LDA $06C2,X @ $06D2 = #$00
+ 07:D78F:99 85 07  STA $0785,Y @ $0786 = #$20
+ 07:D792:BD C3 06  LDA $06C3,X @ $06D3 = #$00
+ 07:D795:99 86 07  STA $0786,Y @ $0787 = #$27
+ 07:D798:C8        INY
+ 07:D799:C8        INY
+ 07:D79A:C8        INY
+ 07:D79B:C8        INY
+ 07:D79C:C8        INY
+ 07:D79D:C8        INY
+ 07:D79E:C8        INY
+ 07:D79F:E8        INX
+ 07:D7A0:E8        INX
+ 07:D7A1:E8        INX
+ 07:D7A2:E8        INX
+ 07:D7A3:C6 02     DEC $0002 = #$AD
+ 07:D7A5:10 C5     BPL $D76C
+ 
+ 07:D7A7:E6 05     INC $0005
+ 
+ 07:D7A9:A5 27     LDA $0027 ; Check direction of screen scroll
+ 07:D7AB:29 01     AND #$01
+ 07:D7AD:D0 11     BNE $D7C0 ; Moving right
+                             ; Else moving left
+ 07:D7AF:C6 22     DEC $0022
+ 07:D7B1:A5 22     LDA $0022
+ 07:D7B3:29 7F     AND #$7F
+ 07:D7B5:85 22     STA $0022 = #$00
+ 07:D7B7:29 3F     AND #$3F
+ 07:D7B9:C9 3F     CMP #$3F
+ 07:D7BB:D0 11     BNE $D7CE
+ 07:D7BD:C6 20     DEC $0020 = #$0B
+ 07:D7BF:60        RTS -----------------------------------------
+ 07:D7C0:E6 22     INC $0022 ; Tick up $22 (scroll on current block)
+ 07:D7C2:A5 22     LDA $0022 
+ 07:D7C4:29 7F     AND #$7F  ; Modulo #$80 (roll over every 128 pixels)
+ 07:D7C6:85 22     STA $0022
+ 07:D7C8:29 3F     AND #$3F  ; Check if at 64 pixel mark
+ 07:D7CA:D0 02     BNE $D7CE
+ 07:D7CC:E6 20     INC $0020 ; If so, load next block
+ 07:D7CE:60        RTS -----------------------------------------
+================================================================
+FUNCTION $D7DA
+ 07:D7DA:A5 FD     LDA $00FD = #$00
+ 07:D7DC:29 01     AND #$01
+ 07:D7DE:0A        ASL
+ 07:D7DF:0A        ASL
+ 07:D7E0:09 20     ORA #$20
+ 07:D7E2:85 00     STA $0000 = #$00
+ 07:D7E4:09 03     ORA #$03
+ 07:D7E6:8D A3 07  STA $07A3 = #$00
+ 07:D7E9:A5 21     LDA $0021 = #$04
+ 07:D7EB:4A        LSR
+ 07:D7EC:4A        LSR
+ 07:D7ED:4A        LSR
+ 07:D7EE:4A        LSR
+ 07:D7EF:18        CLC
+ 07:D7F0:65 00     ADC $0000 = #$00
+ 07:D7F2:8D 80 07  STA $0780 = #$27
+ 07:D7F5:A5 21     LDA $0021 = #$04
+ 07:D7F7:09 C0     ORA #$C0
+ 07:D7F9:8D A4 07  STA $07A4 = #$00
+ 07:D7FC:A5 22     LDA $0022 = #$60
+ 07:D7FE:0A        ASL
+ 07:D7FF:0A        ASL
+ 07:D800:0A        ASL
+ 07:D801:0A        ASL
+ 07:D802:0A        ASL
+ 07:D803:8D 81 07  STA $0781 = #$8C
+ 07:D806:A9 1F     LDA #$1F
+ 07:D808:8D 82 07  STA $0782 = #$03
+ 07:D80B:A9 07     LDA #$07
+ 07:D80D:8D A5 07  STA $07A5 = #$00
+ 07:D810:A9 00     LDA #$00
+ 07:D812:85 03     STA $0003 = #$02
+ 07:D814:20 C7 D8  JSR $D8C7
+ 07:D817:A5 22     LDA $0022 = #$60
+ 07:D819:29 01     AND #$01
+ 07:D81B:D0 3B     BNE $D858
+ 07:D81D:A5 FD     LDA $00FD = #$00
+ 07:D81F:6A        ROR
+ 07:D820:6A        ROR
+ 07:D821:6A        ROR
+ 07:D822:29 40     AND #$40
+ 07:D824:05 21     ORA $0021 = #$04
+ 07:D826:A8        TAY
+ 07:D827:A5 22     LDA $0022 = #$60
+ 07:D829:29 02     AND #$02
+ 07:D82B:F0 10     BEQ $D83D
+ 07:D82D:A5 10     LDA $0010 = #$54
+ 07:D82F:29 F0     AND #$F0
+ 07:D831:85 10     STA $0010 = #$54
+ 07:D833:B9 40 06  LDA $0640,Y @ $0671 = #$00
+ 07:D836:29 0F     AND #$0F
+ 07:D838:05 10     ORA $0010 = #$54
+ 07:D83A:4C 4A D8  JMP $D84A
+ 07:D83D:A5 10     LDA $0010 = #$54
+ 07:D83F:29 0F     AND #$0F
+ 07:D841:85 10     STA $0010 = #$54
+ 07:D843:B9 40 06  LDA $0640,Y @ $0671 = #$00
+ 07:D846:29 F0     AND #$F0
+ 07:D848:05 10     ORA $0010 = #$54
+ 07:D84A:99 40 06  STA $0640,Y @ $0671 = #$00
+ 07:D84D:A5 03     LDA $0003 = #$02
+ 07:D84F:4A        LSR
+ 07:D850:4A        LSR
+ 07:D851:AA        TAX
+ 07:D852:B9 40 06  LDA $0640,Y @ $0671 = #$00
+ 07:D855:9D A6 07  STA $07A6,X @ $07A6 = #$00
+ 07:D858:A5 22     LDA $0022 = #$60
+ 07:D85A:29 03     AND #$03
+ 07:D85C:0A        ASL
+ 07:D85D:0A        ASL
+ 07:D85E:A8        TAY
+ 07:D85F:A6 03     LDX $0003 = #$02
+ 07:D861:B9 C0 06  LDA $06C0,Y @ $06F1 = #$00
+ 07:D864:9D 83 07  STA $0783,X @ $0783 = #$A2
+ 07:D867:B9 C1 06  LDA $06C1,Y @ $06F2 = #$00
+ 07:D86A:9D 84 07  STA $0784,X @ $0784 = #$A3
+ 07:D86D:B9 C2 06  LDA $06C2,Y @ $06F3 = #$00
+ 07:D870:9D 85 07  STA $0785,X @ $0785 = #$A0
+ 07:D873:B9 C3 06  LDA $06C3,Y @ $06F4 = #$00
+ 07:D876:9D 86 07  STA $0786,X @ $0786 = #$A1
+ 07:D879:E8        INX
+ 07:D87A:E8        INX
+ 07:D87B:E8        INX
+ 07:D87C:E8        INX
+ 07:D87D:E0 20     CPX #$20
+ 07:D87F:F0 07     BEQ $D888
+ 07:D881:86 03     STX $0003 = #$02
+ 07:D883:E6 21     INC $0021 = #$04
+ 07:D885:4C 14 D8  JMP $D814
+ 07:D888:A2 23     LDX #$23
+ 07:D88A:A5 22     LDA $0022 = #$60
+ 07:D88C:29 01     AND #$01
+ 07:D88E:D0 02     BNE $D892
+ 07:D890:A2 2E     LDX #$2E
+ 07:D892:A9 FF     LDA #$FF
+ 07:D894:9D 80 07  STA $0780,X
+ 07:D897:85 19     STA $0019 = #$00
+ 07:D899:A5 27     LDA $0027 = #$01
+ 07:D89B:29 04     AND #$04
+ 07:D89D:D0 12     BNE $D8B1
+ 07:D89F:C6 22     DEC $0022 = #$60
+ 07:D8A1:10 0D     BPL $D8B0
+ 07:D8A3:A9 1D     LDA #$1D
+ 07:D8A5:85 22     STA $0022 = #$60
+ 07:D8A7:A5 50     LDA $0050 = #$00
+ 07:D8A9:30 03     BMI $D8AE
+ 07:D8AB:C6 20     DEC $0020 = #$01
+ 07:D8AD:60        RTS -----------------------------------------
+ 07:D8AE:E6 20     INC $0020 = #$01
+ 07:D8B0:60        RTS -----------------------------------------
+ 07:D8B1:E6 22     INC $0022 = #$60
+ 07:D8B3:A5 22     LDA $0022 = #$60
+ 07:D8B5:C9 1E     CMP #$1E
+ 07:D8B7:90 F7     BCC $D8B0
+ 07:D8B9:A9 00     LDA #$00
+ 07:D8BB:85 22     STA $0022 = #$60
+ 07:D8BD:A5 50     LDA $0050 = #$00
+ 07:D8BF:30 03     BMI $D8C4
+ 07:D8C1:E6 20     INC $0020 = #$01
+ 07:D8C3:60        RTS -----------------------------------------
+ 07:D8C4:C6 20     DEC $0020 = #$01
+ 07:D8C6:60        RTS -----------------------------------------
+ 07:D8C7:A4 20     LDY $0020 = #$01
+ 07:D8C9:20 59 D9  JSR $D959
+ 07:D8CC:20 36 D9  JSR $D936
+ 07:D8CF:A9 00     LDA #$00
+ 07:D8D1:20 CD FF  JSR $FFCD
+ 07:D8D4:A0 03     LDY #$03
+ 07:D8D6:84 02     STY $0002 = #$00
+ 07:D8D8:A9 00     LDA #$00
+ 07:D8DA:85 10     STA $0010 = #$54
+ 07:D8DC:A4 02     LDY $0002 = #$00
+ 07:D8DE:BE 55 D9  LDX $D955,Y @ $D986 = #$65
+ 07:D8E1:B1 00     LDA ($00),Y @ $8531 = #$07
+ 07:D8E3:A8        TAY
+ 07:D8E4:B1 64     LDA ($64),Y @ $8031 = #$01
+>07:D8E6:9D C0 06  STA $06C0,X @ $06C0 = #$A2
+ 07:D8E9:B1 66     LDA ($66),Y @ $8131 = #$01
+ 07:D8EB:9D C1 06  STA $06C1,X @ $06C1 = #$A3
+ 07:D8EE:B1 68     LDA ($68),Y @ $8231 = #$01
+ 07:D8F0:9D C4 06  STA $06C4,X @ $06C4 = #$B2
+ 07:D8F3:B1 6A     LDA ($6A),Y @ $8331 = #$01
+ 07:D8F5:9D C5 06  STA $06C5,X @ $06C5 = #$B3
+ 07:D8F8:B1 6C     LDA ($6C),Y @ $8431 = #$41
+ 07:D8FA:29 03     AND #$03
+ 07:D8FC:05 10     ORA $0010 = #$54
+ 07:D8FE:85 10     STA $0010 = #$54
+ 07:D900:C6 02     DEC $0002 = #$00
+ 07:D902:30 07     BMI $D90B
+ 07:D904:06 10     ASL $0010 = #$54
+ 07:D906:06 10     ASL $0010 = #$54
+ 07:D908:4C DC D8  JMP $D8DC
+ 07:D90B:A0 00     LDY #$00
+ 07:D90D:B9 10 01  LDA $0110,Y @ $0141 = #$00
+ 07:D910:19 11 01  ORA $0111,Y @ $0142 = #$00
+ 07:D913:F0 1A     BEQ $D92F
+ 07:D915:B9 10 01  LDA $0110,Y @ $0141 = #$00
+ 07:D918:C5 20     CMP $0020 = #$01
+ 07:D91A:D0 13     BNE $D92F
+ 07:D91C:B9 11 01  LDA $0111,Y @ $0142 = #$00
+ 07:D91F:C5 21     CMP $0021 = #$04
+ 07:D921:D0 0C     BNE $D92F
+ 07:D923:A0 07     LDY #$07
+ 07:D925:B9 66 E8  LDA $E866,Y @ $E897 = #$49
+ 07:D928:99 C0 06  STA $06C0,Y @ $06F1 = #$00
+ 07:D92B:88        DEY
+ 07:D92C:10 F7     BPL $D925
+ 07:D92E:60        RTS -----------------------------------------
+ 07:D92F:C8        INY
+ 07:D930:C8        INY
+ 07:D931:C0 20     CPY #$20
+ 07:D933:D0 D8     BNE $D90D
+ 07:D935:60        RTS -----------------------------------------
+================================================================
+FUNCTION $D9C6
+ 07:D936:A5 EA     LDA $00EA
+ 07:D938:20 CD FF  JSR $FFCD
+ 07:D93B:A9 00     LDA #$00
+ 07:D93D:85 01     STA $0001 = #$85
+ 07:D93F:A4 21     LDY $0021 = #$04
+ 07:D941:B1 24     LDA ($24),Y @ $8071 = #$4A
+ 07:D943:0A        ASL
+ 07:D944:26 01     ROL $0001 = #$85
+ 07:D946:0A        ASL
+ 07:D947:26 01     ROL $0001 = #$85
+ 07:D949:18        CLC
+ 07:D94A:65 62     ADC $0062 = #$00
+ 07:D94C:85 00     STA $0000 = #$00
+ 07:D94E:A5 01     LDA $0001 = #$85
+ 07:D950:65 63     ADC $0063 = #$85
+ 07:D952:85 01     STA $0001 = #$85
+ 07:D954:60        RTS -----------------------------------------
+================================================================
+TABLE $D955
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D950                00 02 08 0A
+================================================================
+FUNCTION $D959
+Load value Y from table at $DA9C
+From this directions are obtained on which level data to load?
+
+ 07:D959:B1 6E     LDA ($6E),Y @ $DA9C = #$04
+ 07:D95B:48        PHA
+ 07:D95C:A9 00     LDA #$00
+ 07:D95E:85 00     STA $0000 = #$00
+ 07:D960:68        PLA
+ 07:D961:0A        ASL
+ 07:D962:26 00     ROL $0000 = #$00
+ 07:D964:0A        ASL
+ 07:D965:26 00     ROL $0000 = #$00
+ 07:D967:0A        ASL
+ 07:D968:26 00     ROL $0000 = #$00
+ 07:D96A:0A        ASL
+ 07:D96B:26 00     ROL $0000 = #$00
+ 07:D96D:0A        ASL
+ 07:D96E:26 00     ROL $0000 = #$00
+ 07:D970:0A        ASL
+ 07:D971:26 00     ROL $0000 = #$00
+ 07:D973:18        CLC
+ 07:D974:65 60     ADC $0060 = #$00
+ 07:D976:85 24     STA $0024 = #$80
+ 07:D978:A5 00     LDA $0000 = #$00
+ 07:D97A:65 61     ADC $0061 = #$80
+ 07:D97C:85 25     STA $0025 = #$82
+ 07:D97E:60        RTS -----------------------------------------
+================================================================
+TABLE $DAFF
+Starting room # for each level
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DAF0                                              00
+DB00 04 0A 10 17 17
+
+00 (Stage 1) 00 = 00 - 4 rooms
+01 (Stage 2) 04 = 04 - 6 rooms
+02 (Stage 3) 0A = 10 - 6 rooms
+03 (Stage 4) 10 = 16 - 7 rooms
+04 (Stage 5) 17 = 23 
+05 (Stage 6) 17 = 23 
+
+TABLE $DB05
+Tileset for each room
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DB00                0F 08 07 02 0F 08 0F 0F 09 03 0F 
+DC10 0F 0F 0F 0F 04 0F 0F 00 0F 0F 0F 05 0F 0F 0F 01
+DB20 0F 0F 0F 06
+
+TABLE $DB24
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DB20             00 06 0A 09 00 06 00 00 0B 08 00 00
+DB30 00 00 00 01 00 00 00 00 00 00 02 05 05 05 03 03
+DB40 03 07 04
+
+TABLE $DB43
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DB40          0F 20 26 15 0F 21 11 01 0F 20 0F 10 0F
+DB50 20 23 13 0F 3B 2B 1B 0F 2C 1C 0C 0F 37 27 17 0F
+DB60 27 17 07 0F 20 21 11 0F 20 23 13 0F 17 06 11 0F
+DB70 22 12 11 0F 36 26 03 0F 20 34 26 0F 2B 1C 1B 0F
+DB80 17 07 0F 0F 36 26 15 0F 26 15 05 0F 31 22 1C 0F
+DB90 22 1C 01 0F 0F 0F 0F 0F 0F 0F 0F 
+
+TABLE $DB9B
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DB90                                  0F 0F 0F 0F 0F
+DBA0 0F 0F 0F 0F 07 26 37 0F 0C 22 33 0F 00 10 20 0F
+DBB0 0C 22 33 0F 09 19 36 0F 03 14 34 0F 03 23 33 0F
+DBC0 01 22 20 0F 0F 29 38 0F 03 23 34 0F 00 10 20 0F
+DBD0 04 15 35 0F 0C 19 29 0F 0F 0F 0F 0F 00 10 20 0F
+DBE0 08 18 27 0F 0C 22 33 0F 0F 29 38 0F 00 10 20 0F
+DBF0 04 26 36 0F 00 10 20 0F 04 23 36
+
+================================================================
+FUNCTION $DBFB
+ 07:DBFB:A5 E9     LDA $00E9 = #$00
+ 07:DBFD:C9 05     CMP #$05
+ 07:DBFF:F0 09     BEQ $DC0A
+ 07:DC01:A5 50     LDA $0050 = #$00
+ 07:DC03:29 C0     AND #$C0
+ 07:DC05:F0 2C     BEQ $DC33
+ 07:DC07:4C 4A DD  JMP $DD4A
+ 07:DC0A:A9 10     LDA #$10
+ 07:DC0C:CD 30 03  CMP $0330 = #$40
+ 07:DC0F:90 03     BCC $DC14
+ 07:DC11:8D 30 03  STA $0330 = #$40
+ 07:DC14:A9 F0     LDA #$F0
+ 07:DC16:CD 30 03  CMP $0330 = #$40
+ 07:DC19:B0 03     BCS $DC1E
+ 07:DC1B:8D 30 03  STA $0330 = #$40
+ 07:DC1E:A9 10     LDA #$10
+ 07:DC20:CD 60 03  CMP $0360 = #$00
+ 07:DC23:90 03     BCC $DC28
+ 07:DC25:8D 60 03  STA $0360 = #$00
+ 07:DC28:A9 E0     LDA #$E0
+ 07:DC2A:CD 60 03  CMP $0360 = #$00
+ 07:DC2D:B0 03     BCS $DC32
+ 07:DC2F:8D 60 03  STA $0360 = #$00
+ 07:DC32:60        RTS -----------------------------------------
+ 07:DC33:A5 30     LDA $0030 = #$09
+ 07:DC35:C9 02     CMP #$02
+ 07:DC37:F0 0A     BEQ $DC43
+ 07:DC39:A9 E0     LDA #$E0
+ 07:DC3B:CD 60 03  CMP $0360 = #$00
+ 07:DC3E:B0 03     BCS $DC43
+ 07:DC40:8D 60 03  STA $0360 = #$00
+ 07:DC43:A9 10     LDA #$10
+ 07:DC45:CD 60 03  CMP $0360 = #$00
+ 07:DC48:90 11     BCC $DC5B
+ 07:DC4A:A5 30     LDA $0030 = #$09
+ 07:DC4C:C9 02     CMP #$02
+ 07:DC4E:F0 0B     BEQ $DC5B
+ 07:DC50:A9 10     LDA #$10
+ 07:DC52:8D 60 03  STA $0360 = #$00
+ 07:DC55:A5 31     LDA $0031 = #$01
+ 07:DC57:29 08     AND #$08
+ 07:DC59:F0 00     BEQ $DC5B
+ 07:DC5B:AD 30 03  LDA $0330 = #$40
+ 07:DC5E:38        SEC
+ 07:DC5F:E5 FC     SBC $00FC = #$00
+ 07:DC61:85 01     STA $0001 = #$D3
+ 07:DC63:A5 32     LDA $0032 = #$40
+ 07:DC65:38        SEC
+ 07:DC66:ED 30 03  SBC $0330 = #$40
+ 07:DC69:85 00     STA $0000 = #$74
+ 07:DC6B:F0 0F     BEQ $DC7C
+ 07:DC6D:10 6A     BPL $DCD9
+ 07:DC6F:49 FF     EOR #$FF
+ 07:DC71:18        CLC
+ 07:DC72:69 01     ADC #$01
+ 07:DC74:85 00     STA $0000 = #$74
+ 07:DC76:A5 01     LDA $0001 = #$D3
+ 07:DC78:C9 80     CMP #$80
+ 07:DC7A:B0 01     BCS $DC7D
+ 07:DC7C:60        RTS -----------------------------------------
+ 07:DC7D:A5 00     LDA $0000 = #$74
+ 07:DC7F:C9 08     CMP #$08
+ 07:DC81:90 02     BCC $DC85
+ 07:DC83:A9 08     LDA #$08
+ 07:DC85:18        CLC
+ 07:DC86:65 FC     ADC $00FC = #$00
+ 07:DC88:85 FC     STA $00FC = #$00
+ 07:DC8A:08        PHP
+ 07:DC8B:A5 FD     LDA $00FD = #$00
+ 07:DC8D:69 00     ADC #$00
+ 07:DC8F:85 FD     STA $00FD = #$00
+ 07:DC91:28        PLP
+ 07:DC92:A5 52     LDA $0052 = #$00
+ 07:DC94:69 00     ADC #$00
+ 07:DC96:85 52     STA $0052 = #$00
+ 07:DC98:C5 51     CMP $0051 = #$05
+ 07:DC9A:D0 16     BNE $DCB2
+ 07:DC9C:A9 00     LDA #$00
+ 07:DC9E:85 FC     STA $00FC = #$00
+ 07:DCA0:38        SEC
+ 07:DCA1:E5 F7     SBC $00F7 = #$00
+ 07:DCA3:85 00     STA $0000 = #$74
+ 07:DCA5:A9 F0     LDA #$F0
+ 07:DCA7:CD 30 03  CMP $0330 = #$40
+ 07:DCAA:B0 06     BCS $DCB2
+ 07:DCAC:8D 30 03  STA $0330 = #$40
+ 07:DCAF:4C EC DE  JMP $DEEC
+ 07:DCB2:A5 F7     LDA $00F7 = #$00
+ 07:DCB4:29 03     AND #$03
+ 07:DCB6:18        CLC
+ 07:DCB7:65 00     ADC $0000 = #$74
+ 07:DCB9:4A        LSR
+ 07:DCBA:4A        LSR
+ 07:DCBB:85 01     STA $0001 = #$D3
+ 07:DCBD:A5 27     LDA $0027 = #$01
+ 07:DCBF:29 01     AND #$01
+ 07:DCC1:D0 12     BNE $DCD5
+ 07:DCC3:E6 20     INC $0020 = #$01
+ 07:DCC5:E6 20     INC $0020 = #$01
+ 07:DCC7:E6 22     INC $0022 = #$60
+ 07:DCC9:A5 22     LDA $0022 = #$60
+ 07:DCCB:29 7F     AND #$7F
+ 07:DCCD:85 22     STA $0022 = #$60
+ 07:DCCF:29 3F     AND #$3F
+ 07:DCD1:D0 02     BNE $DCD5
+ 07:DCD3:E6 20     INC $0020 = #$01
+ 07:DCD5:A9 01     LDA #$01
+ 07:DCD7:D0 69     BNE $DD42
+ 07:DCD9:A5 01     LDA $0001 = #$D3
+ 07:DCDB:C9 81     CMP #$81
+ 07:DCDD:90 01     BCC $DCE0
+ 07:DCDF:60        RTS -----------------------------------------
+ 07:DCE0:A9 08     LDA #$08
+ 07:DCE2:C5 00     CMP $0000 = #$74
+ 07:DCE4:B0 02     BCS $DCE8
+ 07:DCE6:85 00     STA $0000 = #$74
+ 07:DCE8:A5 FC     LDA $00FC = #$00
+ 07:DCEA:38        SEC
+ 07:DCEB:E5 00     SBC $0000 = #$74
+ 07:DCED:85 FC     STA $00FC = #$00
+ 07:DCEF:08        PHP
+ 07:DCF0:A5 FD     LDA $00FD = #$00
+ 07:DCF2:85 01     STA $0001 = #$D3
+ 07:DCF4:E9 00     SBC #$00
+ 07:DCF6:85 FD     STA $00FD = #$00
+ 07:DCF8:28        PLP
+ 07:DCF9:A5 52     LDA $0052 = #$00
+ 07:DCFB:E9 00     SBC #$00
+ 07:DCFD:85 52     STA $0052 = #$00
+ 07:DCFF:10 18     BPL $DD19
+ 07:DD01:A9 00     LDA #$00
+ 07:DD03:85 FC     STA $00FC = #$00
+ 07:DD05:85 52     STA $0052 = #$00
+ 07:DD07:A5 01     LDA $0001 = #$D3
+ 07:DD09:85 FD     STA $00FD = #$00
+ 07:DD0B:A5 F7     LDA $00F7 = #$00
+ 07:DD0D:85 00     STA $0000 = #$74
+ 07:DD0F:A9 10     LDA #$10
+ 07:DD11:CD 30 03  CMP $0330 = #$40
+ 07:DD14:90 03     BCC $DD19
+ 07:DD16:8D 30 03  STA $0330 = #$40
+ 07:DD19:A5 F7     LDA $00F7 = #$00
+ 07:DD1B:49 FF     EOR #$FF
+ 07:DD1D:29 03     AND #$03
+ 07:DD1F:18        CLC
+ 07:DD20:65 00     ADC $0000 = #$74
+ 07:DD22:4A        LSR
+ 07:DD23:4A        LSR
+ 07:DD24:85 01     STA $0001 = #$D3
+ 
+ 07:DD26:A5 27     LDA $0027
+ 07:DD28:29 02     AND #$02  ; Check if screen already scrolling left
+ 07:DD2A:D0 14     BNE $DD40 ;
+ 07:DD2C:C6 20     DEC $0020 = #$01
+ 07:DD2E:C6 20     DEC $0020 = #$01
+ 07:DD30:C6 22     DEC $0022 = #$60
+ 07:DD32:A5 22     LDA $0022 = #$60
+ 07:DD34:29 7F     AND #$7F
+ 07:DD36:85 22     STA $0022 = #$60
+ 07:DD38:29 3F     AND #$3F
+ 07:DD3A:C9 3F     CMP #$3F
+ 07:DD3C:D0 02     BNE $DD40
+ 07:DD3E:C6 20     DEC $0020 = #$01
+ 
+ 07:DD40:A9 02     LDA #$02
+ 07:DD42:85 27     STA $0027 ; Set screen scroll direction to left
+ 07:DD44:85 F9     STA $00F9
+ 07:DD46:4C BD D6  JMP $D6BD
+ 07:DD49:60        RTS -----------------------------------------
+ 07:DD4A:A9 10     LDA #$10
+ 07:DD4C:CD 30 03  CMP $0330 = #$40
+ 07:DD4F:B0 29     BCS $DD7A
+ 07:DD51:A9 F0     LDA #$F0
+ 07:DD53:CD 30 03  CMP $0330 = #$40
+ 07:DD56:B0 25     BCS $DD7D
+ 07:DD58:8D 30 03  STA $0330 = #$40
+ 07:DD5B:A5 52     LDA $0052 = #$00
+ 07:DD5D:C5 51     CMP $0051 = #$05
+ 07:DD5F:D0 1C     BNE $DD7D
+ 07:DD61:A5 FA     LDA $00FA = #$00
+ 07:DD63:D0 18     BNE $DD7D
+ 07:DD65:A9 01     LDA #$01
+ 07:DD67:85 27     STA $0027 ; Set screen scroll direction to right
+ 07:DD69:85 F9     STA $00F9 = #$01
+ 07:DD6B:A2 60     LDX #$60
+ 07:DD6D:A5 FD     LDA $00FD = #$00
+ 07:DD6F:29 01     AND #$01
+ 07:DD71:F0 02     BEQ $DD75
+ 07:DD73:A2 20     LDX #$20
+ 07:DD75:86 22     STX $0022 = #$60
+ 07:DD77:4C EC DE  JMP $DEEC
+ 07:DD7A:8D 30 03  STA $0330 = #$40
+ 07:DD7D:AD 60 03  LDA $0360 = #$00
+ 07:DD80:38        SEC
+ 07:DD81:E5 FA     SBC $00FA = #$00
+ 07:DD83:F0 28     BEQ $DDAD
+ 07:DD85:90 04     BCC $DD8B
+ 07:DD87:C9 F0     CMP #$F0
+ 07:DD89:90 02     BCC $DD8D
+ 07:DD8B:E9 0F     SBC #$0F
+ 07:DD8D:85 01     STA $0001 = #$D3
+ 07:DD8F:AD 00 04  LDA $0400 = #$D0
+ 07:DD92:30 04     BMI $DD98
+ 07:DD94:A9 00     LDA #$00
+ 07:DD96:85 01     STA $0001 = #$D3
+ 07:DD98:A5 34     LDA $0034 = #$00
+ 07:DD9A:38        SEC
+ 07:DD9B:ED 60 03  SBC $0360 = #$00
+ 07:DD9E:85 00     STA $0000 = #$74
+ 07:DDA0:F0 A7     BEQ $DD49
+ 07:DDA2:30 03     BMI $DDA7
+ 07:DDA4:4C 47 DE  JMP $DE47
+ 07:DDA7:A5 01     LDA $0001 = #$D3
+ 07:DDA9:C9 80     CMP #$80
+ 07:DDAB:B0 01     BCS $DDAE
+ 07:DDAD:60        RTS -----------------------------------------
+ 07:DDAE:A5 00     LDA $0000 = #$74
+ 07:DDB0:49 FF     EOR #$FF
+ 07:DDB2:18        CLC
+ 07:DDB3:69 01     ADC #$01
+ 07:DDB5:29 0F     AND #$0F
+ 07:DDB7:C9 08     CMP #$08
+ 07:DDB9:90 02     BCC $DDBD
+ 07:DDBB:A9 08     LDA #$08
+ 07:DDBD:85 00     STA $0000 = #$74
+ 07:DDBF:18        CLC
+ 07:DDC0:65 FA     ADC $00FA = #$00
+ 07:DDC2:85 FA     STA $00FA = #$00
+ 07:DDC4:C9 F0     CMP #$F0
+ 07:DDC6:90 0C     BCC $DDD4
+ 07:DDC8:29 0F     AND #$0F
+ 07:DDCA:85 FA     STA $00FA = #$00
+ 07:DDCC:A5 50     LDA $0050 = #$00
+ 07:DDCE:30 10     BMI $DDE0
+ 07:DDD0:E6 52     INC $0052 = #$00
+ 07:DDD2:E6 FB     INC $00FB = #$00
+ 07:DDD4:A5 50     LDA $0050 = #$00
+ 07:DDD6:30 0C     BMI $DDE4
+ 07:DDD8:A5 52     LDA $0052 = #$00
+ 07:DDDA:C5 51     CMP $0051 = #$05
+ 07:DDDC:D0 21     BNE $DDFF
+ 07:DDDE:F0 0C     BEQ $DDEC
+ 07:DDE0:C6 52     DEC $0052 = #$00
+ 07:DDE2:C6 FB     DEC $00FB = #$00
+ 07:DDE4:A5 52     LDA $0052 = #$00
+ 07:DDE6:D0 17     BNE $DDFF
+ 07:DDE8:A5 FA     LDA $00FA = #$00
+ 07:DDEA:F0 13     BEQ $DDFF
+ 07:DDEC:A9 00     LDA #$00
+ 07:DDEE:85 FA     STA $00FA = #$00
+ 07:DDF0:38        SEC
+ 07:DDF1:E5 F8     SBC $00F8 = #$00
+ 07:DDF3:85 00     STA $0000 = #$74
+ 07:DDF5:A9 E0     LDA #$E0
+ 07:DDF7:CD 60 03  CMP $0360 = #$00
+ 07:DDFA:B0 03     BCS $DDFF
+ 07:DDFC:8D 60 03  STA $0360 = #$00
+ 07:DDFF:A5 F8     LDA $00F8 = #$00
+ 07:DE01:29 07     AND #$07
+ 07:DE03:18        CLC
+ 07:DE04:65 00     ADC $0000 = #$74
+ 07:DE06:4A        LSR
+ 07:DE07:4A        LSR
+ 07:DE08:4A        LSR
+ 07:DE09:85 01     STA $0001 = #$D3
+ 07:DE0B:D0 03     BNE $DE10
+ 07:DE0D:4C E4 DE  JMP $DEE4
+ 07:DE10:A0 01     LDY #$01
+ 07:DE12:A5 50     LDA $0050 = #$00
+ 07:DE14:10 02     BPL $DE18
+ 07:DE16:A0 02     LDY #$02
+ 07:DE18:84 F9     STY $00F9 = #$01
+ 07:DE1A:A5 27     LDA $0027 = #$01
+ 07:DE1C:29 04     AND #$04
+ 07:DE1E:D0 22     BNE $DE42
+ 07:DE20:A5 50     LDA $0050 = #$00
+ 07:DE22:30 05     BMI $DE29
+ 07:DE24:E6 20     INC $0020 = #$01
+ 07:DE26:4C 2B DE  JMP $DE2B
+ 07:DE29:C6 20     DEC $0020 = #$01
+ 07:DE2B:E6 22     INC $0022 = #$60
+ 07:DE2D:A5 22     LDA $0022 = #$60
+ 07:DE2F:C9 1E     CMP #$1E
+ 07:DE31:90 0F     BCC $DE42
+ 07:DE33:A9 00     LDA #$00
+ 07:DE35:85 22     STA $0022 = #$60
+ 07:DE37:A5 50     LDA $0050 = #$00
+ 07:DE39:30 05     BMI $DE40
+ 07:DE3B:E6 20     INC $0020 = #$01
+ 07:DE3D:4C 42 DE  JMP $DE42
+ 07:DE40:C6 20     DEC $0020 = #$01
+ 07:DE42:A9 04     LDA #$04
+ 07:DE44:4C E2 DE  JMP $DEE2
+ 07:DE47:29 0F     AND #$0F
+ 07:DE49:C9 08     CMP #$08
+ 07:DE4B:90 02     BCC $DE4F
+ 07:DE4D:A9 08     LDA #$08
+ 07:DE4F:85 00     STA $0000 = #$74
+ 07:DE51:A5 01     LDA $0001 = #$D3
+ 07:DE53:C9 81     CMP #$81
+ 07:DE55:90 01     BCC $DE58
+ 07:DE57:60        RTS -----------------------------------------
+ 07:DE58:A5 FA     LDA $00FA = #$00
+ 07:DE5A:38        SEC
+ 07:DE5B:E5 00     SBC $0000 = #$74
+ 07:DE5D:85 FA     STA $00FA = #$00
+ 07:DE5F:B0 0C     BCS $DE6D
+ 07:DE61:29 EF     AND #$EF
+ 07:DE63:85 FA     STA $00FA = #$00
+ 07:DE65:A5 50     LDA $0050 = #$00
+ 07:DE67:30 13     BMI $DE7C
+ 07:DE69:C6 52     DEC $0052 = #$00
+ 07:DE6B:C6 FB     DEC $00FB = #$00
+ 07:DE6D:A5 50     LDA $0050 = #$00
+ 07:DE6F:30 0F     BMI $DE80
+ 07:DE71:A5 52     LDA $0052 = #$00
+ 07:DE73:10 2D     BPL $DEA2
+ 07:DE75:E6 FB     INC $00FB = #$00
+ 07:DE77:E6 52     INC $0052 = #$00
+ 07:DE79:4C 8A DE  JMP $DE8A
+ 07:DE7C:E6 52     INC $0052 = #$00
+ 07:DE7E:E6 FB     INC $00FB = #$00
+ 07:DE80:A5 51     LDA $0051 = #$05
+ 07:DE82:C5 52     CMP $0052 = #$00
+ 07:DE84:B0 1C     BCS $DEA2
+ 07:DE86:85 52     STA $0052 = #$00
+ 07:DE88:C6 FB     DEC $00FB = #$00
+ 07:DE8A:A9 00     LDA #$00
+ 07:DE8C:85 FA     STA $00FA = #$00
+ 07:DE8E:A5 F8     LDA $00F8 = #$00
+ 07:DE90:85 00     STA $0000 = #$74
+ 07:DE92:A5 30     LDA $0030 = #$09
+ 07:DE94:C9 02     CMP #$02
+ 07:DE96:F0 0A     BEQ $DEA2
+ 07:DE98:A9 10     LDA #$10
+ 07:DE9A:CD 60 03  CMP $0360 = #$00
+ 07:DE9D:90 03     BCC $DEA2
+ 07:DE9F:8D 60 03  STA $0360 = #$00
+ 07:DEA2:A5 F8     LDA $00F8 = #$00
+ 07:DEA4:49 FF     EOR #$FF
+ 07:DEA6:29 07     AND #$07
+ 07:DEA8:18        CLC
+ 07:DEA9:65 00     ADC $0000 = #$74
+ 07:DEAB:4A        LSR
+ 07:DEAC:4A        LSR
+ 07:DEAD:4A        LSR
+ 07:DEAE:85 01     STA $0001 = #$D3
+ 07:DEB0:F0 32     BEQ $DEE4
+ 07:DEB2:A5 27     LDA $0027 = #$01
+ 07:DEB4:29 08     AND #$08
+ 07:DEB6:D0 1E     BNE $DED6
+ 07:DEB8:A5 50     LDA $0050 = #$00
+ 07:DEBA:30 05     BMI $DEC1
+ 07:DEBC:C6 20     DEC $0020 = #$01
+ 07:DEBE:4C C3 DE  JMP $DEC3
+ 07:DEC1:E6 20     INC $0020 = #$01
+ 07:DEC3:C6 22     DEC $0022 = #$60
+ 07:DEC5:10 0F     BPL $DED6
+ 07:DEC7:A9 1D     LDA #$1D
+ 07:DEC9:85 22     STA $0022 = #$60
+ 07:DECB:A5 50     LDA $0050 = #$00
+ 07:DECD:30 05     BMI $DED4
+ 07:DECF:C6 20     DEC $0020 = #$01
+ 07:DED1:4C D6 DE  JMP $DED6
+ 07:DED4:E6 20     INC $0020 = #$01
+ 07:DED6:A0 01     LDY #$01
+ 07:DED8:A5 50     LDA $0050 = #$00
+ 07:DEDA:30 02     BMI $DEDE
+ 07:DEDC:A0 02     LDY #$02
+ 07:DEDE:84 F9     STY $00F9 = #$01
+ 07:DEE0:A9 08     LDA #$08
+ 07:DEE2:85 27     STA $0027 = #$01
+ 07:DEE4:A5 01     LDA $0001 = #$D3
+ 07:DEE6:F0 03     BEQ $DEEB
+ 07:DEE8:20 CF D7  JSR $D7CF
+ 07:DEEB:60        RTS -----------------------------------------
+ 
+ If you are in Ursula's castle Room 0,2,3, or 6
+ or if you are in any other stage:
+ 
+ 07:DEEC:A5 E9     LDA $00E9 ; Check stage number
+ 07:DEEE:C9 04     CMP #$04  ; Check if Stage 5 (Ursula's Castle)
+ 07:DEF0:D0 12     BNE $DF04 
+ 
+ 07:DEF2:A5 50     LDA $0050 ; Current room
+ 07:DEF4:29 0F     AND #$0F  ; Check room number
+ 07:DEF6:F0 0C     BEQ $DF04 ; If zero
+ 
+ 07:DEF8:C9 02     CMP #$02
+ 07:DEFA:F0 08     BEQ $DF04
+ 07:DEFC:C9 03     CMP #$03
+ 07:DEFE:F0 04     BEQ $DF04
+ 07:DF00:C9 06     CMP #$06
+ 07:DF02:D0 E7     BNE $DEEB
+ 
+ 07:DF04:A5 50     LDA $0050   ; Current room
+ 07:DF06:29 0F     AND #$0F    ; Check room number
+ 07:DF08:A8        TAY
+ 07:DF09:C8        INY
+ 07:DF0A:B1 70     LDA ($70),Y ; Room info
+ 07:DF0C:85 09     STA $0009   ; Temp storage for room info
+ 07:DF0E:C9 FF     CMP #$FF
+ 07:DF10:D0 01     BNE $DF13
+ 07:DF12:60        RTS -----------------------------------------
+ 07:DF13:A9 04     LDA #$04
+ 07:DF15:85 97     STA $0097 ;
+ 07:DF17:20 BC C1  JSR $C1BC ; Blank screen graphics?
+ 07:DF1A:20 D3 C1  JSR $C1D3 ; Blank entities from screen?
+ 07:DF1D:A9 00     LDA #$00
+ 07:DF1F:85 3A     STA $003A ;
+ 07:DF21:A5 09     LDA $0009 ; Room info 
+ 07:DF23:29 3F     AND #$3F
+ 07:DF25:38        SEC
+ 07:DF26:65 20     ADC $0020 ; Add to current tile block #
+ 07:DF28:85 07     STA $0007 ;
+ 07:DF2A:85 2E     STA $002E ;
+ 07:DF2C:A4 E9     LDY $00E9 ; Stage number 
+ 07:DF2E:A5 50     LDA $0050
+ 07:DF30:29 0F     AND #$0F  ; Room number
+ 07:DF32:38        SEC
+ 07:DF33:79 FF DA  ADC $DAFF,Y
+ 07:DF36:48        PHA
+ 07:DF37:AA        TAX
+ 07:DF38:BC 05 DB  LDY $DB05,X
+ 07:DF3B:20 2A C5  JSR $C52A   ; Load tile set for new room
+ 07:DF3E:68        PLA
+ 07:DF3F:AA        TAX
+ 07:DF40:BD 24 DB  LDA $DB24,X
+ 07:DF43:F0 17     BEQ $DF5C
+ 07:DF45:0A        ASL
+ 07:DF46:0A        ASL
+ 07:DF47:0A        ASL
+ 07:DF48:A8        TAY
+ 07:DF49:A2 00     LDX #$00
+ 07:DF4B:B9 9B DB  LDA $DB9B,Y
+ 07:DF4E:9D 18 06  STA $0618,X ; Store palette info for new room
+ 07:DF51:9D 38 06  STA $0638,X 
+ 07:DF54:C8        INY
+ 07:DF55:E8        INX
+ 07:DF56:E0 08     CPX #$08
+ 07:DF58:D0 F1     BNE $DF4B
+ 
+ 07:DF5A:86 18     STX $0018 = #$00
+ 
+ 07:DF5C:A5 FC     LDA $00FC = #$00
+ 07:DF5E:18        CLC
+ 07:DF5F:69 04     ADC #$04
+ 07:DF61:85 FC     STA $00FC = #$00
+ 07:DF63:A5 FD     LDA $00FD = #$00
+ 07:DF65:69 00     ADC #$00
+ 07:DF67:85 FD     STA $00FD = #$00
+ 
+ 07:DF69:AD 20 03  LDA $0320
+ 07:DF6C:18        CLC
+ 07:DF6D:69 80     ADC #$80
+ 07:DF6F:8D 20 03  STA $0320 ; Move Ariel right by #$80 subpixels
+ 07:DF72:AD 30 03  LDA $0330 = #$40
+ 07:DF75:69 00     ADC #$00
+ 07:DF77:8D 30 03  STA $0330 = #$40
+ 07:DF7A:AD 40 03  LDA $0340 = #$00
+ 07:DF7D:69 00     ADC #$00
+ 07:DF7F:8D 40 03  STA $0340 = #$00
+ 
+ 07:DF82:A9 01     LDA #$01
+ 07:DF84:85 01     STA $0001
+ 07:DF86:20 BD D6  JSR $D6BD
+ 
+ 07:DF89:A5 09     LDA $0009 = #$00
+ 07:DF8B:29 C0     AND #$C0
+ 07:DF8D:F0 0E     BEQ $DF9D
+ 07:DF8F:A5 22     LDA $0022 = #$60
+ 07:DF91:29 3F     AND #$3F
+ 07:DF93:D0 08     BNE $DF9D
+ 07:DF95:A5 20     LDA $0020 = #$01
+ 07:DF97:85 08     STA $0008 = #$00
+ 07:DF99:A5 07     LDA $0007 = #$17
+ 07:DF9B:85 20     STA $0020 = #$01
+ 07:DF9D:20 3D C5  JSR $C53D
+ 07:DFA0:A9 04     LDA #$04
+ 07:DFA2:85 97     STA $0097
+ 07:DFA4:20 CD FF  JSR $FFCD
+ 07:DFA7:20 BC C1  JSR $C1BC ; Blank screen graphics?
+ 07:DFAA:A5 30     LDA $0030 = #$09
+ 07:DFAC:F0 05     BEQ $DFB3
+ 07:DFAE:A9 00     LDA #$00
+ 07:DFB0:8D 48 04  STA $0448 = #$00
+ 07:DFB3:20 03 80  JSR $8003
+ 07:DFB6:A9 00     LDA #$00
+ 07:DFB8:85 EE     STA $00EE = #$00
+ 07:DFBA:20 AD FF  JSR $FFAD
+ 07:DFBD:E6 EE     INC $00EE = #$00
+ 07:DFBF:AD 30 03  LDA $0330 = #$40
+ 07:DFC2:85 32     STA $0032 = #$40
+ 07:DFC4:AD 40 03  LDA $0340 = #$00
+ 07:DFC7:85 33     STA $0033 = #$00
+ 07:DFC9:A5 FC     LDA $00FC = #$00
+ 07:DFCB:85 F7     STA $00F7 = #$00
+ 07:DFCD:A5 FC     LDA $00FC = #$00
+ 07:DFCF:D0 8B     BNE $DF5C
+ 07:DFD1:A5 09     LDA $0009 = #$00
+ 07:DFD3:29 C0     AND #$C0
+ 07:DFD5:F0 04     BEQ $DFDB
+ 07:DFD7:A5 08     LDA $0008 = #$00
+ 07:DFD9:85 20     STA $0020 = #$01
+ 07:DFDB:A9 00     LDA #$00
+ 07:DFDD:85 52     STA $0052 = #$00
+ 07:DFDF:E6 50     INC $0050 = #$00
+ 07:DFE1:A5 50     LDA $0050 = #$00
+ 07:DFE3:29 0F     AND #$0F
+ 07:DFE5:85 50     STA $0050 = #$00
+ 07:DFE7:A8        TAY
+ 07:DFE8:B1 70     LDA ($70),Y @ $DA6C = #$05
+ 07:DFEA:48        PHA
+ 07:DFEB:29 1F     AND #$1F
+ 07:DFED:85 51     STA $0051 = #$05
+ 07:DFEF:68        PLA
+ 07:DFF0:29 C0     AND #$C0
+ 07:DFF2:05 50     ORA $0050 = #$00
+ 07:DFF4:85 50     STA $0050 = #$00
+ 07:DFF6:29 C0     AND #$C0
+ 07:DFF8:D0 04     BNE $DFFE
+ 07:DFFA:A9 01     LDA #$01
+ 07:DFFC:D0 10     BNE $E00E
+ 07:DFFE:30 08     BMI $E008
+ 07:E000:A9 00     LDA #$00
+ 07:E002:85 22     STA $0022 = #$60
+ 07:E004:A9 04     LDA #$04
+ 07:E006:D0 06     BNE $E00E
+ 07:E008:A9 1D     LDA #$1D
+ 07:E00A:85 22     STA $0022 = #$60
+ 07:E00C:A9 08     LDA #$08
+ 07:E00E:85 27     STA $0027 = #$01
+ 07:E010:A2 00     LDX #$00
+ 
+ 
+ 07:E012:A5 E9     LDA $00E9 
+ 07:E014:C9 03     CMP #$03
+ 07:E016:D0 20     BNE $E038
+ 07:E018:A5 50     LDA $0050
+ 07:E01A:29 0F     AND #$0F
+ 07:E01C:C9 05     CMP #$05
+ 07:E01E:D0 18     BNE $E038
+ 
+ 07:E020:A0 00     LDY #$00
+ 07:E022:8C 03 01  STY $0103 = #$00
+ 07:E025:A2 00     LDX #$00
+ 07:E027:B9 4D E0  LDA $E04D,Y @ $E04D = #$0F
+ 07:E02A:9D 00 06  STA $0600,X @ $0600 = #$0F
+ 07:E02D:9D 20 06  STA $0620,X @ $0620 = #$0F
+ 07:E030:C8        INY
+ 07:E031:E8        INX
+ 07:E032:E0 10     CPX #$10
+ 07:E034:D0 F1     BNE $E027
+ 07:E036:86 18     STX $0018 = #$00
+ 
+ 07:E038:A5 E9     LDA $00E9 = #$00
+ 07:E03A:C9 03     CMP #$03
+ 07:E03C:D0 0E     BNE $E04C
+ 07:E03E:A5 FD     LDA $00FD = #$00
+ 07:E040:18        CLC
+ 07:E041:65 FB     ADC $00FB = #$00
+ 07:E043:C9 0E     CMP #$0E
+ 07:E045:D0 05     BNE $E04C
+ 07:E047:A0 0D     LDY #$0D
+ 07:E049:20 2A C5  JSR $C52A
+ 07:E04C:60        RTS -----------------------------------------
+================================================================
+TABLE $E04D
+Palette table
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E040                                        0F 36 26
+E050 03 0F 37 28 18 0F 2B 1C 1B 0F 28 18 08 0F 03 23
+E060 33 0F 1C 2C 3C 0F 31 22 1C 0F 22 1C 01 
+E070 
+E080 
+
+00: 0F 36 26 03
+01: 0F 37 28 18
+02: 0F 2B 1C 1B
+03: 0F 28 18 08 
+04: 0F 03 23 33
+05: 0F 1C 2C 3C
+06: 0F 31 22 1C
+07: 0F 22 1C 01
+================================================================
+FUNCTION $E06D
+ 07:E06D:A4 E9     LDY $00E9 = #$02
+ 07:E06F:B9 61 E2  LDA $E261,Y @ $E262 = #$00
+ 07:E072:F0 D8     BEQ $E04C
+ 07:E074:AD 40 03  LDA $0340 = #$00
+ 07:E077:18        CLC
+ 07:E078:6D 70 03  ADC $0370 = #$00
+ 07:E07B:D9 61 E2  CMP $E261,Y @ $E262 = #$00
+ 07:E07E:D0 15     BNE $E095
+ 07:E080:AD 30 03  LDA $0330 = #$E5
+ 07:E083:38        SEC
+ 07:E084:E9 70     SBC #$70
+ 07:E086:90 C4     BCC $E04C
+ 07:E088:C9 20     CMP #$20
+ 07:E08A:B0 C0     BCS $E04C
+ 07:E08C:AD 60 03  LDA $0360 = #$7D
+ 07:E08F:D9 67 E2  CMP $E267,Y @ $E268 = #$00
+ 07:E092:F0 67     BEQ $E0FB
+ 07:E094:60        RTS -----------------------------------------
+ 07:E095:D9 6D E2  CMP $E26D,Y @ $E26E = #$00
+ 07:E098:D0 B2     BNE $E04C
+ 07:E09A:AD 60 03  LDA $0360 = #$7D
+ 07:E09D:D9 73 E2  CMP $E273,Y @ $E274 = #$00
+ 07:E0A0:D0 AA     BNE $E04C
+ 07:E0A2:A9 80     LDA #$80
+ 07:E0A4:8D 30 03  STA $0330 = #$E5
+ 07:E0A7:B9 61 E2  LDA $E261,Y @ $E262 = #$00
+ 07:E0AA:85 20     STA $0020 = #$01
+ 07:E0AC:20 71 E1  JSR $E171
+ 07:E0AF:AD F0 07  LDA $07F0 = #$00
+ 07:E0B2:85 22     STA $0022 = #$79
+ 07:E0B4:AD F1 07  LDA $07F1 = #$00
+ 07:E0B7:85 27     STA $0027 = #$01
+ 07:E0B9:AD F2 07  LDA $07F2 = #$00
+ 07:E0BC:85 20     STA $0020 = #$01
+ 07:E0BE:AD F3 07  LDA $07F3 = #$00
+ 07:E0C1:85 50     STA $0050 = #$00
+ 07:E0C3:AD F4 07  LDA $07F4 = #$00
+ 07:E0C6:85 51     STA $0051 = #$07
+ 07:E0C8:AD F5 07  LDA $07F5 = #$00
+ 07:E0CB:85 52     STA $0052 = #$00
+ 07:E0CD:AD F6 07  LDA $07F6 = #$00
+ 07:E0D0:85 FD     STA $00FD = #$00
+ 07:E0D2:AD F7 07  LDA $07F7 = #$00
+ 07:E0D5:85 FB     STA $00FB = #$00
+ 07:E0D7:AD F8 07  LDA $07F8 = #$00
+ 07:E0DA:8D 40 03  STA $0340 = #$00
+ 07:E0DD:AD F9 07  LDA $07F9 = #$00
+ 07:E0E0:8D 70 03  STA $0370 = #$00
+ 07:E0E3:AD FA 07  LDA $07FA = #$00
+ 07:E0E6:85 FC     STA $00FC = #$66
+ 07:E0E8:A9 04     LDA #$04
+ 07:E0EA:20 CD FF  JSR $FFCD
+ 07:E0ED:A4 E9     LDY $00E9 = #$02
+ 07:E0EF:B9 B8 BF  LDA $BFB8,Y @ $BFB9 = #$00
+ 07:E0F2:85 9E     STA $009E = #$01
+ 07:E0F4:85 9F     STA $009F = #$00
+ 07:E0F6:A9 01     LDA #$01
+ 07:E0F8:85 F9     STA $00F9 = #$01
+ 07:E0FA:60        RTS -----------------------------------------
+
+================================================================
+ 07:E0FB:A5 22     LDA $0022 
+ 07:E0FD:8D F0 07  STA $07F0
+ 07:E100:A5 27     LDA $0027
+ 07:E102:8D F1 07  STA $07F1
+ 07:E105:A5 20     LDA $0020
+ 07:E107:8D F2 07  STA $07F2
+ 07:E10A:A5 50     LDA $0050 
+ 07:E10C:8D F3 07  STA $07F3 = #$00
+ 07:E10F:A5 51     LDA $0051 = #$02
+ 07:E111:8D F4 07  STA $07F4 = #$00
+ 07:E114:A5 52     LDA $0052 = #$01
+ 07:E116:8D F5 07  STA $07F5 = #$00
+ 07:E119:A5 FD     LDA $00FD = #$06
+ 07:E11B:8D F6 07  STA $07F6 = #$00
+ 07:E11E:A5 FB     LDA $00FB = #$01
+ 07:E120:8D F7 07  STA $07F7 = #$00
+ 07:E123:AD 40 03  LDA $0340 = #$06
+ 07:E126:8D F8 07  STA $07F8 = #$00
+ 07:E129:AD 70 03  LDA $0370 = #$00
+ 07:E12C:8D F9 07  STA $07F9 = #$00
+ 07:E12F:A5 FC     LDA $00FC = #$00
+ 07:E131:8D FA 07  STA $07FA = #$00
+ 
+ 07:E134:AD 40 03  LDA $0340
+ 07:E137:85 FD     STA $00FD
+ 07:E139:A9 80     LDA #$80
+ 07:E13B:8D 30 03  STA $0330
+ 07:E13E:A9 00     LDA #$00
+ 07:E140:85 FC     STA $00FC
+ 07:E142:85 52     STA $0052
+ 07:E144:85 51     STA $0051
+ 07:E146:B9 6D E2  LDA $E26D,Y @ $E271 = #$00
+ 07:E149:85 20     STA $0020 = #$07
+ 07:E14B:20 71 E1  JSR $E171
+ 
+ 07:E14E:A4 E9     LDY $00E9 = #$00
+ 07:E150:B9 6D E2  LDA $E26D,Y @ $E271 = #$00
+ 07:E153:38        SEC
+ 07:E154:E5 FD     SBC $00FD = #$06
+ 07:E156:85 FB     STA $00FB = #$01
+ 07:E158:8D 70 03  STA $0370 = #$00
+ 07:E15B:A9 04     LDA #$04
+ 07:E15D:20 CD FF  JSR $FFCD ; Set bank to #$04?
+ 07:E160:B9 B0 BF  LDA $BFB0 
+ 07:E163:85 9E     STA $009E = #$0B
+ 07:E165:85 9F     STA $009F = #$08
+ 07:E167:A9 01     LDA #$01
+ 07:E169:85 F9     STA $00F9 = #$01
+ 07:E16B:B9 79 E2  LDA $E279,Y @ $E27D = #$00
+ 07:E16E:85 50     STA $0050 = #$81
+ 07:E170:60        RTS -----------------------------------------
+================================================================
+FUNCTION $E171
+ 07:E171:A9 00     LDA #$00
+ 07:E173:85 3A     STA $003A = #$00
+ 07:E175:20 BA CB  JSR $CBBA
+ 07:E178:AD 60 03  LDA $0360 = #$7D
+ 07:E17B:C9 E0     CMP #$E0
+ 07:E17D:D0 74     BNE $E1F3
+ 07:E17F:A9 00     LDA #$00
+ 07:E181:85 22     STA $0022 = #$79
+ 07:E183:A9 04     LDA #$04
+ 07:E185:85 27     STA $0027 = #$01
+ 07:E187:A5 50     LDA $0050 = #$00
+ 07:E189:09 40     ORA #$40
+ 07:E18B:85 50     STA $0050 = #$00
+ 07:E18D:20 BC C1  JSR $C1BC
+ 07:E190:20 D3 C1  JSR $C1D3
+ 07:E193:A5 FA     LDA $00FA = #$00
+ 07:E195:18        CLC
+ 07:E196:69 04     ADC #$04
+ 07:E198:85 FA     STA $00FA = #$00
+ 07:E19A:C9 F0     CMP #$F0
+ 07:E19C:90 06     BCC $E1A4
+ 07:E19E:A9 00     LDA #$00
+ 07:E1A0:85 FA     STA $00FA = #$00
+ 07:E1A2:E6 FB     INC $00FB = #$00
+ 07:E1A4:AD 50 03  LDA $0350 = #$83
+ 07:E1A7:18        CLC
+ 07:E1A8:69 80     ADC #$80
+ 07:E1AA:8D 50 03  STA $0350 = #$83
+ 07:E1AD:AD 60 03  LDA $0360 = #$7D
+ 07:E1B0:69 00     ADC #$00
+ 07:E1B2:8D 60 03  STA $0360 = #$7D
+ 07:E1B5:C9 F0     CMP #$F0
+ 07:E1B7:90 08     BCC $E1C1
+ 07:E1B9:A9 00     LDA #$00
+ 07:E1BB:8D 60 03  STA $0360 = #$7D
+ 07:E1BE:EE 70 03  INC $0370 = #$00
+ 07:E1C1:A5 FA     LDA $00FA = #$00
+ 07:E1C3:29 07     AND #$07
+ 07:E1C5:D0 03     BNE $E1CA
+ 07:E1C7:20 CF D7  JSR $D7CF
+ 07:E1CA:A9 04     LDA #$04
+ 07:E1CC:85 97     STA $0097 = #$44
+ 07:E1CE:20 CD FF  JSR $FFCD
+ 07:E1D1:20 BC C1  JSR $C1BC
+ 07:E1D4:A5 30     LDA $0030 = #$00
+ 07:E1D6:F0 05     BEQ $E1DD
+ 07:E1D8:A9 00     LDA #$00
+ 07:E1DA:8D 48 04  STA $0448 = #$00
+ 07:E1DD:20 03 80  JSR $8003
+ 07:E1E0:A9 00     LDA #$00
+ 07:E1E2:85 EE     STA $00EE = #$01
+ 07:E1E4:20 AD FF  JSR $FFAD
+ 07:E1E7:E6 EE     INC $00EE = #$01
+ 07:E1E9:A5 FA     LDA $00FA = #$00
+ 07:E1EB:D0 A6     BNE $E193
+ 07:E1ED:A9 18     LDA #$18
+ 07:E1EF:8D 60 03  STA $0360 = #$7D
+ 07:E1F2:60        RTS -----------------------------------------
+ 07:E1F3:A9 1D     LDA #$1D
+ 07:E1F5:85 22     STA $0022 = #$79
+ 07:E1F7:A9 08     LDA #$08
+ 07:E1F9:85 27     STA $0027 = #$01
+ 07:E1FB:A9 80     LDA #$80
+ 07:E1FD:85 50     STA $0050 = #$00
+ 07:E1FF:20 BC C1  JSR $C1BC
+ 07:E202:20 D3 C1  JSR $C1D3
+ 07:E205:A5 FA     LDA $00FA = #$00
+ 07:E207:29 07     AND #$07
+ 07:E209:D0 03     BNE $E20E
+ 07:E20B:20 CF D7  JSR $D7CF
+ 07:E20E:A5 FA     LDA $00FA = #$00
+ 07:E210:38        SEC
+ 07:E211:E9 04     SBC #$04
+ 07:E213:85 FA     STA $00FA = #$00
+ 07:E215:B0 06     BCS $E21D
+ 07:E217:A9 EC     LDA #$EC
+ 07:E219:85 FA     STA $00FA = #$00
+ 07:E21B:C6 FB     DEC $00FB = #$00
+ 07:E21D:AD 50 03  LDA $0350 = #$83
+ 07:E220:38        SEC
+ 07:E221:E9 80     SBC #$80
+ 07:E223:8D 50 03  STA $0350 = #$83
+ 07:E226:AD 60 03  LDA $0360 = #$7D
+ 07:E229:E9 00     SBC #$00
+ 07:E22B:8D 60 03  STA $0360 = #$7D
+ 07:E22E:B0 08     BCS $E238
+ 07:E230:A9 EF     LDA #$EF
+ 07:E232:8D 60 03  STA $0360 = #$7D
+ 07:E235:CE 70 03  DEC $0370 = #$00
+ 07:E238:A9 04     LDA #$04
+ 07:E23A:85 97     STA $0097 = #$44
+ 07:E23C:20 CD FF  JSR $FFCD
+ 07:E23F:20 BC C1  JSR $C1BC
+ 07:E242:A5 30     LDA $0030 = #$00
+ 07:E244:F0 05     BEQ $E24B
+ 07:E246:A9 00     LDA #$00
+ 07:E248:8D 48 04  STA $0448 = #$00
+ 07:E24B:20 03 80  JSR $8003
+ 07:E24E:A9 00     LDA #$00
+ 07:E250:85 EE     STA $00EE = #$01
+ 07:E252:20 AD FF  JSR $FFAD
+ 07:E255:E6 EE     INC $00EE = #$01
+ 07:E257:A5 FA     LDA $00FA = #$00
+ 07:E259:D0 AA     BNE $E205
+ 07:E25B:A9 D8     LDA #$D8
+ 07:E25D:8D 60 03  STA $0360 = #$7D
+ 07:E260:60        RTS -----------------------------------------
+================================================================
+TABLE $E261
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E260    0A 00 05 07 00 00 E0 00 E0 10 00 00 11 00 13
+E270 11 00 00 10 00 10 E0 00 00 05 00 07 08 00 00
+================================================================
+FUNCTION $E27F
+ 07:E27F:B9 22 E6  LDA $E622,Y @ $E623 = #$04
+ 07:E282:85 40     STA $0040 = #$10
+ 07:E284:20 44 E5  JSR $E544
+ 07:E287:A8        TAY
+ 07:E288:B9 32 E6  LDA $E632,Y @ $E633 = #$08
+ 07:E28B:85 05     STA $0005 = #$02
+ 07:E28D:A9 00     LDA #$00
+ 07:E28F:85 02     STA $0002 = #$02
+ 07:E291:B9 33 E6  LDA $E633,Y @ $E634 = #$F9
+ 07:E294:48        PHA
+ 07:E295:18        CLC
+ 07:E296:65 07     ADC $0007 = #$7D
+ 07:E298:85 11     STA $0011 = #$84
+ 07:E29A:68        PLA
+ 07:E29B:30 39     BMI $E2D6
+ 07:E29D:B0 06     BCS $E2A5
+ 07:E29F:A5 11     LDA $0011 = #$84
+ 07:E2A1:C9 F0     CMP #$F0
+ 07:E2A3:90 6A     BCC $E30F
+ 07:E2A5:A5 11     LDA $0011 = #$84
+ 07:E2A7:69 0F     ADC #$0F
+ 07:E2A9:85 11     STA $0011 = #$84
+ 07:E2AB:A5 50     LDA $0050 = #$00
+ 07:E2AD:29 C0     AND #$C0
+ 07:E2AF:F0 22     BEQ $E2D3
+ 07:E2B1:30 06     BMI $E2B9
+ 07:E2B3:A5 52     LDA $0052 = #$00
+ 07:E2B5:C5 51     CMP $0051 = #$07
+ 07:E2B7:F0 1A     BEQ $E2D3
+ 07:E2B9:A5 FA     LDA $00FA = #$00
+ 07:E2BB:D0 08     BNE $E2C5
+ 07:E2BD:A5 52     LDA $0052 = #$00
+ 07:E2BF:F0 12     BEQ $E2D3
+ 07:E2C1:C5 51     CMP $0051 = #$07
+ 07:E2C3:F0 0E     BEQ $E2D3
+ 07:E2C5:A5 50     LDA $0050 = #$00
+ 07:E2C7:10 05     BPL $E2CE
+ 07:E2C9:C6 13     DEC $0013 = #$00
+ 07:E2CB:4C 0F E3  JMP $E30F
+ 07:E2CE:E6 13     INC $0013 = #$00
+ 07:E2D0:4C 0F E3  JMP $E30F
+ 07:E2D3:4C 02 E3  JMP $E302
+ 07:E2D6:B0 37     BCS $E30F
+ 07:E2D8:A5 11     LDA $0011 = #$84
+ 07:E2DA:E9 0F     SBC #$0F
+ 07:E2DC:85 11     STA $0011 = #$84
+ 07:E2DE:A5 50     LDA $0050 = #$00
+ 07:E2E0:29 C0     AND #$C0
+ 07:E2E2:F0 1A     BEQ $E2FE
+ 07:E2E4:A5 FA     LDA $00FA = #$00
+ 07:E2E6:D0 08     BNE $E2F0
+ 07:E2E8:A5 52     LDA $0052 = #$00
+ 07:E2EA:F0 12     BEQ $E2FE
+ 07:E2EC:C5 51     CMP $0051 = #$07
+ 07:E2EE:F0 0E     BEQ $E2FE
+ 07:E2F0:A5 50     LDA $0050 = #$00
+ 07:E2F2:10 05     BPL $E2F9
+ 07:E2F4:E6 13     INC $0013 = #$00
+ 07:E2F6:4C 0F E3  JMP $E30F
+ 07:E2F9:C6 13     DEC $0013 = #$00
+ 07:E2FB:4C 0F E3  JMP $E30F
+ 07:E2FE:A9 00     LDA #$00
+ 07:E300:85 11     STA $0011 = #$84
+ 07:E302:A4 05     LDY $0005 = #$02
+ 07:E304:A9 00     LDA #$00
+ 07:E306:99 42 00  STA $0042,Y @ $0043 = #$40
+ 07:E309:88        DEY
+ 07:E30A:10 FA     BPL $E306
+ 07:E30C:4C DC E3  JMP $E3DC
+ 07:E30F:BD 70 03  LDA $0370,X @ $0370 = #$00
+ 07:E312:30 EA     BMI $E2FE
+ 07:E314:A5 11     LDA $0011 = #$84
+ 07:E316:4A        LSR
+ 07:E317:4A        LSR
+ 07:E318:48        PHA
+ 07:E319:29 38     AND #$38
+ 07:E31B:85 21     STA $0021 = #$27
+ 07:E31D:68        PLA
+ 07:E31E:4A        LSR
+ 07:E31F:29 02     AND #$02
+ 07:E321:85 03     STA $0003 = #$00
+ 07:E323:A9 00     LDA #$00
+ 07:E325:85 04     STA $0004 = #$10
+ 07:E327:B9 34 E6  LDA $E634,Y @ $E635 = #$0E
+ 07:E32A:10 02     BPL $E32E
+ 07:E32C:C6 04     DEC $0004 = #$10
+ 07:E32E:18        CLC
+ 07:E32F:7D 30 03  ADC $0330,X @ $0330 = #$E5
+ 07:E332:85 12     STA $0012 = #$EE
+ 07:E334:A5 13     LDA $0013 = #$00
+ 07:E336:65 04     ADC $0004 = #$10
+ 07:E338:85 13     STA $0013 = #$00
+ 07:E33A:A5 12     LDA $0012 = #$EE
+ 07:E33C:85 06     STA $0006 = #$76
+ 07:E33E:4A        LSR
+ 07:E33F:4A        LSR
+ 07:E340:4A        LSR
+ 07:E341:4A        LSR
+ 07:E342:48        PHA
+ 07:E343:29 01     AND #$01
+ 07:E345:05 03     ORA $0003 = #$00
+ 07:E347:85 03     STA $0003 = #$00
+ 07:E349:68        PLA
+ 07:E34A:4A        LSR
+ 07:E34B:05 21     ORA $0021 = #$27
+ 07:E34D:85 21     STA $0021 = #$27
+ 07:E34F:A5 EA     LDA $00EA = #$01
+ 07:E351:20 CF FF  JSR $FFCF
+ 07:E354:A4 13     LDY $0013 = #$00
+ 07:E356:20 59 D9  JSR $D959
+ 07:E359:A4 13     LDY $0013 = #$00
+ 07:E35B:B1 6E     LDA ($6E),Y @ $DABE = #$01
+ 07:E35D:10 04     BPL $E363
+ 07:E35F:A9 00     LDA #$00
+ 07:E361:F0 2B     BEQ $E38E
+ 07:E363:A5 EA     LDA $00EA = #$01
+ 07:E365:20 CF FF  JSR $FFCF
+ 07:E368:20 3B D9  JSR $D93B
+ 07:E36B:A9 00     LDA #$00
+ 07:E36D:20 CF FF  JSR $FFCF
+ 07:E370:20 D4 E5  JSR $E5D4
+ 07:E373:B0 19     BCS $E38E
+ 07:E375:A4 03     LDY $0003 = #$00
+ 07:E377:B1 00     LDA ($00),Y @ $0002 = #$02
+ 07:E379:A8        TAY
+ 07:E37A:B1 6C     LDA ($6C),Y @ $9601 = #$F8
+ 07:E37C:29 F0     AND #$F0
+ 07:E37E:C9 30     CMP #$30
+ 07:E380:D0 0C     BNE $E38E
+ 07:E382:85 BE     STA $00BE = #$00
+ 07:E384:A5 13     LDA $0013 = #$00
+ 07:E386:85 2C     STA $002C = #$0B
+ 07:E388:A5 21     LDA $0021 = #$27
+ 07:E38A:85 2D     STA $002D = #$37
+ 07:E38C:A9 30     LDA #$30
+ 07:E38E:A4 02     LDY $0002 = #$02
+ 07:E390:99 42 00  STA $0042,Y @ $0043 = #$40
+ 07:E393:C5 41     CMP $0041 = #$40
+ 07:E395:90 02     BCC $E399
+ 07:E397:85 41     STA $0041 = #$40
+ 07:E399:05 10     ORA $0010 = #$40
+ 07:E39B:85 10     STA $0010 = #$40
+ 07:E39D:E6 02     INC $0002 = #$02
+ 07:E39F:A5 02     LDA $0002 = #$02
+ 07:E3A1:C5 05     CMP $0005 = #$02
+ 07:E3A3:F0 37     BEQ $E3DC
+ 07:E3A5:E6 40     INC $0040 = #$10
+ 07:E3A7:A4 40     LDY $0040 = #$10
+ 07:E3A9:A5 12     LDA $0012 = #$EE
+ 07:E3AB:48        PHA
+ 07:E3AC:29 10     AND #$10
+ 07:E3AE:85 04     STA $0004 = #$10
+ 07:E3B0:68        PLA
+ 07:E3B1:18        CLC
+ 07:E3B2:79 34 E6  ADC $E634,Y @ $E635 = #$0E
+ 07:E3B5:85 12     STA $0012 = #$EE
+ 07:E3B7:29 10     AND #$10
+ 07:E3B9:C5 04     CMP $0004 = #$10
+ 07:E3BB:F0 B3     BEQ $E370
+ 07:E3BD:A5 03     LDA $0003 = #$00
+ 07:E3BF:49 01     EOR #$01
+ 07:E3C1:85 03     STA $0003 = #$00
+ 07:E3C3:29 01     AND #$01
+ 07:E3C5:D0 A9     BNE $E370
+ 07:E3C7:E6 21     INC $0021 = #$27
+ 07:E3C9:A5 21     LDA $0021 = #$27
+ 07:E3CB:29 07     AND #$07
+ 07:E3CD:D0 8A     BNE $E359
+ 07:E3CF:E6 13     INC $0013 = #$00
+ 07:E3D1:C6 21     DEC $0021 = #$27
+ 07:E3D3:A5 21     LDA $0021 = #$27
+ 07:E3D5:29 38     AND #$38
+ 07:E3D7:85 21     STA $0021 = #$27
+ 07:E3D9:4C 4F E3  JMP $E34F
+ 07:E3DC:4C B3 E5  JMP $E5B3
+=============================================== 
+FUNCTION $E3DF 
+ 07:E3DF:B9 5B E6  LDA $E65B,Y
+ 07:E3E2:85 40     STA $0040
+ 07:E3E4:20 44 E5  JSR $E544
+ 07:E3E7:A8        TAY
+ 07:E3E8:B9 6B E6  LDA $E66B,Y
+ 07:E3EB:85 05     STA $0005
+ 07:E3ED:A9 00     LDA #$00
+ 07:E3EF:85 02     STA $0002
+ 07:E3F1:A9 00     LDA #$00
+ 07:E3F3:85 04     STA $0004
+ 07:E3F5:B9 6C E6  LDA $E66C,Y
+ 07:E3F8:10 02     BPL $E3FC
+ 07:E3FA:C6 04     DEC $0004 = #$10
+ 07:E3FC:18        CLC
+ 07:E3FD:7D 30 03  ADC $0330,X
+ 07:E400:85 12     STA $0012 = #$EE
+ 07:E402:A5 13     LDA $0013 = #$00
+ 07:E404:65 04     ADC $0004 = #$10
+ 07:E406:85 13     STA $0013 = #$00
+ 07:E408:A5 12     LDA $0012 = #$EE
+ 07:E40A:4A        LSR
+ 07:E40B:4A        LSR
+ 07:E40C:4A        LSR
+ 07:E40D:4A        LSR
+ 07:E40E:48        PHA
+ 07:E40F:29 01     AND #$01
+ 07:E411:85 03     STA $0003 = #$00
+ 07:E413:68        PLA
+ 07:E414:4A        LSR
+ 07:E415:85 21     STA $0021 = #$27
+ 07:E417:BD 70 03  LDA $0370,X @ $0370 = #$00
+ 07:E41A:30 3A     BMI $E456
+ 07:E41C:A5 07     LDA $0007 = #$7D
+ 07:E41E:18        CLC
+ 07:E41F:79 6D E6  ADC $E66D,Y @ $E66E = #$0E
+ 07:E422:85 11     STA $0011 = #$84
+ 07:E424:B9 6D E6  LDA $E66D,Y @ $E66E = #$0E
+ 07:E427:10 04     BPL $E42D
+ 07:E429:90 2B     BCC $E456
+ 07:E42B:B0 02     BCS $E42F
+ 07:E42D:B0 06     BCS $E435
+ 07:E42F:A5 11     LDA $0011 = #$84
+ 07:E431:C9 F0     CMP #$F0
+ 07:E433:90 40     BCC $E475
+ 07:E435:A5 11     LDA $0011 = #$84
+ 07:E437:18        CLC
+ 07:E438:69 10     ADC #$10
+ 07:E43A:85 11     STA $0011 = #$84
+ 07:E43C:A5 50     LDA $0050 = #$00
+ 07:E43E:29 C0     AND #$C0
+ 07:E440:F0 0E     BEQ $E450
+ 07:E442:A5 50     LDA $0050 = #$00
+ 07:E444:10 05     BPL $E44B
+ 07:E446:C6 13     DEC $0013 = #$00
+ 07:E448:4C 75 E4  JMP $E475
+ 07:E44B:E6 13     INC $0013 = #$00
+ 07:E44D:4C 75 E4  JMP $E475
+ 
+ 07:E450:A9 EF     LDA #$EF
+ 07:E452:85 11     STA $0011 = #$84
+ 07:E454:D0 1F     BNE $E475
+ 07:E456:A5 11     LDA $0011 = #$84
+ 07:E458:38        SEC
+ 07:E459:E9 10     SBC #$10
+ 07:E45B:85 11     STA $0011 = #$84
+ 07:E45D:A5 50     LDA $0050 = #$00
+ 07:E45F:29 C0     AND #$C0
+ 07:E461:F0 0E     BEQ $E471
+ 07:E463:A5 50     LDA $0050 = #$00
+ 07:E465:10 05     BPL $E46C
+ 07:E467:E6 13     INC $0013 = #$00
+ 07:E469:4C 75 E4  JMP $E475
+ 07:E46C:C6 13     DEC $0013 = #$00
+ 07:E46E:4C 75 E4  JMP $E475
+ 
+ 07:E471:A9 00     LDA #$00
+ 07:E473:85 11     STA $0011 = #$84
+ 07:E475:A5 11     LDA $0011 = #$84
+ 07:E477:85 06     STA $0006 = #$76
+ 07:E479:4A        LSR
+ 07:E47A:4A        LSR
+ 07:E47B:48        PHA
+ 07:E47C:29 38     AND #$38
+ 07:E47E:05 21     ORA $0021 = #$27
+ 07:E480:85 21     STA $0021 = #$27
+ 07:E482:68        PLA
+ 07:E483:4A        LSR
+ 07:E484:29 02     AND #$02
+ 07:E486:05 03     ORA $0003 = #$00
+ 07:E488:85 03     STA $0003 = #$00
+ 07:E48A:A5 EA     LDA $00EA = #$01
+ 07:E48C:20 CF FF  JSR $FFCF
+ 07:E48F:A4 13     LDY $0013 = #$00
+ 07:E491:20 59 D9  JSR $D959
+ 07:E494:A4 13     LDY $0013 = #$00
+ 07:E496:B1 6E     LDA ($6E),Y @ $DABE = #$01
+ 07:E498:10 04     BPL $E49E
+ 07:E49A:A9 00     LDA #$00
+ 07:E49C:F0 2B     BEQ $E4C9
+ 07:E49E:A5 EA     LDA $00EA = #$01
+ 07:E4A0:20 CF FF  JSR $FFCF
+ 07:E4A3:20 3B D9  JSR $D93B
+ 07:E4A6:A9 00     LDA #$00
+ 07:E4A8:20 CF FF  JSR $FFCF
+ 07:E4AB:20 D4 E5  JSR $E5D4
+ 07:E4AE:B0 19     BCS $E4C9
+ 07:E4B0:A4 03     LDY $0003 = #$00
+ 07:E4B2:B1 00     LDA ($00),Y @ $0002 = #$02
+ 07:E4B4:A8        TAY
+ 07:E4B5:B1 6C     LDA ($6C),Y
+ 07:E4B7:29 F0     AND #$F0
+ 07:E4B9:C9 30     CMP #$30
+ 07:E4BB:D0 0C     BNE $E4C9
+ 07:E4BD:85 BE     STA $00BE = #$00
+ 07:E4BF:A5 13     LDA $0013 = #$00
+ 07:E4C1:85 2C     STA $002C = #$0B
+ 07:E4C3:A5 21     LDA $0021 = #$27
+ 07:E4C5:85 2D     STA $002D = #$37
+ 07:E4C7:A9 30     LDA #$30
+ 07:E4C9:A4 02     LDY $0002 = #$02
+ 07:E4CB:99 42 00  STA $0042,Y @ $0043 = #$40
+ 07:E4CE:C5 41     CMP $0041 = #$40
+ 07:E4D0:90 02     BCC $E4D4
+ 07:E4D2:85 41     STA $0041 = #$40
+ 07:E4D4:05 10     ORA $0010 = #$40
+ 07:E4D6:85 10     STA $0010 = #$40
+ 07:E4D8:E6 02     INC $0002 = #$02
+ 07:E4DA:A5 02     LDA $0002 = #$02
+ 07:E4DC:C5 05     CMP $0005 = #$02
+ 07:E4DE:F0 61     BEQ $E541
+ 07:E4E0:E6 40     INC $0040 = #$10
+ 07:E4E2:A4 40     LDY $0040 = #$10
+ 07:E4E4:A5 11     LDA $0011 = #$84
+ 07:E4E6:48        PHA
+ 07:E4E7:29 10     AND #$10
+ 07:E4E9:85 04     STA $0004 = #$10
+ 07:E4EB:68        PLA
+ 07:E4EC:18        CLC
+ 07:E4ED:79 6D E6  ADC $E66D,Y @ $E66E = #$0E
+ 07:E4F0:85 11     STA $0011 = #$84
+ 07:E4F2:29 10     AND #$10
+ 07:E4F4:C5 04     CMP $0004 = #$10
+ 07:E4F6:F0 B3     BEQ $E4AB
+ 07:E4F8:A5 11     LDA $0011 = #$84
+ 07:E4FA:C9 F0     CMP #$F0
+ 07:E4FC:90 2C     BCC $E52A
+ 07:E4FE:69 0F     ADC #$0F
+ 07:E500:85 11     STA $0011 = #$84
+ 07:E502:A5 27     LDA $0027 = #$01
+ 07:E504:C9 04     CMP #$04
+ 07:E506:B0 08     BCS $E510
+ 07:E508:A9 EF     LDA #$EF
+ 07:E50A:85 11     STA $0011 = #$84
+ 07:E50C:A9 00     LDA #$00
+ 07:E50E:F0 B9     BEQ $E4C9
+ 07:E510:A5 03     LDA $0003 = #$00
+ 07:E512:29 FD     AND #$FD
+ 07:E514:85 03     STA $0003 = #$00
+ 07:E516:A5 21     LDA $0021 = #$27
+ 07:E518:29 07     AND #$07
+ 07:E51A:85 21     STA $0021 = #$27
+ 07:E51C:A5 50     LDA $0050 = #$00
+ 07:E51E:10 05     BPL $E525
+ 07:E520:C6 13     DEC $0013 = #$00
+ 07:E522:4C 8A E4  JMP $E48A
+ 07:E525:E6 13     INC $0013 = #$00
+ 07:E527:4C 8A E4  JMP $E48A
+ 07:E52A:A5 03     LDA $0003 = #$00
+ 07:E52C:49 02     EOR #$02
+ 07:E52E:85 03     STA $0003 = #$00
+ 07:E530:29 02     AND #$02
+ 07:E532:F0 03     BEQ $E537
+ 07:E534:4C AB E4  JMP $E4AB
+ 07:E537:A5 21     LDA $0021 = #$27
+ 07:E539:18        CLC
+ 07:E53A:69 08     ADC #$08
+ 07:E53C:85 21     STA $0021 = #$27
+ 07:E53E:4C 94 E4  JMP $E494
+ 07:E541:4C B3 E5  JMP $E5B3
+ 07:E544:48        PHA
+ 07:E545:A5 50     LDA $0050 = #$00
+ 07:E547:29 C0     AND #$C0
+ 07:E549:F0 41     BEQ $E58C
+ 07:E54B:BD 40 03  LDA $0340,X @ $0340 = #$00
+ 07:E54E:18        CLC
+ 07:E54F:7D 70 03  ADC $0370,X @ $0370 = #$00
+ 07:E552:85 13     STA $0013 = #$00
+ 07:E554:BD 60 03  LDA $0360,X @ $0360 = #$7D
+ 07:E557:85 07     STA $0007 = #$7D
+ 07:E559:BD 70 03  LDA $0370,X @ $0370 = #$00
+ 07:E55C:C5 FB     CMP $00FB = #$00
+ 07:E55E:F0 44     BEQ $E5A4
+ 07:E560:A5 FA     LDA $00FA = #$00
+ 07:E562:D0 40     BNE $E5A4
+ 07:E564:A5 52     LDA $0052 = #$00
+ 07:E566:F0 0D     BEQ $E575
+ 07:E568:C5 51     CMP $0051 = #$07
+ 07:E56A:D0 38     BNE $E5A4
+ 07:E56C:BD 70 03  LDA $0370,X @ $0370 = #$00
+ 07:E56F:C5 FB     CMP $00FB = #$00
+ 07:E571:B0 0B     BCS $E57E
+ 07:E573:90 2F     BCC $E5A4
+ 07:E575:BD 70 03  LDA $0370,X @ $0370 = #$00
+ 07:E578:C5 FB     CMP $00FB = #$00
+ 07:E57A:90 02     BCC $E57E
+ 07:E57C:B0 26     BCS $E5A4
+ 07:E57E:BD 40 03  LDA $0340,X @ $0340 = #$00
+ 07:E581:18        CLC
+ 07:E582:65 FB     ADC $00FB = #$00
+ 07:E584:85 13     STA $0013 = #$00
+ 07:E586:A9 00     LDA #$00
+ 07:E588:85 07     STA $0007 = #$7D
+ 07:E58A:F0 18     BEQ $E5A4
+ 07:E58C:BD 40 03  LDA $0340,X @ $0340 = #$00
+ 07:E58F:18        CLC
+ 07:E590:65 FB     ADC $00FB = #$00
+ 07:E592:85 13     STA $0013 = #$00
+ 07:E594:BD 60 03  LDA $0360,X @ $0360 = #$7D
+ 07:E597:85 07     STA $0007 = #$7D
+ 07:E599:BD 70 03  LDA $0370,X @ $0370 = #$00
+ 07:E59C:C5 FB     CMP $00FB = #$00
+ 07:E59E:F0 04     BEQ $E5A4
+ 07:E5A0:A9 00     LDA #$00
+ 07:E5A2:85 07     STA $0007 = #$7D
+ 07:E5A4:A9 00     LDA #$00
+ 07:E5A6:85 10     STA $0010 = #$40
+ 07:E5A8:85 41     STA $0041 = #$40
+ 07:E5AA:85 BE     STA $00BE = #$00
+ 07:E5AC:A9 00     LDA #$00
+ 07:E5AE:20 CF FF  JSR $FFCF
+ 07:E5B1:68        PLA
+ 07:E5B2:60        RTS -----------------------------------------
+ 07:E5B3:A5 10     LDA $0010 = #$40
+ 07:E5B5:29 10     AND #$10
+ 07:E5B7:D0 16     BNE $E5CF
+ 07:E5B9:BD 00 04  LDA $0400,X @ $0400 = #$D0
+ 07:E5BC:29 DF     AND #$DF
+ 07:E5BE:9D 00 04  STA $0400,X @ $0400 = #$D0
+ 07:E5C1:A5 41     LDA $0041 = #$40
+ 07:E5C3:C9 20     CMP #$20
+ 07:E5C5:D0 08     BNE $E5CF
+ 07:E5C7:BD 00 04  LDA $0400,X @ $0400 = #$D0
+ 07:E5CA:09 20     ORA #$20
+ 07:E5CC:9D 00 04  STA $0400,X @ $0400 = #$D0
+ 07:E5CF:A5 9B     LDA $009B = #$04
+ 07:E5D1:4C CF FF  JMP $FFCF
+ 07:E5D4:A5 E9     LDA $00E9 = #$02
+ 07:E5D6:C9 05     CMP #$05
+ 07:E5D8:F0 22     BEQ $E5FC
+ 07:E5DA:AD 10 01  LDA $0110 = #$00
+ 07:E5DD:0D 11 01  ORA $0111 = #$00
+ 07:E5E0:F0 3E     BEQ $E620
+ 07:E5E2:A0 00     LDY #$00
+ 07:E5E4:B9 10 01  LDA $0110,Y @ $0111 = #$00
+ 07:E5E7:C5 13     CMP $0013 = #$00
+ 07:E5E9:D0 2F     BNE $E61A
+ 07:E5EB:B9 11 01  LDA $0111,Y @ $0112 = #$00
+ 07:E5EE:C5 21     CMP $0021 = #$27
+ 07:E5F0:D0 28     BNE $E61A
+ 07:E5F2:A5 E9     LDA $00E9 = #$02
+ 07:E5F4:C9 01     CMP #$01
+ 07:E5F6:F0 08     BEQ $E600
+ 07:E5F8:C9 02     CMP #$02
+ 07:E5FA:F0 10     BEQ $E60C
+ 07:E5FC:A9 40     LDA #$40
+ 07:E5FE:38        SEC
+ 07:E5FF:60        RTS -----------------------------------------
+ 07:E600:A5 13     LDA $0013 = #$00
+ 07:E602:C9 09     CMP #$09
+ 07:E604:F0 10     BEQ $E616
+ 07:E606:C9 0A     CMP #$0A
+ 07:E608:F0 0C     BEQ $E616
+ 07:E60A:D0 F0     BNE $E5FC
+ 07:E60C:A5 13     LDA $0013 = #$00
+ 07:E60E:C9 02     CMP #$02
+ 07:E610:F0 04     BEQ $E616
+ 07:E612:C9 04     CMP #$04
+ 07:E614:D0 E6     BNE $E5FC
+ 07:E616:A9 00     LDA #$00
+ 07:E618:38        SEC
+ 07:E619:60        RTS -----------------------------------------
+ 07:E61A:C8        INY
+ 07:E61B:C8        INY
+ 07:E61C:C0 20     CPY #$20
+ 07:E61E:D0 C4     BNE $E5E4
+ 07:E620:18        CLC
+ 07:E621:60        RTS -----------------------------------------
+================================================================
+DATA TABLE $E622
+
+================================================================
+FUNCTION $E87E
+ 07:E87E:A5 E9     LDA $00E9 ; Current level 
+ 07:E880:C9 04     CMP #$04  ; Check if Level 5 (Ursula's Castle)
+ 07:E882:D0 3C     BNE $E8C0 ; Exit if not
+ 
+ 07:E884:A0 00     LDY #$00
+ 07:E886:AD 40 03  LDA $0340 ; Ariel's x-position (high)
+ 07:E889:D9 0C EA  CMP $EA0C,Y ; #$01
+ 07:E88C:D0 2A     BNE $E8B8
+ 
+ 07:E88E:AD 30 03  LDA $0330 ; Ariel's x-position (mid)
+ 07:E891:38        SEC
+ 07:E892:F9 0D EA  SBC $EA0D,Y ; #$90
+ 07:E895:B0 04     BCS $E89B
+ 
+ 07:E897:49 FF     EOR #$FF
+ 07:E899:69 01     ADC #$01    ; Absolute value?
+ 
+ 07:E89B:C9 10     CMP #$10
+ 07:E89D:B0 19     BCS $E8B8
+ 
+ 07:E89F:AD 70 03  LDA $0370 ; Ariel's y-position (high)
+ 07:E8A2:D9 0E EA  CMP $EA0E,Y ; #$00
+ 07:E8A5:D0 11     BNE $E8B8
+ 
+ 07:E8A7:AD 60 03  LDA $0360 ; Ariel's y-position (low)
+ 07:E8AA:38        SEC
+ 07:E8AB:F9 0F EA  SBC $EA0F,Y ; #$50
+ 07:E8AE:B0 04     BCS $E8B4
+ 07:E8B0:49 FF     EOR #$FF
+ 07:E8B2:69 01     ADC #$01
+ 07:E8B4:C9 10     CMP #$10
+ 07:E8B6:90 09     BCC $E8C1
+ 
+ 07:E8B8:C8        INY
+ 07:E8B9:C8        INY
+ 07:E8BA:C8        INY
+ 07:E8BB:C8        INY
+ 07:E8BC:C0 2C     CPY #$2C
+ 07:E8BE:D0 C6     BNE $E886
+ 07:E8C0:60        RTS -----------------------------------------
+ 07:E8C1:A5 30     LDA $0030
+ 07:E8C3:C9 07     CMP #$07
+ 07:E8C5:F0 F9     BEQ $E8C0
+ 07:E8C7:A5 14     LDA $0014
+ 07:E8C9:29 80     AND #$80
+ 07:E8CB:F0 F3     BEQ $E8C0
+ 07:E8CD:98        TYA
+ 07:E8CE:4A        LSR
+ 07:E8CF:4A        LSR
+ 07:E8D0:48        PHA
+ 07:E8D1:A9 00     LDA #$00
+ 07:E8D3:85 EE     STA $00EE = #$00
+ 07:E8D5:20 EC C1  JSR $C1EC
+ 07:E8D8:20 D3 C1  JSR $C1D3
+ 07:E8DB:A9 04     LDA #$04
+ 07:E8DD:85 97     STA $0097 = #$3C
+ 07:E8DF:20 BC C1  JSR $C1BC
+ 07:E8E2:20 AD FF  JSR $FFAD
+ 07:E8E5:20 04 C1  JSR $C104
+ 07:E8E8:68        PLA
+ 07:E8E9:A8        TAY
+ 07:E8EA:85 0A     STA $000A = #$00
+ 07:E8EC:B9 8C EA  LDA $EA8C,Y @ $EA8F = #$4D
+ 07:E8EF:85 08     STA $0008 = #$00
+ 07:E8F1:B9 97 EA  LDA $EA97,Y @ $EA9A = #$EA
+ 07:E8F4:85 09     STA $0009 = #$00
+ 07:E8F6:A0 00     LDY #$00
+ 07:E8F8:84 FC     STY $00FC = #$00
+ 07:E8FA:84 FA     STY $00FA = #$00
+ 07:E8FC:84 F7     STY $00F7 = #$00
+ 07:E8FE:84 F8     STY $00F8 = #$00
+ 07:E900:A5 0A     LDA $000A = #$00
+ 07:E902:C9 05     CMP #$05
+ 07:E904:F0 04     BEQ $E90A
+ 07:E906:C9 07     CMP #$07
+ 07:E908:D0 08     BNE $E912
+ 07:E90A:A5 28     LDA $0028 = #$00
+ 07:E90C:C9 01     CMP #$01
+ 07:E90E:D0 02     BNE $E912
+ 07:E910:A0 07     LDY #$07
+ 07:E912:A5 0A     LDA $000A = #$00
+ 07:E914:85 28     STA $0028 = #$00
+ 07:E916:B1 08     LDA ($08),Y @ $0003 = #$82
+ 07:E918:85 0F     STA $000F = #$F0
+ 07:E91A:85 20     STA $0020 = #$01
+ 07:E91C:C8        INY
+ 07:E91D:B1 08     LDA ($08),Y @ $0003 = #$82
+ 07:E91F:85 FD     STA $00FD = #$00
+ 07:E921:8D 40 03  STA $0340 = #$00
+ 07:E924:85 33     STA $0033 = #$00
+ 07:E926:C8        INY
+ 07:E927:B1 08     LDA ($08),Y @ $0003 = #$82
+ 07:E929:8D 30 03  STA $0330 = #$40
+ 07:E92C:85 32     STA $0032 = #$40
+ 07:E92E:C8        INY
+ 07:E92F:B1 08     LDA ($08),Y @ $0003 = #$82
+ 07:E931:85 FB     STA $00FB = #$00
+ 07:E933:8D 70 03  STA $0370 = #$00
+ 07:E936:85 35     STA $0035 = #$00
+ 07:E938:C8        INY
+ 07:E939:B1 08     LDA ($08),Y @ $0003 = #$82
+ 07:E93B:8D 60 03  STA $0360 = #$93
+ 07:E93E:85 34     STA $0034 = #$93
+ 07:E940:C8        INY
+ 07:E941:84 0A     STY $000A = #$00
+ 07:E943:A5 FD     LDA $00FD = #$00
+ 07:E945:4A        LSR
+ 07:E946:6A        ROR
+ 07:E947:4A        LSR
+ 07:E948:29 40     AND #$40
+ 07:E94A:38        SEC
+ 07:E94B:E9 20     SBC #$20
+ 07:E94D:29 7F     AND #$7F
+ 07:E94F:85 22     STA $0022 = #$60
+ 07:E951:A9 80     LDA #$80
+ 07:E953:85 0B     STA $000B = #$00
+ 07:E955:A9 01     LDA #$01
+ 07:E957:85 01     STA $0001 = #$A4
+ 07:E959:85 27     STA $0027 = #$01
+ 07:E95B:20 BD D6  JSR $D6BD
+ 07:E95E:20 CB C0  JSR $C0CB
+ 07:E961:C6 0B     DEC $000B = #$00
+ 07:E963:D0 F0     BNE $E955
+ 07:E965:A4 0A     LDY $000A = #$00
+ 07:E967:B1 08     LDA ($08),Y @ $0003 = #$82
+ 07:E969:85 52     STA $0052 = #$00
+ 07:E96B:C8        INY
+ 07:E96C:B1 08     LDA ($08),Y @ $0003 = #$82
+ 07:E96E:85 0A     STA $000A = #$00
+ 07:E970:A8        TAY
+ 07:E971:B1 70     LDA ($70),Y @ $DA6F = #$00
+ 07:E973:48        PHA
+ 07:E974:29 1F     AND #$1F
+ 07:E976:85 51     STA $0051 = #$05
+ 07:E978:68        PLA
+ 07:E979:29 F0     AND #$F0
+ 07:E97B:05 0A     ORA $000A = #$00
+ 07:E97D:85 50     STA $0050 = #$00
+ 07:E97F:29 C0     AND #$C0
+ 07:E981:F0 08     BEQ $E98B
+ 07:E983:A9 1D     LDA #$1D
+ 07:E985:85 22     STA $0022 = #$60
+ 07:E987:A9 08     LDA #$08
+ 07:E989:85 27     STA $0027 = #$01
+ 07:E98B:A2 09     LDX #$09
+ 07:E98D:A5 0A     LDA $000A = #$00
+ 07:E98F:C9 03     CMP #$03
+ 07:E991:90 01     BCC $E994
+ 07:E993:E8        INX
+ 07:E994:20 6B C2  JSR $C26B
+ 07:E997:20 AD FF  JSR $FFAD
+ 07:E99A:A0 00     LDY #$00
+ 07:E99C:A2 07     LDX #$07
+ 07:E99E:A5 0A     LDA $000A = #$00
+ 07:E9A0:C9 06     CMP #$06
+ 07:E9A2:D0 05     BNE $E9A9
+ 07:E9A4:E8        INX
+ 07:E9A5:A0 08     LDY #$08
+ 07:E9A7:D0 00     BNE $E9A9
+ 07:E9A9:86 0A     STX $000A = #$00
+ 07:E9AB:A2 00     LDX #$00
+ 07:E9AD:B9 FC E9  LDA $E9FC,Y @ $E9FF = #$15
+ 07:E9B0:9D 20 06  STA $0620,X @ $0624 = #$0F
+ 07:E9B3:C8        INY
+ 07:E9B4:E8        INX
+ 07:E9B5:E0 08     CPX #$08
+ 07:E9B7:D0 F4     BNE $E9AD
+ 07:E9B9:A6 0A     LDX $000A = #$00
+ 07:E9BB:20 6B C2  JSR $C26B
+ 
+ 07:E9BE:A5 50     LDA $0050 = #$00
+ 07:E9C0:29 0F     AND #$0F
+ 07:E9C2:A8        TAY
+ 07:E9C3:B9 3B DB  LDA $DB3B,Y @ $DB3E = #$03
+ 07:E9C6:F0 12     BEQ $E9DA
+ 07:E9C8:0A        ASL
+ 07:E9C9:0A        ASL
+ 07:E9CA:0A        ASL
+ 07:E9CB:A8        TAY
+ 07:E9CC:A2 00     LDX #$00
+ 07:E9CE:B9 9B DB  LDA $DB9B,Y @ $DB9E = #$0F
+ 07:E9D1:9D 38 06  STA $0638,X @ $063C = #$0F
+ 07:E9D4:C8        INY
+ 07:E9D5:E8        INX
+ 07:E9D6:E0 08     CPX #$08
+ 07:E9D8:D0 F4     BNE $E9CE
+ 07:E9DA:A9 04     LDA #$04
+ 07:E9DC:20 CD FF  JSR $FFCD
+ 07:E9DF:A4 0F     LDY $000F = #$F0
+ 07:E9E1:B9 80 BF  LDA $BF80,Y @ $BF83 = #$07
+ 07:E9E4:85 9E     STA $009E = #$00
+ 07:E9E6:85 9F     STA $009F = #$00
+ 07:E9E8:A9 01     LDA #$01
+ 07:E9EA:85 F9     STA $00F9 = #$01
+ 07:E9EC:20 0E C1  JSR $C10E
+ 07:E9EF:20 AD FF  JSR $FFAD
+ 07:E9F2:A9 00     LDA #$00
+ 07:E9F4:85 3A     STA $003A = #$00
+ 07:E9F6:20 BA CB  JSR $CBBA
+ 07:E9F9:4C E6 C1  JMP $C1E6
+ 
+================================================================
+TABLE $EA0C
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+EA00                                     01 90 00 50
+EA10 03 A0 00 B0 05 20 00 B0 05 C0 00 B0 07 20 00 90
+EA20 08 E0 00 90 09 20 00 90 0E C0 03 50 0F 40 03 B0 
+EA30 0F C0 04 50 10 30 04 90 
+ 
+    x-pos y-pos
+00: 01 90 00 50
+04: 03 A0 00 B0
+08: 05 20 00 B0
+0C: 05 C0 00 B0
+10: 07 20 00 90
+14: 08 E0 00 90
+18: 09 20 00 90
+1C: 0E C0 03 50
+20: 0F 40 03 B0
+24: 0F C0 04 50 
+28: 10 30 04 90
+===============================================================
+TABLE $EA38
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+EA30                         06 07 20 00 90 00 01 07
+EA40 08 E0 00 90 01 01 08 09 20 00 90 00 02 06 07 20
+EA50 00 90 00 01 00 01 90 00 50 01 00 02 03 A0 00 B0
+EA60 03 00 04 05 20 00 B0 05 00 04 05 20 00 B0 05 00
+EA70 11 0F 40 03 B0 00 05 10 0E C0 03 50 01 04 13 10
+EA80 30 04 90 00 06 12 0F C0 04 50 01 05
+
+00 $EA38: 06 07 20 00 90 00 01
+01 $EA3F: 07 08 E0 00 90 01 01
+02 $EA46: 08 09 20 00 90 00 02
+03 $EA4D: 06 07 20 00 90 00 01
+04 $EA54: 00 01 90 00 50 01 00
+05 $EA5B: 02 03 A0 00 B0 03 00 04 05 20 00 B0 05 00
+06 $EA69: 04 05 20 00 B0 05 00
+07 $EA70: 11 0F 40 03 B0 00
+08 $EA77: 10 0E C0 03 50 01 04
+09 $EA7E: 13 10 30 04 90 00 06 12 0F C0 04 50 01 05
+
+================================================================
+TABLE $EA8C
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+EA80                                     38 3F 46 4D            
+EA90 54 5B 69 70 77 7E 85
+
+TABLE $EA97
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+
+EA90                      EA EA EA EA EA EA EA EA EA
+EAA0 EA EA
+
+00 $EA38
+01 $EA3F
+02 $EA46
+03 $EA4D
+04 $EA54
+05 $EA5B
+06 $EA69
+07 $EA70
+08 $EA77
+09 $EA7E
+0A $EA85
+
+================================================================
+
+================================================================
+FUNCTION $F419
+For all stages but Ursula's castle
+
+ 07:F419:A9 00     LDA #$00
+ 07:F41B:85 EE     STA $00EE
+ 07:F41D:20 EC C1  JSR $C1EC
+ 07:F420:A9 04     LDA #$04
+ 07:F422:85 97     STA $0097
+ 07:F424:20 BC C1  JSR $C1BC
+ 07:F427:20 AD FF  JSR $FFAD
+ 07:F42A:20 04 C1  JSR $C104
+ 07:F42D:A9 20     LDA #$20
+ 07:F42F:A2 00     LDX #$00
+ 07:F431:A0 00     LDY #$00
+ 07:F433:84 FC     STY $00FC = #$00
+ 07:F435:84 FD     STY $00FD = #$00
+ 07:F437:84 FA     STY $00FA
+ 07:F439:84 FB     STY $00FB
+ 07:F43B:20 70 C1  JSR $C170   ; Black out screen?
+ 07:F43E:A2 0D     LDX #$0D
+ 07:F440:20 6B C2  JSR $C26B
+ 
+ 07:F443:A9 06     LDA #$06
+ 07:F445:20 CD FF  JSR $FFCD   ; Set bank to Page 6
+ 07:F448:A5 E9     LDA $00E9   ; Current stage
+ 07:F44A:18        CLC
+ 07:F44B:69 12     ADC #$12    
+ 07:F44D:AA        TAX
+ 07:F44E:20 00 B0  JSR $B000
+ 
+ 07:F451:A0 0F     LDY #$0F
+ 07:F453:B9 72 F4  LDA $F472,Y
+ 07:F456:99 20 06  STA $0620,Y ; Set palettes to blank
+ 07:F459:99 30 06  STA $0630,Y ; Set palettes to blank
+ 07:F45C:88        DEY
+ 07:F45D:10 F4     BPL $F453
+ 
+ 07:F45F:20 0E C1  JSR $C10E
+ 07:F462:20 AD FF  JSR $FFAD
+ 07:F465:20 E6 C1  JSR $C1E6
+ 07:F468:A9 0C     LDA #$0C
+ 07:F46A:20 9E FC  JSR $FC9E
+ 07:F46D:A2 B4     LDX #$B4
+ 07:F46F:4C A6 FF  JMP $FFA6
+=======================================================================
+TABLE $F472 
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+F470       0F 20 20 20 0F 20 20 20 0F 20 20 20 0F 20
+F480 20 20
+================================================================
+FUNCTION $F600
+ 07:F600:AD 30 03  LDA $0330   ; Ariel's x-position (low)
+ 07:F603:85 02     STA $0002
+ 07:F605:AD 40 03  LDA $0340   ; Ariel's x-position (high)
+ 07:F608:85 03     STA $0003
+ 07:F60A:BD 00 04  LDA $0400,X ; Orientation of object 
+ 07:F60D:09 40     ORA #$40
+ 07:F60F:9D 00 04  STA $0400,X ; Set #$40 flag 
+ 07:F612:20 87 F8  JSR $F887   ; Advance object to right 
+ 07:F615:E0 00     CPX #$00    ; Check if object is Ariel
+ 07:F617:D0 1D     BNE $F636   ; If rolling over to new scren section?
+ 
+ 07:F619:20 61 FA  JSR $FA61
+ 07:F61C:90 18     BCC $F636
+ 07:F61E:20 9B E6  JSR $E69B
+ 07:F621:AD 30 03  LDA $0330 = #$21
+ 07:F624:38        SEC
+ 07:F625:E5 02     SBC $0002 = #$02
+ 07:F627:85 02     STA $0002 = #$02
+ 07:F629:AD 40 03  LDA $0340 = #$0C
+ 07:F62C:E5 03     SBC $0003 = #$03
+ 07:F62E:05 02     ORA $0002 = #$02
+ 07:F630:B0 04     BCS $F636
+ 07:F632:C8        INY
+ 07:F633:4C B0 F6  JMP $F6B0
+ 
+ 
+ 07:F636:20 DF E3  JSR $E3DF
+ 07:F639:18        CLC
+ 07:F63A:A5 10     LDA $0010 = #$40
+ 07:F63C:29 10     AND #$10
+ 07:F63E:D0 03     BNE $F643
+ 07:F640:4C C3 F6  JMP $F6C3
+ 07:F643:20 9B E6  JSR $E69B
+ 07:F646:E0 00     CPX #$00
+ 07:F648:F0 02     BEQ $F64C
+ 07:F64A:38        SEC
+ 07:F64B:60        RTS -----------------------------------------
+ 07:F64C:A0 06     LDY #$06
+ 07:F64E:20 DF E3  JSR $E3DF
+ 07:F651:A5 42     LDA $0042 = #$40
+ 07:F653:C9 60     CMP #$60
+ 07:F655:F0 17     BEQ $F66E
+ 07:F657:C9 80     CMP #$80
+ 07:F659:F0 13     BEQ $F66E
+ 07:F65B:A5 43     LDA $0043 = #$40
+ 07:F65D:C9 A0     CMP #$A0
+ 07:F65F:F0 04     BEQ $F665
+ 07:F661:C9 C0     CMP #$C0
+ 07:F663:D0 E5     BNE $F64A
+ 07:F665:A9 01     LDA #$01
+ 07:F667:85 11     STA $0011 = #$30
+ 07:F669:20 EF E6  JSR $E6EF
+ 07:F66C:38        SEC
+ 07:F66D:60        RTS -----------------------------------------
+ 07:F66E:A9 01     LDA #$01
+ 07:F670:20 D3 E6  JSR $E6D3
+ 07:F673:38        SEC
+ 07:F674:60        RTS -----------------------------------------
+================================================================
+FUNCTION $F675
+ 07:F675:AD 30 03  LDA $0330
+ 07:F678:85 02     STA $0002
+ 07:F67A:AD 40 03  LDA $0340
+ 07:F67D:85 03     STA $0003   ; Ariel x-position
+ 
+ 07:F67F:BD 00 04  LDA $0400,X ; Check orientation of object
+ 07:F682:29 BF     AND #$BF    ; Flags 1011 1111
+ 07:F684:9D 00 04  STA $0400,X ; Clear #$40 flag
+ 07:F687:20 A5 F8  JSR $F8A5   ; object X moves left
+ 
+ 07:F68A:E0 00     CPX #$00
+ 07:F68C:D0 22     BNE $F6B0
+ 07:F68E:20 61 FA  JSR $FA61
+ 07:F691:90 1D     BCC $F6B0
+ 07:F693:A5 12     LDA $0012 = #$B0
+ 07:F695:18        CLC
+ 07:F696:20 BE E6  JSR $E6BE
+ 07:F699:AD 30 03  LDA $0330 = #$E9
+ 07:F69C:38        SEC
+ 07:F69D:E5 02     SBC $0002 = #$19
+ 07:F69F:85 02     STA $0002 = #$19
+ 07:F6A1:AD 40 03  LDA $0340 = #$02
+ 07:F6A4:E5 03     SBC $0003 = #$85
+ 07:F6A6:05 02     ORA $0002 = #$19
+ 07:F6A8:F0 06     BEQ $F6B0
+ 07:F6AA:90 04     BCC $F6B0
+ 07:F6AC:88        DEY
+ 07:F6AD:4C 36 F6  JMP $F636
+ 07:F6B0:20 DF E3  JSR $E3DF
+ 07:F6B3:18        CLC
+ 07:F6B4:A5 10     LDA $0010 = #$00
+ 07:F6B6:29 10     AND #$10
+ 07:F6B8:F0 09     BEQ $F6C3
+ 07:F6BA:20 B7 E6  JSR $E6B7
+ 07:F6BD:E0 00     CPX #$00
+ 07:F6BF:F0 8B     BEQ $F64C
+ 07:F6C1:38        SEC
+ 07:F6C2:60        RTS -----------------------------------------
+ 07:F6C3:E0 00     CPX #$00
+ 07:F6C5:D0 14     BNE $F6DB
+ 07:F6C7:A5 42     LDA $0042 = #$30
+ 07:F6C9:C9 60     CMP #$60
+ 07:F6CB:F0 23     BEQ $F6F0
+ 07:F6CD:C9 80     CMP #$80
+ 07:F6CF:F0 0C     BEQ $F6DD
+ 07:F6D1:A5 43     LDA $0043 = #$40
+ 07:F6D3:C9 A0     CMP #$A0
+ 07:F6D5:F0 2F     BEQ $F706
+ 07:F6D7:C9 C0     CMP #$C0
+ 07:F6D9:F0 3C     BEQ $F717
+ 07:F6DB:18        CLC
+ 07:F6DC:60        RTS -----------------------------------------
+ 07:F6DD:A5 06     LDA $0006 = #$98
+ 07:F6DF:29 0F     AND #$0F
+ 07:F6E1:85 00     STA $0000 = #$00
+ 07:F6E3:A5 12     LDA $0012 = #$B0
+ 07:F6E5:49 0F     EOR #$0F
+ 07:F6E7:29 0F     AND #$0F
+ 07:F6E9:38        SEC
+ 07:F6EA:E5 00     SBC $0000 = #$00
+ 07:F6EC:90 ED     BCC $F6DB
+ 07:F6EE:B0 0F     BCS $F6FF
+ 07:F6F0:A5 06     LDA $0006 = #$98
+ 07:F6F2:29 0F     AND #$0F
+ 07:F6F4:85 00     STA $0000 = #$00
+ 07:F6F6:A5 12     LDA $0012 = #$B0
+ 07:F6F8:29 0F     AND #$0F
+ 07:F6FA:38        SEC
+ 07:F6FB:E5 00     SBC $0000 = #$00
+ 07:F6FD:90 DC     BCC $F6DB
+ 07:F6FF:85 11     STA $0011 = #$00
+ 07:F701:20 D3 E6  JSR $E6D3
+ 07:F704:38        SEC
+ 07:F705:60        RTS -----------------------------------------
+ 07:F706:A5 11     LDA $0011 = #$00
+ 07:F708:29 0F     AND #$0F
+ 07:F70A:85 00     STA $0000 = #$00
+ 07:F70C:A5 12     LDA $0012 = #$B0
+ 07:F70E:29 0F     AND #$0F
+ 07:F710:38        SEC
+ 07:F711:E5 00     SBC $0000 = #$00
+ 07:F713:B0 C6     BCS $F6DB
+ 07:F715:90 11     BCC $F728
+ 07:F717:A5 11     LDA $0011 = #$00
+ 07:F719:29 0F     AND #$0F
+ 07:F71B:85 00     STA $0000 = #$00
+ 07:F71D:A5 12     LDA $0012 = #$B0
+ 07:F71F:49 0F     EOR #$0F
+ 07:F721:29 0F     AND #$0F
+ 07:F723:38        SEC
+ 07:F724:E5 00     SBC $0000 = #$00
+ 07:F726:B0 B3     BCS $F6DB
+ 07:F728:49 FF     EOR #$FF
+ 07:F72A:69 01     ADC #$01
+ 07:F72C:85 11     STA $0011 = #$00
+ 07:F72E:20 EF E6  JSR $E6EF
+ 07:F731:38        SEC
+ 07:F732:60        RTS -----------------------------------------
+================================================================
+FUNCTION $F82F 
+ 07:F82F:BD B0 03  LDA $03B0,X ; Check if screen section y is greater than #$80
+ 07:F832:10 3B     BPL $F86F
+ 
+ 07:F834:BD 70 03  LDA $0370,X ; y-position (high)
+ 07:F837:85 10     STA $0010 = #$40
+ 07:F839:20 22 F9  JSR $F922   ; object moves up 
+ 07:F83C:E0 00     CPX #$00
+ 07:F83E:F0 1B     BEQ $F85B
+ 
+ 07:F840:A5 50     LDA $0050
+ 07:F842:29 C0     AND #$C0
+ 07:F844:F0 08     BEQ $F84E   ; If 1100 0000 is set
+ 07:F846:30 13     BMI $F85B   ; If 1000 0000 is set
+ 
+ 07:F848:A5 52     LDA $0052
+ 07:F84A:C5 51     CMP $0051
+ 07:F84C:D0 0D     BNE $F85B
+ 07:F84E:A5 10     LDA $0010 = #$40
+ 07:F850:DD 70 03  CMP $0370,X ; y-position (high)
+ 07:F853:F0 06     BEQ $F85B
+ 
+ 07:F855:A9 00     LDA #$00
+ 07:F857:85 10     STA $0010 = #$40
+ 07:F859:F0 03     BEQ $F85E
+ 07:F85B:20 7F E2  JSR $E27F
+ 07:F85E:20 70 F9  JSR $F970
+ 07:F861:A5 10     LDA $0010 = #$40
+ 07:F863:29 10     AND #$10
+ 07:F865:F0 1E     BEQ $F885
+ 07:F867:20 EF E6  JSR $E6EF
+ 07:F86A:20 99 F9  JSR $F999
+ 07:F86D:38        SEC
+ 07:F86E:60        RTS -----------------------------------------
+ 07:F86F:C8        INY
+ 07:F870:20 4A F9  JSR $F94A
+ 07:F873:20 7F E2  JSR $E27F
+ 07:F876:20 70 F9  JSR $F970
+ 07:F879:A5 10     LDA $0010 = #$40
+ 07:F87B:29 10     AND #$10
+ 07:F87D:F0 06     BEQ $F885
+ 07:F87F:20 CD E6  JSR $E6CD
+ 07:F882:20 99 F9  JSR $F999
+ 07:F885:18        CLC
+ 07:F886:60        RTS -----------------------------------------
+================================================================
+FUNCTION $F887
+Move object to right a number of subpixels equal to its x-speed
+
+ 07:F887:BD 20 03  LDA $0320,X
+ 07:F88A:18        CLC
+ 07:F88B:7D 80 03  ADC $0380,X
+ 07:F88E:9D 20 03  STA $0320,X
+ 07:F891:BD 30 03  LDA $0330,X
+ 07:F894:7D 90 03  ADC $0390,X
+ 07:F897:9D 30 03  STA $0330,X
+ 07:F89A:90 08     BCC $F8A4
+ 07:F89C:BD 40 03  LDA $0340,X
+ 07:F89F:69 00     ADC #$00
+ 07:F8A1:9D 40 03  STA $0340,X
+ 07:F8A4:60        RTS -----------------------------------------
+================================================================
+FUNCTION $F8A5
+Move object to left a number of subpixels equal to its x-velocity
+
+ 07:F8A5:BD 20 03  LDA $0320,X
+ 07:F8A8:38        SEC
+ 07:F8A9:FD 80 03  SBC $0380,X
+ 07:F8AC:9D 20 03  STA $0320,X
+ 07:F8AF:BD 30 03  LDA $0330,X
+ 07:F8B2:FD 90 03  SBC $0390,X
+ 07:F8B5:9D 30 03  STA $0330,X
+ 07:F8B8:B0 08     BCS $F8C2
+ 07:F8BA:BD 40 03  LDA $0340,X
+ 07:F8BD:E9 00     SBC #$00
+ 07:F8BF:9D 40 03  STA $0340,X
+ 07:F8C2:60        RTS -----------------------------------------
+================================================================
+FUNCTION $F8C3
+Increase y-position (go down)
+
+ 07:F8C3:BD 50 03  LDA $0350,X
+ 07:F8C6:18        CLC
+ 07:F8C7:7D A0 03  ADC $03A0,X
+ 07:F8CA:9D 50 03  STA $0350,X
+ 07:F8CD:BD 60 03  LDA $0360,X
+ 07:F8D0:7D B0 03  ADC $03B0,X
+ 07:F8D3:9D 60 03  STA $0360,X
+ 07:F8D6:C9 F0     CMP #$F0
+ 07:F8D8:90 10     BCC $F8EA
+ 07:F8DA:69 0F     ADC #$0F
+ 07:F8DC:9D 60 03  STA $0360,X
+ 07:F8DF:A5 50     LDA $0050   ; Vertical screen scroll?
+ 07:F8E1:10 04     BPL $F8E7
+ 07:F8E3:DE 70 03  DEC $0370,X
+ 07:F8E6:60        RTS -----------------------------------------
+ 07:F8E7:FE 70 03  INC $0370,X
+ 07:F8EA:60        RTS -----------------------------------------
+================================================================
+FUNCTION $F8EB
+Decrease y-position (go up)
+
+ 07:F8EB:BD 50 03  LDA $0350,X
+ 07:F8EE:38        SEC
+ 07:F8EF:FD A0 03  SBC $03A0,X
+ 07:F8F2:9D 50 03  STA $0350,X
+ 07:F8F5:BD 60 03  LDA $0360,X
+ 07:F8F8:FD B0 03  SBC $03B0,X
+ 07:F8FB:9D 60 03  STA $0360,X
+ 07:F8FE:B0 10     BCS $F910
+ 07:F900:E9 0F     SBC #$0F
+ 07:F902:9D 60 03  STA $0360,X
+ 07:F905:A5 50     LDA $0050   ; Vertical screen scroll?
+ 07:F907:10 04     BPL $F90D
+ 07:F909:FE 70 03  INC $0370,X
+ 07:F90C:60        RTS -----------------------------------------
+ 07:F90D:DE 70 03  DEC $0370,X @ $037E = #$02
+ 07:F910:60        RTS -----------------------------------------
+================================================================
+FUNCTION $F911
+ 07:F911:BD B0 03  LDA $03B0,X ; y-speed (high)
+ 07:F914:10 06     BPL $F91C   ; Jump ahead if greater than #$8000 ??
+ 07:F916:20 22 F9  JSR $F922
+ 07:F919:4C 70 F9  JMP $F970
+ 
+ 07:F91C:20 4A F9  JSR $F94A
+ 07:F91F:4C 70 F9  JMP $F970
+================================================================
+FUNCTION $F922
+Move object x upwards
+Adjust screen section if necessary
+
+ 07:F922:BD 50 03  LDA $0350,X ; y-pos subpixel 
+ 07:F925:38        SEC
+ 07:F926:FD A0 03  SBC $03A0,X ; y-pos speed low
+ 07:F929:9D 50 03  STA $0350,X
+ 07:F92C:BD 60 03  LDA $0360,X ; y-pos middle
+ 07:F92F:FD B0 03  SBC $03B0,X ; y-pos speed high
+ 07:F932:9D 60 03  STA $0360,X 
+ 07:F935:C9 F0     CMP #$F0
+ 07:F937:90 10     BCC $F949   ; Exit
+ 07:F939:69 0F     ADC #$0F
+ 07:F93B:9D 60 03  STA $0360,X ; 
+ 07:F93E:A5 50     LDA $0050 = #$03
+ 07:F940:10 04     BPL $F946
+ 07:F942:DE 70 03  DEC $0370,X @ $037E = #$02
+ 07:F945:60        RTS -----------------------------------------
+ 07:F946:FE 70 03  INC $0370,X @ $037E = #$02
+ 07:F949:60        RTS -----------------------------------------
+================================================================
+FUNCTION $F94A
+ 07:F94A:BD 50 03  LDA $0350,X
+ 07:F94D:38        SEC
+ 07:F94E:FD A0 03  SBC $03A0,X
+ 07:F951:9D 50 03  STA $0350,X
+ 07:F954:BD 60 03  LDA $0360,X
+ 07:F957:FD B0 03  SBC $03B0,X
+ 07:F95A:9D 60 03  STA $0360,X
+ 07:F95D:B0 10     BCS $F96F   ; Exit
+ 07:F95F:E9 0F     SBC #$0F
+ 07:F961:9D 60 03  STA $0360,X
+ 07:F964:A5 50     LDA $0050
+ 07:F966:10 04     BPL $F96C
+ 07:F968:FE 70 03  INC $0370,X ; 
+ 07:F96B:60        RTS -----------------------------------------
+ 07:F96C:DE 70 03  DEC $0370,X ; 
+ 07:F96F:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FA61
+Checks if object X is colliding with another object?
+
+SEC
+CLC = No colliding object found
+
+ 07:FA61:BD 00 04  LDA $0400,X 
+ 07:FA64:10 4E     BPL $FAB4   ; If #$80 flag set, CLC and exit
+ 
+ 07:FA66:84 00     STY $0000   ; object Y
+ 07:FA68:A0 0F     LDY #$0F    ; Ticks down through list 
+ 07:FA6A:84 01     STY $0001
+ 
+ 07:FA6C:B9 00 03  LDA $0300,Y ; Jump to $FAAA if there are any entities
+ 07:FA6F:10 39     BPL $FAAA   ; on-screen other than Ariel & her bubbles
+ 
+ 07:FA71:B9 00 04  LDA $0400,Y ; Jump to $FAAA if the 
+ 07:FA74:10 34     BPL $FAAA   ; #$80 flag of $0400,Y is set
+ 
+ 07:FA76:29 04     AND #$04    ; Jump to $FAAA if the 
+ 07:FA78:D0 30     BNE $FAAA   ; invisible flag (#$04) of $400,Y is set
+ 
+ 07:FA7A:B9 C0 03  LDA $03C0,Y ; Jump to $FAAA if the
+ 07:FA7D:10 2B     BPL $FAAA   ; #$80 flag of $3C0,Y is set
+ 
+ 07:FA7F:20 B6 FA  JSR $FAB6   ; Set correct vertical positioning
+ 07:FA82:20 CF FA  JSR $FACF   ; Set correct horizontal positioning
+ 07:FA85:B9 C0 03  LDA $03C0,Y 
+ 07:FA88:29 1F     AND #$1F    ; Hitbox ID of object Y
+ 07:FA8A:A8        TAY
+ 07:FA8B:A5 11     LDA $0011
+ 07:FA8D:D9 60 FB  CMP $FB60,Y ; Hitbox height
+ 07:FA90:B0 18     BCS $FAAA
+ 07:FA92:38        SEC
+ 07:FA93:B9 80 FB  LDA $FB80,Y ; Hitbox width 
+ 07:FA96:E5 12     SBC $0012
+ 07:FA98:F0 10     BEQ $FAAA
+ 07:FA9A:90 0E     BCC $FAAA   
+ 
+ 07:FA9C:85 12     STA $0012 
+ 07:FA9E:C9 08     CMP #$08
+ 07:FAA0:90 04     BCC $FAA6
+ 07:FAA2:A9 08     LDA #$08
+ 07:FAA4:85 12     STA $0012
+ 07:FAA6:A4 00     LDY $0000 = #$00
+ 07:FAA8:38        SEC
+ 07:FAA9:60        RTS -----------------------------------------
+ 07:FAAA:C6 01     DEC $0001 
+ 07:FAAC:A4 01     LDY $0001 
+ 07:FAAE:C0 02     CPY #$02
+ 07:FAB0:D0 BA     BNE $FA6C
+ 07:FAB2:A4 00     LDY $0000
+ 07:FAB4:18        CLC
+ 07:FAB5:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FAB6
+ 07:FAB6:AD 30 03  LDA $0330 = #$E9
+ 07:FAB9:38        SEC
+ 07:FABA:F9 30 03  SBC $0330,Y @ $0335 = #$00
+ 07:FABD:48        PHA
+ 07:FABE:AD 40 03  LDA $0340 = #$02
+ 07:FAC1:F9 40 03  SBC $0340,Y @ $0345 = #$00
+ 07:FAC4:68        PLA
+ 07:FAC5:B0 05     BCS $FACC
+ 07:FAC7:49 FF     EOR #$FF
+ 07:FAC9:69 01     ADC #$01
+ 07:FACB:18        CLC
+ 07:FACC:85 12     STA $0012 = #$B0
+ 07:FACE:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FACF 
+ 07:FACF:B9 60 03  LDA $0360,Y
+ 07:FAD2:38        SEC
+ 07:FAD3:E5 FA     SBC $00FA   ; Diagonal screen scroll
+ 07:FAD5:B0 02     BCS $FAD9   
+ 07:FAD7:E9 0F     SBC #$0F    
+ 
+ 07:FAD9:85 11     STA $0011 = #$00
+ 07:FADB:AD 60 03  LDA $0360   ; Ariel y-position
+ 07:FADE:38        SEC
+ 07:FADF:E5 FA     SBC $00FA = #$00
+ 07:FAE1:B0 02     BCS $FAE5
+ 07:FAE3:E9 0F     SBC #$0F
+ 
+ 07:FAE5:38        SEC
+ 07:FAE6:E5 11     SBC $0011
+ 07:FAE8:B0 05     BCS $FAEF
+ 07:FAEA:49 FF     EOR #$FF
+ 07:FAEC:69 01     ADC #$01
+ 07:FAEE:18        CLC
+ 
+ 07:FAEF:85 11     STA $0011 = #$00
+ 07:FAF1:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FAF2 
+Check if Ariel is colliding with object X
+Carry clear = success (collision)
+Carry set   = failure (no collision)
+
+ 07:FAF2:A5 30     LDA $0030 ; Check Ariel's current status
+ 07:FAF4:C9 07     CMP #$07  ; Check if in damage animation 
+ 07:FAF6:B0 66     BCS $FB5E ; Exit if so
+ 
+ 07:FAF8:BD 00 04  LDA $0400,X
+ 07:FAFB:10 61     BPL $FB5E ; Exit
+ 
+ 07:FAFD:29 04     AND #$04
+ 07:FAFF:D0 5D     BNE $FB5E ; Exit if invisible flag is set
+ 
+ 07:FB01:BD C0 03  LDA $03C0,X
+ 07:FB04:29 1F     AND #$1F
+ 07:FB06:A8        TAY
+ 07:FB07:AD 30 03  LDA $0330
+ 07:FB0A:38        SEC
+ 07:FB0B:FD 30 03  SBC $0330,X @ $0330 = #$E9
+ 07:FB0E:48        PHA
+ 07:FB0F:AD 40 03  LDA $0340 = #$02
+ 07:FB12:FD 40 03  SBC $0340,X @ $0340 = #$02
+ 07:FB15:68        PLA
+ 07:FB16:B0 04     BCS $FB1C
+ 07:FB18:49 FF     EOR #$FF
+ 07:FB1A:69 01     ADC #$01
+ 07:FB1C:D9 80 FB  CMP $FB80,Y @ $FB85 = #$19
+ 07:FB1F:B0 3D     BCS $FB5E
+ 07:FB21:BD 60 03  LDA $0360,X @ $0360 = #$3F
+ 07:FB24:38        SEC
+ 07:FB25:E5 FA     SBC $00FA = #$00
+ 07:FB27:B0 03     BCS $FB2C
+ 07:FB29:E9 0F     SBC #$0F
+ 07:FB2B:18        CLC
+ 07:FB2C:85 00     STA $0000 = #$00
+ 07:FB2E:BD 70 03  LDA $0370,X @ $0370 = #$00
+ 07:FB31:E5 FB     SBC $00FB = #$00
+ 07:FB33:29 01     AND #$01
+ 07:FB35:D0 27     BNE $FB5E
+ 07:FB37:AD 60 03  LDA $0360 = #$3F
+ 07:FB3A:38        SEC
+ 07:FB3B:E5 FA     SBC $00FA = #$00
+ 07:FB3D:B0 03     BCS $FB42
+ 07:FB3F:E9 0F     SBC #$0F
+ 07:FB41:18        CLC
+ 07:FB42:85 1F     STA $001F = #$3F
+ 07:FB44:AD 70 03  LDA $0370 = #$00
+ 07:FB47:E5 FB     SBC $00FB = #$00
+ 07:FB49:29 01     AND #$01
+ 07:FB4B:D0 11     BNE $FB5E
+ 07:FB4D:A5 1F     LDA $001F = #$3F
+ 07:FB4F:38        SEC
+ 07:FB50:E5 00     SBC $0000 = #$00
+ 07:FB52:B0 04     BCS $FB58
+ 07:FB54:49 FF     EOR #$FF
+ 07:FB56:69 01     ADC #$01
+ 07:FB58:D9 60 FB  CMP $FB60,Y @ $FB65 = #$10
+ 07:FB5B:B0 01     BCS $FB5E
+ 07:FB5D:60        RTS -----------------------------------------
+ 07:FB5E:38        SEC
+ 07:FB5F:60        RTS -----------------------------------------
+================================================================
+DATA TABLE $FB60
+Measure of hitbox height (total height = 2x+1?)
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+FB60 10 0C 14 18 0C 10 10 18 28 20 20 08 08 08 08 08
+FB70 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08 08
+
+DATA TABLE $FB80
+Measure of hitbox width (total width = 2x+1?
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+FB80 11 0D 15 15 15 19 21 19 41 19 11 09 09 09 09 09
+FB90 09 09 09 09 09 09 09 09 09 09 09 09 09 09 09 09
+
+00 = 11,10
+01 = 0D,0C
+02 = 15,14
+03 = 15,18
+04 = 15,0C
+05 = 19,10
+06 = 21,10
+07 = 19,18
+08 = 41,28
+09 = 19,20
+0A = 11,20
+0B-1F = 09,08
+
+================================================================
+FUNCTION $FBA0
+Check if object X is colliding with a bubble.
+If yes, slot # of object will be returned in Y.
+Carry set   = failure (object is not colliding with bubble)
+Carry clear = success (object is colliding with bubble)
+If X = 0-2 (Ariel/Bubbles), function immediately ends in failure.
+
+ 07:FBA0:E0 03     CPX #$03
+ 07:FBA2:90 BA     BCC $FB5E   ; Exit immediately if object X is Ariel or a bubble
+ 07:FBA4:A0 02     LDY #$02    ; Start at bubble #$2
+ 07:FBA6:38        SEC
+ 07:FBA7:B9 00 03  LDA $0300,Y
+ 07:FBAA:30 03     BMI $FBAF   ; Go ahead if object exists 
+ 07:FBAC:4C 3D FC  JMP $FC3D   ; Else skip to next Y value
+ 07:FBAF:B9 00 04  LDA $0400,Y ; Skip to next Y value if object Y has the #$80 flag set (i-frames?)
+ 07:FBB2:10 F8     BPL $FBAC
+ 07:FBB4:BD 00 04  LDA $0400,X ; Skip to next Y value if object X has the #$80 flag set (i-frames?)
+ 07:FBB7:10 F3     BPL $FBAC
+ 07:FBB9:29 04     AND #$04    
+ 07:FBBB:D0 EF     BNE $FBAC   ; Skip to next Y value if object X has the invisible flag set
+ 07:FBBD:B9 10 03  LDA $0310,Y 
+ 07:FBC0:F0 7B     BEQ $FC3D   ; Skip to next Y value if object Y is on Action Loop Zero
+ 07:FBC2:BD 10 03  LDA $0310,X 
+ 07:FBC5:F0 76     BEQ $FC3D   ; Skip to next Y value if object X is on Action Loop Zero
+ 07:FBC7:C9 04     CMP #$04    
+ 07:FBC9:F0 72     BEQ $FC3D   
+ 07:FBCB:C9 5C     CMP #$5C
+ 07:FBCD:F0 6E     BEQ $FC3D
+ 07:FBCF:C9 5D     CMP #$5D    ; Skip to next Y-value if object X is on Action Loop 00,04,5C or 5D
+ 07:FBD1:F0 6A     BEQ $FC3D
+ 07:FBD3:84 00     STY $0000   ; Store address of object Y
+ 07:FBD5:BD C0 03  LDA $03C0,X 
+ 07:FBD8:29 1F     AND #$1F    ; Load bottom 5 bits (0001 1111)
+ 07:FBDA:A8        TAY
+ 07:FBDB:B9 80 FB  LDA $FB80,Y ; Load hitbox shape from table?
+ 07:FBDE:85 01     STA $0001
+ 07:FBE0:B9 60 FB  LDA $FB60,Y
+ 07:FBE3:85 02     STA $0002 
+ 07:FBE5:C6 02     DEC $0002
+ 
+ 07:FBE7:A4 00     LDY $0000   ; Retrieve address of object Y
+ 07:FBE9:B9 30 03  LDA $0330,Y ; Load x-position (middle byte) of object Y
+ 07:FBEC:38        SEC
+ 07:FBED:FD 30 03  SBC $0330,X ; Subtract x-position of object X
+ 07:FBF0:48        PHA         ; Push to stack
+ 07:FBF1:B9 40 03  LDA $0340,Y 
+ 07:FBF4:FD 40 03  SBC $0340,X ; Subtract 
+ 07:FBF7:68        PLA         ; 
+ 07:FBF8:B0 04     BCS $FBFE   
+ 07:FBFA:49 FF     EOR #$FF      
+ 07:FBFC:69 01     ADC #$01    ; Absolute value of difference
+ 07:FBFE:C5 01     CMP $0001   ; Compare against hitbox width
+ 07:FC00:B0 3B     BCS $FC3D   ; Skip to next Y-value if equal to or greater (no collision)
+ 07:FC02:BD 60 03  LDA $0360,X
+ 07:FC05:38        SEC
+ 07:FC06:E5 FA     SBC $00FA = #$00
+ 07:FC08:B0 03     BCS $FC0D
+ 07:FC0A:E9 0F     SBC #$0F
+ 07:FC0C:18        CLC
+ 07:FC0D:85 03     STA $0003 = #$B8
+ 07:FC0F:BD 70 03  LDA $0370,X @ $0379 = #$04
+ 07:FC12:E5 FB     SBC $00FB = #$04
+ 07:FC14:29 01     AND #$01
+ 07:FC16:D0 25     BNE $FC3D
+ 07:FC18:B9 60 03  LDA $0360,Y @ $0375 = #$02
+ 07:FC1B:38        SEC
+ 07:FC1C:E5 FA     SBC $00FA = #$00
+ 07:FC1E:B0 03     BCS $FC23
+ 07:FC20:E9 0F     SBC #$0F
+ 07:FC22:18        CLC
+ 07:FC23:85 1F     STA $001F = #$B8
+ 07:FC25:B9 70 03  LDA $0370,Y @ $0385 = #$40
+ 07:FC28:E5 FB     SBC $00FB = #$04
+ 07:FC2A:29 01     AND #$01
+ 07:FC2C:D0 0F     BNE $FC3D
+ 07:FC2E:A5 1F     LDA $001F = #$B8
+ 07:FC30:38        SEC
+ 07:FC31:E5 03     SBC $0003 = #$B8
+ 07:FC33:B0 04     BCS $FC39
+ 07:FC35:49 FF     EOR #$FF
+ 07:FC37:69 01     ADC #$01
+ 07:FC39:C5 02     CMP $0002 = #$0F
+ 07:FC3B:90 07     BCC $FC44
+ 07:FC3D:88        DEY
+ 07:FC3E:F0 03     BEQ $FC43
+ 07:FC40:4C A6 FB  JMP $FBA6
+ 07:FC43:38        SEC
+ 07:FC44:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FC45
+Spawns a sprite (independent)
+
+Store animation loop A to object X, set animation/action(?) loops to start
+
+ 07:FC45:9D 30 04  STA $0430,X @ $043F
+ 07:FC48:A9 00     LDA #$00
+ 07:FC4A:9D 18 04  STA $0418,X @ $0427
+ 07:FC4D:9D 48 04  STA $0448,X @ $0457
+ 07:FC50:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FC51
+Spawns a sprite (relative to an existing sprite)
+
+Store animation loop A to object Y, set animation/action(?) loops to start
+Set $0400,Y to #$90 PLUS bit #$40 of object X's value (e.g. either #$90 or #$C0)
+Set $0300,Y to #$80
+
+ 07:FC51:99 30 04  STA $0430,Y ; Set animation loop of Y to A
+ 07:FC54:A9 00     LDA #$00
+ 07:FC56:99 18 04  STA $0418,Y ; Set position in animation loop to zero
+ 07:FC59:99 48 04  STA $0448,Y ;
+ 07:FC5C:99 70 03  STA $0370,Y ; Set highest byte of y-position to zero
+ 
+ 07:FC5F:BD 00 04  LDA $0400,X ; Orientation of relative sprite
+ 07:FC62:29 40     AND #$40
+ 07:FC64:09 90     ORA #$90
+ 07:FC66:99 00 04  STA $0400,Y ; Retain #$40 bit and toggle #$90 bits
+ 07:FC69:A9 80     LDA #$80    
+ 07:FC6B:99 00 03  STA $0300,Y
+ 07:FC6E:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FC6F
+If Ariel is to left of object, go left
+else go right?
+
+ 07:FC6F:A9 01     LDA #$01
+ 07:FC71:9D D0 03  STA $03D0,X ; Flag for "turn to left"
+ 
+ 07:FC74:BD 30 03  LDA $0330,X 
+ 07:FC77:38        SEC
+ 07:FC78:ED 30 03  SBC $0330 = #$7C
+ 07:FC7B:BD 40 03  LDA $0340,X @ $0348 = #$06
+ 07:FC7E:ED 40 03  SBC $0340 = #$0F
+ 07:FC81:90 05     BCC $FC88
+ 07:FC83:A9 02     LDA #$02
+ 07:FC85:9D D0 03  STA $03D0,X @ $03D8 = #$02
+ 07:FC88:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FC89 
+ 07:FC89:BD D0 03  LDA $03D0,X @ $03D8 = #$02
+ 07:FC8C:6A        ROR
+ 07:FC8D:6A        ROR
+ 07:FC8E:6A        ROR
+ 07:FC8F:29 40     AND #$40
+ 07:FC91:85 00     STA $0000 = #$00
+ 07:FC93:BD 00 04  LDA $0400,X @ $0408 = #$94
+ 07:FC96:29 BF     AND #$BF
+ 07:FC98:05 00     ORA $0000 = #$00
+ 07:FC9A:9D 00 04  STA $0400,X @ $0408 = #$94
+ 07:FC9D:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FC9E
+ 07:FC9E:85 D9     STA $00D9
+FUNCTION $FCA0 (alternate entry)
+ 07:FCA0:86 00     STX $0000
+ 07:FCA2:A6 DA     LDX $00DA
+ 07:FCA4:85 01     STA $0001
+ 07:FCA6:B5 DC     LDA $DC,X 
+ 07:FCA8:C9 88     CMP #$88    ; 136   
+ 07:FCAA:D0 0A     BNE $FCB6
+ 07:FCAC:A5 01     LDA $0001 
+ 07:FCAE:95 DC     STA $DC,X 
+ 07:FCB0:E8        INX
+ 07:FCB1:8A        TXA
+ 07:FCB2:29 07     AND #$07
+ 07:FCB4:85 DA     STA $00DA
+ 07:FCB6:A6 00     LDX $0000
+ 07:FCB8:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FCB9
+ 07:FCB9:18        CLC
+ 07:FCBA:BD D0 03  LDA $03D0,X 
+ 07:FCBD:29 03     AND #$03    ; Check x-movement
+ 07:FCBF:F0 50     BEQ $FD11   ; Exit if none
+ 07:FCC1:29 01     AND #$01    ; Check if moving left
+ 07:FCC3:F0 03     BEQ $FCC8   
+ 07:FCC5:4C 00 F6  JMP $F600
+ 07:FCC8:C8        INY
+ 07:FCC9:4C 75 F6  JMP $F675
+=================================================================
+FUNCTION $FCCC
+ 07:FCCC:18        CLC
+ 07:FCCD:BD D0 03  LDA $03D0,X @ $03DD = #$02
+ 07:FCD0:29 0C     AND #$0C
+ 07:FCD2:F0 3D     BEQ $FD11
+ 07:FCD4:29 04     AND #$04
+ 07:FCD6:F0 03     BEQ $FCDB
+ 07:FCD8:4C B1 F7  JMP $F7B1
+ 07:FCDB:C8        INY
+ 07:FCDC:4C 33 F7  JMP $F733
+================================================================
+FUNCTION $FCDF
+ 07:FCDF:BD D0 03  LDA $03D0,X
+ 07:FCE2:29 03     AND #$03    ; Check horizontal movement
+ 07:FCE4:F0 2B     BEQ $FD11   ; Exit if none
+ 07:FCE6:29 01     AND #$01    
+ 07:FCE8:F0 0B     BEQ $FCF5   
+ 07:FCEA:BD 00 04  LDA $0400,X
+ 07:FCED:09 40     ORA #$40    
+ 07:FCEF:9D 00 04  STA $0400,X ; Turn to right?
+ 07:FCF2:4C 87 F8  JMP $F887   ; Move to right
+ 
+ 07:FCF5:BD 00 04  LDA $0400,X
+ 07:FCF8:29 BF     AND #$BF
+ 07:FCFA:9D 00 04  STA $0400,X ; Turn to left?
+ 07:FCFD:4C A5 F8  JMP $F8A5   ; Move to left
+================================================================
+FUNCTION $FD00
+ 07:FD00:BD D0 03  LDA $03D0,X
+ 07:FD03:29 0C     AND #$0C
+ 07:FD05:F0 0A     BEQ $FD11
+ 07:FD07:29 04     AND #$04
+ 07:FD09:F0 03     BEQ $FD0E
+ 07:FD0B:4C C3 F8  JMP $F8C3   ; Going down (y-position increase)
+ 07:FD0E:4C EB F8  JMP $F8EB   ; Going up   (y-position decrease)
+ 07:FD11:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FD12
+Calculate distance between object and Ariel on y-axis
+ 07:FD12:BD 60 03  LDA $0360,X ; Y-Position (pixels)
+ 07:FD15:38        SEC         
+ 07:FD16:E5 FA     SBC $00FA    
+ 07:FD18:B0 02     BCS $FD1C
+ 07:FD1A:E9 0F     SBC #$0F
+ 07:FD1C:85 00     STA $0000
+ 07:FD1E:AD 60 03  LDA $0360   ; Ariel Y-Position (pixels)
+ 07:FD21:38        SEC
+ 07:FD22:E5 FA     SBC $00FA
+ 07:FD24:B0 02     BCS $FD28
+ 07:FD26:E9 0F     SBC #$0F
+ 07:FD28:38        SEC
+ 07:FD29:E5 00     SBC $0000
+ 07:FD2B:B0 05     BCS $FD32
+ 07:FD2D:49 FF     EOR #$FF
+ 07:FD2F:69 01     ADC #$01
+ 07:FD31:18        CLC
+ 07:FD32:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FD33
+Calculates distance between object and Ariel on x-axis
+
+ 07:FD33:AD 30 03  LDA $0330
+ 07:FD36:38        SEC
+ 07:FD37:FD 30 03  SBC $0330,X
+ 07:FD3A:48        PHA
+ 07:FD3B:AD 40 03  LDA $0340
+ 07:FD3E:FD 40 03  SBC $0340,X
+ 07:FD41:68        PLA
+ 07:FD42:B0 05     BCS $FD49
+ 07:FD44:49 FF     EOR #$FF
+ 07:FD46:69 01     ADC #$01
+ 07:FD48:18        CLC
+ 07:FD49:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FD4A
+ 07:FD4A:A0 00     LDY #$00
+ 07:FD4C:20 12 FD  JSR $FD12
+ 
+ 07:FD4F:B0 02     BCS $FD53
+ 
+ 07:FD51:A0 04     LDY #$04
+ 
+ 07:FD53:85 00     STA $0000
+ 07:FD55:20 33 FD  JSR $FD33
+ 
+ 07:FD58:B0 02     BCS $FD5C
+ 
+ 07:FD5A:C8        INY
+ 07:FD5B:C8        INY
+ 
+ 07:FD5C:85 01     STA $0001
+ 07:FD5E:C5 00     CMP $0000
+ 
+ 07:FD60:B0 09     BCS $FD6B
+ 
+ 07:FD62:48        PHA
+ 07:FD63:A5 00     LDA $0000
+ 07:FD65:85 01     STA $0001
+ 07:FD67:68        PLA
+ 07:FD68:85 00     STA $0000
+ 07:FD6A:C8        INY
+ 
+ 07:FD6B:A9 00     LDA #$00
+ 07:FD6D:85 02     STA $0002
+ 07:FD6F:A5 01     LDA $0001
+ 07:FD71:4A        LSR
+ 07:FD72:4A        LSR
+ 07:FD73:C5 00     CMP $0000
+ 
+ 07:FD75:B0 09     BCS $FD80
+ 
+ 07:FD77:E6 02     INC $0002
+ 07:FD79:0A        ASL
+ 07:FD7A:C5 00     CMP $0000
+ 07:FD7C:B0 02     BCS $FD80
+ 
+ 07:FD7E:E6 02     INC $0002
+ 
+ 07:FD80:98        TYA
+ 07:FD81:0A        ASL
+ 07:FD82:0A        ASL
+ 07:FD83:18        CLC
+ 07:FD84:65 02     ADC $0002
+ 07:FD86:A8        TAY
+ 07:FD87:B9 8B FD  LDA $FD8B,Y
+ 07:FD8A:60        RTS -----------------------------------------
+================================================================
+DATA TABLE $FD8B
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+FD80                                  04 05 06 04 08
+FD90 07 06 04 0C 0B 0A 04 08 09 0A 04 04 03 02 04 00
+FDA0 01 02 04 0C 0D 0E 04 00 0F 0E 04 08 09 09 09 01
+FDB0 05 05 05 04 06 06 06 02 0A 0A 0A
+
+00 = 04 05 06 04 
+01 = 08 07 06 04
+02 = 0C 0B 0A 04
+03 = 08 09 0A 04
+04 = 04 03 02 04
+05 = 00 01 02 04
+06 = 0C 0D 0E 04
+07 = 00 0F 0E 04
+08 = 08 09 09 09
+09 = 01 05 05 05
+0A = 04 06 06 06
+0B = 02 0A 0A 0A
+
+================================================================
+FUNCTION $FDBB
+================================================================
+FUNCTION $FE44
+Identifies the next unoccupied object slot & assigns it to X.
+Carry clear = success
+Carry set   = failure (all slots full)
+
+ 07:FE44:A2 0D     LDX #$0D
+ 07:FE46:BD 02 03  LDA $0302,X ; Check object slots starting at the highest
+ 07:FE49:10 05     BPL $FE50   ; If one is found
+ 07:FE4B:CA        DEX         ; Tick down
+ 07:FE4C:D0 F8     BNE $FE46
+ 07:FE4E:38        SEC         ; Failure (set carry)
+ 07:FE4F:60        RTS -----------------------------------------
+ 07:FE50:E8        INX
+ 07:FE51:E8        INX
+ 07:FE52:18        CLC         ; Success (clear carry)
+ 07:FE53:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FE54
+Identifies the next unoccupied object slot & assigns it to Y.
+Carry clear = success
+Carry set   = failure (all slots full)
+ 07:FE54:A0 0D     LDY #$0D
+ 07:FE56:B9 02 03  LDA $0302,Y
+ 07:FE59:10 05     BPL $FE60
+ 07:FE5B:88        DEY
+ 07:FE5C:D0 F8     BNE $FE56
+ 07:FE5E:38        SEC
+ 07:FE5F:60        RTS -----------------------------------------
+ 07:FE60:C8        INY
+ 07:FE61:C8        INY
+ 07:FE62:18        CLC
+ 07:FE63:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FE64
+ 07:FE64:BD E0 03  LDA $03E0,X
+ 07:FE67:29 07     AND #$07    ; Isolate 0111 flags
+ 07:FE69:A8        TAY
+ 07:FE6A:B9 85 FE  LDA $FE85,Y
+ 07:FE6D:85 00     STA $0000
+ 07:FE6F:49 FF     EOR #$FF
+ 07:FE71:85 01     STA $0001   ; 255 minus $0000
+ 07:FE73:BD E0 03  LDA $03E0,X ; 
+ 07:FE76:4A        LSR
+ 07:FE77:4A        LSR
+ 07:FE78:4A        LSR
+ 07:FE79:A8        TAY
+ 07:FE7A:B9 30 01  LDA $0130,Y
+ 07:FE7D:25 01     AND $0001
+ 07:FE7F:05 00     ORA $0000
+ 07:FE81:99 30 01  STA $0130,Y
+ 07:FE84:60        RTS -----------------------------------------
+================================================================
+DATA TABLE $FE85
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+FE80                01 02 04 08 10 20 40 80 
+
+ 00 | 01 | 0000 0001 | 1111 1110
+ 01 | 02 | 0000 0010 | 1111 1101
+ 02 | 04 | 0000 0100 | 1111 1011
+ 03 | 08 | 0000 1000 | 1111 0111
+ 04 | 10 | 0001 0000 | 1110 1111
+ 05 | 20 | 0010 0000 | 1101 1111
+ 06 | 40 | 0100 0000 | 1011 1111
+ 07 | 80 | 1000 0000 | 0111 1111
+================================================================
+FUNCTION $FEB0
+Boot-up function
+
+ 07:FEB0:78        SEI           ; Set interrupt
+ 07:FEB1:D8        CLD
+ 07:FEB2:A2 00     LDX #$00
+ 07:FEB4:8E 00 20  STX PPU_CTRL  ;
+ 07:FEB7:8E 01 20  STX PPU_MASK  ; Black out screen
+ 07:FEBA:CA        DEX           ; #$FF
+ 07:FEBB:9A        TXS           ; Set stack to $100-$1FF
+ 07:FEBC:A0 04     LDY #$04
+ 07:FEBE:AD 02 78  LDA $7802
+ 07:FEC1:D8        CLD           ;
+ 07:FEC2:A2 00     LDX #$00      ;
+ 07:FEC4:8E 00 20  STX PPU_CTRL
+ 07:FEC7:8E 01 20  STX PPU_MASK
+ 07:FECA:CA        DEX
+ 07:FECB:9A        TXS
+ 07:FECC:A0 04     LDY #$04
+ 07:FECE:AD 02 20  LDA PPU_STATUS
+ 07:FED1:10 FB     BPL $FECE
+ 07:FED3:AD 02 20  LDA PPU_STATUS
+ 07:FED6:30 FB     BMI $FED3
+ 07:FED8:88        DEY
+ 07:FED9:D0 F3     BNE $FECE
+ 07:FEDB:8C 10 40  STY DMC_FREQ
+ 07:FEDE:8C 15 40  STY APU_STATUS
+ 07:FEE1:A9 40     LDA #$40
+ 07:FEE3:8D 17 40  STA JOY2_FRAME
+ 07:FEE6:98        TYA
+ 07:FEE7:99 00 00  STA $0000,Y ; Wipe initial values
+ 07:FEEA:99 00 01  STA $0100,Y ; from #$000-#$7FF
+ 07:FEED:99 00 02  STA $0200,Y
+ 07:FEF0:99 00 03  STA $0300,Y
+ 07:FEF3:99 00 04  STA $0400,Y
+ 07:FEF6:99 00 05  STA $0500,Y
+ 07:FEF9:99 00 06  STA $0600,Y
+ 07:FEFC:99 00 07  STA $0700,Y
+ 07:FEFF:88        DEY
+ 07:FF00:D0 E5     BNE $FEE7
+ 07:FF02:A0 07     LDY #$07
+ 07:FF04:A9 88     LDA #$88
+ 07:FF06:99 DC 00  STA $00DC,Y @ $00E0 = #$88
+ 07:FF09:88        DEY
+ 07:FF0A:10 FA     BPL $FF06
+ 07:FF0C:A9 1E     LDA #$1E
+ 07:FF0E:85 FE     STA $00FE = #$1E
+ 07:FF10:20 BC C1  JSR $C1BC
+ 07:FF13:A9 20     LDA #$20
+ 07:FF15:A2 FF     LDX #$FF
+ 07:FF17:A0 00     LDY #$00
+ 07:FF19:20 70 C1  JSR $C170
+ 07:FF1C:A9 24     LDA #$24
+ 07:FF1E:A2 FF     LDX #$FF
+ 07:FF20:A0 00     LDY #$00
+ 07:FF22:20 70 C1  JSR $C170
+ 07:FF25:A9 C6     LDA #$C6
+ 07:FF27:85 94     STA $0094 = #$C6
+ 07:FF29:A9 39     LDA #$39
+ 07:FF2B:85 93     STA $0093 = #$01
+ 07:FF2D:A9 00     LDA #$00
+ 07:FF2F:20 7E FF  JSR $FF7E
+ 07:FF32:A9 90     LDA #$90
+ 07:FF34:85 FF     STA $00FF = #$90
+
+FUNCTION $FF36 
+
+ 07:FF36:A2 FF     LDX #$FF
+ 07:FF38:9A        TXS
+ 07:FF39:A2 00     LDX #$00
+ 07:FF3B:86 90     STX $0090 = #$00
+ 07:FF3D:A0 04     LDY #$04
+ 07:FF3F:B5 80     LDA $80,X @ $0080 = #$01
+ 07:FF41:C9 04     CMP #$04
+ 07:FF43:B0 0A     BCS $FF4F
+ 07:FF45:E8        INX
+ 07:FF46:E8        INX
+ 07:FF47:E8        INX
+ 07:FF48:E8        INX
+ 07:FF49:88        DEY
+ 07:FF4A:D0 F3     BNE $FF3F
+ 07:FF4C:4C 39 FF  JMP $FF39
+ 
+ 07:FF4F:A5 90     LDA $0090
+ 07:FF51:D0 E6     BNE $FF39
+ 
+ 07:FF53:88        DEY
+ 07:FF54:98        TYA
+ 07:FF55:49 03     EOR #$03
+ 07:FF57:85 91     STA $0091
+ 07:FF59:B4 80     LDY $80,X
+ 07:FF5B:A9 02     LDA #$02
+ 07:FF5D:95 80     STA $80,X
+ 07:FF5F:C0 08     CPY #$08
+ 07:FF61:D0 0B     BNE $FF6E
+ 
+ 07:FF63:B5 82     LDA $82,X
+ 07:FF65:85 93     STA $0093
+ 07:FF67:B5 83     LDA $83,X
+ 07:FF69:85 94     STA $0094
+ 07:FF6B:6C 93 00  JMP ($0093)
+ 
+ 07:FF6E:B5 82     LDA $82,X
+ 07:FF70:AA        TAX
+ 07:FF71:9A        TXS
+ 07:FF72:A5 91     LDA $0091
+ 07:FF74:D0 03     BNE $FF79
+ 
+	07:FF76:20 18 C1  JSR $C118 -> Poll controller input
+ 
+ 07:FF79:68        PLA
+ 07:FF7A:A8        TAY
+ 07:FF7B:68        PLA
+ 07:FF7C:AA        TAX
+ 07:FF7D:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FF7E
+ 07:FF7E:20 A2 FF  JSR $FFA2
+ 07:FF81:A5 93     LDA $0093 = #$01
+ 07:FF83:95 82     STA $82,X @ $0082 = #$B9
+ 07:FF85:A5 94     LDA $0094 = #$C6
+ 07:FF87:95 83     STA $83,X @ $0083 = #$C6
+ 07:FF89:A9 08     LDA #$08
+ 07:FF8B:95 80     STA $80,X @ $0080 = #$01
+ 07:FF8D:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FF8E
+ 07:FF8E:20 A2 FF  JSR $FFA2
+ 07:FF91:A9 00     LDA #$00
+ 07:FF93:95 80     STA $80,X @ $0080 = #$01
+ 07:FF95:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FF96
+ 07:FF96:20 A0 FF  JSR $FFA0
+ 07:FF99:A9 00     LDA #$00
+ 07:FF9B:95 80     STA $80,X
+ 07:FF9D:4C 36 FF  JMP $FF36
+================================================================
+FUNCTION $FFA0
+Multiply value of $91 by 4, then transfer to X
+
+ 07:FFA0:A5 91     LDA $0091
+ 07:FFA2:0A        ASL
+ 07:FFA3:0A        ASL
+ 07:FFA4:AA        TAX
+ 07:FFA5:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FFA6
+ 07:FFA6:20 AD FF  JSR $FFAD
+ 07:FFA9:CA        DEX
+ 07:FFAA:D0 FA     BNE $FFA6
+ 07:FFAC:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FFAD
+ 07:FFAD:A9 01     LDA #$01
+ 07:FFAF:85 93     STA $0093
+ 07:FFB1:8A        TXA
+ 07:FFB2:48        PHA
+ 07:FFB3:98        TYA
+ 07:FFB4:48        PHA
+ 07:FFB5:20 A0 FF  JSR $FFA0
+ 07:FFB8:A5 93     LDA $0093
+ 07:FFBA:95 81     STA $81,X @ $0091 = #$00
+ 07:FFBC:A9 01     LDA #$01
+ 07:FFBE:95 80     STA $80,X @ $0090 = #$00
+ 07:FFC0:8A        TXA
+ 07:FFC1:A8        TAY
+ 07:FFC2:BA        TSX
+ 07:FFC3:96 82     STX $0082,Y @ $0181 = #$00
+ 07:FFC5:4C 36 FF  JMP $FF36
+================================================================ 
+FUNCTION $FFC8 -> Set RAM bank $8000-$BFFF to Page A
+
+ 07:FFC8:AA        TAX
+ 07:FFC9:9D DE FF  STA $FFDE,X
+ 07:FFCC:60        RTS -----------------------------------------
+================================================================
+FUNCTION $FFCD
+Set RAM bank $8000-$BFFF to Page A, retaining values of X/Y
+Store Page # to $9B/$BF
+
+ 07:FFCD:85 9B     STA $009B = #$06
+ 07:FFCF:85 BF     STA $00BF = #$06
+ 07:FFD1:86 9C     STX $009C = #$00
+ 07:FFD3:84 9D     STY $009D = #$14
+ 07:FFD5:AA        TAX
+ 07:FFD6:9D DE FF  STA $FFDE,X
+ 07:FFD9:A6 9C     LDX $009C = #$00
+ 07:FFDB:A4 9D     LDY $009D = #$14
+ 07:FFDD:60        RTS -----------------------------------------
+================================================================
+
+ 

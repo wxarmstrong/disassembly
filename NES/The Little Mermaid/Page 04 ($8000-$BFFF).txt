@@ -1,0 +1,704 @@
+PAGE 04
+LOCATION IN RAM: 0x10010-0x1400F
+----------------------------------------------------------------
+Function $8000
+
+ 04:8000:4C 3B 81  JMP $813B
+----------------------------------------------------------------
+Function $8003 -> Updates animations for each object
+(Alternates between ascending/descending order on each other frame)
+
+ 04:8003:20 4D 80  JSR $804D -> Draw player's health
+ 
+ 04:8006:E6 95     INC $0095 -> Increment global counter
+ 04:8008:A5 95     LDA $0095
+ 04:800A:4A        LSR
+ 04:800B:B0 21     BCS $802E
+ 
+ Even-numbered frames:
+ 
+ 04:800D:A2 00     LDX #$00
+ 04:800F:86 96     STX $0096
+ 
+ Loop:
+	 04:8011:BD 00 03  LDA $0300,X
+	 04:8014:30 0C     BMI $8022
+	 04:8016:A9 00     LDA #$00
+	 04:8018:9D A0 04  STA $04A0,X
+	 04:801B:A9 FF     LDA #$FF
+	 04:801D:9D E0 03  STA $03E0,X
+	 04:8020:D0 03     BNE $8025
+	 04:8022:20 84 80  JSR $8084
+	 04:8025:E6 96     INC $0096
+	 04:8027:A6 96     LDX $0096
+	 04:8029:E0 10     CPX #$10
+	 04:802B:D0 E4     BNE $8011
+ 04:802D:60        RTS -----------------------------------------
+ 
+ Odd-numbered frames:
+ 
+ 04:802E:A2 0F     LDX #$0F
+ 04:8030:86 96     STX $0096
+ 
+ Loop:
+	 04:8032:BD 00 03  LDA $0300,X
+	 04:8035:30 0C     BMI $8043
+	 04:8037:A9 00     LDA #$00
+	 04:8039:9D A0 04  STA $04A0,X
+	 04:803C:A9 FF     LDA #$FF
+	 04:803E:9D E0 03  STA $03E0,X
+	 04:8041:D0 03     BNE $8046
+	 04:8043:20 84 80  JSR $8084
+	 04:8046:C6 96     DEC $0096
+	 04:8048:A6 96     LDX $0096
+	 04:804A:10 E6     BPL $8032
+	 
+ 04:804C:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Function $804D - Draws player's health
+
+ 04:804D:A5 BA     LDA $00BA ; Max health
+ 04:804F:0A        ASL
+ 04:8050:0A        ASL
+ 04:8051:85 97     STA $0097
+ 04:8053:AA        TAX
+ 
+ Draw proper # of empty heart containers
+	 04:8054:BD 6F 80  LDA $806F,X
+	 04:8057:9D FF 01  STA $01FF,X
+	 04:805A:CA        DEX
+	 04:805B:D0 F7     BNE $8054
+ 
+ 04:805D:A5 B1     LDA $00B1
+ 04:805F:F0 0E     BEQ $806F
+ 
+ If player has health
+	 04:8061:0A        ASL
+	 04:8062:0A        ASL
+	 04:8063:AA        TAX
+	 04:8064:A9 98     LDA #$98
+	 04:8066:9D FD 01  STA $01FD,X
+	 04:8069:CA        DEX
+	 04:806A:CA        DEX
+	 04:806B:CA        DEX
+	 04:806C:CA        DEX
+	 04:806D:D0 F5     BNE $8064
+ 04:806F:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Function $8084
+
+ 04:8084:BD 60 03  LDA $0360,X
+ 04:8087:85 12     STA $0012
+ 04:8089:BD 30 03  LDA $0330,X
+ 04:808C:85 13     STA $0013
+ 04:808E:BD 00 04  LDA $0400,X 
+ 04:8091:29 10     AND #$10    ; Attribute flag
+ 04:8093:F0 71     BEQ $8106
+ 
+ 04:8095:BD 60 03  LDA $0360,X
+ 04:8098:38        SEC
+ 04:8099:E5 FA     SBC $00FA   ; Screen scroll amount?
+ 04:809B:85 12     STA $0012   ; Move entity up
+ 04:809D:B0 06     BCS $80A5
+ 04:809F:08        PHP
+ 04:80A0:E9 0F     SBC #$0F
+ 04:80A2:85 12     STA $0012 = #$72
+ 04:80A4:28        PLP
+ 04:80A5:BD 70 03  LDA $0370,X @ $0375 = #$00
+ 04:80A8:E5 FB     SBC $00FB = #$02
+ 04:80AA:29 01     AND #$01
+ 04:80AC:F0 21     BEQ $80CF
+ 04:80AE:E0 00     CPX #$00
+ 04:80B0:D0 02     BNE $80B4
+ 04:80B2:F0 2E     BEQ $80E2
+ 04:80B4:BD 10 03  LDA $0310,X @ $0315 = #$00
+ 04:80B7:C9 0A     CMP #$0A
+ 04:80B9:D0 37     BNE $80F2
+ 04:80BB:BD 60 03  LDA $0360,X ; y-pos (mid)
+ 04:80BE:38        SEC
+ 04:80BF:E5 FA     SBC $00FA = #$00
+ 04:80C1:B0 02     BCS $80C5
+ 04:80C3:E9 0F     SBC #$0F
+ 04:80C5:C9 30     CMP #$30
+ 04:80C7:90 19     BCC $80E2
+ 04:80C9:C9 D0     CMP #$D0
+ 04:80CB:B0 15     BCS $80E2
+ 04:80CD:90 23     BCC $80F2
+ 04:80CF:BD 30 03  LDA $0330,X @ $0335 = #$00
+ 04:80D2:38        SEC
+ 04:80D3:E5 FC     SBC $00FC = #$00
+ 04:80D5:85 13     STA $0013 = #$52
+ 04:80D7:BD 40 03  LDA $0340,X @ $0345 = #$00
+ 04:80DA:E5 FD     SBC $00FD = #$0C
+ 04:80DC:F0 28     BEQ $8106
+ 04:80DE:E4 3A     CPX $003A = #$00
+ 04:80E0:D0 10     BNE $80F2
+ 04:80E2:BD 00 04  LDA $0400,X @ $0405 = #$00
+ 04:80E5:29 7F     AND #$7F
+ 04:80E7:9D 00 04  STA $0400,X @ $0405 = #$00
+ 04:80EA:4C 0E 81  JMP $810E
+ 04:80ED:BD 70 03  LDA $0370,X @ $0375 = #$00
+ 04:80F0:F0 14     BEQ $8106
+ 04:80F2:A9 00     LDA #$00
+ 04:80F4:9D 00 03  STA $0300,X @ $0305 = #$00
+ 04:80F7:9D A0 04  STA $04A0,X @ $04A5 = #$00
+ 04:80FA:E4 3A     CPX $003A = #$00
+ 04:80FC:D0 02     BNE $8100
+ 04:80FE:85 3A     STA $003A = #$00
+ 04:8100:A9 FF     LDA #$FF
+ 04:8102:9D E0 03  STA $03E0,X @ $03E5 = #$FF
+ 04:8105:60        RTS -----------------------------------------
+ 
+================================================================
+FUNCTION $813B - Page 4 main function
+ 04:813B:BC 30 04  LDY $0430,X ; Load animation loop of each entity
+ 04:813E:F0 53     BEQ $8193   ; Jump ahead if blank
+ 
+ 04:8140:B9 1C A7  LDA $A71C,Y 
+ 04:8143:85 00     STA $0000
+ 04:8145:B9 A7 A7  LDA $A7A7,Y
+ 04:8148:85 01     STA $0001   ; Store address of animation loop in $0000/$0001
+ 
+ 04:814A:E0 10     CPX #$10
+ 04:814C:B0 0B     BCS $8159
+ 04:814E:A5 B1     LDA $00B1   ; Check health
+ 04:8150:F0 2E     BEQ $8180   ; Jump to $8180 if Ariel is dead
+ 04:8152:BD A0 04  LDA $04A0,X 
+ 04:8155:30 02     BMI $8159
+ 04:8157:D0 27     BNE $8180
+ 
+ if
+	 04:8159:BD 48 04  LDA $0448,X
+	 04:815C:30 22     BMI $8180
+	 04:815E:29 7F     AND #$7F
+	 04:8160:FE 48 04  INC $0448,X
+	 04:8163:A0 01     LDY #$01
+	 04:8165:D1 00     CMP ($00),Y
+	 04:8167:D0 17     BNE $8180
+	 04:8169:A9 00     LDA #$00
+	 04:816B:9D 48 04  STA $0448,X
+	 04:816E:BD 18 04  LDA $0418,X
+	 04:8171:29 7F     AND #$7F
+	 04:8173:FE 18 04  INC $0418,X
+	 04:8176:88        DEY
+	 04:8177:D1 00     CMP ($00),Y
+	 04:8179:D0 05     BNE $8180
+	 04:817B:A9 00     LDA #$00
+	 04:817D:9D 18 04  STA $0418,X @ $0428 = #$00
+	 
+ 04:8180:BD 00 04  LDA $0400,X @ $0410 = #$80
+ 04:8183:10 3B     BPL $81C0
+ 04:8185:E0 00     CPX #$00
+ 04:8187:D0 0A     BNE $8193
+ 04:8189:A5 3F     LDA $003F = #$00
+ 04:818B:F0 06     BEQ $8193
+ 04:818D:4A        LSR
+ 04:818E:4A        LSR
+ 04:818F:29 01     AND #$01
+ 04:8191:D0 2D     BNE $81C0
+ 04:8193:BD 10 03  LDA $0310,X @ $0320 = #$00
+ 04:8196:C9 02     CMP #$02
+ 04:8198:D0 0F     BNE $81A9
+ 04:819A:BD 80 04  LDA $0480,X @ $0490 = #$00
+ 04:819D:F0 0A     BEQ $81A9
+ 04:819F:C9 3C     CMP #$3C
+ 04:81A1:B0 06     BCS $81A9
+ 04:81A3:4A        LSR
+ 04:81A4:4A        LSR
+ 04:81A5:29 01     AND #$01
+ 04:81A7:D0 17     BNE $81C0
+ 04:81A9:BD A0 04  LDA $04A0,X @ $04B0 = #$00
+ 04:81AC:10 06     BPL $81B4
+ 04:81AE:4A        LSR
+ 04:81AF:4A        LSR
+ 04:81B0:29 01     AND #$01
+ 04:81B2:D0 0C     BNE $81C0
+ 04:81B4:BD 00 04  LDA $0400,X @ $0410 = #$80
+ 04:81B7:29 04     AND #$04
+ 04:81B9:D0 05     BNE $81C0
+ 04:81BB:BD 00 04  LDA $0400,X @ $0410 = #$80
+ 04:81BE:30 01     BMI $81C1
+ 04:81C0:60        RTS -----------------------------------------
+ 04:81C1:BD 18 04  LDA $0418,X ; Load position in animation loop
+ 04:81C4:29 7F     AND #$7F
+ 04:81C6:18        CLC
+ 04:81C7:69 02     ADC #$02
+ 04:81C9:A8        TAY
+ 04:81CA:B1 00     LDA ($00),Y ; Load value from animation loop
+ 04:81CC:D0 14     BNE $81E2
+ 04:81CE:9D 00 03  STA $0300,X @ $0310 = #$00
+ 04:81D1:9D A0 04  STA $04A0,X @ $04B0 = #$00
+ 04:81D4:A9 FF     LDA #$FF
+ 04:81D6:9D E0 03  STA $03E0,X @ $03F0 = #$00
+ 04:81D9:E4 3A     CPX $003A = #$00
+ 04:81DB:D0 04     BNE $81E1
+ 04:81DD:A9 00     LDA #$00
+ 04:81DF:85 3A     STA $003A = #$00
+ 04:81E1:60        RTS -----------------------------------------
+ 04:81E2:A8        TAY
+ 04:81E3:B9 BB 92  LDA $92BB,Y @ $93BA = #$82
+ 04:81E6:85 02     STA $0002
+ 04:81E8:B9 B6 93  LDA $93B6,Y @ $94B5 = #$00
+ 04:81EB:85 03     STA $0003
+ 04:81ED:A0 00     LDY #$00
+ 04:81EF:B1 02     LDA ($02),Y @ $01FE = #$4A
+ 04:81F1:85 04     STA $0004 = #$00
+ 04:81F3:C8        INY
+ 04:81F4:B1 02     LDA ($02),Y @ $01FE = #$4A
+ 04:81F6:18        CLC
+ 04:81F7:65 11     ADC $0011 = #$00
+ 04:81F9:48        PHA
+ 04:81FA:BD 00 04  LDA $0400,X @ $0410 = #$80
+ 04:81FD:29 20     AND #$20
+ 04:81FF:85 11     STA $0011 = #$00
+ 04:8201:68        PLA
+ 04:8202:AA        TAX
+ 04:8203:BD 1D A3  LDA $A31D,X @ $A32D = #$19
+ 04:8206:38        SEC
+ 04:8207:E9 02     SBC #$02
+ 04:8209:85 05     STA $0005 = #$00
+ 04:820B:BD D5 A3  LDA $A3D5,X @ $A3E5 = #$96
+ 04:820E:E9 00     SBC #$00
+ 04:8210:85 06     STA $0006 = #$BC
+ 04:8212:A6 97     LDX $0097 = #$5C
+ 04:8214:F0 40     BEQ $8256
+ 04:8216:C8        INY
+ 04:8217:B1 02     LDA ($02),Y @ $01FE = #$4A
+ 04:8219:9D 01 02  STA $0201,X @ $0211 = #$C9
+ 04:821C:A5 12     LDA $0012 = #$C4
+ 04:821E:18        CLC
+ 04:821F:71 05     ADC ($05),Y @ $BCFF = #$01
+ 04:8221:9D 00 02  STA $0200,X @ $0210 = #$6F
+ 04:8224:B1 05     LDA ($05),Y @ $BCFF = #$01
+ 04:8226:30 04     BMI $822C
+ 04:8228:90 04     BCC $822E
+ 04:822A:B0 2B     BCS $8257
+ 04:822C:90 29     BCC $8257
+ 04:822E:C8        INY
+ 04:822F:B1 02     LDA ($02),Y @ $01FE = #$4A
+ 04:8231:45 10     EOR $0010 = #$00
+ 04:8233:05 11     ORA $0011 = #$00
+ 04:8235:9D 02 02  STA $0202,X @ $0212 = #$42
+ 04:8238:A5 13     LDA $0013 = #$4C
+ 04:823A:18        CLC
+ 04:823B:71 05     ADC ($05),Y @ $BCFF = #$01
+ 04:823D:9D 03 02  STA $0203,X @ $0213 = #$88
+ 04:8240:B1 05     LDA ($05),Y @ $BCFF = #$01
+ 04:8242:30 04     BMI $8248
+ 04:8244:90 04     BCC $824A
+ 04:8246:B0 10     BCS $8258
+ 04:8248:90 0E     BCC $8258
+ 04:824A:E8        INX
+ 04:824B:E8        INX
+ 04:824C:E8        INX
+ 04:824D:E8        INX
+ 04:824E:86 97     STX $0097 = #$5C
+ 04:8250:F0 04     BEQ $8256
+ 04:8252:C6 04     DEC $0004 = #$00
+ 04:8254:10 C0     BPL $8216
+ 04:8256:60        RTS -----------------------------------------
+ 04:8257:C8        INY
+ 04:8258:A9 F8     LDA #$F8
+ 04:825A:9D 00 02  STA $0200,X
+ 04:825D:D0 F3     BNE $8252
+================================================================
+ANIMATION LOOPS
+----------------------------------------------------------------
+ANIMATION 20 - Fish (@ Shark Boss)
+A527 01 ; 02 steps
+A528 0C ; 13 frames per step
+
+A529 2A ; 13 frames
+A52A 2B ; 13 frames
+----------------------------------------------------------------
+ANIMATION 34 - Seahorse
+----------------------------------------------------------------
+ANIMATION 36 - Urchin
+----------------------------------------------------------------
+ANIMATION 3D - Starfish
+----------------------------------------------------------------
+ANIMATION 5C - Stage 1 Boss (Shark) : Sending Fish
+A652 09 ; 10 steps
+A653 04 ; 5 frames per step
+
+A654 9D ;
+A655 9D ; 10 frames
+A656 9E ;
+A657 9E ;
+A658 9E ; 15 frames
+A659 9D ;
+A65A 9D ; 10 frames
+A65B 9F ;
+A65C 9F ;
+A65D 9F ; 15 frames
+----------------------------------------------------------------
+ANIMATION 5D - Stage 2 Boss (Shark) : Dashing
+A65E 09 ; 10 steps 
+A65F 02 ; 03 frames per step
+
+A660 9D ; 
+A661 9D ; 6 frames
+A662 9E ;
+A663 9E ;
+A664 9E ; 9 frames
+A665 9D ;
+A666 9D ; 6 frames
+A667 9F ;
+A668 9F ;
+A669 9F ; 9 frames
+----------------------------------------------------------------
+ANIMATION 78 - Stage 5 Boss (Ursula 1) : Default
+ANIMATION 79 - Stage 5 Boss (Ursula 1) : Throwing
+----------------------------------------------------------------
+===============================================================
+FUNCTION $B600
+ 04:B600:A5 FD     LDA $00FD
+ 04:B602:18        CLC
+ 04:B603:65 FB     ADC $00FB
+ 04:B605:85 01     STA $0001
+ 04:B607:A5 50     LDA $0050 ; Current room
+ 04:B609:29 C0     AND #$C0  ; Check orientation 
+ 04:B60B:F0 28     BEQ $B635 ; If room is horizontal
+ 04:B60D:30 12     BMI $B621 ; If room is vertical (upward)
+ 
+ ROOM = Vertical (downward)
+ 04:B60F:A5 FA     LDA $00FA
+ 04:B611:85 00     STA $0000
+ 04:B613:18        CLC
+ 04:B614:69 FF     ADC #$FF
+ 04:B616:85 02     STA $0002
+ 04:B618:A5 01     LDA $0001
+ 04:B61A:69 00     ADC #$00
+ 04:B61C:85 03     STA $0003
+ 04:B61E:4C 44 B6  JMP $B644
+ 
+ ROOM = Vertical (upward)
+ 04:B621:A5 FA     LDA $00FA
+ 04:B623:85 02     STA $0002
+ 04:B625:18        CLC
+ 04:B626:69 FF     ADC #$FF
+ 04:B628:85 00     STA $0000
+ 04:B62A:A5 01     LDA $0001
+ 04:B62C:85 03     STA $0003
+ 04:B62E:90 14     BCC $B644
+ 04:B630:C6 01     DEC $0001
+ 04:B632:4C 44 B6  JMP $B644
+ 
+ ROOM = Horizontal
+ 04:B635:A5 FC     LDA $00FC = #$00
+ 04:B637:85 00     STA $0000 = #$00
+ 04:B639:18        CLC
+ 04:B63A:69 FF     ADC #$FF
+ 04:B63C:85 02     STA $0002 = #$C3
+ 04:B63E:A5 01     LDA $0001 = #$00
+ 04:B640:69 00     ADC #$00
+ 04:B642:85 03     STA $0003 = #$82
+ 
+ 
+ 04:B644:A5 F9     LDA $00F9
+ 04:B646:29 01     AND #$01
+ 04:B648:F0 03     BEQ $B64D
+ 04:B64A:4C D7 B6  JMP $B6D7
+ 
+ 04:B64D:A5 50     LDA $0050 ; Current room
+ 04:B64F:30 51     BMI $B6A2 ; If vertical (upward)
+ 
+ 04:B651:A4 9F     LDY $009F = #$00
+ 04:B653:F0 24     BEQ $B679
+ 04:B655:88        DEY
+ 04:B656:B1 72     LDA ($72),Y @ $B804 = #$01
+ 04:B658:C5 01     CMP $0001 = #$00
+ 04:B65A:90 1D     BCC $B679
+ 04:B65C:D0 14     BNE $B672
+ 
+ 04:B65E:A5 50     LDA $0050 ; Current room
+ 04:B660:29 40     AND #$40
+ 04:B662:F0 08     BEQ $B66C ; If not vertical (downward)
+ 04:B664:B1 76     LDA ($76),Y @ $B842 = #$BC
+ 04:B666:C5 00     CMP $0000 = #$00
+ 04:B668:90 0F     BCC $B679
+ 04:B66A:B0 06     BCS $B672
+ 04:B66C:B1 74     LDA ($74),Y @ $B823 = #$58
+ 04:B66E:C5 00     CMP $0000 = #$00
+ 04:B670:90 07     BCC $B679
+ 04:B672:20 55 B7  JSR $B755
+ 04:B675:C6 9F     DEC $009F = #$00
+ 04:B677:D0 D8     BNE $B651
+ 04:B679:A4 9E     LDY $009E = #$00
+ 04:B67B:F0 20     BEQ $B69D
+ 04:B67D:88        DEY
+ 04:B67E:30 1C     BMI $B69C
+ 04:B680:B1 72     LDA ($72),Y @ $B804 = #$01
+ 04:B682:C5 03     CMP $0003 = #$82
+ 04:B684:90 16     BCC $B69C
+ 04:B686:D0 F5     BNE $B67D
+ 04:B688:A5 50     LDA $0050 ; Current room
+ 04:B68A:29 40     AND #$40  
+ 04:B68C:F0 08     BEQ $B696 ; If not vertical (downward)
+ 04:B68E:B1 76     LDA ($76),Y @ $B842 = #$BC
+ 04:B690:C5 02     CMP $0002 = #$C3
+ 04:B692:90 08     BCC $B69C
+ 04:B694:B0 E7     BCS $B67D
+ 04:B696:B1 74     LDA ($74),Y @ $B823 = #$58
+ 04:B698:C5 02     CMP $0002 = #$C3
+ 04:B69A:B0 E1     BCS $B67D
+ 04:B69C:C8        INY
+ 04:B69D:84 9E     STY $009E = #$00
+ 04:B69F:4C 54 B7  JMP $B754
+ 04:B6A2:A4 9F     LDY $009F = #$00
+ 04:B6A4:F0 18     BEQ $B6BE
+ 04:B6A6:88        DEY
+ 04:B6A7:B1 72     LDA ($72),Y @ $B804 = #$01
+ 04:B6A9:C5 01     CMP $0001 = #$00
+ 04:B6AB:90 11     BCC $B6BE
+ 04:B6AD:D0 08     BNE $B6B7
+ 04:B6AF:B1 76     LDA ($76),Y @ $B842 = #$BC
+ 04:B6B1:C5 00     CMP $0000 = #$00
+ 04:B6B3:F0 02     BEQ $B6B7
+ 04:B6B5:B0 07     BCS $B6BE
+ 04:B6B7:20 55 B7  JSR $B755
+ 04:B6BA:C6 9F     DEC $009F = #$00
+ 04:B6BC:D0 E4     BNE $B6A2
+ 04:B6BE:A4 9E     LDY $009E = #$00
+ 04:B6C0:F0 12     BEQ $B6D4
+ 04:B6C2:88        DEY
+ 04:B6C3:30 0E     BMI $B6D3
+ 04:B6C5:B1 72     LDA ($72),Y @ $B804 = #$01
+ 04:B6C7:C5 03     CMP $0003 = #$82
+ 04:B6C9:90 08     BCC $B6D3
+ 04:B6CB:D0 F5     BNE $B6C2
+ 04:B6CD:B1 76     LDA ($76),Y @ $B842 = #$BC
+ 04:B6CF:C5 02     CMP $0002 = #$C3
+ 04:B6D1:90 EF     BCC $B6C2
+ 04:B6D3:C8        INY
+ 04:B6D4:84 9E     STY $009E = #$00
+ 04:B6D6:60        RTS -----------------------------------------
+ 04:B6D7:A5 50     LDA $0050 ; Current level
+ 04:B6D9:30 49     BMI $B724 ; If vertical (upward)
+ 04:B6DB:A4 9E     LDY $009E = #$00
+ 04:B6DD:A5 03     LDA $0003 = #$82
+ 04:B6DF:D1 72     CMP ($72),Y @ $B804 = #$01
+ 04:B6E1:90 1D     BCC $B700
+ 04:B6E3:D0 14     BNE $B6F9
+ 04:B6E5:A5 50     LDA $0050 = #$00
+ 04:B6E7:29 40     AND #$40
+ 04:B6E9:F0 08     BEQ $B6F3
+ 04:B6EB:A5 02     LDA $0002 = #$C3
+ 04:B6ED:D1 76     CMP ($76),Y @ $B842 = #$BC
+ 04:B6EF:90 0F     BCC $B700
+ 04:B6F1:B0 06     BCS $B6F9
+ 04:B6F3:A5 02     LDA $0002 = #$C3
+ 04:B6F5:D1 74     CMP ($74),Y @ $B823 = #$58
+ 04:B6F7:90 07     BCC $B700
+ 04:B6F9:20 55 B7  JSR $B755
+ 04:B6FC:E6 9E     INC $009E = #$00
+ 04:B6FE:D0 D7     BNE $B6D7
+ 04:B700:A4 9F     LDY $009F = #$00
+ 04:B702:A5 01     LDA $0001 = #$00
+ 04:B704:D1 72     CMP ($72),Y @ $B804 = #$01
+ 04:B706:90 19     BCC $B721
+ 04:B708:D0 14     BNE $B71E
+ 04:B70A:A5 50     LDA $0050 = #$00
+ 04:B70C:29 40     AND #$40
+ 04:B70E:F0 08     BEQ $B718
+ 04:B710:A5 00     LDA $0000 = #$00
+ 04:B712:D1 76     CMP ($76),Y @ $B842 = #$BC
+ 04:B714:90 0B     BCC $B721
+ 04:B716:B0 06     BCS $B71E
+ 04:B718:A5 00     LDA $0000 = #$00
+ 04:B71A:D1 74     CMP ($74),Y @ $B823 = #$58
+ 04:B71C:90 03     BCC $B721
+ 04:B71E:C8        INY
+ 04:B71F:D0 E1     BNE $B702
+ 04:B721:84 9F     STY $009F = #$00
+ 04:B723:60        RTS -----------------------------------------
+ 04:B724:A4 9E     LDY $009E = #$00
+ 04:B724:A4 9E     LDY $009E = #$00
+ 04:B726:A5 03     LDA $0003 = #$82
+ 04:B728:D1 72     CMP ($72),Y @ $B804 = #$01
+ 04:B72A:90 11     BCC $B73D
+ 04:B72C:D0 08     BNE $B736
+ 04:B72E:A5 02     LDA $0002 = #$C3
+ 04:B730:D1 76     CMP ($76),Y @ $B842 = #$BC
+ 04:B732:F0 02     BEQ $B736
+ 04:B734:B0 07     BCS $B73D
+ 04:B736:20 55 B7  JSR $B755
+ 04:B739:E6 9E     INC $009E = #$00
+ 04:B73B:D0 E7     BNE $B724
+ 04:B73D:A4 9F     LDY $009F = #$00
+ 04:B73F:A5 01     LDA $0001 = #$00
+ 04:B741:D1 72     CMP ($72),Y @ $B804 = #$01
+ 04:B743:90 0D     BCC $B752
+ 04:B745:D0 08     BNE $B74F
+ 04:B747:A5 00     LDA $0000 = #$00
+ 04:B749:D1 76     CMP ($76),Y @ $B842 = #$BC
+ 04:B74B:F0 02     BEQ $B74F
+ 04:B74D:B0 03     BCS $B752
+ 04:B74F:C8        INY
+ 04:B750:D0 ED     BNE $B73F
+ 04:B752:84 9F     STY $009F = #$00
+ 04:B754:60        RTS -----------------------------------------
+ ===============================================================
+ FUNCTION $B755
+ 04:B755:98        TYA
+ 04:B756:85 04     STA $0004
+ 04:B758:A2 0F     LDX #$0F
+ 04:B75A:DD E0 03  CMP $03E0,X
+ 04:B75D:F0 F5     BEQ $B754   ; Exit
+ 04:B75F:CA        DEX      
+ 04:B760:D0 F8     BNE $B75A
+ 
+ 04:B762:20 44 FE  JSR $FE44   ; Search for unoccupied object slot
+ 04:B765:B0 ED     BCS $B754   ; Exit if none is located
+ 
+ 04:B767:A5 04     LDA $0004   
+ 04:B769:29 07     AND #$07
+ 04:B76B:A8        TAY
+ 04:B76C:B9 85 FE  LDA $FE85,Y
+ 04:B76F:85 05     STA $0005
+ 04:B771:A5 04     LDA $0004
+ 04:B773:4A        LSR
+ 04:B774:4A        LSR
+ 04:B775:4A        LSR
+ 04:B776:A8        TAY
+>04:B777:B9 30 01  LDA $0130,Y
+ 04:B77A:25 05     AND $0005
+ 04:B77C:D0 D6     BNE $B754
+ 04:B77E:A5 04     LDA $0004
+ 04:B780:A8        TAY
+ 04:B781:9D E0 03  STA $03E0,X
+ 04:B784:B1 74     LDA ($74),Y
+ 04:B786:9D 30 03  STA $0330,X
+ 04:B789:B1 76     LDA ($76),Y
+ 04:B78B:9D 60 03  STA $0360,X
+ 04:B78E:A5 50     LDA $0050 = #$00
+ 04:B790:29 C0     AND #$C0
+ 04:B792:D0 10     BNE $B7A4
+ 04:B794:A5 FB     LDA $00FB = #$00
+ 04:B796:9D 70 03  STA $0370,X @ $037E = #$00
+ 04:B799:B1 72     LDA ($72),Y @ $B804 = #$01
+ 04:B79B:38        SEC
+ 04:B79C:E5 FB     SBC $00FB = #$00
+ 04:B79E:9D 40 03  STA $0340,X @ $034E = #$00
+ 04:B7A1:4C B1 B7  JMP $B7B1
+ 04:B7A4:A5 FD     LDA $00FD = #$01
+ 04:B7A6:9D 40 03  STA $0340,X @ $034E = #$00
+ 04:B7A9:B1 72     LDA ($72),Y @ $B804 = #$01
+ 04:B7AB:38        SEC
+ 04:B7AC:E5 FD     SBC $00FD = #$01
+ 04:B7AE:9D 70 03  STA $0370,X @ $037E = #$00
+ 04:B7B1:B1 78     LDA ($78),Y @ $B861 = #$15
+ 04:B7B3:A8        TAY
+ 04:B7B4:A9 80     LDA #$80
+ 04:B7B6:9D 00 03  STA $0300,X @ $030E = #$00 ; Set 
+ 04:B7B9:B9 C4 BB  LDA $BBC4,Y @ $BBC4 = #$90
+ 04:B7BC:9D 00 04  STA $0400,X @ $040E = #$00 ; Orientation 
+ 
+ 04:B7BF:B9 04 BC  LDA $BC04,Y
+ 04:B7C2:9D 10 03  STA $0310,X ; Set action loop
+ 04:B7C5:B9 44 BC  LDA $BC44,Y 
+ 04:B7C8:9D C0 03  STA $03C0,X ; ???
+ 04:B7CB:B9 C4 BC  LDA $BCC4,Y
+ 04:B7CE:9D F0 03  STA $03F0,X ; HP
+ 
+ 04:B7D1:B9 84 BC  LDA $BC84,Y 
+ 04:B7D4:20 45 FC  JSR $FC45   ; Spawn entity with appropriate animation loop & action/animation set to start
+ 
+ 04:B7D7:B9 04 BD  LDA $BD04,Y
+ 04:B7DA:A8        TAY
+ 04:B7DB:B9 44 BD  LDA $BD44,Y ;
+ 04:B7DE:9D 80 03  STA $0380,X ;              
+ 04:B7E1:B9 4B BD  LDA $BD4B,Y ; Set x-velocity
+ 04:B7E4:9D 90 03  STA $0390,X ; 
+ 
+ 04:B7E7:A9 00     LDA #$00
+ 04:B7E9:9D 20 03  STA $0320,X ; Set x subpixels to zero
+ 04:B7EC:9D 50 03  STA $0350,X ; Set y subpixels to zero
+ 04:B7EF:9D 60 04  STA $0460,X ; Set action subtimer 1 to zero
+ 04:B7F2:9D 70 04  STA $0470,X ; Set action subtimer 2 to zero
+ 04:B7F5:9D 80 04  STA $0480,X ; Set action subtimer 2 goal to zero
+ 04:B7F8:9D 90 04  STA $0490,X ; ???
+ 04:B7FB:9D A0 04  STA $04A0,X ; Set existence timer to zero
+ 04:B7FE:20 99 F9  JSR $F999
+ 04:B801:4C 6F FC  JMP $FC6F
+===========================================
+DATA TABLE $B842
+ 
+DATA TABLE $B861
+
+===========================================
+DATA TABLE $BBC4
+Identifies initial orientation for entity X
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+BBC0             90 90 94 90 90 90 90 90 90 90 90 90
+BBD0 94 94 90 90 90 90 90 90 90 90 90 90 90 94 94 90
+BBE0 90 94 94 94 90 94 90 94 90 90 90 90 94 90 90 94
+BBF0 94 94 90 90 94 90 94 90 94 94 94 94 94 D0 94 90
+BC00 90 94 90 90 
+
+===========================================
+DATA TABLE $BC04
+Identifies initial action loop for entity X
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+BC00             00 10 11 12 00 15 16 17 1C 1E 20 21
+BC10 22 24 25 00 03 05 06 08 0A 30 31 32 33 4D 4E 36
+BC20 37 38 39 40 41 3C 45 3F 21 0C 2A 2C 2D 2E 0F 30
+BC30 4F 50 47 4A 43 57 00 00 51 52 53 55 56 0A 5A 00
+BC40 00 5E 00 00 
+
+===========================================
+DATA TABLE $BC44
+===========================================
+DATA TABLE $BC84
+Identifies animation loop for entity X
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+BC80             00 23 00 20 6E 26 33 33 35 3B 2F 29
+BC90 00 22 1E 00 20 30 3E 37 86 40 41 42 43 46 46 48
+BCA0 49 4A 4B 00 5F 00 54 12 50 5C 57 59 59 55 77 40
+BCB0 46 46 78 21 00 44 85 83 46 4C 4C 4C 4C 2D 00 88
+BCC0 5F 6E 00 00
+
+===========================================
+DATA TABLE $BCC4
+Identifies initial HP for entity X
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+BCC0             01 01 01 01 01 01 01 01 02 02 01 01
+BCD0 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01 01
+BCE0 01 01 01 01 01 01 01 01 01 04 04 03 03 05 01 01
+BCF0 01 01 06 01 01 07 01 01 01 01 01 01 01 01 01 01
+BD00 01 01 01 01
+
+===========================================
+DATA TABLE $BD04
+Identifies code for entity X in data tables $BD44/$BD4B (x-velocity)
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+BD00             00 01 00 01 00 01 00 00 00 02 00 00
+BD10 00 01 01 00 01 01 01 00 00 00 00 00 01 00 00 00
+BD20 00 00 00 00 00 00 03 00 00 01 04 06 06 00 00 00
+BD30 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+BD40 00 00 00 00
+
+===========================================
+DATA TABLES $BD44/$BD4B
+Identifies velocity code Y
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+BD40             00 80 00 80 40 00 00
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+BD40                                  00 00 01 01 00
+BD50 04 02
+
+     Velocity
+00 = $0000
+01 = $0080
+02 = $0100
+03 = $0180
+04 = $0040
+05 = $0400
+06 = $0200
+
+===========================================
