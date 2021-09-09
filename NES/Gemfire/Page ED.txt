@@ -1,0 +1,2 @@
+Page ED
+ROM: 0x1A010 - 0x1C00F
