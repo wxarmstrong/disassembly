@@ -1,0 +1,4 @@
+00EB - PPU_CTRL mirror
+00EC - PPU_MASK mirror
+
+015F - Energy
