@@ -1,0 +1,9 @@
+032C : Event #
+
+033A : Array of graphic/text strings to be printed
+
+05E8 : Certificate data
+05E8 (Name) 21 0A 09
+05F5 (?)    21 19 01
+05FA (?)    22 C5 01
+05FF (?)    22 C8 01
