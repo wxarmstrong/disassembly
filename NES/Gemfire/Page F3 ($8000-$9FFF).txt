@@ -1,0 +1,128 @@
+Page F3
+ROM: 0x26010 -> 0x2800F
+-------------------------
+Function $8000
+8000 JMP $0000 / Placeholder auto-inserted by compiler
+-------------------------
+$8004 -> Table of characters
+00 Ander.........
+01 Colin.........
+02 Loryn.........
+03 Bryan.........
+04 Erin..........
+05 Hubert.......!
+06 Geoff........!
+07 Roland.....+..
+08 Terian........
+09 Seth..........
+0A Erik.......).!
+0B Regis......4.!
+0C Oswald....... 
+0D Griff........!
+0E Adryl........3
+0F Eadric........
+10 Karl.........!
+11 Carlyle....4.0
+12 Erven......+. 
+13 Pender........
+14 Geolug.....$..
+15 Owen.........1
+16 Leander..../.1
+17 Elgis........"
+18 Jerras.......2
+19 Garth....../."
+1A Kelvin.......2
+1B Lars.........1
+1C Alain........3
+1D Eselred....%..
+1E Wolfen.......!
+1F Elford....... 
+20 Alex..........
+21 Gerard.......1
+22 Karla...... ..
+23 Anise.........
+24 Shabard...... 
+25 Sven.........#
+26 Fuster.......2
+27 Anselm....... 
+28 Galford......#
+29 Cairn........2
+2A Esok........."
+2B Eustace......!
+2C Aiden........3
+2D Veen.........1
+2E Lenne........2
+2F Aigle......9.!
+30 Raith.........
+31 Walther......2
+32 Elias........1
+33 Nicolay....#.2
+34 Bradley......3
+35 Sarthe.......1
+36 Randal.......2
+37 Melgan.......!
+38 Francis....3.2
+39 Seagal.......2
+3A Andrew.......2
+3B Kneulf.....*.1
+3C Arkin........3
+3D Keyla.........
+3E Gweyn.........
+3F Geran.........
+-------------------------
+$8383 -> Table of provinces
+00 Dunmoor......ÿÿÿÿÿÿ..
+01 Carveti........ÿÿÿÿ..
+02 Cobrige.........ÿÿÿ..
+03 Banshea......ÿÿÿÿÿÿ..
+04 Petaria.........ÿÿÿ..
+05 Hyland...........ÿÿ..
+06 Norwood.........ÿÿÿ..
+07 Lisle.......ÿÿÿÿÿÿÿ..
+08 Erewood........ÿÿÿÿ..
+09 Rodale............ÿ..
+0A Hermet...........ÿÿ..
+0B Ostlan........ÿÿÿÿÿ..
+0C Powice........ÿÿÿÿÿ..
+0D Cardyf........ÿÿÿÿÿ..
+0E Eljing...........ÿÿ..
+0F Centra..........ÿÿÿ..
+10 Culver...........ÿÿ..
+11 Lindum.........ÿÿÿÿ..
+12 Caster.........ÿÿÿÿ..
+13 Anglia.........ÿÿÿÿ..
+14 Oldlyn........ÿÿÿÿÿ..
+15 Londre............ÿ..
+16 Attley..........ÿÿÿ..
+17 Linden..........ÿÿÿ..
+18 Ashlan........ÿÿÿÿÿ..
+19 Penzan......ÿÿÿÿÿÿÿ..
+1A Belgam.........ÿÿÿÿ..
+1B Celsea............ÿ..
+1C Cambry........ÿÿÿÿÿ..
+1D Farlan........ÿÿÿÿÿ..
+-------------------------
+$85FA - Table of units
+00 Ogre........2d.4..
+01 Orks.........d.ª..
+02 Olog-hais....n.É..
+03 Gargoyles...(x.W..
+04 Lizards.....<n.#..
+05 Skeletons....d.¼..
+06 Bugbear......d.j..
+07 Fachan......(d.t..
+08 Wyvern.....*<–....
+09 Gunners.....(–.“..
+0A Shooters....#–.†..
+0B Spearmen.....–.˜..
+0C Pikemen.....(–.E..
+0D Lancers....-2´.C..
+0E Warriors...3<´.2..
+0F Pluvius...... ....
+10 Zendor.......–."..
+11 Skulryk......n.ˆ..
+12 Empyron......Œ.U..
+13 Scylla.......‚.f..
+14 Chylla.......x.x..
+15 Pastha....... ....
+16 Dragon....... ....
