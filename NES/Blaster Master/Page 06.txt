@@ -1,0 +1,2032 @@
+$8000 -> $8002 (ptr to page's jump table)
+-----------------------------------------
+Jump table for Object ID:
+(Add +3 to get to code)
+01 8124
+02 8124
+03 92D2 / 92D5 -> Tank (default)
+04 8C5A / 8C5D -> Tank death animation
+05 9000
+06 9165
+07 8E8E
+08 8CA6
+09 8AF6
+0A 8B32
+0B 8B6E
+0C 8BAA
+0D 89E3 / 89E6 -> Tank going right into door 
+0E 8A0D / 8A10 -> Tank while screen scrolls right
+0F 8A1B / 8A1E -> Tank going right out of door
+10 8A2C / 8A2F -> Tank going left into door
+11 8A56 / 8A59 -> Tank while screen scrolls left
+12 8A64 / 8A67 -> Tank going left out of door
+13 9764
+14 977F / 9782 -> Default shot
+15 9877
+16 989D
+17 99BF
+18 99E3
+19 9ADE
+1A 9B22
+1B 815C / 815F -> Jason (default)
+1C 855D / 8560 -> Jason death animation
+1D 8675
+1E 8711 / 8714 -> Jason going right into door
+1F 873B / 873E -> Jason while screen scrolls right
+20 874B / 874E -> Jason going right out of door
+21 875C / 875F -> Jason going left into door
+22 8786 / 8789 -> Jason while screen scrolls left
+23 8796 / 8799 -> Jason going left out of door
+24 9D2C
+25 9D3D
+26 9D2C
+27 9D50
+28 9D2C
+29 9D63
+2A 8828 / 882B -> Shot spawner
+2B 884E 
+2C 9C0D
+2D 9C14
+2E 9C29
+2F 9C30
+30 9C1B
+31 9C22
+32 9C37
+33 9C3E
+34 9C45
+35 9C59
+36 9E95
+----------------------------------------------------------------
+Function $8124
+
+ 06:8124:4C 5B 81  JMP $815B
+ 
+ 06:8127:A9 20     LDA #$20
+ 06:8129:85 40     STA $0040 = #$20
+ 06:812B:A9 20     LDA #$20
+ 06:812D:85 41     STA $0041 = #$20
+ 06:812F:20 F9 F7  JSR $F7F9
+ 06:8132:D0 08     BNE $813C
+ 06:8134:A6 57     LDX $0057 = #$00
+ 06:8136:BD 50 01  LDA $0150,X @ $021B = #$10
+ 06:8139:85 46     STA $0046 = #$1B
+ 06:813B:60        RTS -----------------------------------------
+ 06:813C:A5 49     LDA $0049 ; x-tile
+ 06:813E:38        SEC
+ 06:813F:E5 1D     SBC $001D 
+ 06:8141:18        CLC
+ 06:8142:69 08     ADC #$08
+ 06:8144:29 7F     AND #$7F
+ 06:8146:C9 20     CMP #$20
+ 06:8148:B0 0E     BCS $8158
+ 
+ 06:814A:A5 4B     LDA $004B = #$7C
+ 06:814C:38        SEC
+ 06:814D:E5 1F     SBC $001F = #$72
+ 06:814F:18        CLC
+ 06:8150:69 08     ADC #$08
+ 06:8152:29 7F     AND #$7F
+ 06:8154:C9 20     CMP #$20
+ 06:8156:90 03     BCC $815B
+ 06:8158:4C FD D6  JMP $D6FD
+ 06:815B:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Function $815C / $815F -> AI script for Object 0x1B (Jason default)
+
+ 06:815C:4C 8F 84  JMP $848F
+ 
+ 06:815F:A9 40     LDA #$40
+ 06:8161:85 42     STA $0042
+ 06:8163:A9 80     LDA #$80
+ 06:8165:85 43     STA $0043
+ 06:8167:A5 53     LDA $0053
+ 06:8169:D0 0F     BNE $817A
+ 
+ 06:816B:A5 50     LDA $0050
+ 06:816D:C9 01     CMP #$01
+ 06:816F:D0 06     BNE $8177
+ 
+ 06:8171:A9 04     LDA #$04
+ 06:8173:85 4F     STA $004F
+ 06:8175:D0 03     BNE $817A
+ 
+ 06:8177:4C 8F 84  JMP $848F
+ 
+ 06:817A:A5 53     LDA $0053
+ 06:817C:F0 1C     BEQ $819A
+ 
+ 06:817E:A5 F7     LDA $00F7
+ 06:8180:29 03     AND #$03
+ 06:8182:C9 01     CMP #$01
+ 06:8184:F0 10     BEQ $8196
+ 
+ 06:8186:C9 02     CMP #$02
+ 06:8188:F0 08     BEQ $8192
+ 
+ 06:818A:A5 47     LDA $0047
+ 06:818C:09 40     ORA #$40
+ 06:818E:85 47     STA $0047 = #$80
+ 06:8190:D0 08     BNE $819A
+ 
+ 06:8192:A9 80     LDA #$80
+ 06:8194:D0 02     BNE $8198
+ 
+ 06:8196:A9 00     LDA #$00
+ 
+ 06:8198:85 47     STA $0047 = #$80
+ 06:819A:A5 50     LDA $0050 = #$00
+ 06:819C:F0 1C     BEQ $81BA
+ 
+ 06:819E:C9 01     CMP #$01
+ 06:81A0:F0 3F     BEQ $81E1
+ 
+ 06:81A2:C9 02     CMP #$02
+ 06:81A4:D0 03     BNE $81A9
+ 06:81A6:4C 46 82  JMP $8246
+ 
+ 06:81A9:C9 03     CMP #$03
+ 06:81AB:D0 03     BNE $81B0
+ 06:81AD:4C 4D 83  JMP $834D
+ 
+ 06:81B0:C9 04     CMP #$04
+ 06:81B2:D0 03     BNE $81B7
+ 06:81B4:4C BD 83  JMP $83BD
+ 06:81B7:4C 8F 84  JMP $848F
+ 
+ 06:81BA:24 47     BIT $0047 = #$80
+ 06:81BC:70 0D     BVS $81CB
+ 
+ 06:81BE:20 99 96  JSR $9699
+ 06:81C1:A5 D9     LDA $00D9 = #$00
+ 06:81C3:D0 16     BNE $81DB
+ 
+ 06:81C5:24 47     BIT $0047 = #$80
+ 06:81C7:30 20     BMI $81E9
+ 06:81C9:10 25     BPL $81F0
+ 
+ 06:81CB:A5 D9     LDA $00D9 = #$00
+ 06:81CD:D0 25     BNE $81F4
+ 
+ 06:81CF:A5 50     LDA $0050 = #$00
+ 06:81D1:D0 21     BNE $81F4
+ 
+ 06:81D3:A5 4C     LDA $004C = #$00
+ 06:81D5:F0 1D     BEQ $81F4
+ 06:81D7:10 12     BPL $81EB
+ 06:81D9:30 17     BMI $81F2
+ 
+ 06:81DB:A5 10     LDA $0010 = #$BF
+ 06:81DD:29 03     AND #$03
+ 06:81DF:D0 13     BNE $81F4
+ 
+ 06:81E1:24 47     BIT $0047 = #$00
+ 06:81E3:70 0F     BVS $81F4
+ 06:81E5:10 0B     BPL $81F2
+ 06:81E7:30 02     BMI $81EB
+ 
+ 06:81E9:C6 4C     DEC $004C = #$10
+ 06:81EB:C6 4C     DEC $004C = #$10
+ 06:81ED:4C F4 81  JMP $81F4
+ 
+ 06:81F0:E6 4C     INC $004C = #$10
+ 
+ 06:81F2:E6 4C     INC $004C = #$10
+ 
+ 06:81F4:A5 50     LDA $0050 = #$00
+ 06:81F6:D0 12     BNE $820A
+ 
+ 06:81F8:A5 F3     LDA $00F3 = #$00
+ 06:81FA:10 0E     BPL $820A
+ 
+ 06:81FC:AD 5C 85  LDA $855C = #$D0
+ 06:81FF:85 4D     STA $004D ; y-velocity
+ 06:8201:A9 01     LDA #$01
+ 06:8203:85 50     STA $0050
+ 06:8205:A9 3B     LDA #$3B
+ 06:8207:20 26 EC  JSR $EC26
+ 
+ 06:820A:20 85 D1  JSR $D185
+ 06:820D:29 40     AND #$40
+ 06:820F:F0 04     BEQ $8215
+ 
+ 06:8211:A9 08     LDA #$08
+ 06:8213:D0 02     BNE $8217
+ 
+ 06:8215:A9 10     LDA #$10
+ 
+ 06:8217:A2 4C     LDX #$4C  ; x-velocity
+ 06:8219:20 3C F4  JSR $F43C
+ 06:821C:20 54 D2  JSR $D254
+ 06:821F:F0 22     BEQ $8243
+ 
+ 06:8221:A5 50     LDA $0050
+ 06:8223:D0 1A     BNE $823F
+ 
+ 06:8225:24 47     BIT $0047
+ 06:8227:70 16     BVS $823F
+ 
+ 06:8229:A9 01     LDA #$01
+ 06:822B:24 4C     BIT $004C ; x-velocity
+ 06:822D:10 02     BPL $8231
+ 
+ 06:822F:A9 FF     LDA #$FF
+ 
+ 06:8231:20 8B D1  JSR $D18B
+ 06:8234:20 12 D1  JSR $D112 ; Check if tile is a door
+ 06:8237:D0 06     BNE $823F
+ 
+ 06:8239:20 EC 86  JSR $86EC ; Adjust camera / Change Jason's state to "moving right through door"
+ 06:823C:4C 8F 84  JMP $848F
+ 
+ 06:823F:A9 00     LDA #$00
+ 06:8241:85 4C     STA $004C
+ 
+ 06:8243:4C 6F 82  JMP $826F
+ 
+ 06:8246:A9 80     LDA #$80
+ 06:8248:85 42     STA $0042 = #$40
+ 06:824A:A9 40     LDA #$40
+ 06:824C:85 43     STA $0043 = #$80
+ 06:824E:A5 F3     LDA $00F3 = #$00
+ 06:8250:29 08     AND #$08
+ 06:8252:F0 08     BEQ $825C
+ 
+ 06:8254:A9 00     LDA #$00
+ 06:8256:85 50     STA $0050 = #$00
+ 06:8258:A9 80     LDA #$80
+ 06:825A:85 4A     STA $004A = #$80
+ 
+ 06:825C:A9 00     LDA #$00
+ 06:825E:24 47     BIT $0047 = #$00
+ 06:8260:70 08     BVS $826A
+ 06:8262:10 04     BPL $8268
+ 
+ 06:8264:A9 FC     LDA #$FC
+ 06:8266:D0 02     BNE $826A
+ 
+ 06:8268:A9 04     LDA #$04
+ 
+ 06:826A:85 4C     STA $004C = #$10
+ 06:826C:20 54 D2  JSR $D254
+ 
+ 06:826F:E6 4D     INC $004D = #$00
+ 06:8271:E6 4D     INC $004D = #$00
+ 06:8273:A9 40     LDA #$40
+ 06:8275:A2 4D     LDX #$4D
+ 06:8277:20 3C F4  JSR $F43C
+ 06:827A:20 B8 D2  JSR $D2B8
+ 06:827D:D0 22     BNE $82A1
+ 
+ 06:827F:20 85 D1  JSR $D185
+ 06:8282:29 40     AND #$40
+ 06:8284:D0 04     BNE $828A
+ 
+ 06:8286:A9 01     LDA #$01
+ 06:8288:D0 02     BNE $828C
+ 
+ 06:828A:A9 04     LDA #$04
+ 
+ 06:828C:85 50     STA $0050 = #$00
+ 06:828E:A5 F3     LDA $00F3 = #$00
+ 06:8290:10 0C     BPL $829E
+ 
+ 06:8292:20 85 D1  JSR $D185
+ 06:8295:20 5D D1  JSR $D15D
+ 06:8298:D0 04     BNE $829E
+ 
+ 06:829A:A9 03     LDA #$03
+ 06:829C:85 50     STA $0050 = #$00
+ 06:829E:4C 8C 84  JMP $848C
+ 
+ 06:82A1:A5 4D     LDA $004D = #$00
+ 06:82A3:10 07     BPL $82AC
+ 
+ 06:82A5:A9 00     LDA #$00
+ 06:82A7:85 4D     STA $004D = #$00
+ 06:82A9:4C 8C 84  JMP $848C
+ 
+ 06:82AC:A5 50     LDA $0050 = #$00
+ 06:82AE:C9 01     CMP #$01
+ 06:82B0:D0 02     BNE $82B4
+ 
+ 06:82B2:C6 50     DEC $0050 = #$00
+ 
+ 06:82B4:A5 4D     LDA $004D = #$00
+ 06:82B6:C9 32     CMP #$32
+ 06:82B8:B0 06     BCS $82C0
+ 
+ 06:82BA:A9 00     LDA #$00
+ 06:82BC:85 4D     STA $004D = #$00
+ 06:82BE:F0 24     BEQ $82E4
+ 
+ 06:82C0:A9 01     LDA #$01
+ 06:82C2:85 50     STA $0050 = #$00
+ 06:82C4:A9 08     LDA #$08
+ 06:82C6:85 4F     STA $004F = #$00
+ 06:82C8:A5 4D     LDA $004D = #$00
+ 06:82CA:C9 40     CMP #$40
+ 06:82CC:B0 07     BCS $82D5
+ 
+ 06:82CE:A5 53     LDA $0053 = #$FF
+ 06:82D0:38        SEC
+ 06:82D1:E9 40     SBC #$40
+ 06:82D3:B0 02     BCS $82D7
+ 
+ 06:82D5:A9 00     LDA #$00
+ 
+ 06:82D7:85 53     STA $0053 = #$FF
+ 06:82D9:A9 E0     LDA #$E0
+ 06:82DB:85 4D     STA $004D = #$00
+ 06:82DD:A5 53     LDA $0053 = #$FF
+ 06:82DF:D0 03     BNE $82E4
+ 
+ 06:82E1:4C 4A 83  JMP $834A
+ 
+ 06:82E4:A5 F3     LDA $00F3 = #$00
+ 06:82E6:29 04     AND #$04
+ 06:82E8:F0 31     BEQ $831B
+ 
+ 06:82EA:A6 4E     LDX $004E   ; Tile position
+ 06:82EC:BD 00 05  LDA $0500,X 
+ 06:82EF:20 12 D1  JSR $D112   ; Check if tile is a door
+ 06:82F2:D0 08     BNE $82FC
+ 
+ 06:82F4:A9 01     LDA #$01
+ 06:82F6:20 C9 D0  JSR $D0C9
+ 06:82F9:4C 47 83  JMP $8347
+ 
+ 06:82FC:8A        TXA
+ 06:82FD:18        CLC
+ 06:82FE:69 11     ADC #$11
+ 06:8300:AA        TAX
+ 06:8301:BD 00 05  LDA $0500,X
+ 06:8304:20 5D D1  JSR $D15D
+ 06:8307:F0 0B     BEQ $8314
+ 
+ 06:8309:A9 02     LDA #$02
+ 06:830B:85 50     STA $0050 = #$00
+ 06:830D:A9 C0     LDA #$C0
+ 06:830F:85 4A     STA $004A = #$80
+ 06:8311:4C 4A 83  JMP $834A
+ 
+ 06:8314:A9 03     LDA #$03
+ 06:8316:85 50     STA $0050 ; Set mode to "climbing"
+ 06:8318:4C 4A 83  JMP $834A
+ 
+ 06:831B:A5 F3     LDA $00F3
+ 06:831D:29 08     AND #$08
+ 06:831F:F0 26     BEQ $8347
+ 
+ 06:8321:A9 EF     LDA #$EF
+ 06:8323:20 8B D1  JSR $D18B
+ 06:8326:20 5D D1  JSR $D15D - Standing above a ladder?
+ 06:8329:D0 07     BNE $8332
+ 
+ 06:832B:A9 03     LDA #$03
+ 06:832D:85 50     STA $0050 = #$00
+ 06:832F:4C 4A 83  JMP $834A
+ 
+ 06:8332:20 85 D1  JSR $D185 - Get flag data for Jason's tile
+ 06:8335:29 40     AND #$40
+ 06:8337:D0 03     BNE $833C
+ 06:8339:4C 4A 83  JMP $834A
+ 
+ 06:833C:A9 F0     LDA #$F0
+ 06:833E:85 4D     STA $004D = #$00
+ 06:8340:A9 04     LDA #$04
+ 06:8342:85 50     STA $0050 = #$00
+ 06:8344:4C 4A 83  JMP $834A
+ 
+ 06:8347:20 22 86  JSR $8622
+ 
+ 06:834A:4C 8C 84  JMP $848C
+ 
+ 06:834D:A9 80     LDA #$80
+ 06:834F:85 48     STA $0048 = #$C0
+ 06:8351:A9 00     LDA #$00
+ 06:8353:85 4C     STA $004C = #$10
+ 06:8355:20 85 D1  JSR $D185
+ 06:8358:20 5D D1  JSR $D15D
+ 06:835B:F0 06     BEQ $8363
+ 
+ 06:835D:A9 01     LDA #$01
+ 06:835F:85 50     STA $0050 = #$00
+ 06:8361:D0 4B     BNE $83AE
+ 
+ 06:8363:A2 00     LDX #$00
+ 06:8365:A5 F7     LDA $00F7 = #$00
+ 06:8367:29 0C     AND #$0C
+ 06:8369:F0 08     BEQ $8373
+ 
+ 06:836B:A2 08     LDX #$08
+ 06:836D:C9 04     CMP #$04
+ 06:836F:F0 02     BEQ $8373
+ 
+ 06:8371:A2 F8     LDX #$F8
+ 
+ 06:8373:86 4D     STX $004D = #$00
+ 06:8375:20 D8 D1  JSR $D1D8
+ 06:8378:A5 4D     LDA $004D = #$00
+ 06:837A:F0 32     BEQ $83AE
+ 06:837C:30 12     BMI $8390
+ 
+ 06:837E:A5 4A     LDA $004A = #$80
+ 06:8380:10 2C     BPL $83AE
+ 
+ 06:8382:A9 11     LDA #$11
+ 06:8384:20 8B D1  JSR $D18B
+ 06:8387:10 25     BPL $83AE
+ 
+ 06:8389:20 5D D1  JSR $D15D
+ 06:838C:F0 20     BEQ $83AE
+ 06:838E:D0 14     BNE $83A4
+ 
+ 06:8390:A5 4A     LDA $004A = #$80
+ 06:8392:10 1A     BPL $83AE
+ 
+ 06:8394:C9 90     CMP #$90
+ 06:8396:B0 16     BCS $83AE
+ 
+ 06:8398:A9 11     LDA #$11
+ 06:839A:20 8B D1  JSR $D18B
+ 06:839D:10 0F     BPL $83AE
+ 
+ 06:839F:20 5D D1  JSR $D15D
+ 06:83A2:D0 0A     BNE $83AE
+ 
+ 06:83A4:A9 80     LDA #$80
+ 06:83A6:85 4A     STA $004A = #$80
+ 06:83A8:A9 00     LDA #$00
+ 06:83AA:85 50     STA $0050 = #$00
+ 06:83AC:D0 00     BNE $83AE
+ 
+ 06:83AE:A5 F3     LDA $00F3 = #$00
+ 06:83B0:10 08     BPL $83BA
+ 
+ 06:83B2:A9 01     LDA #$01
+ 06:83B4:85 50     STA $0050 = #$00
+ 06:83B6:A9 E0     LDA #$E0
+ 06:83B8:85 4D     STA $004D = #$00
+ 06:83BA:4C 8F 84  JMP $848F
+ 
+ 06:83BD:A9 40     LDA #$40
+ 06:83BF:85 42     STA $0042 = #$C0
+ 06:83C1:A9 40     LDA #$40
+ 06:83C3:85 43     STA $0043 = #$80
+ 06:83C5:24 47     BIT $0047 = #$0F
+ 06:83C7:70 04     BVS $83CD
+ 06:83C9:30 0D     BMI $83D8
+ 06:83CB:10 10     BPL $83DD
+ 
+ 06:83CD:A5 10     LDA $0010 = #$77
+ 06:83CF:4A        LSR
+ 06:83D0:B0 0D     BCS $83DF
+ 
+ 06:83D2:A5 4C     LDA $004C = #$00
+ 06:83D4:F0 09     BEQ $83DF
+ 06:83D6:30 05     BMI $83DD
+ 
+ 06:83D8:C6 4C     DEC $004C = #$00
+ 06:83DA:4C DF 83  JMP $83DF
+ 
+ 06:83DD:E6 4C     INC $004C = #$00
+ 
+ 06:83DF:A9 10     LDA #$10
+ 06:83E1:A2 4C     LDX #$4C
+ 06:83E3:20 3C F4  JSR $F43C
+ 06:83E6:20 54 D2  JSR $D254
+ 06:83E9:F0 30     BEQ $841B
+ 
+ 06:83EB:A5 4A     LDA $004A = #$80
+ 06:83ED:C9 41     CMP #$41
+ 06:83EF:B0 2A     BCS $841B
+ 
+ 06:83F1:A9 F0     LDA #$F0
+ 06:83F3:24 4C     BIT $004C = #$00
+ 06:83F5:10 02     BPL $83F9
+ 
+ 06:83F7:A9 EE     LDA #$EE
+ 
+ 06:83F9:20 8B D1  JSR $D18B
+ 06:83FC:29 C0     AND #$C0
+ 06:83FE:D0 1B     BNE $841B
+ 
+ 06:8400:A9 00     LDA #$00
+ 06:8402:85 50     STA $0050 = #$00
+ 06:8404:A9 80     LDA #$80
+ 06:8406:85 4A     STA $004A = #$80
+ 06:8408:C6 4B     DEC $004B = #$3C
+ 06:840A:A5 4E     LDA $004E = #$BB
+ 06:840C:38        SEC
+ 06:840D:E9 11     SBC #$11
+ 06:840F:85 4E     STA $004E = #$BB
+ 06:8411:A9 E0     LDA #$E0
+ 06:8413:24 4C     BIT $004C = #$00
+ 06:8415:10 02     BPL $8419
+ 
+ 06:8417:A9 20     LDA #$20
+ 
+ 06:8419:85 48     STA $0048 = #$C0
+ 
+ 06:841B:A5 F7     LDA $00F7 = #$00
+ 06:841D:29 0C     AND #$0C
+ 06:841F:C9 04     CMP #$04
+ 06:8421:F0 11     BEQ $8434
+ 
+ 06:8423:C9 08     CMP #$08
+ 06:8425:F0 08     BEQ $842F
+ 
+ 06:8427:A5 4D     LDA $004D = #$00
+ 06:8429:C9 10     CMP #$10
+ 06:842B:F0 09     BEQ $8436
+ 06:842D:30 05     BMI $8434
+ 
+ 06:842F:C6 4D     DEC $004D = #$00
+ 06:8431:4C 36 84  JMP $8436
+ 
+ 06:8434:E6 4D     INC $004D = #$00
+ 
+ 06:8436:A5 4D     LDA $004D = #$00
+ 06:8438:30 0A     BMI $8444
+ 
+ 06:843A:C9 20     CMP #$20
+ 06:843C:90 0E     BCC $844C
+ 
+ 06:843E:A9 20     LDA #$20
+ 06:8440:85 4D     STA $004D = #$00
+ 06:8442:D0 08     BNE $844C
+ 
+ 06:8444:C9 F0     CMP #$F0
+ 06:8446:B0 04     BCS $844C
+ 
+ 06:8448:A9 F0     LDA #$F0
+ 06:844A:85 4D     STA $004D = #$00
+ 
+ 06:844C:20 B8 D2  JSR $D2B8
+ 06:844F:F0 14     BEQ $8465
+ 
+ 06:8451:A5 4D     LDA $004D = #$00
+ 06:8453:30 0A     BMI $845F
+ 
+ 06:8455:A9 80     LDA #$80
+ 06:8457:85 4A     STA $004A = #$80
+ 06:8459:A9 00     LDA #$00
+ 06:845B:85 50     STA $0050 = #$00
+ 06:845D:F0 1D     BEQ $847C
+ 
+ 06:845F:A9 10     LDA #$10
+ 06:8461:85 4D     STA $004D = #$00
+ 06:8463:D0 17     BNE $847C
+ 
+ 06:8465:A5 4A     LDA $004A = #$80
+ 06:8467:C9 40     CMP #$40
+ 06:8469:B0 11     BCS $847C
+ 
+ 06:846B:A9 EF     LDA #$EF
+ 06:846D:20 8B D1  JSR $D18B
+ 06:8470:29 40     AND #$40
+ 06:8472:D0 08     BNE $847C
+ 
+ 06:8474:A9 40     LDA #$40
+ 06:8476:85 4A     STA $004A = #$80
+ 06:8478:A9 08     LDA #$08
+ 06:847A:85 4D     STA $004D = #$00
+ 
+ 06:847C:A5 F3     LDA $00F3 = #$00
+ 06:847E:10 0C     BPL $848C
+ 
+ 06:8480:20 85 D1  JSR $D185
+ 06:8483:20 5D D1  JSR $D15D
+ 06:8486:D0 04     BNE $848C
+ 
+ 06:8488:A9 03     LDA #$03
+ 06:848A:85 50     STA $0050 = #$00
+
+Start here during pause/unpause:
+ 06:848F:A9 08     LDA #$08
+ 06:8491:85 40     STA $0040 = #$18
+ 06:8493:A9 10     LDA #$10
+ 06:8495:85 41     STA $0041 = #$10
+ 
+ 06:8497:20 5F CB  JSR $CB5F
+ 06:849A:20 F9 F7  JSR $F7F9
+ 06:849D:20 E0 85  JSR $85E0 ; Check & apply object collision dmg
+ 
+ 06:84A0:A5 53     LDA $0053
+ 06:84A2:D0 12     BNE $84B6
+ 
+ 06:84A4:A5 4F     LDA $004F
+ 06:84A6:D0 0E     BNE $84B6
+ 
+ 06:84A8:A9 1C     LDA #$1C
+ 06:84AA:85 46     STA $0046 = #$03
+ 06:84AC:A9 00     LDA #$00
+ 06:84AE:85 51     STA $0051 = #$00
+ 
+ 06:84B0:A5 C5     LDA $00C5
+ 06:84B2:09 08     ORA #$08
+ 06:84B4:85 C5     STA $00C5 ; set death animation pause flag
+ 
+ 06:84B6:A5 47     LDA $0047
+ 06:84B8:49 80     EOR #$80
+ 06:84BA:29 80     AND #$80
+ 06:84BC:4A        LSR
+ 06:84BD:85 44     STA $0044 = #$03
+ 06:84BF:A6 50     LDX $0050 = #$00
+ 06:84C1:F0 1A     BEQ $84DD
+ 
+ 06:84C3:CA        DEX
+ 06:84C4:F0 3E     BEQ $8504
+ 
+ 06:84C6:CA        DEX
+ 06:84C7:F0 3F     BEQ $8508
+ 
+ 06:84C9:CA        DEX
+ 06:84CA:F0 03     BEQ $84CF
+ 
+ 06:84CC:4C 1B 85  JMP $851B
+ 
+ 06:84CF:A2 00     LDX #$00
+ 06:84D1:A5 4A     LDA $004A = #$80
+ 06:84D3:10 02     BPL $84D7
+ 
+ 06:84D5:A2 40     LDX #$40
+ 
+ 06:84D7:86 44     STX $0044 = #$03
+ 06:84D9:A9 67     LDA #$67
+ 06:84DB:D0 38     BNE $8515
+ 
+ 06:84DD:A5 4C     LDA $004C = #$00
+ 06:84DF:F0 1F     BEQ $8500
+ 
+ 06:84E1:A5 D9     LDA $00D9 = #$00
+ 06:84E3:F0 06     BEQ $84EB
+ 
+ 06:84E5:A5 F7     LDA $00F7 = #$00
+ 06:84E7:29 03     AND #$03
+ 06:84E9:F0 15     BEQ $8500
+ 
+ 06:84EB:A5 1C     LDA $001C = #$90
+ 06:84ED:2A        ROL
+ 06:84EE:2A        ROL
+ 06:84EF:2A        ROL
+ 06:84F0:85 45     STA $0045 = #$20
+ 06:84F2:A5 3E     LDA $003E = #$77
+ 06:84F4:4A        LSR
+ 06:84F5:4A        LSR
+ 06:84F6:18        CLC
+ 06:84F7:65 45     ADC $0045 = #$20
+ 06:84F9:29 03     AND #$03
+ 06:84FB:18        CLC
+ 06:84FC:69 61     ADC #$61
+ 06:84FE:D0 15     BNE $8515
+ 
+ 06:8500:A9 60     LDA #$60
+ 06:8502:D0 11     BNE $8515
+ 
+ 06:8504:A9 61     LDA #$61
+ 06:8506:D0 0D     BNE $8515
+ 
+ 06:8508:A5 48     LDA $0048 = #$C0
+ 06:850A:2A        ROL
+ 06:850B:2A        ROL
+ 06:850C:2A        ROL
+ 06:850D:29 01     AND #$01
+ 06:850F:18        CLC
+ 06:8510:69 65     ADC #$65
+ 06:8512:4C 15 85  JMP $8515
+ 
+ 06:8515:20 DF F8  JSR $F8DF
+ 06:8518:4C E7 88  JMP $88E7
+ 
+ 06:851B:AD 3E 85  LDA $853E = #$40
+ 06:851E:85 7A     STA $007A = #$00
+ 06:8520:AD 3F 85  LDA $853F = #$85
+ 06:8523:85 7B     STA $007B = #$00
+ 06:8525:A2 20     LDX #$20
+ 06:8527:A5 F7     LDA $00F7 = #$00
+ 06:8529:29 0F     AND #$0F
+ 06:852B:F0 02     BEQ $852F
+ 
+ 06:852D:A2 08     LDX #$08
+ 06:852F:8A        TXA
+ 06:8530:A2 00     LDX #$00
+ 06:8532:25 10     AND $0010 = #$77
+ 06:8534:F0 01     BEQ $8537
+ 06:8536:E8        INX
+ 06:8537:8A        TXA
+ 06:8538:20 F7 F8  JSR $F8F7
+ 06:853B:4C E7 88  JMP $88E7
+----------------------------------------------------------------
+Function $855D / $8560 - Jason's death animation
+
+ 06:855D:4C 8F 85  JMP $858F
+
+ 06:8560:A9 80     LDA #$80
+ 06:8562:85 42     STA $0042 = #$C0
+ 06:8564:A9 80     LDA #$80
+ 06:8566:85 43     STA $0043 = #$80
+ 06:8568:A5 51     LDA $0051 = #$4F
+ 06:856A:D0 12     BNE $857E
+ 06:856C:20 BD D6  JSR $D6BD
+ 06:856F:A9 06     LDA #$06
+ 06:8571:85 D4     STA $00D4 = #$00
+ 
+ 06:8573:A5 C5     LDA $00C5
+ 06:8575:09 08     ORA #$08
+ 06:8577:85 C5     STA $00C5 ; Set death animation pause flag
+ 
+ 06:8579:A9 51     LDA #$51
+ 06:857B:20 26 EC  JSR $EC26
+ 06:857E:E6 51     INC $0051 = #$4F
+ 06:8580:D0 02     BNE $8584
+ 06:8582:C6 51     DEC $0051 = #$4F
+ 06:8584:A5 51     LDA $0051 ; Screen timer?
+ 06:8586:C9 90     CMP #$90
+ 06:8588:D0 05     BNE $858F
+ 06:858A:A9 02     LDA #$02
+ 06:858C:20 C9 D0  JSR $D0C9
+ 
+ (start here if pausing)
+ 06:858F:A9 10     LDA #$10
+ 06:8591:85 40     STA $0040 = #$20
+ 06:8593:A9 10     LDA #$10
+ 06:8595:85 41     STA $0041 = #$20
+ 06:8597:20 F9 F7  JSR $F7F9
+ 06:859A:A5 51     LDA $0051 ; Screen timer
+ 06:859C:4A        LSR
+ 06:859D:4A        LSR
+ 06:859E:AA        TAX
+ 06:859F:E0 18     CPX #$18
+ 06:85A1:90 02     BCC $85A5
+ 06:85A3:A2 17     LDX #$17
+ 06:85A5:BD C8 85  LDA $85C8,X
+ 06:85A8:AA        TAX
+ 06:85A9:BD BC 85  LDA $85BC,X
+ 06:85AC:85 45     STA $0045
+ 06:85AE:BD C2 85  LDA $85C2,X
+ 06:85B1:85 44     STA $0044
+ 06:85B3:20 C3 F6  JSR $F6C3
+ 06:85B6:20 41 F5  JSR $F541
+ 06:85B9:4C E7 88  JMP $88E7
+----------------------------------------------------------------
+Function $85E0 - Check Jason's collisions with objects
+
+ 06:85E0:A5 4F     LDA $004F ; Invincibility timer
+ 06:85E2:D0 3B     BNE $861F
+ 06:85E4:A5 53     LDA $0053 ; Health 
+ 06:85E6:F0 37     BEQ $861F
+ 
+ if (timer==0 && health>0)
+	 06:85E8:A9 7F     LDA #$7F
+	 06:85EA:20 7A D6  JSR $D67A
+	 06:85ED:30 0A     BMI $85F9
+	 06:85EF:20 85 D1  JSR $D185
+	 06:85F2:20 30 D1  JSR $D130
+	 06:85F5:D0 27     BNE $861E
+	 06:85F7:A9 40     LDA #$40
+	 06:85F9:29 7F     AND #$7F
+	 06:85FB:F0 21     BEQ $861E
+	 
+	 if object causes damage
+		 06:85FD:48        PHA
+		 06:85FE:20 10 D0  JSR $D010 ; Increase x-velocity by 10 in opposite direction of current movement
+		 06:8601:68        PLA
+		 06:8602:0A        ASL
+		 06:8603:49 FF     EOR #$FF
+		 06:8605:18        CLC
+		 06:8606:69 01     ADC #$01
+		 06:8608:18        CLC
+		 06:8609:65 53     ADC $0053 ; subtract damage amount
+		 06:860B:B0 02     BCS $860F
+		 06:860D:A9 00     LDA #$00  ; if HP < 0, HP = 0
+		 06:860F:85 53     STA $0053
+		 
+		 06:8611:A9 01     LDA #$01
+		 06:8613:85 50     STA $0050 ; set state to "jumping"
+		 06:8615:A9 20     LDA #$20
+		 06:8617:85 4F     STA $004F ; set invincibility timer to 32
+		 06:8619:A9 33     LDA #$33
+		 06:861B:20 26 EC  JSR $EC26
+		 
+	 06:861E:60        RTS -----------------------------------------
+ 06:861F:4C 6A D6  JMP $D66A
+----------------------------------------------------------------
+Function $8622 - Jumps into tank if conditions are met:
+
+ 06:8622:A5 F3     LDA $00F3
+ 06:8624:29 20     AND #$20
+ 06:8626:F0 4C     BEQ $8674
+ 
+ 06:8628:AD D4 03  LDA $03D4
+ 06:862B:C5 14     CMP $0014
+ 06:862D:D0 45     BNE $8674
+ 
+ 06:862F:A5 48     LDA $0048
+ 06:8631:85 00     STA $0000
+ 06:8633:A5 49     LDA $0049
+ 06:8635:85 01     STA $0001
+ 
+ 06:8637:38        SEC
+ 06:8638:A5 00     LDA $0000
+ 06:863A:E9 80     SBC #$80
+ 06:863C:85 00     STA $0000
+ 06:863E:B0 02     BCS $8642
+ 06:8640:C6 01     DEC $0001
+ 06:8642:AD D0 03  LDA $03D0 
+ 06:8645:C5 00     CMP $0000
+ 06:8647:AD D1 03  LDA $03D1
+ 06:864A:E5 01     SBC $0001
+ 06:864C:0A        ASL
+ 06:864D:D0 25     BNE $8674
+ 
+ 06:864F:AD D3 03  LDA $03D3
+ 06:8652:38        SEC
+ 06:8653:E5 4B     SBC $004B
+ 06:8655:0A        ASL
+ 06:8656:D0 1C     BNE $8674
+ 
+ if
+ - current level is the same as tank's saved level
+ - within the same horizontal tile as tank
+ - within the same vertical tile as tank (modulo 0x80)
+ 
+ 06:8658:A9 1D     LDA #$1D
+ 06:865A:85 46     STA $0046
+ 06:865C:AD D0 03  LDA $03D0
+ 06:865F:85 48     STA $0048
+ 06:8661:AD D1 03  LDA $03D1
+ 06:8664:85 49     STA $0049
+ 06:8666:A9 16     LDA #$16
+ 06:8668:8D D6 03  STA $03D6
+ 06:866B:A9 E4     LDA #$E4
+ 06:866D:85 4D     STA $004D
+ 
+ 06:866F:A9 3E     LDA #$3E
+ 06:8671:20 26 EC  JSR $EC26
+ 06:8674:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Function $86EC
+----------------------------------------------------------------
+Function $8711 - Jason going right through door
+
+ 06:8711:4C 35 87  JMP $8735
+ 
+ 06:8714:E6 51     INC $0051
+ 06:8716:A5 51     LDA $0051
+ 06:8718:C9 1C     CMP #$1C  ; Check if Jason has completely entered door
+ 06:871A:D0 19     BNE $8735
+ 
+ Jason has completely entered door
+	 06:871C:18        CLC
+	 06:871D:A5 48     LDA $0048
+	 06:871F:69 80     ADC #$80
+	 06:8721:85 48     STA $0048
+	 06:8723:A5 49     LDA $0049
+	 06:8725:69 08     ADC #$08
+	 06:8727:85 49     STA $0049
+	 06:8729:A5 4E     LDA $004E = #$9F
+	 06:872B:18        CLC
+	 06:872C:69 09     ADC #$09
+	 06:872E:85 4E     STA $004E = #$9F
+	 06:8730:E6 46     INC $0046 ; Tick up to "screen scroll" state
+	 06:8732:4C 3E 87  JMP $873E (start running screen scroll script)
+ 
+ 06:8735:20 6A D6  JSR $D66A
+ 06:8738:4C D8 87  JMP $87D8
+----------------------------------------------------------------
+Function $873B - Screen as Jason goes right through door
+
+ 06:873B:4C 48 87  JMP $8748
+
+ if
+	 06:873E:20 A8 CC  JSR $CCA8
+	 06:8741:D0 02     BNE $8745
+
+	 if
+		06:8743:E6 46     INC $0046
+
+	 06:8745:20 87 D0  JSR $D087
+	 
+ 06:8748:4C E7 88  JMP $88E7 
+----------------------------------------------------------------
+Function $874B - Jason going right out of door
+
+ Pause logic:
+ 06:874B:4C 59 87  JMP $8759 ; Skip if game is paused
+ 
+ Regular logic:
+ 06:874E:C6 51     DEC $0051 ; Tick down timer
+ 06:8750:D0 07     BNE $8759
+ 
+ 06:8752:A9 1B     LDA #$1B
+ 06:8754:85 46     STA $0046 ; Set Jason to default state
+ 06:8756:20 BF C4  JSR $C4BF ; Set new respawn position
+ 
+ 06:8759:4C A7 87  JMP $87A7
+---------------------------------------------------------------- 
+Function $875C - Jason going left through door
+
+ 06:875C:4C 80 87  JMP $8780
+ 
+ 06:875F:E6 51     INC $0051 = #$1C
+ 06:8761:A5 51     LDA $0051 = #$1C
+ 06:8763:C9 1C     CMP #$1C
+ 06:8765:D0 19     BNE $8780
+ 06:8767:38        SEC
+ 06:8768:A5 48     LDA $0048 = #$40
+ 06:876A:E9 80     SBC #$80
+ 06:876C:85 48     STA $0048 = #$40
+ 06:876E:A5 49     LDA $0049 = #$7D
+ 06:8770:E9 08     SBC #$08
+ 06:8772:85 49     STA $0049 = #$7D
+ 06:8774:A5 4E     LDA $004E = #$AD
+ 06:8776:38        SEC
+ 06:8777:E9 09     SBC #$09
+ 06:8779:85 4E     STA $004E = #$AD
+ 06:877B:E6 46     INC $0046 = #$1F
+ 06:877D:4C 89 87  JMP $8789
+ 06:8780:20 6A D6  JSR $D66A
+ 06:8783:4C A7 87  JMP $87A7
+----------------------------------------------------------------
+Function $8786 - Jason while screen scrolls left
+ 
+ 06:8786:4C 93 87  JMP $8793
+ 06:8789:20 A8 CC  JSR $CCA8
+ 06:878C:D0 02     BNE $8790
+ 06:878E:E6 46     INC $0046
+ 06:8790:20 87 D0  JSR $D087
+ 06:8793:4C E7 88  JMP $88E7
+----------------------------------------------------------------
+Function $8796 - Jason going left out of door
+
+ 06:8796:4C A4 87  JMP $87A4
+
+ 06:8799:C6 51     DEC $0051 = #$1C
+ 06:879B:D0 07     BNE $87A4
+ 06:879D:A9 1B     LDA #$1B
+ 06:879F:85 46     STA $0046 = #$1F
+ 06:87A1:20 BF C4  JSR $C4BF ; Set new spawn position
+ 06:87A4:4C D8 87  JMP $87D8
+----------------------------------------------------------------
+Function $87A7
+
+ 06:87A7:A9 08     LDA #$08
+ 06:87A9:85 40     STA $0040 = #$20
+ 06:87AB:A9 10     LDA #$10
+ 06:87AD:85 41     STA $0041 = #$20
+ 06:87AF:20 F9 F7  JSR $F7F9
+ 06:87B2:A5 3F     LDA $003F = #$A0
+ 06:87B4:48        PHA
+ 06:87B5:A5 3E     LDA $003E = #$10
+ 06:87B7:48        PHA
+ 06:87B8:A5 3E     LDA $003E = #$10
+ 06:87BA:38        SEC
+ 06:87BB:E9 28     SBC #$28
+ 06:87BD:85 3E     STA $003E = #$10
+ 06:87BF:A9 00     LDA #$00
+ 06:87C1:85 44     STA $0044 = #$00
+ 06:87C3:A9 31     LDA #$31
+ 06:87C5:20 DF F8  JSR $F8DF
+ 06:87C8:68        PLA
+ 06:87C9:85 3E     STA $003E = #$10
+ 06:87CB:68        PLA
+ 06:87CC:85 3F     STA $003F = #$A0
+ 06:87CE:A5 3E     LDA $003E = #$10
+ 06:87D0:38        SEC
+ 06:87D1:E5 51     SBC $0051 = #$1C
+ 06:87D3:85 3E     STA $003E = #$10
+ 06:87D5:4C B6 84  JMP $84B6
+ 06:87D8:A9 08     LDA #$08
+ 06:87DA:85 40     STA $0040 = #$20
+ 06:87DC:A9 10     LDA #$10
+ 06:87DE:85 41     STA $0041 = #$20
+ 06:87E0:20 F9 F7  JSR $F7F9
+ 06:87E3:A5 3F     LDA $003F = #$A0
+ 06:87E5:48        PHA
+ 06:87E6:A5 3E     LDA $003E = #$10
+ 06:87E8:48        PHA
+ 06:87E9:A5 3E     LDA $003E = #$10
+ 06:87EB:18        CLC
+ 06:87EC:69 18     ADC #$18
+ 06:87EE:85 3E     STA $003E = #$10
+ 06:87F0:A9 00     LDA #$00
+ 06:87F2:85 44     STA $0044 = #$00
+ 06:87F4:A9 31     LDA #$31
+ 06:87F6:20 DF F8  JSR $F8DF
+ 06:87F9:68        PLA
+ 06:87FA:85 3E     STA $003E = #$10
+ 06:87FC:68        PLA
+ 06:87FD:85 3F     STA $003F = #$A0
+ 06:87FF:A5 3E     LDA $003E = #$10
+ 06:8801:18        CLC
+ 06:8802:65 51     ADC $0051 = #$1C
+ 06:8804:85 3E     STA $003E = #$10
+ 06:8806:4C B6 84  JMP $84B6
+----------------------------------------------------------------
+Function $8809 - Check if Jason shoots
+
+ 06:8809:A5 F3     LDA $00F3
+ 06:880B:29 40     AND #$40
+ 06:880D:F0 18     BEQ $8827
+ 
+	If player pressed B
+	 06:880F:A9 1C     LDA #$1C
+	 06:8811:85 00     STA $0000
+	 06:8813:A2 0E     LDX #$0E
+	 06:8815:20 A9 D6  JSR $D6A9    ; check if slots +0x0E/0x1C are unoccupied
+	 06:8818:F0 0D     BEQ $8827
+	 
+	If slot is available
+	 06:881A:A9 2A     LDA #$2A
+	 06:881C:9D 00 04  STA $0400,X
+	 06:881F:20 9A D6  JSR $D69A   ; Spawn new shot
+	 
+	 06:8822:A9 34     LDA #$34
+	 06:8824:20 26 EC  JSR $EC26   ; Play shot SFX
+	 
+ 06:8827:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Function $8828 - Spawner for Jason's bullet?
+
+ 06:8828:EA        NOP
+ 06:8829:EA        NOP
+ 06:882A:EA        NOP
+ 06:882B:A2 30     LDX #$30
+ 06:882D:A5 47     LDA $0047
+ 06:882F:10 02     BPL $8833
+ 06:8831:A2 D0     LDX #$D0
+ 06:8833:86 4C     STX $004C ; x-velocity
+ 06:8835:A9 00     LDA #$00
+ 06:8837:85 4D     STA $004D ; y-velocity
+ 
+ 06:8839:18        CLC
+ 06:883A:A5 4A     LDA $004A
+ 06:883C:69 20     ADC #$20
+ 06:883E:85 4A     STA $004A ; y-subpixel
+ 06:8840:90 02     BCC $8844
+ 06:8842:E6 4B     INC $004B ; y-pixel
+ 06:8844:20 93 D1  JSR $D193 ; set tile position of current object
+ 06:8847:A9 20     LDA #$20
+ 06:8849:85 51     STA $0051 ; timer
+ 06:884B:E6 46     INC $0046 ; Tick up to next object state
+ 06:884D:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Function $884E - Jason's bullet
+
+ 06:884E:4C 65 88  JMP $8865
+ 
+ 06:8851:A9 80     LDA #$80
+ 06:8853:85 42     STA $0042
+ 06:8855:A9 80     LDA #$80
+ 06:8857:85 43     STA $0043
+ 06:8859:20 B8 D1  JSR $D1B8
+ 06:885C:20 85 D1  JSR $D185
+ 06:885F:30 23     BMI $8884
+ 
+ 06:8861:C6 51     DEC $0051
+ 06:8863:F0 1F     BEQ $8884
+ 
+ 06:8865:A9 10     LDA #$10
+ 06:8867:85 40     STA $0040 = #$20
+ 06:8869:A9 10     LDA #$10
+ 06:886B:85 41     STA $0041 = #$20
+ 06:886D:20 F9 F7  JSR $F7F9
+ 06:8870:D0 15     BNE $8887
+ 06:8872:A9 01     LDA #$01
+ 06:8874:20 7A D6  JSR $D67A
+ 06:8877:30 0B     BMI $8884
+ 06:8879:A9 00     LDA #$00
+ 06:887B:85 44     STA $0044 = #$00
+ 06:887D:A9 25     LDA #$25
+ 06:887F:85 45     STA $0045 = #$5B
+ 06:8881:4C 82 F5  JMP $F582
+ 06:8884:20 72 9B  JSR $9B72
+ 06:8887:4C 06 D7  JMP $D706
+----------------------------------------------------------------
+Function $888A - Check if Jason is jumping out of tank
+ 
+ 06:888A:A5 F3     LDA $00F3 
+ 06:888C:29 20     AND #$20
+ 06:888E:F0 56     BEQ $88E6
+ 
+	 06:8890:20 90 D6  JSR $D690 ; Clear ? values
+	 
+	 06:8893:A5 53     LDA $0053 
+	 06:8895:8D FF 03  STA $03FF ; Save tank health in memory
+	 06:8898:A9 FF     LDA #$FF
+	 06:889A:85 53     STA $0053 ; Set Jason's health to full
+
+	 06:889C:A9 00     LDA #$00
+	 06:889E:85 C1     STA $00C1 ; Set "in-tank" to false
+	 06:88A0:85 94     STA $0094
+	 
+	 06:88A2:A5 14     LDA $0014
+	 06:88A4:8D D4 03  STA $03D4 ; Save level location of tank
+	 
+	 06:88A7:A5 47     LDA $0047
+	 06:88A9:8D D5 03  STA $03D5
+	 06:88AC:A5 48     LDA $0048
+	 06:88AE:8D D0 03  STA $03D0
+	 06:88B1:A5 49     LDA $0049
+	 06:88B3:8D D1 03  STA $03D1
+	 06:88B6:A5 4A     LDA $004A
+	 06:88B8:8D D2 03  STA $03D2
+	 06:88BB:A5 4B     LDA $004B
+	 06:88BD:8D D3 03  STA $03D3
+	 06:88C0:A9 1E     LDA #$1E
+	 06:88C2:8D D6 03  STA $03D6
+	 06:88C5:A9 00     LDA #$00
+	 06:88C7:85 50     STA $0050
+	 06:88C9:A9 3E     LDA #$3E
+	 06:88CB:20 26 EC  JSR $EC26
+	 06:88CE:A9 1B     LDA #$1B
+	 06:88D0:85 46     STA $0046
+	 06:88D2:A9 F0     LDA #$F0
+	 06:88D4:85 4D     STA $004D
+	 06:88D6:A9 EF     LDA #$EF
+	 06:88D8:20 8B D1  JSR $D18B
+	 06:88DB:30 04     BMI $88E1
+	 06:88DD:A9 00     LDA #$00
+	 06:88DF:85 4A     STA $004A
+	 06:88E1:68        PLA
+	 06:88E2:68        PLA       ; Clear the return address from the stack (end tank script)
+	 06:88E3:20 E7 88  JSR $88E7
+ 
+ 06:88E6:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Function $88E7 - Display exited tank as object on screen
+
+ 06:88E7:AD D6 03  LDA $03D6
+ 06:88EA:F0 03     BEQ $88EF
+ 
+ 06:88EC:CE D6 03  DEC $03D6
+ 
+ 06:88EF:A5 C1     LDA $00C1
+ 06:88F1:D0 58     BNE $894B
+ 
+ If not in tank:
+ 06:88F3:A5 14     LDA $0014
+ 06:88F5:CD D4 03  CMP $03D4
+ 06:88F8:D0 51     BNE $894B
+ 06:88FA:A5 49     LDA $0049
+ 06:88FC:48        PHA
+ 06:88FD:A5 48     LDA $0048
+ 06:88FF:48        PHA
+ 06:8900:A5 4B     LDA $004B
+ 06:8902:48        PHA
+ 06:8903:A5 4A     LDA $004A
+ 06:8905:48        PHA
+ 06:8906:A5 47     LDA $0047
+ 06:8908:48        PHA
+ 06:8909:A5 4F     LDA $004F
+ 06:890B:48        PHA
+ 06:890C:AD D0 03  LDA $03D0
+ 06:890F:85 48     STA $0048
+ 06:8911:AD D1 03  LDA $03D1
+ 06:8914:85 49     STA $0049
+ 06:8916:AD D2 03  LDA $03D2 = #$80
+ 06:8919:85 4A     STA $004A = #$CE
+ 06:891B:AD D3 03  LDA $03D3 = #$3A
+ 06:891E:85 4B     STA $004B
+ 06:8920:AD D5 03  LDA $03D5
+ 06:8923:85 47     STA $0047
+ 06:8925:A9 00     LDA #$00
+ 06:8927:85 4F     STA $004F
+ 06:8929:A9 18     LDA #$18
+ 06:892B:85 40     STA $0040
+ 06:892D:A9 10     LDA #$10
+ 06:892F:85 41     STA $0041
+ 06:8931:20 F9 F7  JSR $F7F9
+ 06:8934:D0 03     BNE $8939
+ 06:8936:20 04 95  JSR $9504
+ 06:8939:68        PLA
+ 06:893A:85 4F     STA $004F
+ 06:893C:68        PLA
+ 06:893D:85 47     STA $0047 = #$4F
+ 06:893F:68        PLA
+ 06:8940:85 4A     STA $004A = #$CE
+ 06:8942:68        PLA
+ 06:8943:85 4B     STA $004B = #$39
+ 06:8945:68        PLA
+ 06:8946:85 48     STA $0048 = #$BB
+ 06:8948:68        PLA
+ 06:8949:85 49     STA $0049 = #$3D
+ 
+ 06:894B:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Function $894C - hit detection for tank?
+
+ 06:894C:A5 4F     LDA $004F ; invincibility timer
+ 06:894E:D0 69     BNE $89B9
+ 
+ if invincibility timer == 0
+	 06:8950:A5 53     LDA $0053 ; health
+	 06:8952:D0 25     BNE $8979
+	 
+	 if health == 0
+		 06:8954:A5 46     LDA $0046
+		 06:8956:C9 03     CMP #$03
+		 06:8958:D0 04     BNE $895E
+		 
+		 06:895A:A5 50     LDA $0050
+		 06:895C:F0 04     BEQ $8962
+		 
+		 06:895E:E6 4F     INC $004F ; tick up invincibility timer
+		 06:8960:D0 57     BNE $89B9
+		 
+		 normal movement:
+		 06:8962:20 BD D6  JSR $D6BD
+		 06:8965:A9 04     LDA #$04
+		 06:8967:85 46     STA $0046
+		 06:8969:A5 C5     LDA $00C5 ; set death animation pause flag
+		 06:896B:09 08     ORA #$08
+		 06:896D:85 C5     STA $00C5 = #$00
+		 06:896F:A9 00     LDA #$00
+		 06:8971:85 51     STA $0051 = #$4F
+		 06:8973:85 91     STA $0091 = #$00
+		 06:8975:85 90     STA $0090 = #$00
+		 06:8977:F0 40     BEQ $89B9
+	 else
+		 06:8979:A9 7F     LDA #$7F
+		 06:897B:20 7A D6  JSR $D67A
+		 06:897E:10 0B     BPL $898B
+		 06:8980:48        PHA
+		 06:8981:29 7F     AND #$7F
+		 06:8983:F0 03     BEQ $8988
+		 06:8985:20 10 D0  JSR $D010
+		 06:8988:68        PLA
+		 06:8989:30 0A     BMI $8995
+		 06:898B:20 85 D1  JSR $D185
+		 
+		 06:898E:20 30 D1  JSR $D130
+		 06:8991:D0 25     BNE $89B8
+		 
+		 06:8993:A9 40     LDA #$40
+		 06:8995:29 7F     AND #$7F
+		 06:8997:F0 1F     BEQ $89B8
+		 06:8999:A2 03     LDX #$03
+		 06:899B:86 46     STX $0046 = #$1B
+		 06:899D:A2 02     LDX #$02
+		 06:899F:86 50     STX $0050 = #$01
+		 06:89A1:A2 20     LDX #$20
+		 06:89A3:86 4F     STX $004F = #$00
+		 06:89A5:49 FF     EOR #$FF
+		 06:89A7:18        CLC
+		 06:89A8:69 01     ADC #$01
+		 06:89AA:18        CLC
+		 06:89AB:65 53     ADC $0053
+		 06:89AD:B0 02     BCS $89B1
+		 
+		 06:89AF:A9 00     LDA #$00
+		 
+		 06:89B1:85 53     STA $0053
+		 06:89B3:A9 3C     LDA #$3C
+		 06:89B5:20 26 EC  JSR $EC26
+		 06:89B8:60        RTS -----------------------------------------
+ else
+	06:89B9:4C 6A D6  JMP $D66A
+----------------------------------------------------------------
+Function $89BC
+
+ 06:89BC:A5 1C     LDA $001C
+ 06:89BE:18        CLC
+ 06:89BF:69 20     ADC #$20
+ 06:89C1:29 C0     AND #$C0
+ 06:89C3:85 1C     STA $001C
+ 06:89C5:A5 1E     LDA $001E = #$80
+ 06:89C7:18        CLC
+ 06:89C8:69 20     ADC #$20
+ 06:89CA:29 C0     AND #$C0
+ 06:89CC:85 1E     STA $001E = #$80
+ 06:89CE:A9 00     LDA #$00
+ 06:89D0:85 94     STA $0094 = #$00
+ 06:89D2:85 51     STA $0051 = #$4F
+ 06:89D4:85 D9     STA $00D9 = #$00
+ 06:89D6:A9 10     LDA #$10
+ 06:89D8:A6 47     LDX $0047 = #$4F
+ 06:89DA:30 02     BMI $89DE
+ 06:89DC:A9 0D     LDA #$0D
+ 06:89DE:85 46     STA $0046 = #$1B
+ 06:89E0:4C F3 94  JMP $94F3
+----------------------------------------------------------------
+Function $89E3 / $89E6 -> AI script for Object 0x0D (Player going right into door)
+ 06:89E3:4C 07 8A  JMP $8A07
+ 
+ 06:89E6:E6 51     INC $0051 ; Tick up timer
+ 06:89E8:A5 51     LDA $0051 
+ 06:89EA:C9 25     CMP #$25
+ 06:89EC:D0 19     BNE $8A07 ; Begin screen scroll @ 25 frames
+ 
+ 06:89EE:18        CLC
+ 06:89EF:A5 48     LDA $0048
+ 06:89F1:69 80     ADC #$80
+ 06:89F3:85 48     STA $0048
+ 06:89F5:A5 49     LDA $0049
+ 06:89F7:69 09     ADC #$09
+ 06:89F9:85 49     STA $0049 ; Move right 9.5
+ 
+ 06:89FB:A5 4E     LDA $004E
+ 06:89FD:18        CLC
+ 06:89FE:69 09     ADC #$09
+ 06:8A00:85 4E     STA $004E ; Move player ahead by 9 tiles
+ 06:8A02:E6 46     INC $0046 ; Tick up to screen scroll phase
+ 06:8A04:4C 10 8A  JMP $8A10 ; Begin screen scroll script
+ 
+ If player is paused:
+ 06:8A07:20 6A D6  JSR $D66A
+ 06:8A0A:4C B0 8A  JMP $8AB0
+----------------------------------------------------------------
+Function $8A0D / $8A10 -> AI script for Object 0x0E (Player while screen scrolls right)
+ 06:8A0D:4C 1A 8A  JMP $8A1A
+ 
+ 06:8A10:20 A8 CC  JSR $CCA8
+ 06:8A13:D0 02     BNE $8A17
+ 06:8A15:E6 46     INC $0046
+ 06:8A17:4C 87 D0  JMP $D087
+ 06:8A1A:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Function $8AB0
+
+ 06:8AB0:A9 18     LDA #$18
+ 06:8AB2:85 40     STA $0040
+ 06:8AB4:A9 10     LDA #$10
+ 06:8AB6:85 41     STA $0041
+ 06:8AB8:20 F9 F7  JSR $F7F9
+ 
+ 06:8ABB:A5 3F     LDA $003F
+ 06:8ABD:48        PHA
+ 06:8ABE:A5 3E     LDA $003E
+ 06:8AC0:48        PHA
+ 06:8AC1:A5 3E     LDA $003E
+ 06:8AC3:18        CLC
+ 06:8AC4:69 20     ADC #$20
+ 06:8AC6:85 3E     STA $003E
+ 
+ 06:8AC8:A5 4F     LDA $004F
+ 06:8ACA:48        PHA
+ 06:8ACB:A9 00     LDA #$00
+ 06:8ACD:85 4F     STA $004F ; timer = 0
+ 06:8ACF:A9 00     LDA #$00
+ 06:8AD1:85 44     STA $0044 
+ 06:8AD3:A9 31     LDA #$31
+ 06:8AD5:20 DF F8  JSR $F8DF
+ 06:8AD8:68        PLA
+ 06:8AD9:85 4F     STA $004F ; restore original timer value
+ 06:8ADB:68        PLA
+ 06:8ADC:85 3E     STA $003E
+ 06:8ADE:68        PLA
+ 06:8ADF:85 3F     STA $003F
+ 
+ 06:8AE1:A5 3E     LDA $003E = #$10
+ 06:8AE3:18        CLC
+ 06:8AE4:65 51     ADC $0051 = #$00
+ 06:8AE6:85 3E     STA $003E = #$10
+ 06:8AE8:4C 04 95  JMP $9504
+----------------------------------------------------------------
+Function $8AF6
+
+ 06:8AF6:4C 0A 8B  JMP $8B0A
+ 06:8AF9:A9 3A     LDA #$3A
+ 06:8AFB:85 45     STA $0045
+ 06:8AFD:AD 0F 8B  LDA $8B0F = #$11
+ 06:8B00:85 7A     STA $007A
+ 06:8B02:AD 10 8B  LDA $8B10 = #$8B
+ 06:8B05:85 7B     STA $007B
+ 06:8B07:20 DB 8B  JSR $8BDB
+ 
+ 06:8B0A:A9 3A     LDA #$3A
+ 06:8B0C:4C 43 8C  JMP $8C43
+ 
+Table $8B11
+
+20 20 30 20 20 10 00 00 00 00 10 20 20 30 20 20 05 06 05 06 00 
+----------------------------------------------------------------
+Function $8BDB
+
+ 06:8BDB:A4 51     LDY $0051 ; Timer
+ 06:8BDD:C0 08     CPY #$08
+ 06:8BDF:F0 15     BEQ $8BF6
+ 
+	 06:8BE1:B1 7A     LDA ($7A),Y ; ptr to velocity table
+	 06:8BE3:85 4C     STA $004C   ; x-velocity
+	 06:8BE5:98        TYA
+	 06:8BE6:18        CLC
+	 06:8BE7:69 08     ADC #$08
+	 06:8BE9:A8        TAY
+	 06:8BEA:B1 7A     LDA ($7A),Y
+	 06:8BEC:85 4D     STA $004D   ; y-velocity
+	 06:8BEE:E6 51     INC $0051   ; Tick up timer
+	 06:8BF0:20 28 8C  JSR $8C28
+	 06:8BF3:4C B5 D1  JMP $D1B5   ; Move object according to its velocity
+ 
+ 06:8BF6:A5 47     LDA $0047 
+ 06:8BF8:30 04     BMI $8BFE
+ 
+ 06:8BFA:A9 0F     LDA #$0F
+ 06:8BFC:D0 02     BNE $8C00
+ 
+ 06:8BFE:A9 80     LDA #$80
+ 
+ 06:8C00:85 47     STA $0047
+ 
+ 06:8C02:A5 50     LDA $0050
+ 06:8C04:18        CLC
+ 06:8C05:69 10     ADC #$10
+ 06:8C07:A8        TAY
+ 06:8C08:B1 7A     LDA ($7A),Y
+ 06:8C0A:85 46     STA $0046
+ 06:8C0C:A0 14     LDY #$14
+ 06:8C0E:B1 7A     LDA ($7A),Y
+ 06:8C10:85 4C     STA $004C
+ 06:8C12:C8        INY
+ 06:8C13:B1 7A     LDA ($7A),Y
+ 06:8C15:85 4D     STA $004D
+ 06:8C17:20 28 8C  JSR $8C28
+ 06:8C1A:A5 45     LDA $0045
+ 06:8C1C:20 43 8C  JSR $8C43
+ 06:8C1F:A9 00     LDA #$00
+ 06:8C21:85 50     STA $0050 = #$00
+ 06:8C23:85 51     STA $0051 = #$00
+ 06:8C25:68        PLA
+ 06:8C26:68        PLA
+ 06:8C27:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Function $92D2 - Tank (default)
+
+ 06:92D2:4C F3 94  JMP $94F3
+ 
+ 06:92D5:A9 C0     LDA #$C0
+ 06:92D7:85 42     STA $0042
+ 06:92D9:A9 80     LDA #$80
+ 06:92DB:85 43     STA $0043
+ 06:92DD:20 E1 CD  JSR $CDE1 ; Return flag data for current tile
+ 06:92E0:20 B9 96  JSR $96B9
+ 06:92E3:20 99 96  JSR $9699
+ 06:92E6:20 28 8E  JSR $8E28
+ 06:92E9:A5 53     LDA $0053
+ 06:92EB:F0 62     BEQ $934F
+
+ 06:92ED:A5 90     LDA $0090
+ 06:92EF:F0 4E     BEQ $933F
+ 
+ 06:92F1:A5 4F     LDA $004F
+ 06:92F3:D0 13     BNE $9308
+ 
+ 06:92F5:AD FC 03  LDA $03FC
+ 06:92F8:29 04     AND #$04
+ 06:92FA:F0 0C     BEQ $9308
+ 
+ If Hover is collected:
+ 06:92FC:A5 98     LDA $0098
+ 06:92FE:30 08     BMI $9308
+ 
+ If ?
+ 06:9300:A5 92     LDA $0092
+ 06:9302:F0 04     BEQ $9308
+ 
+ If hover gauge is not empty
+ 06:9304:A5 F7     LDA $00F7 
+ 06:9306:30 06     BMI $930E
+ 
+ If A is pressed:
+ 06:9308:A9 01     LDA #$01
+ 06:930A:85 90     STA $0090
+ 06:930C:D0 31     BNE $933F
+ 
+ 06:930E:A9 02     LDA #$02
+ 06:9310:85 90     STA $0090
+ 06:9312:A5 10     LDA $0010
+ 06:9314:29 07     AND #$07
+ 06:9316:C9 03     CMP #$03
+ 06:9318:D0 05     BNE $931F
+ 
+ 06:931A:A9 30     LDA #$30
+ 06:931C:20 26 EC  JSR $EC26 ; Play hover SFX
+ 
+ 06:931F:C6 92     DEC $0092 ; Tick down hover
+ 06:9321:A5 4D     LDA $004D
+ 06:9323:38        SEC
+ 06:9324:E9 01     SBC #$01  ; y-velocity--
+ 06:9326:10 12     BPL $933A
+ 
+ if moving upwards:
+ 06:9328:24 98     BIT $0098
+ 06:932A:10 08     BPL $9334
+ 
+ 06:932C:C9 F8     CMP #$F8
+ 06:932E:B0 0A     BCS $933A
+ 
+ 06:9330:A9 F8     LDA #$F8
+ 06:9332:D0 06     BNE $933A ; To minimum of -8 ?
+ 
+ 06:9334:C9 F0     CMP #$F0
+ 06:9336:B0 02     BCS $933A
+ 
+ 06:9338:A9 F0     LDA #$F0  ; To maximum of -16 ?
+ 
+ 06:933A:85 4D     STA $004D ; Set y-velocity
+ 06:933C:4C 6D 93  JMP $936D
+ 
+ 06:933F:A5 4D     LDA $004D
+ 06:9341:C9 DC     CMP #$DC
+ 06:9343:90 0A     BCC $934F
+ 
+ 06:9345:24 F7     BIT $00F7
+ 06:9347:30 06     BMI $934F
+ 
+ 06:9349:A9 00     LDA #$00
+ 06:934B:85 4D     STA $004D ; Set y-velocity to 0
+ 06:934D:F0 1E     BEQ $936D
+ 
+ 06:934F:E6 4D     INC $004D
+ 06:9351:E6 4D     INC $004D ; Increase y-velocity by 2
+ 06:9353:24 98     BIT $0098
+ 06:9355:30 0A     BMI $9361
+ 
+ 06:9357:A9 40     LDA #$40
+ 06:9359:A2 4D     LDX #$4D
+ 06:935B:20 3C F4  JSR $F43C
+ 06:935E:4C 6D 93  JMP $936D ; limit to max of 40
+ 
+ 06:9361:A5 4D     LDA $004D
+ 06:9363:30 08     BMI $936D
+ 
+ 06:9365:C9 08     CMP #$08
+ 06:9367:90 04     BCC $936D
+ 
+ 06:9369:A9 08     LDA #$08
+ 06:936B:85 4D     STA $004D
+ 
+ 06:936D:20 54 D2  JSR $D254
+ 06:9370:D0 5F     BNE $93D1
+ 
+ 06:9372:A5 4A     LDA $004A ; y-subtile
+ 06:9374:C9 80     CMP #$80
+ 06:9376:F0 03     BEQ $937B
+ 06:9378:4C 29 94  JMP $9429
+ 
+ 06:937B:A9 11     LDA #$11
+ 06:937D:20 8B D1  JSR $D18B
+ 06:9380:30 03     BMI $9385
+ 06:9382:4C 29 94  JMP $9429
+ 
+ 06:9385:A5 99     LDA $0099
+ 06:9387:29 0C     AND #$0C
+ 06:9389:C9 0C     CMP #$0C
+ 06:938B:F0 03     BEQ $9390
+ 06:938D:4C 29 94  JMP $9429
+ 
+ 06:9390:A5 F7     LDA $00F7 
+ 06:9392:29 03     AND #$03
+ 06:9394:AA        TAX
+ 06:9395:A5 48     LDA $0048
+ 06:9397:C9 40     CMP #$40
+ 06:9399:90 17     BCC $93B2
+ 
+ 06:939B:C9 C0     CMP #$C0
+ 06:939D:B0 03     BCS $93A2
+ 06:939F:4C 29 94  JMP $9429
+ 
+ 06:93A2:E0 01     CPX #$01
+ 06:93A4:F0 03     BEQ $93A9
+ 06:93A6:4C 29 94  JMP $9429
+ 
+ 06:93A9:A0 C0     LDY #$C0
+ 06:93AB:A9 00     LDA #$00
+ 06:93AD:48        PHA
+ 06:93AE:A9 12     LDA #$12
+ 06:93B0:D0 0E     BNE $93C0
+ 
+ 06:93B2:E0 02     CPX #$02
+ 06:93B4:F0 03     BEQ $93B9
+ 06:93B6:4C 29 94  JMP $9429
+ 
+ 06:93B9:A0 40     LDY #$40
+ 06:93BB:A9 01     LDA #$01
+ 06:93BD:48        PHA
+ 06:93BE:A9 10     LDA #$10
+ 
+ 06:93C0:20 8B D1  JSR $D18B ; Check if tile is solid
+ 06:93C3:30 08     BMI $93CD
+ 
+ 06:93C5:68        PLA
+ 06:93C6:85 50     STA $0050
+ 06:93C8:84 48     STY $0048
+ 06:93CA:4C EB 8A  JMP $8AEB
+ 
+ 06:93CD:68        PLA
+ 06:93CE:4C 29 94  JMP $9429
+ 
+ 06:93D1:A9 00     LDA #$00
+ 06:93D3:85 4C     STA $004C = #$00
+ 06:93D5:A5 50     LDA $0050 = #$00
+ 06:93D7:D0 50     BNE $9429
+ 
+ 06:93D9:A5 F7     LDA $00F7 = #$00
+ 06:93DB:29 03     AND #$03
+ 06:93DD:AA        TAX
+ 06:93DE:A5 48     LDA $0048 = #$41
+ 06:93E0:C9 40     CMP #$40
+ 06:93E2:F0 10     BEQ $93F4
+ 
+ 06:93E4:C9 C0     CMP #$C0
+ 06:93E6:D0 41     BNE $9429
+ 
+ 06:93E8:E0 02     CPX #$02
+ 06:93EA:D0 3D     BNE $9429
+ 
+ 06:93EC:A9 80     LDA #$80
+ 06:93EE:85 47     STA $0047 = #$40
+ 06:93F0:A9 FF     LDA #$FF
+ 06:93F2:D0 0A     BNE $93FE
+ 06:93F4:E0 01     CPX #$01
+ 06:93F6:D0 31     BNE $9429
+ 06:93F8:A9 0F     LDA #$0F
+ 06:93FA:85 47     STA $0047 = #$40
+ 06:93FC:A9 01     LDA #$01
+ 06:93FE:20 8B D1  JSR $D18B ; Check tile to right of tank
+ 06:9401:20 12 D1  JSR $D112
+ 06:9404:D0 07     BNE $940D
+ 06:9406:A9 00     LDA #$00
+ 06:9408:85 91     STA $0091 = #$00
+ 06:940A:4C BC 89  JMP $89BC
+ 06:940D:A5 99     LDA $0099 = #$00
+ 06:940F:29 04     AND #$04
+ 06:9411:F0 16     BEQ $9429
+ 06:9413:A9 EF     LDA #$EF
+ 06:9415:20 8B D1  JSR $D18B ; Check tile above tank
+ 06:9418:30 0F     BMI $9429
+ 06:941A:A5 47     LDA $0047 = #$40
+ 06:941C:30 04     BMI $9422
+ 06:941E:A9 00     LDA #$00
+ 06:9420:F0 02     BEQ $9424
+ 06:9422:A9 01     LDA #$01
+ 06:9424:85 50     STA $0050 = #$00
+ 06:9426:4C 63 8B  JMP $8B63
+ 06:9429:20 B8 D2  JSR $D2B8
+ 06:942C:F0 6E     BEQ $949C
+ 06:942E:A5 4D     LDA $004D = #$00
+ 06:9430:10 03     BPL $9435
+ 06:9432:4C D0 94  JMP $94D0
+ 06:9435:A9 00     LDA #$00
+ 06:9437:85 4D     STA $004D = #$00
+ 06:9439:20 8A 88  JSR $888A
+ 06:943C:A5 90     LDA $0090 = #$00
+ 06:943E:F0 08     BEQ $9448
+ 06:9440:A9 06     LDA #$06
+ 06:9442:85 91     STA $0091 = #$00
+ 06:9444:A9 00     LDA #$00
+ 06:9446:85 90     STA $0090 = #$00
+ 06:9448:A5 50     LDA $0050 = #$00
+ 06:944A:29 03     AND #$03
+ 06:944C:85 50     STA $0050 = #$00
+ 06:944E:F0 32     BEQ $9482
+ 06:9450:C9 02     CMP #$02
+ 06:9452:F0 3A     BEQ $948E
+ 06:9454:C9 03     CMP #$03
+ 06:9456:D0 0F     BNE $9467
+ 06:9458:A5 F3     LDA $00F3 = #$00
+ 06:945A:10 0B     BPL $9467
+ 06:945C:A9 01     LDA #$01
+ 06:945E:85 50     STA $0050 = #$00
+ 06:9460:AD 37 96  LDA $9637 = #$04
+ 06:9463:85 8F     STA $008F = #$00
+ 06:9465:D0 6D     BNE $94D4
+ 06:9467:C6 8F     DEC $008F = #$00
+ 06:9469:D0 69     BNE $94D4
+ 06:946B:E6 50     INC $0050 = #$00
+ 06:946D:A5 50     LDA $0050 = #$00
+ 06:946F:C9 02     CMP #$02
+ 06:9471:D0 61     BNE $94D4
+ 06:9473:AE F1 94  LDX $94F1 = #$BE
+ 06:9476:A5 98     LDA $0098
+ 06:9478:10 03     BPL $947D
+ 
+ 06:947A:AE F2 94  LDX $94F2 = #$D2
+ 06:947D:86 4D     STX $004D = #$00
+ 06:947F:4C D4 94  JMP $94D4
+ 
+ 06:9482:A5 F3     LDA $00F3 = #$00
+ 06:9484:10 4E     BPL $94D4
+ 06:9486:A9 2E     LDA #$2E
+ 06:9488:20 26 EC  JSR $EC26
+ 06:948B:4C 93 94  JMP $9493
+ 06:948E:A9 2D     LDA #$2D
+ 06:9490:20 26 EC  JSR $EC26
+ 06:9493:E6 50     INC $0050
+ 06:9495:AD 37 96  LDA $9637 = #$04
+ 06:9498:85 8F     STA $008F = #$00
+ 06:949A:D0 38     BNE $94D4
+ 06:949C:A5 98     LDA $0098
+ 06:949E:10 0C     BPL $94AC
+ 06:94A0:A5 99     LDA $0099 = #$00
+ 06:94A2:29 02     AND #$02
+ 06:94A4:F0 06     BEQ $94AC
+ 06:94A6:A9 08     LDA #$08
+ 06:94A8:85 46     STA $0046 = #$1B
+ 06:94AA:D0 28     BNE $94D4
+ 06:94AC:A5 99     LDA $0099 = #$00
+ 06:94AE:29 01     AND #$01
+ 06:94B0:F0 10     BEQ $94C2
+ 06:94B2:A5 F3     LDA $00F3 = #$00
+ 06:94B4:10 0C     BPL $94C2
+ 06:94B6:A5 90     LDA $0090 = #$00
+ 06:94B8:D0 08     BNE $94C2
+ 06:94BA:A9 02     LDA #$02
+ 06:94BC:85 90     STA $0090 = #$00
+ 06:94BE:A9 06     LDA #$06
+ 06:94C0:85 91     STA $0091 = #$00
+ 06:94C2:A5 50     LDA $0050 = #$00
+ 06:94C4:C9 02     CMP #$02
+ 06:94C6:F0 0C     BEQ $94D4
+ 06:94C8:A9 02     LDA #$02
+ 06:94CA:85 50     STA $0050 = #$00
+ 06:94CC:A9 10     LDA #$10
+ 06:94CE:85 4D     STA $004D = #$00
+ 06:94D0:A9 00     LDA #$00
+ 06:94D2:85 4D     STA $004D = #$00
+ 06:94D4:A5 91     LDA $0091 = #$00
+ 06:94D6:F0 02     BEQ $94DA
+ 06:94D8:C6 91     DEC $0091 = #$00
+ 06:94DA:A5 50     LDA $0050 = #$00
+ 06:94DC:4A        LSR
+ 06:94DD:B0 04     BCS $94E3
+ 06:94DF:A9 00     LDA #$00
+ 06:94E1:85 8F     STA $008F = #$00
+ 06:94E3:20 38 96  JSR $9638
+ 06:94E6:85 BE     STA $00BE = #$03
+ 06:94E8:20 E2 96  JSR $96E2
+ 06:94EB:20 CC 96  JSR $96CC
+ 06:94EE:4C F3 94  JMP $94F3
+ 
+ (Jump here if pausing)
+ 06:94F3:20 5F CB  JSR $CB5F
+ 06:94F6:A9 18     LDA #$18
+ 06:94F8:85 40     STA $0040
+ 06:94FA:A9 10     LDA #$10
+ 06:94FC:85 41     STA $0041 = #$20
+ 06:94FE:20 F9 F7  JSR $F7F9
+ 06:9501:20 4C 89  JSR $894C
+ 06:9504:A5 3F     LDA $003F
+ 06:9506:48        PHA
+ 06:9507:A5 3E     LDA $003E
+ 06:9509:48        PHA
+ 06:950A:A5 3F     LDA $003F
+ 06:950C:18        CLC
+ 06:950D:69 04     ADC #$04
+ 06:950F:85 3F     STA $003F
+ 06:9511:A9 00     LDA #$00
+ 06:9513:85 44     STA $0044
+ 06:9515:A5 91     LDA $0091
+ 06:9517:D0 18     BNE $9531
+ 
+ 06:9519:A5 90     LDA $0090
+ 06:951B:F0 1C     BEQ $9539
+ 06:951D:C9 01     CMP #$01
+ 06:951F:D0 04     BNE $9525
+ 06:9521:A9 2C     LDA #$2C
+ 06:9523:D0 0E     BNE $9533
+ 06:9525:C6 3F     DEC $003F
+ 06:9527:A5 10     LDA $0010
+ 06:9529:4A        LSR
+ 06:952A:29 01     AND #$01
+ 06:952C:18        CLC
+ 06:952D:69 7A     ADC #$7A
+ 06:952F:D0 02     BNE $9533
+ 06:9531:A9 2E     LDA #$2E
+ 06:9533:20 DF F8  JSR $F8DF
+ 06:9536:4C C0 95  JMP $95C0
+ 
+ 06:9539:A5 C1     LDA $00C1 = #$FF
+ 06:953B:F0 19     BEQ $9556
+ 06:953D:A5 50     LDA $0050 = #$00
+ 06:953F:29 03     AND #$03
+ 06:9541:85 50     STA $0050 = #$00
+ 06:9543:C9 02     CMP #$02
+ 06:9545:D0 0F     BNE $9556
+ 06:9547:A5 4D     LDA $004D = #$00
+ 06:9549:30 05     BMI $9550
+ 06:954B:C6 3F     DEC $003F = #$A0
+ 06:954D:4C 56 95  JMP $9556
+ 06:9550:E6 3F     INC $003F = #$A0
+ 06:9552:E6 3F     INC $003F = #$A0
+ 06:9554:E6 3F     INC $003F = #$A0
+ 06:9556:A5 C1     LDA $00C1 = #$FF
+ 06:9558:F0 25     BEQ $957F
+ 06:955A:A5 D9     LDA $00D9 = #$00
+ 06:955C:D0 06     BNE $9564
+ 06:955E:A5 50     LDA $0050 = #$00
+ 06:9560:C9 02     CMP #$02
+ 06:9562:D0 1B     BNE $957F
+ 06:9564:A5 10     LDA $0010 = #$B2
+ 06:9566:4A        LSR
+ 06:9567:90 25     BCC $958E
+ 06:9569:A5 F7     LDA $00F7 = #$00
+ 06:956B:29 03     AND #$03
+ 06:956D:C9 01     CMP #$01
+ 06:956F:F0 09     BEQ $957A
+ 06:9571:C9 02     CMP #$02
+ 06:9573:D0 19     BNE $958E
+ 06:9575:C6 DA     DEC $00DA = #$01
+ 06:9577:4C 8E 95  JMP $958E
+ 06:957A:E6 DA     INC $00DA = #$01
+ 06:957C:4C 8E 95  JMP $958E
+ 06:957F:A5 1C     LDA $001C = #$00
+ 06:9581:4A        LSR
+ 06:9582:4A        LSR
+ 06:9583:4A        LSR
+ 06:9584:4A        LSR
+ 06:9585:18        CLC
+ 06:9586:65 3E     ADC $003E = #$10
+ 06:9588:4A        LSR
+ 06:9589:4A        LSR
+ 06:958A:29 03     AND #$03
+ 06:958C:85 DA     STA $00DA = #$01
+ 06:958E:A5 94     LDA $0094 = #$00
+ 06:9590:4A        LSR
+ 06:9591:4A        LSR
+ 06:9592:18        CLC
+ 06:9593:65 3E     ADC $003E = #$10
+ 06:9595:38        SEC
+ 06:9596:E9 08     SBC #$08
+ 06:9598:85 3E     STA $003E = #$10
+ 06:959A:A5 DA     LDA $00DA = #$01
+ 06:959C:29 03     AND #$03
+ 06:959E:18        CLC
+ 06:959F:69 1C     ADC #$1C
+ 
+ 06:95A1:20 DF F8  JSR $F8DF
+ 06:95A4:A5 94     LDA $0094 = #$00
+ 06:95A6:4A        LSR
+ 06:95A7:29 06     AND #$06
+ 06:95A9:49 FF     EOR #$FF
+ 06:95AB:18        CLC
+ 06:95AC:69 11     ADC #$11
+ 06:95AE:18        CLC
+ 06:95AF:65 3E     ADC $003E = #$10
+ 06:95B1:85 3E     STA $003E = #$10
+ 06:95B3:A5 DA     LDA $00DA = #$01
+ 06:95B5:18        CLC
+ 06:95B6:69 01     ADC #$01
+ 06:95B8:29 03     AND #$03
+ 06:95BA:18        CLC
+ 06:95BB:69 1C     ADC #$1C
+ 06:95BD:20 DF F8  JSR $F8DF
+ 06:95C0:68        PLA
+ 06:95C1:85 3E     STA $003E = #$10
+ 06:95C3:68        PLA
+ 06:95C4:85 3F     STA $003F = #$A0
+ 06:95C6:A5 94     LDA $0094 = #$00
+ 06:95C8:4A        LSR
+ 06:95C9:29 06     AND #$06
+ 06:95CB:49 FF     EOR #$FF
+ 06:95CD:18        CLC
+ 06:95CE:69 04     ADC #$04
+ 06:95D0:18        CLC
+ 06:95D1:65 3F     ADC $003F = #$A0
+ 06:95D3:85 3F     STA $003F = #$A0
+ 06:95D5:A5 8F     LDA $008F = #$00
+ 06:95D7:F0 07     BEQ $95E0
+ 06:95D9:E6 3F     INC $003F = #$A0
+ 06:95DB:E6 3F     INC $003F = #$A0
+ 06:95DD:4C F8 95  JMP $95F8
+ 06:95E0:A5 50     LDA $0050 = #$00
+ 06:95E2:D0 14     BNE $95F8
+ 06:95E4:A5 4C     LDA $004C = #$00
+ 06:95E6:F0 10     BEQ $95F8
+ 06:95E8:A5 C1     LDA $00C1 = #$FF
+ 06:95EA:F0 0C     BEQ $95F8
+ 06:95EC:A5 D9     LDA $00D9 = #$00
+ 06:95EE:D0 08     BNE $95F8
+ 06:95F0:A5 DA     LDA $00DA = #$01
+ 06:95F2:29 02     AND #$02
+ 06:95F4:D0 02     BNE $95F8
+ 06:95F6:E6 3F     INC $003F = #$A0
+ 06:95F8:A5 94     LDA $0094 = #$00
+ 06:95FA:F0 1A     BEQ $9616
+ 06:95FC:A2 00     LDX #$00
+ 06:95FE:24 47     BIT $0047 = #$0F
+ 06:9600:30 02     BMI $9604
+ 06:9602:A2 40     LDX #$40
+ 06:9604:86 44     STX $0044 = #$00
+ 06:9606:A5 94     LDA $0094 = #$00
+ 06:9608:4A        LSR
+ 06:9609:4A        LSR
+ 06:960A:C9 03     CMP #$03
+ 06:960C:F0 04     BEQ $9612
+ 06:960E:A9 25     LDA #$25
+ 06:9610:D0 21     BNE $9633
+ 06:9612:A9 24     LDA #$24
+ 06:9614:D0 1D     BNE $9633
+ 06:9616:AD D6 03  LDA $03D6 = #$00
+ 06:9619:F0 0B     BEQ $9626
+ 06:961B:A5 47     LDA $0047 = #$0F
+ 06:961D:4A        LSR
+ 06:961E:29 40     AND #$40
+ 06:9620:85 44     STA $0044 = #$00
+ 06:9622:A9 32     LDA #$32
+ 06:9624:D0 0D     BNE $9633
+ 06:9626:A9 00     LDA #$00
+ 06:9628:85 44     STA $0044 = #$00
+ 06:962A:A5 47     LDA $0047 = #$0F
+ 06:962C:4A        LSR
+ 06:962D:4A        LSR
+ 06:962E:29 03     AND #$03
+ 06:9630:18        CLC
+ 06:9631:69 20     ADC #$20
+ 06:9633:4C DF F8  JMP $F8DF
+ 06:9636:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Function $9699
+
+ 06:9699:A5 14     LDA $0014
+ 06:969B:C9 0D     CMP #$0D
+ 06:969D:D0 15     BNE $96B4 
+ 
+ 06:969F:A5 50     LDA $0050
+ 06:96A1:C9 02     CMP #$02
+ 06:96A3:F0 0F     BEQ $96B4
+ 
+ 06:96A5:A9 11     LDA #$11
+ 06:96A7:20 8B D1  JSR $D18B
+ 06:96AA:29 03     AND #$03
+ 06:96AC:C9 01     CMP #$01
+ 06:96AE:F0 04     BEQ $96B4
+ 06:96B0:A9 FF     LDA #$FF
+ 06:96B2:D0 02     BNE $96B6
+ 06:96B4:A9 00     LDA #$00
+ 06:96B6:85 D9     STA $00D9 = #$00
+ 06:96B8:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Function $977F / $9782 -> AI script for Object 0x0F (Default shot)
+ 06:977F:4C BD 97  JMP $97BD
+ 
+ 06:9782:A9 80     LDA #$80
+ 06:9784:85 42     STA $0042
+ 06:9786:A9 80     LDA #$80
+ 06:9788:85 43     STA $0043
+ 
+ 06:978A:A5 B9     LDA $00B9
+ 06:978C:C9 03     CMP #$03
+ 06:978E:B0 06     BCS $9796
+ 06:9790:20 B5 D1  JSR $D1B5 ; Move object according to its velocity
+ 06:9793:4C 99 97  JMP $9799
+ 
+ 06:9796:20 FE D1  JSR $D1FE
+ 06:9799:20 85 D1  JSR $D185
+ 06:979C:10 1F     BPL $97BD
+ 06:979E:0A        ASL
+ 06:979F:10 16     BPL $97B7
+ 06:97A1:AD FC 03  LDA $03FC
+ 06:97A4:29 02     AND #$02
+ 06:97A6:F0 0F     BEQ $97B7
+ 
+ If Stage 2 Item obtained:
+ 06:97A8:20 B7 CD  JSR $CDB7
+ 06:97AB:A9 80     LDA #$80
+ 06:97AD:85 48     STA $0048
+ 06:97AF:85 4A     STA $004A
+ 06:97B1:20 06 D7  JSR $D706
+ 06:97B4:4C C9 9B  JMP $9BC9
+ 
+ Else
+ 06:97B7:20 06 D7  JSR $D706
+ 06:97BA:4C 86 9B  JMP $9B86
+ 
+ 06:97BD:A9 10     LDA #$10
+ 06:97BF:85 40     STA $0040 = #$10
+ 06:97C1:A9 10     LDA #$10
+ 06:97C3:85 41     STA $0041 = #$10
+ 06:97C5:20 F9 F7  JSR $F7F9
+ 06:97C8:D0 37     BNE $9801
+ 06:97CA:A6 B9     LDX $00B9
+ 06:97CC:BD 2A 98  LDA $982A,X @ $98A9 = #$51
+ 06:97CF:20 7A D6  JSR $D67A
+ 06:97D2:30 2D     BMI $9801
+ 06:97D4:AD 0C 98  LDA $980C = #$0E
+ 06:97D7:85 7A     STA $007A = #$82
+ 06:97D9:AD 0D 98  LDA $980D = #$98
+ 06:97DC:85 7B     STA $007B = #$97
+ 06:97DE:A6 47     LDX $0047 = #$03
+ 06:97E0:BD 04 98  LDA $9804,X @ $9883 = #$85
+ 06:97E3:85 44     STA $0044 = #$00
+ 06:97E5:A5 B9     LDA $00B9 = #$00
+ 06:97E7:F0 10     BEQ $97F9
+ 06:97E9:C9 02     CMP #$02
+ 06:97EB:90 06     BCC $97F3
+ 06:97ED:A5 44     LDA $0044 = #$00
+ 06:97EF:09 03     ORA #$03
+ 06:97F1:85 44     STA $0044 = #$00
+ 06:97F3:8A        TXA
+ 06:97F4:29 01     AND #$01
+ 06:97F6:4C F7 F8  JMP $F8F7
+ 
+ 06:97F9:BD 08 98  LDA $9808,X
+ 06:97FC:85 45     STA $0045
+ 06:97FE:4C 82 F5  JMP $F582
+ 06:9801:4C 06 D7  JMP $D706
+ 
+Table $9804
+Table $9808
+Table $982A
