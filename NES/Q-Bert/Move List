@@ -1,0 +1,14 @@
+1-1 (64)
+{'Right', 'Right', 'Right', 'Down', 'Up', 'Down', 'Right', 'Right', 'Left', 'Right', 'Up', 'Right', 'Left', 'Down', 'Left', 'Down', 'Left', 'Down', 'Left', 'Left', 'Up', 'Down', 'Left', 'Up', 'Up', 'Right', 'Right', 'Down', 'Right', 'Up', 'Down', 'Right', 'Left', 'Down', 'Left', 'Up', 'Right', 'Right', 'Up', 'Right', 'Left', 'Up', 'Left', 'Down', 'Left', 'Right', 'Down', 'Left', 'Down', 'Down', 'Left', 'Right', 'Left', 'Left', 'Down', 'Down', 'Up', 'Right', 'Up', 'Left', 'Left'}
+
+1-2 (64)
+{'Down', 'Up', 'Down', 'Right', 'Up', 'Right', 'Right', 'Left', 'Down', 'Up', 'Right', 'Down', 'Down', 'Down', 'Left', 'Right', 'Up', 'Down', 'Up', 'Down', 'Left', 'Right', 'Up', 'Right', 'Up', 'Up', 'Right', 'Down', 'Up', 'Right', 'Up', 'Down', 'Up', 'Right', 'Right', 'Down', 'Right', 'Right', 'Down', 'Left', 'Left', 'Left', 'Up', 'Left', 'Down', 'Down', 'Down', 'Down', 'Down', 'Up', 'Left', 'Down', 'Right', 'Left', 'Down', 'Down', 'Right', 'Down', 'Right', 'Left', 'Down', 'Left', 'Left'}
+
+1-3 (96)
+'Right', 'Right', 'Left', 'Down', 'Down', 'Left', 'Up', 'Down', 'Up', 'Up', 'Down', 'Up', 'Down', 'Up', 'Right', 'Right', 'Right', 'Right', 'Down', 'Up', 'Left', 'Left', 'Left', 'Left', 'Right', 'Left', 'Down', 'Right', 'Right', 'Right', 'Left', 'Up', 'Left', 'Left', 'Down', 'Down', 'Down', 'Up', 'Down', 'Up', 'Right', 'Right', 'Up', 'Left', 'Left', 'Down', 'Right', 'Down', 'Right', 'Up', 'Down', 'Down', 'Left', 'Right', 'Left', 'Down', 'Left', 'Right', 'Up', 'Right', 'Up', 'Up', 'Up', 'Left', 'Down', 'Down', 'Down', 'Left', 'Right', 'Right', 'Up', 'Right', 'Up', 'Right', 'Up', 'Up', 'Right', 'Right', 'Left', 'Down', 'Up', 'Up', 'Right', 'Left', 'Right', 'Right', 'Left', 'Left', 'Down', 'Down', 'Down', 'Down', 'Down', 'Down', 'Up', 'Left'}
+
+1-4 (94)
+{'Right', 'Right', 'Left', 'Left', 'Down', 'Down', 'Right', 'Down', 'Left', 'Up', 'Down', 'Right', 'Down', 'Down', 'Left', 'Up', 'Right', 'Left', 'Right', 'Right', 'Left', 'Left', 'Down', 'Down', 'Up', 'Right', 'Up', 'Up', 'Left', 'Down', 'Up', 'Down', 'Right', 'Right', 'Up', 'Right', 'Up', 'Up', 'Down', 'Down', 'Left', 'Left', 'Right', 'Left', 'Down', 'Down', 'Up', 'Left', 'Down', 'Right', 'Up', 'Right', 'Up', 'Down', 'Up', 'Right', 'Up', 'Up', 'Down', 'Right', 'Up', 'Up', 'Left', 'Left', 'Right', 'Down', 'Left', 'Left', 'Right', 'Up', 'Down', 'Right', 'Down', 'Right', 'Up', 'Right', 'Up', 'Right', 'Left', 'Down', 'Left', 'Left', 'Up', 'Down', 'Right', 'Up', 'Left', 'Left', 'Left', 'Down', 'Right', 'Down', 'Up', 'Left'}
+
+2-1 (28+)
+{'Down', 'Down', 'Down', 'Down', 'Down', 'Down', 'Up', 'Down', 'Up', 'Up', 'Up', 'Right', 'Left', 'Right', 'Right', 'Left', 'Down', 'Left', 'Up', 'Down', 'Up', 'Right', 'Right', 'Down', 'Up', 'Up', 'Up', 'Up'
