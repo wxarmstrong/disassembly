@@ -1,0 +1,50 @@
+@font-face{
+	font-family: OldLondon;
+	src: url(OldLondon.ttf);
+}
+
+table, th, td {
+  border: 1px solid black;
+  font-family: consolas;
+}
+
+table.fixed    { table-layout:fixed; }
+table.fixed td { overflow: hidden; }
+
+div {
+	display: inline-block;
+}
+
+#gameboard {
+	font-size: 100px;
+}
+
+#gameboard td {
+	height: 60px;
+	width: 25%;
+	font-family: cooper black;
+	font-weight: bold;
+	font-size: 80px;
+	text-align: center;
+	background-color: #D5CC8B;
+}
+
+#foundwords {
+	width: 250px;
+}
+
+button {
+	width: 500px;
+	height: 236px;
+	border: 5px solid orange;
+	font-size: 100px;
+	text-align: center;
+	font-family: OldLondon;
+	color: black;
+	background-color: #DC3E0F;
+	text-shadow:
+		-1px -1px 0 yellow,
+		1px -1px 0 yellow,
+		-1px 1px 0 yellow,
+		1px 1px 0 yellow;
+}
