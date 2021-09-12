@@ -1,0 +1,2284 @@
+PAGE C2
+ROM: 004010 - 00600F
+
+Game Intro + New Game sequence
+----------------------------------------------------
+ROM: 004010 - 00600F
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8000 4C B5 80 
+JMP $80B5
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8000          20 BF E4 FE FF 40 A8 86 72 40 A8 88 72 
+8010 40 A8 8A 72 89 20 A8 8C 72 40 A9 8E 72 44 A9 87 
+8020 6B 40 A8 90 72 B7 18 00 00 00 00 B7 12 94 72 CF 
+
+Function $8003 (FE FF)
+Initializes text settings
+
+8008 40          /
+8009 A8 86 72    / $7286
+
+800C 40          /
+800D A8 88 72    / $7288
+
+8010 40          /
+8011 A8 8A 72    /
+
+8014 89 20       /
+8016 A8 8C 72    /
+
+8019 40          /
+801A A9 8E 72    /
+
+801D 44          /
+801E A9 87 6B    / $6B87 (Settings) -> Enable music
+
+8021 40          /
+8022 A8 90 72    /
+
+8025 B7 18       /
+     00 00 00 00 / 
+802B B7 12 94 72 /
+
+802F CF          / Return
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8030 20 BF E4 00 00 8A FF 00 A9 87 6B AC 37 CE 60 60 
+8040 61 67 E9 D4 EE 08 60 8E C2 8F E9 03 C0 04 60 60 
+8050 E9 70 C7 04 CF 
+
+Function $8030 (00 00)
+
+Function $8030 (00 00)
+8035 8A FF 00    /
+8038 A9 87 6B    / $6B87 (Settings) -> Set to 0xFF (null)
+803B AC 37 CE    / Call $CE37 -> Wipe sprites and black out nametable
+
+803E 60          /
+803F 60          /
+8040 61          /
+8041 67          /
+8042 E9 D4 EE 08 /
+
+8046 60          / Push #$00                         / (+2)
+8047 8E C2 8F    / Push #$8FC2                       / (+2)
+804A E9 03 C0 04 / Call $C003                        / (-4) 1B 52 20 1B 45 3F
+
+804E 60          /
+804F 60          /
+8050 E9 C7 70 04 /
+
+8054 CF          / Return
+
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8050                20 BF E4 00 00 8A 85 72 8C 62 70 
+8060 BC D0 B3 8E 62 70 8E 62 90 8E F9 00 61 E9 EC DC 
+8070 0A 8A FF 00 A9 7C 73 60 8D 15 8E A0 72 E9 3A F3 
+8080 06 60 8E C4 00 8E B6 72 E9 3A F3 06 68 8E 82 73 
+8090 8E 5E F3 E9 E0 DD 06 8E 82 73 65 E9 D4 EE 04 40 
+80A0 A9 7D 73 8A FF 00 A9 8E 73 A9 8B 73 A9 8A 73 89 
+80B0 FF A8 8C 73 CF 
+
+Function $8055 (00 00)
+
+805A 8A 85 72    / load L #$7285
+805D 8C 62 70    / load R #$7062
+8060 BC          / sub L R
+8061 D0          / inc L
+8062 B3          / push L                            / (+2)
+8063 8E 62 70    / push #$7062                       / (+2)
+8066 8E 62 90    / push #$9062                       / (+2)
+8069 8E F9 00    / push #$00F9                       / (+2)
+806C 61          / push #$01                         / (+2)
+806D E9 EC DC 0A / Call $DCEC                        / (-10) Transfer values from Page F9 to $7062-$7285
+
+8071 8A FF 00    /
+8074 A9 7C 73    /
+
+8077 60          /
+8078 8D 15       /
+807A 8E A0 72    /
+807D E9 3A F3 06 / Call $F33A                        / (-2) Blank out $72A0-$72B4
+
+8081 60
+8082 8E C4 00    /
+8085 8E B6 72    /
+8088 E9 3A F3 06 / Call $F33A
+
+808C 68          /
+808D 8E 82 73    /
+8090 8E 5E F3    / 06 06 06 07 06 06 06 06
+8093 E9 E0 DD 06 / Call $DDE0 -> Transfer 8 values from $F35E to $7382            
+
+8097 8E 82 73    /
+809A 65          /
+809B E9 D4 EE 04 / Call $EED4 -> Sysop 0x05
+
+809F 40
+80A0 A9 7D 73    /
+
+80A3 8A FF 00    /
+80A6 A9 8E 73
+80A9 A9 8B 73
+80AC A9 8A 73
+
+80AF 89 FF
+80B1 A8 8C 73
+
+80B4 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+80B0                20 BF E4 FE FF AC 03 80 AC 55 80 
+80C0 AC 57 8F AC 30 80 AC 07 88 AC 75 A6 AC 37 CE CF
+
+Function $80B5 (FE FF)
+Main - Runs all functions for intro + new game
+
+80BA AC 03 80    / Call $8003 / Initialize text settings, enable BGM
+80BD AC 55 80    / Call $8055 / Loads initial game data + initial CHR switch state
+80C0 AC 57 8F    / Call $8F57 / 
+80C3 AC 30 80    / Call $8030
+80C6 AC 07 88    / Call $8807
+80C9 AC 75 A6    / Call $A675 -> Black out palettes
+80CC AC 37 CE    / Call $CE37 -> Wipe sprites and black out nametable 
+80CF CF          / Return
+
+---------------------------------------------------- 
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+80D0 20 BF E4 F1 FF 6F DE F1 FF B3 3D 8E FA 00 62 E9 
+80E0 EC DC 0A DE F1 FF 2D D6 FE 80 0D D3 B3 0C D3 B4 
+80F0 C1 D8 F6 80 40 CF 0C D0 2C D1 0D D0 2D D1 0C D3 
+8100 D7 EA 80 0D D3 D7 EA 80 41 CF 
+
+Function $80D0 (F1 FF)
+
+80D5 6F
+80D6 DE F1 FF
+80D9 B3
+80DA 3D
+80DB 8E FA 00
+80DE 62
+80DF E9 EC DC 0A .. / $DCEC (Transfer values)
+
+80E3 DE F1 FF
+80E6 2D
+80E7 D6 FE 80
+
+80EA 0D
+80EB D3
+80EC B3
+80ED 0C
+80EE D3
+80EF B4
+80F0 C1
+80F1 D8 F6 80
+
+if
+	80F4 40
+	80F5 CF
+
+80F6 0C
+80F7 D0
+80F8 2C
+
+80F9 D1
+80FA 0D
+80FB D0
+80FC 2D
+80FD D1
+
+80FE 0C
+80FF D3
+8100 D7 EA 80
+
+8103 0D
+8104 D3
+8105 D7 EA 80
+
+8108 41
+8109 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8100                               20 BF E4 00 00 8E 
+8110 61 10 8E 00 60 8E 00 80 8E F9 00 61 E9 EC DC 0A 
+8120 CF 
+
+Function $810A
+
+810F 8E 61 10
+8112 8E 00 60
+8115 8E 00 80
+8118 8E F9 00
+811B 61
+811C E9 EC DC 0A / Call $DCEC
+
+8120 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8120    20 BF E4 00 00 8E E2 00 8E EA B5 8E DE B2 8D 
+8130 1A 8D 1E 62 61 69 E9 D4 EE 10 60 60 68 8D 12 67 
+8140 67 68 E9 D4 EE 0E 68 69 E9 70 C7 04 61 8E DA 8F 
+8150 E9 03 C0 04 6B 69 E9 70 C7 04 61 8E E8 8F E9 03 
+8160 C0 04 8E E7 00 8E F2 AC 8E 7A AC 66 8D 14 8D 16 
+8170 66 69 E9 D4 EE 10 8D 17 67 E9 70 C7 04 61 8E F3 
+8180 8F E9 03 C0 04 8D 10 60 8E CA 8F 66 E9 D4 EE 08 
+8190 8D 10 8D 10 8E 76 F3 66 E9 D4 EE 08 CF 
+
+Function $8121 (00 00)
+
+8126 8E E2 00
+8129 8E EA B5
+812C 8E DE B2
+812F 8D 1A
+8131 8D 1E
+8133 62
+8134 61
+8135 69
+8136 E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 (Print background)
+
+813A 60
+813B 60
+813C 68
+813D 8D 12
+813F 67
+8140 67
+8141 68
+8142 E9 D4 EE 0E / Call $EED4 -> Sysop 0x08 (Draw black rectangle)
+
+8146 68
+8147 69
+8148 E9 70 C7 04 / Call $C770 -> Text pos 9, 8
+
+814C 61
+814D 8E DA 8F    / $8FDA "New Adventure"
+8150 E9 03 C0 04 / Call $C003 -> Print
+
+8154 6B
+8155 69
+8156 E9 70 C7 04 / Call $C770 -> Text pos 9,11
+
+815A 61
+815B 8E E8 8F    / $8FE8 "Saved Game"
+815E E9 03 C0 04 / Call $C003 -> Print
+
+8162 8E E7 00
+8165 8E F2 AC
+8168 8E 7A AC
+816B 66
+816C 8D 14
+816E 8D 16
+8170 66
+8171 69
+8172 E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 (Print bottom selection box)
+
+8176 8D 17
+8178 67
+8179 E9 70 C7 04 / Call $C770 -> Text pos 7,23
+
+817D 61
+817E 8E F3 8F    / $8FF3 " Which one?"
+8181 E9 03 C0 04 / Call $C003 -> Print
+
+8185 8D 10
+8187 60
+8188 8E CA 8F    / $8FCA ( 0F 16 30 30 | 0F 12 22 31 | 0F 1A 37 12 | 0F 18 28 38 )
+818B 66
+818C E9 D4 EE 08 / Call $EED4 -> Sysop 0x06 (Set nametable palettes)
+
+8190 8D 10
+8192 8D 10
+8194 8E 76 F3
+8197 66
+8198 E9 D4 EE 08 / Call $EED4 -> Sysop 0x06 (Set sprite palettes)
+
+819C CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8190                                        20 BF E4 
+81A0 FE FF 8D 19 67 E9 70 C7 04 61 3C E9 03 C0 04 61 
+81B0 8E FF 8F E9 03 C0 04 AC 9F CD 2B 0B CF 
+
+Function $819D (FE FF)
+
+81A2 8D 19
+81A4 67
+81A5 E9 70 C7 04 / Call $C770 -> Text pos  7,25
+
+81A9 61
+81AA 3C
+81AB E9 03 C0 04 / Call $C003 -> Print
+
+81AF 61
+81B0 8E FF 8F    / $8FFF
+81B3 E9 03 C0 04 / Call $C003 -> Print
+
+81B7 AC 9F CD    / Call $CD9F -> Get player response
+81BA 2B
+
+81BB 0B
+81BC CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+81B0                                        20 BF E4 
+81C0 CB FF AC 0A 81 8E E2 00 8E EA B5 8E DE B2 8D 1A 
+81D0 8D 1E 62 61 69 E9 D4 EE 10 8E E7 00 8E AC A0 8E 
+81E0 04 A0 66 8D 1C 8D 16 62 69 E9 D4 EE 10 8D 19 67 
+81F0 E9 70 C7 04 61 8E 33 90 E9 03 C0 04 DE DE FF B3 
+8200 6C 8E A6 83 8E C0 00 61 E9 3A DE 0A A2 F9 FF A0 
+8210 F9 FF D8 5B 82 41 85 CB 81 CB 57 B5 8C 42 65 BB 
+8220 B0 B3 DE DE FF B3 E9 D0 80 04 D8 4E 82 89 1E A2 
+8230 F9 FF 60 60 62 8D 1A 8D 19 63 68 E9 D4 EE 0E 8D 
+8240 19 66 E9 70 C7 04 61 8E 46 90 E9 03 C0 04 81 CB 
+8250 D0 85 CB 81 CB 8B 29 C2 D7 18 82 A0 F9 FF 8B 1E 
+8260 C0 D7 FC 81 A0 F9 FF D7 78 82 8D 18 6A E9 70 C7 
+8270 04 8E AE 6B E9 6B D5 02 8E 5B 90 E9 9D 81 02 D8 
+8280 ED 81 A0 F9 FF D8 8F 82 DE DE FF B3 D6 92 82 8E 
+8290 64 90 8E AE 6B E9 A6 DE 04 8A AE 6B A8 42 65 8E 
+82A0 E2 00 8E EA B5 8E DE B2 8D 1A 8D 1E 62 61 69 E9 
+82B0 D4 EE 10 60 60 8D 11 6E 64 69 68 E9 D4 EE 0E 65 
+82C0 6A E9 70 C7 04 AA 42 65 E9 6B D5 02 40 D6 21 83 
+82D0 DE FA FF B3 A0 F9 FF B4 BB B3 8D 1E E9 E1 CF 02 
+82E0 8F 28 D4 A0 F9 FF D2 76 B3 6A E9 70 C7 04 A0 F9 
+82F0 FF D2 8C 02 90 BB B0 B3 8E 70 90 E9 99 C7 04 A0
+8300 F9 FF D2 76 B3 8D 13 E9 70 C7 04 DE FA FF B3 A0 
+8310 F9 FF B4 BB D3 B3 8E 73 90 E9 99 C7 04 A0 F9 FF 
+8320 D0 A2 F9 FF A0 F9 FF 55 C6 D7 D0 82 8D 28 E9 E1 
+8330 CF 02 D0 8B 28 B8 A2 F8 FF 8D 1E E9 E1 CF 02 B3 
+8340 A0 F8 FF B3 8D 32 E9 E1 CF 02 8F 14 B4 B5 B4 BB 
+8350 8F 28 A2 FF FF A0 F9 FF D2 77 B3 6A E9 70 C7 04
+8360 A0 FF FF B3 8E 77 90 E9 99 C7 04 8E E7 00 8E F2 
+8370 AC 8E 7A AC 66 8D 14 8D 16 66 69 E9 D4 EE 10 8E 
+8380 84 90 E9 9D 81 02 D8 CC 82 60 65 DE ED FF B3 E9 
+8390 3A F3 06 8E E7 00 8E F2 AC 8E 7A AC 66 8D 14 8D
+
+Function $81BD (CB FF) -> Player setup
+Return value: ?
+
+81C2 AC 0A 81    / Call $810A -> Set up initial game RAM
+
+Reprint background
+81C5 8E E2 00    
+81C8 8E EA B5    / $B5EA
+81CB 8E DE B2    / $B2DE
+81CE 8D 1A       
+81D0 8D 1E       
+81D2 62          
+81D3 61          
+81D4 69            
+81D5 E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 (Print graphic)
+
+81D9 8E E7 00    
+81DC 8E AC A0    / $A0AC
+81DF 8E 04 A0    / $A004
+81E2 66          
+81E3 8D 1C       
+81E5 8D 16       
+81E7 62          
+81E8 69          
+81E9 E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 (Print graphic)
+
+81ED 8D 19       
+81EF 67          
+81F0 E9 70 C7 04 / Call $C770 -> Text pos 7,25
+
+81F4 61          
+81F5 8E 33 90    / $9033 "Enter name of hero"
+81F8 E9 03 C0 04 / Call $C003 -> Print
+
+81FC DE DE FF    /
+81FF B3          /
+8200 6C          /
+8201 8E A6 83    /
+8204 8E C0 00    /
+8207 61          /
+8208 E9 3A DE 0A / Call $DE3A -> C0:83A6 (Let player enter name)
+820C A2 F9 FF    /
+
+820F A0 F9 FF    /
+8212 D8 5B 82    /
+
+	8215 41          /
+	8216 85 CB       /
+
+	Loop:
+	8218 81 CB       /
+	821A 57          /
+	821B B5          /
+	821C 8C 42 65    /
+	821F BB          /
+	8220 B0          /
+	8221 B3          /
+	8222 DE DE FF    /
+	8225 B3          /
+	8226 E9 D0 80 04 / Call $80D0
+	822A D8 4E 82    /
+
+		822D 89 1E       /
+		822F A2 F9 FF    /
+		8232 60          /
+		8233 60          /
+		8234 62          /
+		8235 8D 1A       /
+		8237 8D 19       /
+		823A 68          /
+		823B E9 D4 EE 0E / Call $EED4 -> Sysop 0x08
+
+		823F 8D 19       /
+		8241 66          /
+		8242 E9 70 C7 04 / Call $C770 -> Text pos  6,25
+		8246 61          /
+		8247 8E 46 90    / $9046 "Cannot use that name"
+		824A E9 03 C0 04 / Call $C003 -> Print
+
+	Loop increment:
+	824E 81 CB       /
+	8250 D0          /
+	8251 85 CB       /
+
+	Bound check:
+	8253 81 CB       /
+	8255 8B 29       /
+	8257 C2          /
+	8258 D7 18 82    /
+
+825B A0 F9 FF    /
+825E 8B 1E       /
+8260 C0          /
+8261 D7 FC 81    /
+
+8264 A0 F9 FF    /
+8267 D7 78 82    /
+
+826A 8D 18       /
+826C 6A          /
+826D E9 70 C7 04 /
+
+8271 8E AE 6B    / $6BAE (Player name)
+8274 E9 6B D5 02 / Call $D56B -> Print
+8278 8E 5B 90    / $905B "Is this "
+827B E9 9D 81 02 /
+827F D8 ED 81    /
+
+8282 A0 F9 FF    /
+8285 D8 8F 82    /
+
+8288 DE DE FF    /
+828B B3          /
+828C D6 92 82    /
+
+828F 8E 64 90    / $9064 "Leon Franco"
+8292 8E AE 6B    / $6BAE (Player name)
+8295 E9 A6 DE 04 / Call $DEA6 -> Transfer string to $6BAE
+
+8299 8A AE 6B    /
+829C A8 42 65    / $6542 -> Set crew data pointer to player 1
+
+829F 8E E2 00    /
+82A2 8E EA B5    /
+82A5 8E DE B2    /
+82A8 8D 1A       /
+82AA 8D 1E       /
+82AC 62          /
+82AD 61          /
+82AE 69          /
+82AF E9 D4 EE 10 / Call $EED4 -> Sysop 0x09
+
+82B3 60          /
+82B4 60          /
+82B5 8D 11       /
+82B7 6E          /
+82B8 64          /
+82B9 69          /
+82BA 68          /
+82BB E9 D4 EE 0E / Call $EED4 -> Sysop 0x08
+
+82BF 65          /
+82C0 6A          / 
+82C1 E9 70 C7 04 / Call $C770 -> Text pos 10, 5
+
+82C5 AA 42 65    / $6542 (Pointer to name string)
+82C8 E9 6B D5 02 / Call $D56B -> Print
+
+82CC 40          /
+82CD D6 21 83    /
+
+Loop
+82D0 DE FA FF    /
+82D3 B3          /
+82D4 A0 F9 FF    /
+82D7 B4          /
+82D8 BB          /
+82D9 B3          /
+82DA 8D 1E       /
+82DC E9 E1 CF 02 /
+82E0 8F 28       /
+82E2 D4          /
+82E3 A0 F9 FF    /
+82E6 D2          /
+82E7 76          /
+82E8 B3          /
+82E9 6A          /
+82EA E9 70 C7 04 /
+82EE A0 F9 FF    /
+82F1 D2          /
+82F2 8C 02 90    /
+82F5 BB          /
+82F6 B0          /
+82F7 B3          /
+82F8 8E 70 90    /
+82FB E9 99 C7 04 /
+82FF A0 F9 FF    /
+8302 D2          /
+8303 76          /
+8304 B3          /
+8305 8D 13       /
+8307 E9 70 C7 04 /
+830B DE FA FF    /
+830E B3          /
+830F A0 F9 FF    /
+8312 B4          /
+8313 BB          /
+8314 D3          /
+8315 B3          /
+8316 8E 73 90    /
+8319 E9 99 C7 04 /
+831D A0 F9 FF    /
+8320 D0          /
+
+8321 A2 F9 FF    /
+
+8324 A0 F9 FF    /
+8327 55          /
+8328 C6          /
+8329 D7 D0 82    /
+832C 8D 28       /
+832E E9 E1 CF 02 /
+8332 D0          /
+8333 8B 28       /
+8335 B8          /
+8336 A2 F8 FF    /
+8339 8D 1E       /
+833B E9 E1 CF 02 /
+833F B3          /
+8340 A0 F8 FF    /
+8343 B3          /
+8344 8D 32       /
+8346 E9 E1 CF 02 /
+834A 8F 14       /
+834C B4          /
+834D B5          /
+834E B4          /
+834F BB          /
+8350 8F 28       /
+8352 A2 FF FF    /
+8355 A0 F9 FF    /
+8358 D2          /
+8359 77          /
+835A B3          /
+835B 6A          /
+835C E9 70 C7 04 /
+8360 A0 FF FF    /
+8363 B3          /
+8364 8E 77 90    /
+8367 E9 99 C7 04 /
+836B 8E E7 00    /
+836E 8E F2 AC    /
+8371 8E 7A AC    /
+8374 66          /
+8375 8D 14       /
+8377 8D 16       /
+8379 66          /
+837A 69          /
+837B E9 D4 EE 10 /
+837F 8E 84 90    /
+8382 E9 9D 81 02 /
+8386 D8 CC 82    /
+
+8389 60          /
+838A 65          /
+838B DE ED FF    /
+838E B3          /
+838F E9 3A F3 06 /
+8393 8E E7 00    /
+8396 8E F2 AC    /
+8399 8E 7A AC    /
+839C 66          /
+839D 8D 14       /
+839F 8D 16
+83A1 66
+83A2 69
+83A3 E9 D4 EE 10 / Call $EED4 -> Sysop 0x09
+
+83A7 8D 17
+83A9 67
+83AA E9 70 C7 04 / Call $C770 -> Text pos  7,23
+
+83AE 61
+83AF 8E 8D 90    / $908D "Please assign"
+83B2 E9 03 C0 04 / Call $C003 -> Print
+
+83B6 8D 19
+83B8 67
+83B9 E9 70 C7 04 / Call $C770 -> Text pos  7,25
+
+83BD 61
+83BE 8E 9B 90    / Call $909B "bonus points"
+83C1 E9 03 C0 04 / Call $C003 -> Print
+
+83C5 40
+83C6 D6 09 84
+
+Loop:
+	83C9 DE ED FF
+	83CC B3
+	83CD A0 F9 FF
+	83D0 B4
+	83D1 BB
+	83D2 D3
+	83D3 CD
+	83D4 A0 FF FF
+	83D7 BB
+	83D8 A2 FF FF
+	83DB DE ED FF
+	83DE B3
+	83DF A0 F9 FF
+	83E2 B4
+	83E3 BB
+	83E4 B3
+	83E5 40
+	83E6 D4
+	83E7 A0 F9 FF
+	83EA D2
+	83EB 76
+	83EC B3
+	83ED 8D 13
+	83EF E9 70 C7 04 / Call $C770 -> Text pos 19,2n+6
+	83F3 DE FA FF
+	83F6 B3
+	83F7 A0 F9 FF
+	83FA B4
+	83FB BB
+	83FC D3
+	83FD B3
+	83FE 8E A8 90    / $90A8 "%3d"
+	8401 E9 99 C7 04 / Call $C799 -> Print
+	8405 A0 F9 FF
+	8408 D0
+Bounds check:
+	8409 A2 F9 FF
+	840C A0 F9 FF
+	840F 55
+	8410 C6
+	8411 D7 C9 83
+	
+8414 A0 F9 FF
+8417 D2
+8418 77
+8419 B3
+841A 8D 13
+841C E9 70 C7 04 / Call $C770 -> Text pos 19,2n+7
+
+8420 A0 FF FF
+8423 B3
+8424 8E AC 90    / $90AC "%3d"
+8427 E9 99 C7 04 / Call $C799 -> Print
+
+842B 40
+842C 85 CD
+
+842E 4C
+842F 85 CB
+
+8431 81 CD
+8433 D2
+8434 77
+8435 53
+8436 BD
+8437 D1
+8438 A2 F4 FF
+
+843B 8A E1 00
+843E A2 F5 FF
+
+8441 40
+8442 A2 F6 FF
+
+8445 89 48
+8447 A2 F7 FF
+
+844A 61
+844B 60
+844C DE F4 FF
+844F B3
+8450 6D
+8451 E9 D4 EE 08 / Call $EED4 -> Sysop 0x0D
+
+8455 87 CB
+8457 A0 F8 FF
+845A B3
+845B E9 4D CE 04 / Call $CE4D -> Wait frames for specific input?
+
+845F 4C
+8460 85 CB
+
+8462 60
+8463 E9 A9 C4 02 / Call $C4A9 -> Get Pad input
+8467 A2 F8 FF
+
+846A D9 06 00
+     01 00 39 85
+	 02 00 D5 84
+	 10 00 87 84
+	 20 00 C7 84
+	 40 00 39 85
+	 80 00 D5 84
+	       94 84
+Case 10
+	8487 81 CD
+	8489 D1
+	838A 85 CD
+	848C 50
+	848D C2
+	848E D8 94 84
+	
+	if
+		8491 44
+		8492 85 CD
+Default:
+	8494 A0 FF FF
+	8497 D7 31 84
+	
+	849A 61
+	849B 60
+	849C 6C
+	849D E9 D4 EE 06 / Call $EED4 -> Sysop 0x0C
+	
+	84A1 8E E7 00
+	84A4 8E F2 AC
+	84A7 8E 7A AC
+	84AA 66
+	84AB 8D 14
+	84AD 8D 16
+	84AF 66
+	84B0 69
+	84B1 E9 D4 EE 10 / Call $EED4 -> Sysop 0x09
+	
+	84B5 8E C0 90
+	84B8 E9 9D 81 02 / Call $819D
+	84BC D8 93 83
+	
+	84BF 8A BF 6B    / $6BBF
+	84C2 25
+	
+	84C3 40
+	84C4 D6 CD 85
+Case 20
+	84C7 81 CD
+	84C9 D0
+	84CA 85 CD
+	84CC 54
+	84CD C4
+	84CE D8 94 84
+	
+	84D1 40
+	84D2 D6 92 84
+Case 02 / 80
+	84D5 DE ED FF
+	84D8 B3
+	84D9 81 CD
+	84DB B4
+	84DC BB
+	84DD D3
+	84DE D8 94 84
+	
+	84E1 DE ED FF
+	84E4 B3
+	84E5 81 CD
+	84E7 B4
+	84E8 BB
+	84E9 B3
+	84EA D3
+	84EB D1
+	84EC D4
+	84ED A0 FF FF
+	84F0 D0
+	84F1 A2 FF FF
+	84F4 81 CD
+	84F6 D2
+	84F7 76
+	84F8 B3
+	84F9 8D 13
+	84FB E9 70 C7 04 / Call $C770 -> Text pos
+	84FF DE ED FF
+	8502 B3
+	8503 81 CD
+	8505 B4
+	8506 BB
+	8507 D3
+	8508 B3
+	8509 DE FA FF
+	850C B3
+	850D 81 CD
+	850F B4
+	8510 BB
+	8511 D3
+	8512 B4
+	8513 BB
+	8514 B3
+	8515 8E B0 90    / $90B0 "%3d"
+	8518 E9 99 C7 04 / Call $C799 -> Print
+	851C A0 F9 FF
+	851F D2
+	8520 77
+	8521 B3
+	8522 8D 13
+	8524 E9 70 C7 04 / Call $C770 -> Text pos
+	8528 A0 FF FF
+	852B B3
+	852C 8E B4 90    / $90B4 "%3d"
+	852F E9 99 C7 04 / Call $C799 -> Print
+	8533 41
+	8534 85 CB
+	8536 D6 94 84
+Case 01 / 40
+	8539 A0 FF FF
+	853C D8 94 84
+	
+	853F DE FA FF
+	8542 B3
+	8543 81 CD
+	8545 B4
+	8546 BB
+	8547 D3
+	8548 B3
+	8549 DE ED FF
+	854C B3
+	854D 81 CD
+	854F B4
+	8550 BB
+	8551 D3
+	8552 B4
+	8553 BB
+	8554 8B 64
+	8556 C6
+	8557 D8 94 84
+	
+	855A DE ED FF
+	855D B3
+	855E 81 CD
+	8560 B4
+	8561 BB
+	8562 B3
+	8563 D3
+	8564 D0
+	8565 D4
+	8566 A0 FF FF
+	8569 D1
+	856A A2 FF FF
+	856D 81 CD
+	856F D2
+	8570 76
+	8571 B3
+	8572 8D 13
+	8574 E9 70 C7 04 / Call $C770 -> Text pos
+	8578 DE ED FF
+	857B B3
+	857C 81 CD
+	857E B4
+	857F BB
+	8580 D3
+	8581 B3
+	8582 DE FA FF
+	8585 B3
+	8586 81 CD
+	8588 B4
+	8589 BB
+	858A D3
+	858B B4
+	858C BB
+	858D B3
+	858E 8E B8 90    / $90B8 "%3d"
+	8591 E9 99 C7 04 / Call $C799 -> Print
+	8595 A0 F9 FF
+	8598 D2
+	8599 77
+	859A B3
+	859B 8D 13
+	859D E9 70 C7 04 / Call $C770 -> Text pos
+	85A1 A0 FF FF
+	85A4 B3
+	85A5 8E BC 90    / $90BC "%3d"
+	85A8 D6 2F 85
+	
+	85AB A0 F9 FF
+	85AE 15
+	85AF BB
+	85B0 B3
+	85B1 DE ED FF
+	85B4 B3
+	85B5 A0 F9 FF
+	85B8 B4
+	85B9 BB
+	85BA D3
+	85BB B3
+	85BC DE FA FF
+	85BF B3
+	85C0 A0 F9 FF
+	85C3 B4
+	85C4 BB
+	85C5 D3
+	85C6 B4
+	85C7 BB
+	85C8 D4
+	85C9 A0 F9 FF
+	85CC D0
+
+85CD A2 F9 FF
+85D0 A0 F9 FF
+85D3 55
+85D4 C6
+85D5 D7 AB 85
+
+85D8 8E E2 00
+85DB 8E EA B5
+85DE 8E DE B2
+85E1 8D 1A
+85E3 8D 1E
+85E5 62
+85E6 61
+85E7 69
+85E8 E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 (Print graphic)
+
+85EC 8E E7 00
+85EF 8E AC A0
+85F2 8E 04 A0
+85F5 66
+85F6 8D 1C
+85F8 8D 16
+85FA 62
+85FB 69
+85FC E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 (Print graphic)
+
+8600 8D 19
+8602 65
+8603 E9 70 C7 04 / Call $C770 -> Text pos  5,25
+
+8607 61
+8608 8E C9 90    / $90C9
+860B E9 03 C0 04 / Call $C003 -> "Enter name of flagship"
+
+860F DE CF FF
+8612 B3
+8613 67
+8614 8E A6 83
+8617 8E C0 00
+861A 61
+861B E9 3A DE 0A / Call $DE3A -> C0:83A6 (Let player enter name)
+861F A2 F9 FF
+
+8622 A0 F9 FF
+8625 D7 3C 86
+
+if
+	8628 8D 17
+	862A 6D
+	862B E9 70 C7 04 / Call $C770 -> Text pos 13,23
+	862F 60
+	8630 E9 32 D5 02 / Call $D532 -> Get pointer to first ship
+	8634 B3
+	8635 8E E0 90    / $90E0 "%s"
+	8638 E9 99 C7 04 / Call $C799 -> Print
+
+863C 8E E3 90    / $90E3 "Is this "
+863F E9 9D 81 02 / Call $819D -> Print and get player repsonse
+8643 D8 00 86
+
+8646 A0 F9 FF
+8649 D8 5A 86
+
+if
+	864C DE CF FF
+	864F B3
+	8650 60
+	8651 E9 32 D5 02 / Call $D532 -> Get pointer to first ship
+	8655 B3
+	8656 E9 A6 DE 04 / Call $DEA6 -> Transfer string to local memory
+
+865A 8E E2 00
+865D 8E EA B5
+8660 8E DE B2
+8663 8D 1A
+8665 8D 1E
+8667 62
+8668 61
+8669 69
+866A E9 D4 EE 10 / Call $EED4 -> Sysop 0x09
+
+866E 60
+866F 60
+8670 8D 11
+8672 6E
+8673 64
+8674 69
+8675 68
+8676 E9 D4 EE 0E / Call $EED4 -> Sysop 0x08
+
+867A 8E E7 00
+867D 8E AC A0
+8680 8E 04 A0
+8683 66
+8684 8D 1C
+8686 8D 16
+8688 62
+8689 69
+868A E9 D4 EE 10 / Call $EED4 -> Sysop 0x09
+
+868E 65
+868F 6A
+8690 E9 70 C7 04 / Call $C770 -> Text pos 10, 5
+
+8694 AA 42 65    / $6542 (Name string)
+8697 E9 6B D5 02 / Call $D56B -> Print
+
+869B 40
+869C D6 D7 86
+
+Loop:
+	869F A0 F9 FF
+	86A2 D2
+	86A3 76
+	86A4 B3
+	86A5 6A
+	86A6 E9 70 C7 04 / Call $C770 -> Text pos 10,2n+6
+	86AA 61
+	86AB A0 F9 FF
+	86AE D2
+	86AF 8C 02 90
+	86B2 BB
+	86B3 B0
+	86B4 B3
+	86B5 E9 03 C0 04 / Call $C003 -> Print
+	86B9 A0 F9 FF
+	86BC D2
+	86BD 76
+	86BE B3
+	86BF 8D 13
+	86C1 E9 70 C7 04 / Call $C770 -> Text pos 19,2n+6
+	86C5 A0 F9 FF
+	86C8 15
+	86C9 BB
+	86CA D3
+	86CB B3
+	86CC 8E EC 90    / $90EC "%3d"
+	86CF E9 99 C7 04 / Call $C799 -> Print
+	86D3 A0 F9 FF
+	86D6 D0
+
+Bound check:
+	86D7 A2 F9 FF
+	86DA A0 F9 FF
+	86DD 55
+	86DE C6
+	86DF D7 9F 86
+	
+86E2 A0 F9 FF
+86E5 D2
+86E6 76
+86E7 B3
+86E8 6A
+86E9 E9 70 C7 04 / Call $C770 -> Print 10,2n+6
+
+86ED 60
+86EE E9 32 D5 02 / Call $D532 -> Get pointer to first ship
+86F2 B3
+86F3 8E F0 90    / $90F0 "Ship: %s"
+86F6 E9 99 C7 04 / Call $C799 -> Print
+86FA 8E F9 90    / $90F9 "Is this "
+86FD E9 9D 81 02 / Call $819D -> Print and get player response
+8701 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8700       20 BF E4 FB FF AC BD 81 85 FD 40 D6 28 87
+8710 A0 FF FF 8B 33 B5 8C 04 60 BB 85 FB 81 FB 77 B3
+8720 81 FB 79 B1 A0 FF FF D0 A2 FF FF A0 FF FF 8B 14
+8730 C6 D7 10 87 81 FD CF
+
+Function $8702 (FB FF)
+
+8707 AC BD 81    / Call $81BD (Player setup)
+870A 85 FD
+
+870C 40
+870D D6 28 87
+
+Loop:
+	8710 A0 FF FF
+	8713 8B 33
+	8715 B5
+	8716 8C 04 60    / $6004
+	8719 BB
+	871A 85 FB       / Current ship
+	
+	871C 81 FB
+	871E 77
+	871F B3
+	8720 81 FB
+	8722 79
+	8723 B1          / Set pointer
+	
+	8724 A0 FF FF
+	8727 D0
+Bounds check:
+	8728 A2 FF FF
+	872B A0 FF FF
+	872E 8B 14
+	8730 C6
+	8731 D7 10 87
+	
+8734 81 FD
+8736 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8730                      20 BF E4 FE FF 61 60 63 E9
+8740 D4 EE 06 A5 60 70 8B 4B C1 D8 85 87 65 60 63 E9
+8750 D4 EE 06 8E E7 00 8E F2 AC 8E 7A AC 66 8D 14 8D
+8760 16 66 69 E9 D4 EE 10 8D 17 67 E9 70 C7 04 61 8E
+8770 02 91 E9 03 C0 04 40 2B 0B D0 2B 0B 8C F4 01 C6
+8780 D7 78 87 40 CF 65 60 63 E9 D4 EE 06 8E 61 10 8E
+8790 00 60 8E 00 80 61 61 E9 EC DC 0A 8E E7 00 8E F2
+87A0 AC 8E 7A AC 66 8D 14 8D 16 66 69 E9 D4 EE 10 8D
+87B0 18 67 E9 70 C7 04 61 8E 10 91 E9 03 C0 04 41 CF
+
+Function $8737 (FE FF)
+
+873C 61
+873D 60
+873E 63
+873F E9 D4 EE 06 / Call $EED4 -> Sysop 0x03
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8730                      20 BF E4 FE FF 61 60 63 E9
+8740 D4 EE 06 A5 60 70 8B 4B C1 D8 85 87 65 60 63 E9
+8750 D4 EE 06 8E E7 00 8E F2 AC 8E 7A AC 66 8D 14 8D
+8760 16 66 69 E9 D4 EE 10 8D 17 67 E9 70 C7 04 61 8E
+8770 02 91 E9 03 C0 04 40 2B 0B D0 2B 0B 8C F4 01 C6
+8780 D7 78 87 40 CF 65 60 63 E9 D4 EE 06 8E 61 10 8E
+8790 00 60 8E 00 80 61 61 E9 EC DC 0A 8E E7 00 8E F2
+87A0 AC 8E 7A AC 66 8D 14 8D 16 66 69 E9 D4 EE 10 8D
+87B0 18 67 E9 70 C7 04 61 8E 10 91 E9 03 C0 04 41 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+87C0 20 BF E4 FE FF AC 37 87 2B 0B CF 
+
+Function $87C0 (FE FF) -> Wrapper for $8737
+
+87C5 AC 37 87    / Call $8737
+87C8 2B
+
+87C9 0B
+87CA CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+87C0                                  20 BF E4 FA FF
+87D0 AC 75 A6 AC 21 81 60 62 63 60 69 68 62 8E 1D 91
+87E0 E9 24 C8 10 29 09 D9 02 00 01 00 F3 87 02 00 FF
+87F0 87 F9 87 AC 02 87 2B 41 2A 0B D8 D3 87 0A CF AC
+8800 C0 87 2B 40 D6 F8 87 
+
+Function $87CB (FA FF)
+
+87D0 AC 75 A6    / Call $A675
+87D3 AC 21 81    / Call $8121
+
+87D6 60
+87D7 62
+87D8 63
+87D9 60
+87DA 69
+87DB 68
+87DC 62
+87DD 8E 1D 91    / $911D
+87E0 E9 24 C8 10 / Call $C824
+87E4 29
+
+87E5 09
+87E6 D9 02 00
+     01 00 F3 87
+	 02 00 FF 87
+	       F9 87
+		   
+Case 01
+	87F3 AC 02 87
+	87F6 2B
+	87F7 41
+	87F8 2A
+Default
+	87F9 0B
+	87FA D8 D3 87
+	
+	87FD 0A
+	87FE CF
+Case 02
+	87FF AC C0 87
+	8802 2B
+	8803 40
+	8804 D6 F8 87
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8800                      20 BF E4 00 00 62 E9 8C E0
+8810 02 61 E9 C1 E0 02 AC CB 87 D8 1F 88 AC 47 89 A5
+8820 87 6B 54 DA D7 2D 88 8D 17 E9 D4 EE 02 40 A9 98
+8830 72 40 A9 99 72 40 A9 9A 72 40 A9 9B 72 8A FF 00
+8840 A9 68 70 CF 
+
+Function $8807 (00 00)
+
+880C 62
+880D E9 8C E0 02 / Call $E08C
+
+8811 61
+8812 E9 C1 E0 02 / Call $E0C1
+
+8816 AC CB 87    / Call $87CB
+8819 D8 1F 88
+
+if
+{
+	881C AC 47 89    / $8947
+}
+
+881F A5 87 6B    / $6B87 (Settings)
+8822 54
+8823 DA
+8824 D7 2D 88
+
+if (music off)
+{
+	8827 8D 17
+	8829 E9 D4 EE 02 / Call $EED4
+}
+
+882D 40
+882E A9 98 72    / $7298 (No Event)
+
+8831 40
+8832 A9 99 72    / $7299
+
+8835 40
+8836 A9 9A 72    / $729A
+
+8839 40
+883A A9 9B 72    / $729B (Event outcome?)
+
+883D 8A FF 00
+8840 A9 68 70    / $7068
+
+8843 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8840             20 BF E4 00 00 0C D1 2C D0 D8 69 88
+8850 60 8D 10 E9 D4 EE 04 D8 5F 88 41 A8 90 73 CF 61
+8860 8D 11 E9 D4 EE 04 D6 49 88 CF 
+
+Function $8844 (00 00)
+
+8849 0C
+884A D1
+884B 2C
+884C D0
+884D D8 69 88
+
+8850 60
+8851 8D 10
+8853 E9 D4 EE 04 / Call $EED4
+
+8857 D8 5F 88
+
+885A 41
+885B A8 90 73    / $7390
+885E CF
+
+885F 61
+8860 8D 11
+8862 E9 D4 EE 04
+
+8869 CF 
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8850 60 8D 10 E9 D4 EE 04 D8 5F 88 41 A8 90 73 CF 61
+8860 8D 11 E9 D4 EE 04 D6 49 88 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8860                               20 BF E4 F9 FF 8E
+8870 FC 9B DE F9 FF B3 E9 A6 DE 04 0C D3 A2 FF FF D8
+8880 46 89 A0 FF FF D6 2C 89 61 8E FF 9B E9 03 C0 04
+8890 D6 39 89 0C D0 2C 0C D3 A2 FE FF D6 E7 88 A0 FE
+88A0 FF A2 FA FF D6 08 89 8D 37 E9 44 88 02 D6 08 89
+88B0 8D 4B E9 44 88 02 D6 08 89 61 A5 92 73 8C F8 9B
+88C0 BB D3 B3 66 65 E9 BB A5 08 A5 92 73 D0 A9 92 73
+88D0 D6 08 89 8E 93 73 E9 6A 88 02 D6 08 89 8E A2 73
+88E0 E9 6A 88 02 D6 08 89 D9 07 00 46 00 DD 88 48 00
+88F0 9E 88 4B 00 9E 88 50 00 B9 88 53 00 D3 88 57 00
+8900 A7 88 58 00 B0 88 08 89 D6 39 89 0C D0 D3 A2 FE
+8910 FF A0 FF FF A2 FB FF 40 A2 FC FF 61 DE F9 FF B3
+8920 E9 03 C0 04 66 E9 44 88 02 D6 39 89 D9 02 00 0A
+8930 00 88 88 1B 00 93 88 0B 89 0C D0 2C A4 90 73 D8
+8940 43 89 CF D6 7A 88 CF 
+
+Function $886A
+
+886F 8E FC 9B .. / $9BFC [1B 48]
+8872 DE F9 FF
+8875 B3
+8876 E9 A6 DE 04 / Call $DEA6 -> Transfer string 
+887A 0C
+887B D3
+887C A2 FF FF
+887F D8 46 89
+
+8946
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8870 FC 9B DE F9 FF B3 E9 A6 DE 04 0C D3 A2 FF FF D8
+8880 46 89 A0 FF FF D6 2C 89 61 8E FF 9B E9 03 C0 04
+8890 D6 39 89 0C D0 2C 0C D3 A2 FE FF D6 E7 88 A0 FE
+88A0 FF A2 FA FF D6 08 89 8D 37 E9 44 88 02 D6 08 89
+88B0 8D 4B E9 44 88 02 D6 08 89 61 A5 92 73 8C F8 9B
+88C0 BB D3 B3 66 65 E9 BB A5 08 A5 92 73 D0 A9 92 73
+88D0 D6 08 89 8E 93 73 E9 6A 88 02 D6 08 89 8E A2 73
+88E0 E9 6A 88 02 D6 08 89 D9 07 00 46 00 DD 88 48 00
+88F0 9E 88 4B 00 9E 88 50 00 B9 88 53 00 D3 88 57 00
+8900 A7 88 58 00 B0 88 08 89 D6 39 89 0C D0 D3 A2 FE
+8910 FF A0 FF FF A2 FB FF 40 A2 FC FF 61 DE F9 FF B3
+8920 E9 03 C0 04 66 E9 44 88 02 D6 39 89 D9 02 00 0A
+8930 00 88 88 1B 00 93 88 0B 89 0C D0 2C A4 90 73 D8
+8940 43 89 CF D6 7A 88 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8940                      20 BF E4 FE FF AC 75 A6 60
+8950 60 60 67 E9 D4 EE 08 60 8D 15 E9 D4 EE 04 61 8D
+8960 16 E9 D4 EE 04 8D 10 60 8E C6 97 66 E9 D4 EE 08
+8970 8D 10 8D 10 8E 76 F3 66 E9 D4 EE 08 8E E2 00 8E
+8980 F8 A6 8E 1C A6 6A 8D 16 6C 65 69 E9 D4 EE 10 40
+8990 A9 92 73 AA 42 65 8E 93 73 E9 A6 DE 04 60 E9 32
+89A0 D5 02 B3 8E A2 73 E9 A6 DE 04 40 2B 40 A8 90 73
+89B0 60 60 67 8D 14 6E 66 68 E9 D4 EE 0E 61 8E 01 9C
+89C0 E9 03 C0 04 0B D2 8C D6 97 BB B0 B3 E9 6A 88 02
+89D0 0B D0 2B 0B 8B 16 C2 D7 AC 89 AC 89 A5 60 60 60
+89E0 67 E9 D4 EE 08 8E 82 73 65 E9 D4 EE 04 8D 20 60
+89F0 8E 66 F3 66 E9 D4 EE 08 CF 
+
+Function $8947 
+
+894C AC 75 A6 .. / Call $A675 -> Black out palettes
+894F 60
+8950 60
+8951 60
+8952 67
+8953 E9 D4 EE 08 / Call $EED4 -> Sysop 0x07 (Black out nametable)
+
+8957 60
+8958 8D 15
+895A E9 D4 EE 04 / Call $EED4 -> Sysop 0x15
+
+895E 61
+895F 8D 16
+8961 E9 D4 EE 04 / Call $EED4 -> Sysop 0x16
+
+8965 8D 10
+8967 60
+8968 8E C6 97
+896B 66
+896C E9 D4 EE 08 / Call $EED4 -> Sysop 0x06 (Set palettes)
+
+8970 8D 10
+8972 8D 10
+8974 8E 76 F3
+8977 66
+8978 E9 D4 EE 08 / Call $EED4 -> Sysop 0x06 (Set palettes)
+
+897C 8E E2 00
+897F 8E F8 A6
+8982 8E 1C A6
+8985 6A
+8986 8D 16
+8988 6C
+8989 65
+898A 69
+898B E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 (Print graphic)
+
+898F 40
+8990 A9 92 73 .. / $7392
+
+8993 AA 42 65 .. / $6542 (Ptr to name string)
+8996 8E 93 73    / $7393
+8999 E9 A6 DE 04 / Call $DEA6 -> Transfer string
+
+899D 60
+899E E9 32 D5 02 / Call $D532 -> Get ptr to first ship name
+89A2 B3
+89A3 8E A2 73    / $73A2
+89A6 E9 A6 DE 04 / Call $DEA6 -> Transfer string
+
+89AA 40
+89AB 2B
+
+89AC 40
+89AD A8 90 73 .. / $7390
+
+89B0 60
+89B1 60
+89B2 67
+89B3 8D 14
+89B5 6E
+89B6 66
+89B7 68
+89B8 E9 D4 EE 0E / Call $EED4 -> Sysop 0x08
+
+89BC 61
+89BD 8E 01 9C    / $9C01
+89C0 E9 03 C0 04 / Call $C003 -> Print
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+89C0 E9 03 C0 04 0B D2 8C D6 97 BB B0 B3 E9 6A 88 02
+89D0 0B D0 2B 0B 8B 16 C2 D7 AC 89 AC 89 A5 60 60 60
+89E0 67 E9 D4 EE 08 8E 82 73 65 E9 D4 EE 04 8D 20 60
+89F0 8E 66 F3 66 E9 D4 EE 08 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+89F0                            20 BF E4 00 00 0C D1
+8A00 2C D0 D8 20 8A 60 8D 10 E9 D4 EE 04 58 C0 D8 16
+8A10 8A 41 A8 90 73 CF 61 8D 11 E9 D4 EE 04 D6 FE 89
+8A20 CF 
+
+Function $89F9 (00 00)
+
+89FE 0C
+89FF D1
+8A00 2C
+8A01 D0
+8A02 D8 20 8A
+
+if
+	8A05 60
+	8A06 8D 10
+	8A08 E9 D4 EE 04 / Call $EED4 -> Sysop 0x10 (Get PAD input)
+	8A0C 58
+	8A0D C0          / Check if start pressed?
+	8A0E D8 16 8A
+
+	if
+		8A11 41
+		8A12 A8 90 73    / $7390
+		8A15 CF
+	
+	8A16 61
+	8A17 8D 11
+	8A19 E9 D4 EE 04 / Call $EED4 -> Sysop 0x11 : Wait 1 frame
+	
+	8A1D D6 FE 89
+	
+8A20 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8A20    20 BF E4 F8 FF 40 29 09 52 C1 D8 6A 8A 64 DE 
+8A30 FC FF B3 8E 09 9C E9 E0 DD 06 40 28 09 8C 5E 91 
+8A40 BB D3 B3 DE FC FF B3 08 B4 BB B4 B3 D3 DA D4 08 
+8A50 D0 28 08 54 C2 D7 3C 8A 64 60 DE FC FF B3 66 E9 
+8A60 D4 EE 08 6A 8D 11 E9 D4 EE 04 09 D0 29 09 54 C2 
+8A70 D7 28 8A CF 
+
+Function $8A21 (F8 FF)
+
+8A26 40
+8A27 29       .. / uint16_t loc_09 = 0;
+
+8A28 09
+8A29 52
+8A2A C1
+8A2B D8 6A 8A
+              .. / if (loc_09 != 2) {
+8A2E 64
+8A2F DE FC FF    / uint8_t loc_FC[4];
+8A32 B3
+8A33 8E 09 9C
+8A36 E9 E0 DD 06 / memcpy(C2_9C09, loc_FC, 4);
+8A3A 40
+8A3B 28          / uint8_t loc_08 = 0;
+
+8A3C 09          / do {
+8A3D 8C 5E 91
+8A40 BB
+8A41 D3
+8A42 B3          /
+8A43 DE FC FF
+8A46 B3          
+8A47 08
+8A48 B4        
+8A49 BB            
+8A4A B4
+8A4B B3          / 
+8A4C D3          /
+8A4D DA
+8A4E D4
+8A4F 08
+8A50 D0
+8A51 28          / loc_08++;
+8A52 08
+8A53 54
+8A54 C2          / } while (loc_08 < 4);
+8A55 D7 3C 8A
+
+8A58 64
+8A59 60
+8A5A DE FC FF
+8A5D B3
+8A5E 66
+8A5F E9 D4 EE 08 / Call $EED4 -> Sysop 0x06 (Change palettes?)
+8A63 6A
+8A64 8D 11
+8A66 E9 D4 EE 04 / Call $EED4 -> Sysop 0x11 (Wait 10 frames)
+
+8A6A 09
+8A6B D0
+8A6C 29
+
+8A6D 09
+8A6E 54
+8A6F C2
+8A70 D7 28 8A
+
+8A73 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8A70             20 BF E4 F8 FF 40 29 64 DE FC FF B3 
+8A80 8E 0D 9C E9 E0 DD 06 40 28 09 8C 5E 91 BB D3 B3 
+8A90 DE FC FF B3 08 B4 BB B4 B3 D3 DA D4 08 D0 28 08 
+8AA0 54 C2 D7 89 8A 64 60 DE FC FF B3 66 E9 D4 EE 08 
+8AB0 69 E9 F9 89 02 A4 90 73 D8 BC 8A CF 09 D0 29 09 
+8AC0 54 C2 D7 7B 8A CF 
+
+Function $8A74 (F8 FF)
+
+8A79 40
+8A7A 29
+
+8A7B 64
+8A7C DE FC FF
+8A7F B3
+8A80 8E 0D 9C    / $9D0C
+8A83 E9 E0 DD 06 / Call $DDE0 -> Transfer 4 bytes
+
+8A87 40
+8A88 28
+
+8A89 09 
+8A8A 8C 5E 91
+8A8D BB
+8A8E D3
+8A8F B3
+8A90 DE FC FF
+8A93 B3
+8A94 08
+8A95 B4
+8A96 BB
+8A97 B4
+8A98 B3
+8A99 D3
+8A9A DA
+8A9B D4
+8A9C 08
+8A9D D0
+8A9E 28
+
+8A9F 08
+8AA0 54
+8AA1 C2
+8AA2 D7 89 8A
+
+8AA5 64
+8AA6 60
+8AA7 DE FC FF
+8AAA B3
+8AAB 66
+8AAC E9 D4 EE 08 / Call $EED4 -> Sysop 0x06 (Set array as palette)
+
+8AB0 69
+8AB1 E9 F9 89 02 / Call $89F9 -> Check for input on either controller
+8AB5 A4 90 73
+8AB8 D8 BC 8A
+
+if controller input
+	8ABB CF
+
+8ABC 09
+8ABD D0
+8ABE 29
+
+8ABF 09
+8AC0 54
+8AC1 C2
+8AC2 D7 7B 8A
+
+8AC5 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8AC0                   20 BF E4 EC FF 40 23 03 52 C1 
+8AD0 D8 10 8B 8D 10 DE F0 FF B3 8E 2E 91 E9 E0 DD 06 
+8AE0 40 22 03 8C 5E 91 BB D3 B3 DE F0 FF B3 02 B4 BB 
+8AF0 B4 B3 D3 DA D4 02 D0 22 02 8B 10 C2 D7 E2 8A 8D 
+8B00 10 60 DE F0 FF B3 66 E9 D4 EE 08 6A E9 F9 89 02 
+8B10 03 D0 23 03 54 C2 D7 CD 8A CF 
+
+Function $8AC6 -> Perform fade-in for title screen
+
+8ACB 40
+8ACC 23
+
+8ACD 03
+8ACE 52
+8ACF C1
+8AD0 D8 10 8B
+
+8AD3 8D 10
+8AD5 DE F0 FF
+8AD8 B3
+8AD9 8E 2E 91 .. / $912E (palette)
+8ADC E9 E0 DD 06 / Call $DDE0 -> Transfer memory
+
+8AE0 40
+8AE1 22
+
+8AE2 03
+8AE3 8C 5E 91 .. / $915E
+8AE6 BB
+8AE7 D3
+8AE8 B3
+8AE9 DE F0 FF
+8AEC B3
+8AED 02
+8AEE B4
+8AEF BB
+8AF0 B4
+8AF1 B3
+8AF2 D3
+8AF3 DA
+8AF4 D4
+
+8AF5 02
+8AF6 D0
+8AF7 22
+
+8AF8 02
+8AF9 8B 10
+8AFB C2
+8AFC D7 E2 8A
+
+8AFF 8D 10
+8B01 60
+8B02 DE F0 FF
+8B05 B3
+8B06 66
+8B07 E9 D4 EE 08 / Call $EED4 -> Sysop 0x06 (Set palette)
+
+8B0B 6A
+8B0C E9 F9 89 02 / Call $F989 -> Wait for 10 frames or until pad input
+
+8B10 03
+8B11 D0
+8B12 23
+
+8B13 03
+8B14 54
+8B15 C2
+8B16 D7 CD 8A
+
+8B19 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8B10                               20 BF E4 EC FF 40 
+8B20 23 8D 10 DE F0 FF B3 8E 11 9C E9 E0 DD 06 40 22 
+8B30 03 8C 62 91 BB D3 B3 DE F0 FF B3 02 B4 BB B4 B3 
+8B40 D3 DA D4 02 D0 22 02 54 C2 D7 30 8B 64 60 DE F0 
+8B50 FF B3 66 E9 D4 EE 08 69 E9 F9 89 02 A4 90 73 D8 
+8B60 63 8B CF 03 D0 23 03 54 C2 D7 21 8B CF 
+
+Function $8B1A
+
+8B1F 40
+8B20 23
+
+8B21 8D 10
+8B23 DE F0 FF
+8B26 B3
+8B27 8E 11 9C    / $9C11
+8B2A E9 E0 DD 06 / Call $DDE0 -> Transfer bytes
+
+8B2E 40 22
+
+Do
+	8B30 03
+	8B31 8C 62 91 .. / $9162
+	8B34 BB
+	8B35 D3
+	8B36 B3
+	8B37 DE F0 FF
+	8B3A B3
+	8B3B 02
+	8B3C B4
+	8B3D BB
+	8B3E B4
+	8B3F B3
+	8B40 D3
+	8B41 DA
+	8B42 D4
+
+	8B43 02
+	8B44 D0
+	8B45 22
+While
+	8B46 02
+	8B47 54
+	8B48 C2
+	8B49 D7 30 8B
+	
+8B4C 64
+8B4D 60
+8B4E DE F0 FF
+8B51 B3
+8B52 66
+8B53 E9 D4 EE 08 / Call $EED4
+
+8B57 69
+8B58 E9 F9 89 02 / Call $89F9 -> Wait for 9 frames or until input
+
+8B5C A4 90 73 .. / $7390
+8B5F D8 63 8B
+
+8B62 CF
+
+8B63 03
+8B64 D0
+8B65 23
+
+8B66 03
+8B67 54
+8B68 C2
+8B69 D7 21 8B
+
+8B6C CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8B60                                        20 BF E4 
+8B70 EC FF 40 23 8D 10 DE F0 FF B3 8E 2E 91 E9 E0 DD 
+8B80 06 40 22 03 8C 62 91 BB D3 B3 DE F0 FF B3 02 B4 
+8B90 BB B4 B3 D3 DA D4 02 D0 22 02 8B 10 C2 D7 83 8B 
+8BA0 8D 10 60 DE F0 FF B3 66 E9 D4 EE 08 65 E9 F9 89 
+8BB0 02 A4 90 73 D8 B8 8B CF 03 D0 23 03 54 C2 D7 74 
+8BC0 8B CF 
+
+Function $8B6D (EC FF)
+
+8B72 40
+8B73 23
+
+8B74 8D 10
+8B76 DE F0 FF    / int loc_F0[0x10];
+8B79 B3
+8B7A 8E 2E 91
+8B7D E9 E0 DD 06 / memcpy(C2_912E, loc_F0, 0x10);
+
+8B81 40
+8B82 22
+
+8B83 03
+8B84 8C 62 91
+8B87 BB
+8B88 D3
+8B89 B3
+8B8A DE F0 FF
+8B8D B3
+8B8E 02
+8B8F B4
+8B90 BB
+8B91 B4
+8B92 B3
+8B93 D3
+8B94 DA
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8B80 06 40 22 03 8C 62 91 BB D3 B3 DE F0 FF B3 02 B4 
+8B90 BB B4 B3 D3 DA D4 02 D0 22 02 8B 10 C2 D7 83 8B 
+8BA0 8D 10 60 DE F0 FF B3 66 E9 D4 EE 08 65 E9 F9 89 
+8BB0 02 A4 90 73 D8 B8 8B CF 03 D0 23 03 54 C2 D7 74 
+8BC0 8B CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8BC0       20 BF E4 EC FF 40 23 8D 10 DE F0 FF B3 8E 
+8BD0 1E 91 E9 E0 DD 06 40 22 03 8C 5E 91 BB D3 B3 DE 
+8BE0 F0 FF B3 02 B4 BB B4 B3 D3 DA D4 02 D0 22 02 8B 
+8BF0 10 C2 D7 D8 8B 8D 10 8D 10 DE F0 FF B3 66 E9 D4 
+8C00 EE 08 8D 14 E9 F9 89 02 A4 90 73 D8 0F 8C CF 03 
+8C10 D0 23 03 54 C2 D7 C9 8B CF 
+
+Function $8BC2 (EC FF)
+
+8BC7 40
+8BC8 23
+
+8BC9 8D 10
+8BCB DE F0 FF
+8BCE B3
+8BCF 8E 1E 91
+8BD2 E9 E0 DD 06 / Call $DDE0 -> Transfer 0x10 values from $911E to local memory
+
+8BD6 40
+8BD7 22
+
+8BD8 03
+8BD9 8C 5E 91
+8BDC BB
+8BDD D3
+8BDE B3
+8BDF DE F0 FF
+8BE2 B3
+8BE3 02
+8BE4 B4
+8BE5 BB
+8BE6 B4
+8BE7 B3
+8BE8 D3
+8BE9 DA
+8BEA D4
+8BEB 02
+8BEC D0
+8BED 22
+8BEE 02
+8BEF 8B 10
+8BF1 C2
+8BF2 D7 D8 8B
+
+8BF5 8D 10
+8BF7 8D 10
+8BF9 DE F0 FF
+8BFC B3
+8BFD 66
+8BFE E9 D4 EE 08 / Call $EED4 -> Sysop 0x06 (Set palette)
+
+8C02 8D 14
+8C04 E9 F9 89 02 / Call $89F9 -> Check if there is input on either controller
+8C08 A4 90 73
+8C0B D8 0F 8C
+
+if controller input:
+	8C0E CF
+
+8C0F 03
+8C10 D0
+8C11 23
+
+8C12 03
+8C13 54
+8C14 C2
+8C15 D7 C9 8B
+
+8C18 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8C10                            20 BF E4 EC FF 40 23 
+8C20 8D 10 DE F0 FF B3 8E 1E 91 E9 E0 DD 06 40 22 03 
+8C30 8C 62 91 BB D3 B3 DE F0 FF B3 02 B4 BB B4 B3 D3 
+8C40 DA D4 02 D0 22 02 8B 10 C2 D7 2F 8C 8D 10 8D 10 
+8C50 DE F0 FF B3 66 E9 D4 EE 08 8D 14 E9 F9 89 02 A4 
+8C60 90 73 D8 66 8C CF 03 D0 23 03 54 C2 D7 20 8C CF 
+
+Function $8C19
+
+8C1E 40
+8C1F 23
+
+8C20 8D 10
+8C22 DE F0 FF
+8C25 B3
+8C26 8E 1E 91    / $911E
+8C29 E9 E0 DD 06 / Call $DDE0 -> Transfer 0x10 bytes
+
+8C2D 40
+8C2E 22
+
+8C2F 03
+8C30 8C 62 91
+8C33 BB
+8C34 D3
+8C35 B3
+8C36 DE F0 FF
+8C39 B3
+8C3A 02
+8C3B B4
+8C3C BB
+8C3D B4
+8C3E B3
+8C3F D3
+8C40 DA
+8C41 D4
+
+8C42 02
+8C43 D0
+8C44 22
+
+8C45 02
+8C46 8B 10
+8C48 C2
+8C49 D7 2F 8C
+
+8C4C 8D 10
+8C4E 8D 10
+8C50 DE F0 FF
+8C53 B3
+8C54 66
+8C55 E9 D4 EE 08 / Call $EED4 -> Sysop 0x06
+
+8C59 8D 14
+8C5B E9 F9 89 02 / Call $89F9
+
+8C5F A4 90 73 .. / $7390
+8C62 D8 66 8C
+
+8C65 CF
+
+8C66 03
+8C67 D0
+8C68 23
+
+8C69 03
+8C6A 53
+8C6B C2
+8C6C D7 20 8C
+
+8C6F CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8C70 20 BF E4 00 00 64 60 8E 3E 91 66 E9 D4 EE 08 8E 
+8C80 E2 00 8E B0 A0 8E 74 A0 66 6A 69 6B 69 E9 D4 EE 
+8C90 10 AC 21 8A 8D 1E 8D 11 E9 D4 EE 04 8E E2 00 8E 
+8CA0 0C A1 8E EC A0 62 8D 10 8D 11 68 69 E9 D4 EE 10 
+8CB0 8D 78 E9 F9 89 02 A4 90 73 D8 BD 8C CF 60 60 60 
+8CC0 67 E9 D4 EE 08 8E E2 00 8E 3C A0 8E 04 A0 62 8D 
+8CD0 1C 6F 62 69 E9 D4 EE 10 64 60 8E 15 9C 66 E9 D4 
+8CE0 EE 08 8D 78 E9 F9 89 02 A4 90 73 D8 EF 8C CF AC 
+8CF0 1A 8B A4 90 73 D8 F9 8C CF 60 60 60 67 E9 D4 EE 
+8D00 08 8E E2 00 8E EC A7 8E D4 A7 63 68 6C 6C 69 E9 
+8D10 D4 EE 10 8E E2 00 8E 40 A2 8E 1C A2 62 8D 12 8D 
+8D20 10 67 69 E9 D4 EE 10 AC 74 8A A4 90 73 D8 31 8D 
+8D30 CF 8D 78 E9 F9 89 02 A4 90 73 D8 3E 8D CF AC 1A 
+8D40 8B A4 90 73 D8 48 8D CF 60 60 60 67 E9 D4 EE 08 
+8D50 64 60 8E 66 F3 66 E9 D4 EE 08 8D 3C E9 F9 89 02 
+8D60 CF 
+
+Function $8C70 (00 00)
+8C75 64          /
+8C76 60          /
+8C77 8E 3E 91    /
+8C7A 66          /
+8C7B E9 D4 EE 08 / $EED4 Sysop 0x06: Set palette
+
+8C7F 8E E2 00    /
+8C82 8E B0 A0    /
+8C85 8E 74 A0    /
+8C88 66          /
+8C89 6A          /
+8C8A 69          /
+8C8B 6B          /
+8C8C 69          /
+8C8D E9 D4 EE 10 / $EED4 -> Sysop 0x09: Print Koei logo
+
+8C91 AC 21 8A
+
+8C94 8D 1E
+8C96 8D 11
+8C98 E9 D4 EE 04 / Call $EED4 -> Sysop 0x11 : Wait 30 frames
+
+8C9C 8E E2 00
+8C9F 8E 0C A1
+8CA2 8E EC A0
+8CA5 62
+8CA6 8D 10
+8CA8 8D 11
+8CAA 68
+8CAB 69
+8CAC E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 : Print ???
+
+8CB0 8D 78
+8CB2 E9 F9 89 02 / Call $89F9 -> Wait 120 frames or until input
+
+8CB6 A4 90 73 .. / $7390
+8CB9 D8 BD 8C
+
+8CBC CF
+
+8CBD 60
+8CBE 60
+8CBF 60
+8CC0 67
+8CC1 E9 D4 EE 08 / Call $EED4 -> Sysop 0x07 : Black out nametable
+
+8CC5 8E E2 00
+8CC8 8E 3C A0
+8CCB 8E 04 A0
+8CCE 62
+8CCF 8D 1C
+8CD1 6F
+8CD2 62
+8CD3 69
+8CD4 E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 : Print graphic
+
+8CD8 64
+8CD9 60
+8CDA 8E 15 9C
+8CDD 66
+8CDE E9 D4 EE 08 / Call $EED4 -> Sysop 0x06 : Set palette
+
+8CE2 8D 78
+8CE4 E9 F9 89 02 / Call $89F9 -> Wait 120 frames or until input
+
+8CE8 A4 90 73 .. / $7390
+8CEB D8 EF 8C
+
+8CEE CF
+
+8CEF AC 1A 8B .. / Call $8B1A
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8CE0 EE 08 8D 78 E9 F9 89 02 A4 90 73 D8 EF 8C CF AC 
+8CF0 1A 8B A4 90 73 D8 F9 8C CF 60 60 60 67 E9 D4 EE 
+8D00 08 8E E2 00 8E EC A7 8E D4 A7 63 68 6C 6C 69 E9 
+8D10 D4 EE 10 8E E2 00 8E 40 A2 8E 1C A2 62 8D 12 8D 
+8D20 10 67 69 E9 D4 EE 10 AC 74 8A A4 90 73 D8 31 8D 
+8D30 CF 8D 78 E9 F9 89 02 A4 90 73 D8 3E 8D CF AC 1A 
+8D40 8B A4 90 73 D8 48 8D CF 60 60 60 67 E9 D4 EE 08 
+8D50 64 60 8E 66 F3 66 E9 D4 EE 08 8D 3C E9 F9 89 02 
+8D60 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8D60    20 BF E4 F4 FF 8D 10 60 8E 2E 91 66 E9 D4 EE 
+8D70 08 8D 14 8D 15 E9 D4 EE 04 60 8D 16 E9 D4 EE 04 
+8D80 8E BE 96 65 E9 D4 EE 04 8D 10 8D 10 8E 3E 91 66 
+8D90 E9 D4 EE 08 8D 40 60 8E C6 96 6D E9 D4 EE 08 AC 
+8DA0 C2 8B A4 90 73 D8 A9 8D CF 8A 78 91 2B 40 2A 40 
+8DB0 29 09 8C 96 00 C2 D8 AA 8E 40 26 0A D0 2A 0A 8C 
+8DC0 FF 00 DA 8C EF 00 C8 D8 D8 8D 8A 00 FF CD 0A DA 
+8DD0 2A 8A 00 01 CD 0A DC 2A 3A 60 8D 12 E9 D4 EE 06 
+8DE0 60 60 61 8D 12 09 8B 1E B9 B3 66 68 E9 D4 EE 0E 
+8DF0 62 64 E9 D4 EE 04 B3 60 3B 61 8D 12 09 8F 1D 8B 
+8E00 1E B9 B3 66 69 E9 D4 EE 10 64 E9 F9 89 02 A4 90 
+8E10 73 D8 15 8E CF 06 D0 26 06 58 C2 D7 BB 8D 09 D0 
+8E20 29 40 26 0A D0 2A 0A 8C FF 00 DA 8C EF 00 C8 D8 
+8E30 40 8E 8A 00 FF CD 0A DA 2A 8A 00 01 CD 0A DC 2A 
+8E40 3A 60 8D 12 E9 D4 EE 06 60 60 61 8D 12 09 8B 1E 
+8E50 B9 B3 66 68 E9 D4 EE 0E 62 64 E9 D4 EE 04 B3 60 
+8E60 8E 66 91 61 8D 12 09 8F 1D 8B 1E B9 B3 66 69 E9 
+8E70 D4 EE 10 64 E9 F9 89 02 A4 90 73 D8 7F 8E CF 06 
+8E80 D0 26 06 58 C2 D7 23 8E 89 12 CD 0B BB 2B 09 D0 
+8E90 29 09 8B 5A C0 D8 A7 8E 8D 14 8D 15 E9 D4 EE 04 
+8EA0 60 8D 16 E9 D4 EE 04 D6 B1 8D AC 19 8C CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8EA0                                           20 BF 
+8EB0 E4 FA FF 40 A8 90 73 60 60 60 67 E9 D4 EE 08 61 
+8EC0 8D 15 E9 D4 EE 04 60 8D 16 E9 D4 EE 04 8D 37 E9 
+8ED0 F9 89 02 8D 10 60 8E 3E 91 66 E9 D4 EE 08 8E E2 
+8EE0 00 8E 40 A3 8E 64 A2 6A 8D 16 64 65 69 E9 D4 EE 
+8EF0 10 8E E2 00 8E A4 A1 8E 2C A1 6C 6A 6B 6B 69 E9 
+8F00 D4 EE 10 AC C6 8A 8D 32 E9 F9 89 02 8E E2 00 8E 
+8F10 20 A8 8E 04 A8 61 8D 1C 8D 1A 62 69 E9 D4 EE 10 
+8F20 8D 50 8D 11 E9 D4 EE 04 8D 18 E9 D4 EE 02 D8 40 
+8F30 8F 61 E9 F9 89 02 A4 90 73 D8 3D 8F CF D6 28 8F 
+8F40 8D 17 67 E9 70 C7 04 61 8E 19 9C E9 03 C0 04 8E 
+8F50 D0 07 E9 F9 89 02 CF 
+
+Function $8EAE
+
+8EB3 40
+8EB4 A8 90 73 .. / $7390
+
+8EB7 60
+8EB8 60
+8EB9 60
+8EBA 67
+8EBB E9 D4 EE 08 / Call $EED4 -> Sysop 0x07 (Black out nametable)
+
+8EBF 61
+8EC0 8D 15
+8EC2 E9 D4 EE 04 / Call $EED4 -> Sysop 0x15
+
+8EC6 60
+8EC7 8D 16
+8EC9 E9 D4 EE 04 / Call $EED4 -> Sysop 0x16
+
+8ECD 8D 37
+8ECF E9 F9 89 02 / Call $89F9 -> Wait 55 frames for input
+8ED3 8D 10
+8ED5 60
+8ED6 8E 3E 91 .. / $913E (All black palette)
+8ED9 66
+8EDA E9 D4 EE 08 / Call $EED4 -> Sysop 0x06
+
+8EDE 8E E2 00
+8EE1 8E 40 A3
+8EE4 8E 64 A2
+8EE7 6A
+8EE8 8D 16
+8EEA 64
+8EEB 65
+8EEC 69
+8EED E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 (Print graphic)
+
+8EF1 8E E2 00
+8EF4 8E A4 A1
+8EF7 8E 2C A1
+8EFA 6C
+8EFB 6A
+8EFC 6B
+8EFD 6B
+8EFE 69
+8EFF E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 (Print graphic)
+
+8F03 AC C6 8A .. / Call $8AC6 -> Perform fade-in for title screen
+
+8F06 8D 32
+8F08 E9 F9 89 02 / Call $89F9 -> Wait 50 frames or until input
+
+8F0C 8E E2 00
+8F0F 8E 20 A8
+8F12 8E 04 A8
+8F15 61
+8F16 8D 1C
+8F18 8D 1A
+8F1A 62
+8F1B 69
+8F1C E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 (Print graphic)
+
+8F20 8D 50
+8F22 8D 11
+8F24 E9 D4 EE 04 / Call $EED4 -> Sysop 0x11 (Wait 80 frames)
+
+8F28 8D 18
+8F2A E9 D4 EE 02 / Call $EED4 -> Sysop 0x18
+8F2E D8 40 8F
+
+8F31 61
+8F32 E9 F9 89 02 / Call $89F9
+
+8F36 A4 90 73 .. / $7390
+8F39 D8 3D 8F
+
+	8F3C CF
+
+	8F3D D6 28 8F
+
+8F40 8D 17
+8F42 67
+8F43 E9 70 C7 04 / Call $C770 -> Text pos  7,23
+
+8F47 61
+8F48 8E 19 9C .. / $9C19 "Press start button"
+8F4B E9 03 C0 04 / Call $C003 -> Print
+
+8F4F 8E D0 07
+8F52 E9 F9 89 02 / Call $89F9
+
+8F56 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8F50                      20 BF E4 00 00 61 61 60 61 
+8F60 E9 D4 EE 08 40 A8 90 73 AC 70 8C A4 90 73 D7 95 
+8F70 8F AC 61 8D 8D 17 E9 D4 EE 02 8D 20 60 8E 3E 91 
+8F80 66 E9 D4 EE 08 60 60 8D 12 E9 D4 EE 06 8D 40 60 
+8F90 6C E9 D4 EE 06 AC AE 8E 8D 17 E9 D4 EE 02 60 60 
+8FA0 60 67 E9 D4 EE 08 60 60 8D 12 E9 D4 EE 06 8E 82 
+8FB0 73 65 E9 D4 EE 04 8D 20 60 8E 66 F3 66 E9 D4 EE 
+8FC0 08 CF
+
+Function $8F57
+
+8F5C 61
+8F5D 61
+8F5E 60
+8F5F 61
+8F60 E9 D4 EE 08 / Set nametable 0, extended RAM mode 1, 8x8 sprites
+
+8F64 40
+8F65 A8 90 73    /
+
+8F68 AC 70 8C    /
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8F60 E9 D4 EE 08 40 A8 90 73 AC 70 8C A4 90 73 D7 95 
+8F70 8F AC 61 8D 8D 17 E9 D4 EE 02 8D 20 60 8E 3E 91 
+8F80 66 E9 D4 EE 08 60 60 8D 12 E9 D4 EE 06 8D 40 60 
+8F90 6C E9 D4 EE 06 AC AE 8E 8D 17 E9 D4 EE 02 60 60 
+8FA0 60 67 E9 D4 EE 08 60 60 8D 12 E9 D4 EE 06 8E 82 
+8FB0 73 65 E9 D4 EE 04 8D 20 60 8E 66 F3 66 E9 D4 EE 
+8FC0 08 CF
+----------------------------------------------------
+8FC2 1B 52 20 1B 45 3F
+8FC9 ""
+8FCA 0F 16 30 30 0F 12 22 31 0F 1A 37 12 0F 18 28 38
+8FDA "New Adventure"
+8FE8 "Saved Game"
+8FF3 " Which one?"
+8FFF "OK"
+
+$9002 - String ptr table
+00 900C "Charisma"
+01 9015 "Wisdom"
+02 901C "Intel"
+03 9022 "Courage"
+04 902A "Strength"
+
+9033 "Enter name of hero"
+9046 "Cannot use that name"
+905B "Is this "
+9064 "Leon Franco"
+9070 "%s"
+9073 "%3d"
+9077 "Bonus    %3d"
+9084 "Is this "
+908D "Please assign\nbonus points"
+90A8 "%3d"
+90AC "%3d"
+90B0 "%3d"
+90B4 "%3d"
+90B8 "%3d"
+90BE "%3d"
+90C0 "Is this "
+90C9 "Enter name of flagship"
+90E0 "%s"
+90E3 "Is this "
+90EC "%3d"
+90F0 "Ship: %s"
+90F9 "Is this "
+9102 "No saved game"
+9110 "Loading game"
+911D ""
+911E 0F 16 26 16 0F 16 33 16 0F 06 33 16 0F 16 26 36 
+912E 0F 10 16 30 0F 27 10 30 0F 27 16 10 0F 12 16 22
+913E 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F
+914E 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F
+
+919E "%IGHTY"
+91A5 "YEARS"
+
+
+
+9C09 0F 06 16 30 0F 0F 0F 30 0F 0F 0F 30 0F 0F 0F 30
+
+9C19 "Press start button"
+9C2C "utton"
+9C32 " button"
+9C3A "t button"
+9C43 ""
+9C44 "charted Waters.\W\W\W"

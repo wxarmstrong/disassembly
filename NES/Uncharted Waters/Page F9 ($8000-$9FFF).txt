@@ -1,0 +1,4 @@
+Page F9
+ROM: 72010 - 7400F
+
+9062-9285 - Initial game state data (loaded on bootup)

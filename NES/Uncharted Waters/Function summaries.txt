@@ -1,0 +1,146 @@
+C1:A675 - Black out screen (set all palettes to 0x0F)
+----------------------------------------------------------------------------------
+D3:8589 - Loads the following palettes:
+		  (0F 12 16 38)
+		  (0F 1A 16 38)
+		  
+D3:85AC - Prints the port summary to the screen.
+----------------------------------------------------------------------------------
+Page C8 - Sailing
+C8:98CB
+C8:9994
+C8:993E
+C8:9A34
+C8:9A4B
+C8:9A5B
+C8:9A70 - portFound()
+C8:9A8D
+C8:9AC3
+C8:9B00
+C8:9BC0
+----------------------------------------------------------------------------------
+Page D4 - Market
+D4:8003 - Returns the # of goods on ship #<arg00>
+D4:802C - Returns the # of storage space used by ship #<arg00>
+----------------------------------------------------------------------------------
+Page E5 - Endings
+----------------------------------------------------------------------------------
+Page E6 - Win Sequence
+E6:862B - Loads view of Lisbon
+----------------------------------------------------------------------------------
+FE:C35F - Increments 16-bit zero page value @ (X)
+
+FE:C41D - Perform sysop (A)
+
+FE:C47B - Wait until there is no controller input,
+          then return the next controller input.
+
+FE:C4A9 - Update RNG then get PAD<arg00> input (0 = PAD1, 1 = PAD2)
+
+FE:C70B - Sets the coordinates for the next text to be printed to <arg00>,<arg02>.
+		  (No word wrap)
+FE:C719 - Prints string at address <arg00>.
+		  Additional arguments are inserted into the string:
+		  * '%s'    = string
+		  * '%d'    = number
+		  ' '%(#)d' = number; set width to (#) (right-justified)
+		  
+		  '%%'      = %  
+FE:C72A - Ensures that the x/y coordinates of the next string are
+          in the acceptable ranges (00-3F & 00-1D), & moves them
+		  back onto the screen if necessary.
+FE:C770 - Sets the coordinates for the next text to be printed to <arg00>,<arg02>.
+          (Word wrap to next line if necessary)
+FE:C77F - Set x-coord of next string to <arg00>
+FE:C78C - Set y-coord of next string to <arg00>
+FE:C7C9 - Get PAD1 input.
+		  
+FE:CE6E - Wait <arg00> frames for PAD1 input, then automatically advance
+FE:CE8D - Wait <arg00> time units (6 frames) for PAD1 input, then automatically advance
+FE:CE9B - Wait <arg00>*speed time units for PAD1 input, then automatically advance
+          (18 frames per speed value)
+FE:CFE1 - Return random integer from 0 to <arg00>
+
+FE:D326 - If pointer <arg00> >= #$A000, return the dereferenced value on Page FA.
+Else, return the dereferenced pointer value.
+
+FE:DC0C - tolower(int)
+FE:DC31 - toupper(int)
+FE:DC56 - signum(int)
+
+FE:DCEC - Set Bank <arg00> to Page <arg02>,
+          then transfer <arg08> values from <arg04> to <arg06>.
+----------------------------------------------------------------------------------
+FF:E177 - (A) = (Y)*(X)
+FF:E1B4 - (A) = (Y)/(X) (signed)
+FF:E1D9 - (A) = (Y)/(X) (unsigned)
+
+FF:E299 - Run a 6502 function from a VM function
+FF:E388 - Run a VM function from a 6502 function
+	FF:E392 - JMP ($0008)
+	
+FF:E395 - Push 16-bit in (X) to stack
+FF:E3B0 - Push 32-bit in (X) to stack
+
+FF:E3BA - Pull 16-bit from stack to (X)
+FF:E3D5 - Pull 32-bit from stack to (X)
+
+FF:E3F0 - (A) = (X) << (Y)
+
+FF:E4BF - Run a VM function from another VM function
+
+FF:EED4 - Perform sysop <arg00>
+
+     00 - $F500
+	      Reset vector
+	 
+	 01 - $FA99
+	      Set nametable to <arg00>, set extended RAM mode to <arg02> ,
+	      & set sprite size to <arg04> (0 = 8x16, 1 = 8x8)
+		  
+	 02 - $FAB9
+	      Run PRG bank <arg00>, page <arg02>.
+	 03 - $FAF7
+	      Set PRG bank <arg00> to page <arg02>.
+	 04 - $FAFF
+	      Return setting of PRG bank <arg00>.
+	 05 - $FB06
+	      Perform the CHR Bank Switching described at $<arg00>.
+	 06 - $FB14
+	      Transfer <arg04> bytes from $<arg00> to palette #<arg02> ($700,x)
+	 07 - $FB2C
+	 08 - $FB6C
+	 09 - $FBA8
+	      Print graphic from page <0C>,
+		  data tables <0A> (pattern table for each tile),
+		            & <08> (list of tile IDs)
+		  with height <06> and width <04>,
+		  to <00>,<02>
+	 0A - $FBB0
+	 0B - $FC1E
+	 0C - $FC29
+	      Delete <arg02> sprites starting at sprite #<arg00>
+	 0D - $FC50
+	      Transfer <arg04> sprites from $<arg00> to sprite #<arg02>
+	 0E - $FC6E
+	 0F - $FCD4
+	 10 - $FCF5
+	      Return PAD<arg00> input (0 = PAD1, 1 = PAD2)
+	 11 - $FCFC
+	      Wait <arg00> frames.
+	 12 - $FD10
+	 13 - $FD49
+	 14 - $FD85
+	 15 - $FDB3
+	 16 - $FE38
+	 17 - $FE3D
+	 	  Play music track <arg00> (???)
+	 18 - $FE6C
+	 19 - $FE82
+
+	 1A - $FF31
+	 
+FF:F9C2 - Set PPU_CTRL to <A>
+FF:F9C8 - Set PPU_MASK to <A>
+FF:F9CE - Enable VBlank
+FF:F9D6 - Disable VBlank

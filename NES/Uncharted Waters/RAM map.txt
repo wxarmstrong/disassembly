@@ -1,0 +1,209 @@
+ZERO PAGE
+=======================
+VIRTUAL MACHINE
+
+00-01	Program Counter
+02-03	Effective Stack pointer
+04-1B   Stack pointer
+06-07   Base pointer
+08-0B	Left  32-bit register
+0C-0F   Right 32-bit register
+10-11   Used like a 16-bit register for root functions?
+12-13   Used like a 16-bit register for root functions?   
+14-17   Used like a 32-bit register for C-based 6502 functions?
+18-1B   Used like a 32-bit register for C-based 6502 functions?
+1C-1D   Initialized @ 0x20: Something to do w/ VM stack?
+1E-1F   Initialized @ 0x30: Something to do w/ VM stack?
+20-4F   Alt stack? (unknown)
+30-3F   Alt stack? (unknown)
+40-4F   ?
+-----------------------
+OTHER
+
+50-51   Sysop #
+52-??	(16-bit) arguments for Sysops
+66-67   Return value from sysop
+68-69   ?
+
+6A		MIRROR: Extended RAM mode ($5104)
+
+6B-6E   ?
+
+6F-70   Address pointer; used by Sysops
+
+71-7B   ?
+7C      ?
+7D-96   ?
+
+97-9B	MIRROR: RAM Banks 0-4     ($5113-$5117)
+
+9C-9E   ?
+9F      ?
+A0-AD   ?
+AE      ?
+AF-C7   ?
+C8      ?
+C9      ?
+CA-CB   ?
+CC      ?
+CD      ? (Something to do w/ sprites?) (possibly unused)
+CE-FE   ?
+FF      ?
+=======================
+
+OTHER SYSTEM DATA
+=======================
+GRAPHICAL
+
+0700		"Update Palette + Scroll" flag
+				If flag is not zero, 0701-0720, 0729 and 072B 
+				are stored to PPU in the next interrupt.
+				
+0701-0720   Palette data to update on next interrupt
+
+0721-0728   ?
+0729        PPU_SCROLL data to update on next interrupt?
+072A        ?
+072B        PPU_SCROLL data to update on next interrupt?
+072C        ?
+-----------------------
+UNKNOWN
+
+072C-5FFF	?
+=======================
+6000-6003 JMP command auto placed by compiler (ignore)
+-----------------------
+6004-7FFF Ship array?
+-----------------------
+City array (Value Size: 14 bytes)
+67B2/67B3      Economic Worth
+67B4/67B5      Economic Investment
+67B6/67B7      Industrial Worth
+67B8/67B9      Industrial Investment
+67BA           Portugal Support
+67BB           Spain    Support
+67BC           Turkey   Support
+67BD           Prices (added to 50%)
+-----------------------
+6A6F = ??? Array (Value Size: 2 bytes)
+City data???
+-----------------------
+6AB6/6AB7 (0x18)
+6AB8/6AB9 (0x18)
+-----------------------
+6B1C      Ships
+ +00      Name
+
+6B87      Settings
+
+          0000 0000
+		  |||| |||\
+		  |||| ||\ ???
+		  |||| |\ ???
+		  |||| \ ???
+		  ||||  BGM
+		  |||\
+		  ||\ ???
+		  |\ ???
+		  \ ???
+		   ???
+		   
+6B88      Speed (lower = faster)
+          (Controls how long messages wait for player 
+		   input before automatically advancing.
+		   # of frames = 18 * Speed                  )
+6B89      ?		   
+6B8A      ?
+6B8B      ?
+	
+	
+6BAE	  Party members (00 = Player)
+ +00      Name
+ 
+ +12      ???
+ +13
+ +14
+ +15
+ +16      Age
+ 
+ +17      Charisma
+ +18      Wisdom
+ +19      Intel
+ +20      Courage
+ +21      Strength
+ +22      Battle  Exp (2 byte)
+ +24      Sailing Exp (2 byte)
+
+6C90 (array, entry size 7) 
+ 
+6F7B      Array of cities' statuses
+          0000 0000     __________
+		  |||| |||\____|          |
+		  |||| ||\_____|Diplomacy_| 00 = Neutral           01 = Allied with Portugal
+		  |||| |\______|__Status__| 02 = Allied with Spain 03 = Allied with Turkey
+		  |||| \ 
+		  ||||  ???
+		  |||\
+		  ||\ ???
+		  |\ ???
+		  \ ???
+		   ???
+ 
+7060      ?
+--------------------------------------------
+DATA INITIALLY LOADED BY GAME:
+7062      ?
+7063      ?
+7064/7065 ?
+7066      ?
+7067      Current port (city ID)
+7068      ?
+
+7069-7266 ?
+
+7267      ? 
+7268      ?
+7269-7285 ?
+--------------------------------------------
+TEXT PRINTING
+ 
+7286/7287 x-position of next string to print
+7288/7289 y-position of next string to print
+728A/728B ?
+728C/728D right boundary of string to print
+728E      color of text to print
+728F      ?
+7290/7291 ?
+7292/7293 ?
+7294-7297 ?
+
+7298      Event type
+          00 =
+		  01 =
+		  02 =
+
+7299-729F ?
+
+72A0-72B4 ? initially blanked out
+
+72B5      ?
+
+72B6-737A ? initially blanked out
+
+737B      ?
+737C      ?
+737D      ?
+737E      ?
+
+737F-7381 ?
+
+7382-7389 Mirror for CHR Bankswitch state
+
+738A      ? Init w/ 0xFF
+738B      ? Init w/ 0xFF
+
+738C-738D ? Init w/ 0x00FF
+
+738E      ? Init w/ 0xFF
+
+7390/7391 ?

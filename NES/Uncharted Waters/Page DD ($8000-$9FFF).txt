@@ -1,0 +1,1173 @@
+Page DD
+ROM: 03A010 - 03C00F
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8000 4C 03 E0 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8000          20 BF E4 00 00 68 68 8E CE 88 66 E9 D4
+8010 EE 08 CF 
+
+Function $8003 (00 00) -> Change Nametable palettes 2/3
+
+8008 68
+8009 68
+800A 8E CE 88    / $88CE : 0F 12 16 38 | 0F 1A 16 38
+800D 66
+800E E9 D4 EE 08 / Call $EED4 -> Sysop 0x06 (Change palettes)
+8012 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8010          20 BF E4 00 00 61 69 E9 69 B8 04 CF 
+
+Function $8013 (00 00)
+
+8018 61
+8019 69
+801A E9 69 B8 04 / Call $B869
+
+801E CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8010                                              20
+8020 BF E4 D7 FF 40 85 EF DE FB FF B3 60 E9 26 D0 04
+8030 85 ED 8E E7 00 8E B4 A5 8E 9C A4 6E 8D 14 66 66
+8040 69 E9 D4 EE 10 68 68 E9 0B C7 04 60 8E DA 88 E9
+8050 03 C0 04 AC 03 80 61 67 6F E9 D0 A3 06 60 67 8D
+8060 13 E9 D0 A3 06 68 8D 16 E9 0B C7 04 60 8E DF 88
+8070 E9 03 C0 04 40 D6 9D 80 DE F1 FF B3 81 EB D2 B4
+8080 BB B3 DE FB FF B3 81 EB B4 BB D3 57 B5 8C 96 6C
+8090 BB D3 5F DA B3 E9 32 D5 02 B1 81 EB D0 85 EB 81
+80A0 EB 83 ED C6 D7 78 80 40 85 E1 40 85 DF 40 85 DD
+80B0 40 D6 6D 81 DE FB FF B3 81 EB B4 BB D3 8B 18 B5
+80C0 8C A4 6A BB 85 D7 81 EB D2 7A B3 67 E9 70 C7 04
+80D0 DE F1 FF B3 81 EB D2 B4 BB B0 B3 E9 6B D5 02 81
+80E0 EB D2 79 B3 6E E9 70 C7 04 81 D7 8F 12 B0 85 E9
+80F0 81 E9 CD 81 DF BB 85 DF 81 E9 5A B6 B3 8E D6 88
+8100 E9 99 C7 04 81 EB D2 79 B3 8D 12 E9 70 C7 04 81
+8110 D7 8F 10 B0 85 E7 81 E7 CD 81 DD BB 85 DD 81 E7
+8120 5A B6 B3 8E D6 88 E9 99 C7 04 81 EB D2 79 B3 8D
+8130 16 E9 70 C7 04 DE FB FF B3 81 EB B4 BB D3 57 B5
+8140 8C 94 6C BB B0 85 E5 81 E5 CD 81 E1 BB 85 E1 81
+8150 E5 55 C2 D8 61 81 41 85 EF 87 E5 8E E3 88 D6 66
+8160 81 87 E5 8E D6 88 E9 99 C7 04 81 EB D0 85 EB 81
+8170 EB 83 ED C6 D7 B4 80 81 E1 52 B6 D0 B3 81 DF B4
+8180 B6 85 DB 81 E1 52 B6 D0 B3 81 DD B4 B6 85 D9 87
+8190 D9 87 DB E9 6C DD 04 85 E3 81 EF D8 A2 81 40 D6
+81A0 AB 81 8E E8 03 87 E3 E9 6C DD 04 CF 
+
+Function $801F (D7 FF)
+
+8024 40
+8025 85 EF
+
+8027 DE FB FF
+802A B3
+802B 60
+802C E9 26 D0 04 / Call $D026
+8030 85 ED
+
+8032 8E E7 00
+8035 8E B4 A5
+8038 8E 9C A4
+803B 6E
+803C 8D 14
+803E 66
+803F 66
+8040 69
+8041 E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 : Print graphic
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8040 69 E9 D4 EE 10 68 68 E9 0B C7 04 60 8E DA 88 E9
+8050 03 C0 04 AC 03 80 61 67 6F E9 D0 A3 06 60 67 8D
+8060 13 E9 D0 A3 06 68 8D 16 E9 0B C7 04 60 8E DF 88
+8070 E9 03 C0 04 40 D6 9D 80 DE F1 FF B3 81 EB D2 B4
+8080 BB B3 DE FB FF B3 81 EB B4 BB D3 57 B5 8C 96 6C
+8090 BB D3 5F DA B3 E9 32 D5 02 B1 81 EB D0 85 EB 81
+80A0 EB 83 ED C6 D7 78 80 40 85 E1 40 85 DF 40 85 DD
+80B0 40 D6 6D 81 DE FB FF B3 81 EB B4 BB D3 8B 18 B5
+80C0 8C A4 6A BB 85 D7 81 EB D2 7A B3 67 E9 70 C7 04
+80D0 DE F1 FF B3 81 EB D2 B4 BB B0 B3 E9 6B D5 02 81
+80E0 EB D2 79 B3 6E E9 70 C7 04 81 D7 8F 12 B0 85 E9
+80F0 81 E9 CD 81 DF BB 85 DF 81 E9 5A B6 B3 8E D6 88
+8100 E9 99 C7 04 81 EB D2 79 B3 8D 12 E9 70 C7 04 81
+8110 D7 8F 10 B0 85 E7 81 E7 CD 81 DD BB 85 DD 81 E7
+8120 5A B6 B3 8E D6 88 E9 99 C7 04 81 EB D2 79 B3 8D
+8130 16 E9 70 C7 04 DE FB FF B3 81 EB B4 BB D3 57 B5
+8140 8C 94 6C BB B0 85 E5 81 E5 CD 81 E1 BB 85 E1 81
+8150 E5 55 C2 D8 61 81 41 85 EF 87 E5 8E E3 88 D6 66
+8160 81 87 E5 8E D6 88 E9 99 C7 04 81 EB D0 85 EB 81
+8170 EB 83 ED C6 D7 B4 80 81 E1 52 B6 D0 B3 81 DF B4
+8180 B6 85 DB 81 E1 52 B6 D0 B3 81 DD B4 B6 85 D9 87
+8190 D9 87 DB E9 6C DD 04 85 E3 81 EF D8 A2 81 40 D6
+81A0 AB 81 8E E8 03 87 E3 E9 6C DD 04 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+81A0                                     20 BF E4 FE
+81B0 FF 60 8D 12 8D 1C 62 62 E9 05 A4 0A 8D 14 61 6C
+81C0 E9 D4 EE 06 AC 1F 80 2B 8A F0 00 A9 63 70 AC 89
+81D0 B8 AC 3F B8 0B D7 E3 81 61 8E EE 88 E9 03 C0 04
+81E0 D6 11 82 0B 5A C2 D8 EF 81 8E 27 89 D6 F2 81 8E
+81F0 48 89 E9 F4 A3 02 AC 3F B8 0B 51 C0 D8 05 82 8A
+8200 8B 89 D6 08 82 8A 8C 89 B3 3B 8E 6B 89 E9 99 C7
+8210 06 AC 9F CD D8 3F 82 8A F0 03 CD A4 69 72 BC A8
+8220 69 72 AC 13 80 AC 3F B8 8E 8E 89 E9 F4 A3 02 AC
+8230 6E 87 8E 03 80 8E DE 00 61 E9 3A DE 06 41 CF 8E
+8240 03 80 8E DE 00 61 E9 3A DE 06 60 8D 12 8D 1C 62
+8250 62 E9 9B A4 0A 8E 83 86 8E DE 00 61 E9 3A DE 06
+8260 40 CF 
+
+Function $81AC (FE FF)
+
+81B1 60
+81B2 8D 12
+81B4 8D 1C
+81B6 62
+81B7 62
+81B8 E9 05 A4 0A / Call $A405
+
+81BC 8D 14
+81BE 61
+81BF 6C
+81C0 E9 D4 EE 06 / Call $EED4 -> Sysop 0x0C (Clear sprite 0x01-0x14)
+
+81C4 AC 1F 80    / Call $801F
+81C7 2B
+
+81C8 8A F0 00
+81CB A9 63 70    / $7063
+
+81CE AC 89 B8    / Call $B889
+81D1 AC 3F B8    / Call $B83F
+
+81D4 0B
+81D5 D7 E3 81
+
+if
+{
+	81D8 61
+	81D9 8E EE 88    / $88EE "We won't get anywhere\nlike this. Do ye stillwant to sail"
+	81DC E9 03 C0 04 / Call $C003 -> Print
+	81E0 D6 11 82
+}
+else
+{
+	81E3 0B
+	81E4 5A
+	81E5 C2
+	81E6 D8 EF 81
+	
+	if
+	{
+		81E9 8E 27 89    / $8927 "We're not well\nprepared, Captain"
+		81EC D6 F2 81
+	}
+	else
+	{
+		81EF 8E 48 89    / $8948 "Preparations are\ncomplete, Captain"
+	}
+	81F2 E9 F4 A3 02 / Call $A3F4 -> Print
+	
+	81F6 AC 3F B8    / Call $B83F
+	
+	81F9 0B
+	81FA 51
+	81FB C0
+	81FC D8 05 82
+	
+	if
+	{
+		81FF 8A 8B 89 .. / $898B (blank)
+		8202 D6 08 82
+	}
+	else
+	{
+		8205 8A 8C 89 .. / $898C "s"
+	}
+	
+	8208 B3
+	8209 3B
+	820A 8E 6B 89    / $896B "We can sail for %d\nday%s. Ready"
+	820D E9 99 C7 06 / Call $C799 -> Print
+}
+8211 AC 9F CD .. / Call $CD9F -> Wait for player response
+8214 D8 3F 82
+
+if
+{
+	8217 8A F0 03
+	821A CD
+	821B A4 69 72    / $7269
+	821E BC
+	821F A8 69 72    / $7269
+	8222 AC 13 80    / Call $8013
+	8225 AC 3F B8    / Call $B83F
+	
+	8228 8E 8E 89    / $898E "Steady as ye go!"
+	822B E9 F4 A3 02 / Call $A3F4 -> Print
+	
+	822F AC 6E 87    / Call $876E
+	
+	8232 8E 03 80
+	8235 8E DE 00
+	8238 61
+	8239 E9 3A DE 06 / Call $DE3A -> DE:8003 (Set nametable palettes for current city)
+	
+	823D 41
+	823E CF
+}
+
+823F 8E 03 80
+8242 8E DE 00
+8245 61
+8246 E9 3A DE 06 / Call $DE3A -> DE:8003 (Set nametable palettes for current city)
+
+824A 60
+824B 8D 12
+824D 8D 1C
+824F 62
+8250 62
+8251 E9 9B A4 0A / Call $A49B
+
+8255 8E 83 86
+8258 8E DE 00
+825B 61
+825C E9 3A DE 06 / Call $DE3A -> DE:8683
+
+8260 40
+8261 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8260       20 BF E4 E8 FF AC 13 80 AC 3F B8 8E 9F 89
+8270 E9 F4 A3 02 40 21 22 40 A2 FF FF A2 FD FF D6 CF
+8280 82 A0 FF FF 57 B5 8C 90 6C BB 20 00 76 D3 8B 40
+8290 DA D8 C8 82 DE F8 FF B3 A0 FD FF B4 BB B3 A0 FF
+82A0 FF D4 A0 FD FF D0 A2 FD FF A0 FF FF B3 E9 32 D5
+82B0 02 8F 12 B3 E9 26 D3 02 CD 02 BB 22 A0 FF FF B3
+82C0 E9 EA D9 02 CD 01 BB 21 A0 FF FF D0 A2 FF FF A0
+82D0 FF FF 55 C6 D7 81 82 60 8D 12 8D 1C 62 62 E9 05
+82E0 A4 0A 8D 14 61 6C E9 D4 EE 06 AC 03 80 66 61 DE
+82F0 F8 FF B3 A0 FD FF B3 8E FC 86 8E C0 00 61 E9 3A
+8300 DE 0E 8E 03 80 8E DE 00 61 E9 3A DE 06 AC CE B7
+8310 60 8D 12 8D 1C 62 62 E9 9B A4 0A 40 CF 
+
+Function $8262 -> Player loads water
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8260       20 BF E4 E8 FF AC 13 80 AC 3F B8 8E 9F 89
+8270 E9 F4 A3 02 40 21 22 40 A2 FF FF A2 FD FF D6 CF
+8280 82 A0 FF FF 57 B5 8C 90 6C BB 20 00 76 D3 8B 40
+8290 DA D8 C8 82 DE F8 FF B3 A0 FD FF B4 BB B3 A0 FF
+82A0 FF D4 A0 FD FF D0 A2 FD FF A0 FF FF B3 E9 32 D5
+82B0 02 8F 12 B3 E9 26 D3 02 CD 02 BB 22 A0 FF FF B3
+82C0 E9 EA D9 02 CD 01 BB 21 A0 FF FF D0 A2 FF FF A0
+82D0 FF FF 55 C6 D7 81 82 60 8D 12 8D 1C 62 62 E9 05
+82E0 A4 0A 8D 14 61 6C E9 D4 EE 06 AC 03 80 66 61 DE
+82F0 F8 FF B3 A0 FD FF B3 8E FC 86 8E C0 00 61 E9 3A
+8300 DE 0E 8E 03 80 8E DE 00 61 E9 3A DE 06 AC CE B7
+8310 60 8D 12 8D 1C 62 62 E9 9B A4 0A 40 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8310                                        20 BF E4
+8320 F8 FF A4 6B 66 83 13 B8 2B 3D E9 EA D9 02 B3 3D
+8330 E9 32 D5 02 8F 12 B3 E9 26 D3 02 B4 BC 2A 0B 1A
+8340 C8 D8 46 83 0A 2B 0B D7 59 83 AC 13 80 AC 3F B8
+8350 8E CD 89 E9 F4 A3 02 40 CF AC 3F B8 3E 8E E6 89
+8360 E9 99 C7 04 61 3B 60 8E 06 8A E9 F3 CC 08 28 08
+8370 8B FF C0 D7 7A 83 08 D7 7C 83 40 CF AC 3F B8 81
+8380 13 18 B5 29 39 8E 07 8A E9 99 C7 04 AC 9F CD D7
+8390 94 83 40 CF 38 3D 81 17 EA 04 66 61 3C 3D 3F 8E
+83A0 F6 85 8E C0 00 61 E9 3A DE 10 09 CD A4 6B 66 BC
+83B0 A8 6B 66 6D 8D 16 E9 70 C7 04 8E 36 8A E9 19 C7
+83C0 02 6E 8D 19 E9 0B C7 04 AA 6B 66 8E 3C 8A E9 19
+83D0 C7 04 41 CF 
+
+Function $831D
+
+8322 A4 6B 66
+8325 83 13
+8327 B8
+8328 2B
+
+8329 3D
+832A E9 EA D9 02 / Call $D9EA
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8320 F8 FF A4 6B 66 83 13 B8 2B 3D E9 EA D9 02 B3 3D
+8330 E9 32 D5 02 8F 12 B3 E9 26 D3 02 B4 BC 2A 0B 1A
+8340 C8 D8 46 83 0A 2B 0B D7 59 83 AC 13 80 AC 3F B8
+8350 8E CD 89 E9 F4 A3 02 40 CF AC 3F B8 3E 8E E6 89
+8360 E9 99 C7 04 61 3B 60 8E 06 8A E9 F3 CC 08 28 08
+8370 8B FF C0 D7 7A 83 08 D7 7C 83 40 CF AC 3F B8 81
+8380 13 18 B5 29 39 8E 07 8A E9 99 C7 04 AC 9F CD D7
+8390 94 83 40 CF 38 3D 81 17 EA 04 66 61 3C 3D 3F 8E
+83A0 F6 85 8E C0 00 61 E9 3A DE 10 09 CD A4 6B 66 BC
+83B0 A8 6B 66 6D 8D 16 E9 70 C7 04 8E 36 8A E9 19 C7
+83C0 02 6E 8D 19 E9 0B C7 04 AA 6B 66 8E 3C 8A E9 19
+83D0 C7 04 41 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+83D0             20 BF E4 E5 FF DE F7 FF B3 60 E9 26
+83E0 D0 04 85 EB AC 3F B8 3F 3D 3E 8E 40 8A E9 99 C7
+83F0 08 61 E9 9B CE 02 A4 6B 66 1D C6 D8 0D 84 AC 89
+8400 B8 AC 3F B8 8E 5F 8A E9 F4 A3 02 40 CF 40 85 E5
+8410 8D 14 61 6C E9 D4 EE 06 60 8D 12 8D 1C 62 62 E9
+8420 05 A4 0A AC CE B7 AC 03 80 66 61 3C 8E 78 84 8E
+8430 C0 00 61 E9 3A DE 0C 69 8D 16 E9 70 C7 04 60 8E
+8440 7B 8A E9 03 C0 04 6A 8D 16 E9 0B C7 04 3D 8E 82
+8450 8A E9 19 C7 04 6B 8D 16 E9 0B C7 04 3F 8E 89 8A
+8460 E9 19 C7 04 6D 8D 16 E9 70 C7 04 8E 8C 8A E9 19
+8470 C7 02 6E 8D 19 E9 0B C7 04 AA 6B 66 8E 92 8A E9
+8480 19 C7 04 AC 13 80 AC 3F B8 61 8E 96 8A E9 03 C0
+8490 04 87 EB 62 6A 62 E9 16 A2 08 2A 0A 8C FF 00 C1
+84A0 D8 BE 84 87 17 87 13 3D 3C 3F DE F7 FF B3 0A B4
+84B0 BB D3 B3 3A E9 1D 83 0E CD 81 E5 DB 85 E5 0A 8C
+84C0 FF 00 C0 D7 CE 84 A4 6B 66 1D C6 D8 83 84 A4 6B
+84D0 66 1D C6 D8 E3 84 AC 89 B8 AC 3F B8 8E AA 8A E9
+84E0 F4 A3 02 8E 03 80 8E DE 00 61 E9 3A DE 06 AC CE
+84F0 B7 60 8D 12 8D 1C 62 62 E9 9B A4 0A 81 E5 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+84F0                                              20
+8500 BF E4 FC FF 40 2A 40 D6 1E 85 0D 1B BB D3 8B 18
+8510 B5 8C B4 6A BB B0 5A B6 CD 0A BB 2A 0B D0 2B 0B
+8520 1C C6 D7 0A 85 0A CF 
+
+Function $84FF
+
+8504 40
+8505 2A
+
+8506 40
+8507 D6 1E 85
+
+850A 0D
+850B 1B
+850C BB
+850D D3
+850E 8B 18
+8510 B5
+8511 8C B4 6A .. / $6AB4 (Food)
+8514 BB
+8515 B0
+8516 5A
+8517 B6
+8518 CD
+8519 0A
+851A BB
+851B 2A
+851C 0B
+851D D0
+
+851E 2B
+851F 0B
+8520 1C
+8521 C6
+8522 D7 0A 85
+
+8525 0A
+8526 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8520                      20 BF E4 00 00 0D 5A B5 B3
+8530 0C 8B 18 B5 8C B4 6A BB B4 B3 B0 BB B1 CF 
+
+Function $8527 (00 00) - Add <02> units of food to ship <00>
+Args:
+<0C> Ship #
+<0D> # of units of food to add
+
+852C 0D
+852D 5A
+852E B5
+852F B3
+8530 0C
+8531 8B 18
+8533 B5
+8534 8C B4 6A .. / $6AB4 - Food
+8537 BB
+8538 B4
+8539 B3
+853A B0
+853B BB
+853C B1
+853D CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8530                                           20 BF
+8540 E4 00 00 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8540             20 BF E4 FE FF A5 67 70 8B 31 C8 D8
+8550 57 85 89 32 D6 61 85 A5 67 70 5E B5 8C BD 67 BB
+8560 D3 2B 0B 8F 32 55 B6 2B 8E 27 85 8E FF 84 8E 3E
+8570 85 8E C9 8A 8E C4 8A 3B 60 E9 D4 83 0E CF 
+
+Function $8544 -> Player loads food
+
+8549 A5 67 70    / $7067 (current port)
+854C 8B 31
+854E C8
+854F D8 57 85
+
+if ( ... )
+{
+	8552 89 32
+	8554 D6 61 85
+}
+else
+{
+	8557 A5 67 70 .. / $7067
+	855A 5E
+	855B B5
+	855C 8C BD 67    / $67BD (Prices)
+	855F BB
+	8560 D3
+}
+
+8561 2B
+
+8562 0B
+8563 8F 32
+8565 55
+8566 B6
+8567 2B
+
+8568 8E 27 85
+856B 8E FF 84
+856E 8E 3E 85
+8571 8E C9 8A
+8574 8E C4 8A .. / $8AC4 "Food"
+8577 3B
+8578 60
+8579 E9 D4 83 0E / Call $83D4
+
+857D CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8570                                           20 BF
+8580 E4 00 00 CF 
+
+Function $857E
+
+8583 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8580             20 BF E4 FD FF 40 85 FD 40 D6 A8 85
+8590 A0 FF FF 1D BB D3 8B 18 B5 8C B8 6A BB B0 CD 81
+85A0 FD BB 85 FD A0 FF FF D0 A2 FF FF A0 FF FF 1C C6
+85B0 D7 90 85 81 FD CF 
+
+Function $8584
+
+8589 40
+858A 85 FD
+
+858C 40
+858D D6 A8 85
+
+8590 A0 FF FF
+8593 1D
+8594 BB
+8595 D3
+8596 8B 18
+8598 B5
+8599 8C B8 6A .. / $6AB8
+859C BB
+859D B0
+859E CD
+859F 81 FD
+85A1 BB
+85A2 85 FD
+85A4 A0 FF FF
+85A7 D0
+
+85A8 A2 FF FF
+85AB A0 FF FF
+85AE 1C
+85AF C6
+85B0 D7 90 85
+
+85B3 81 FD
+85B5 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+85B0                   20 BF E4 00 00 3D 0C 8B 18 B5
+85C0 8C B8 6A BB B4 B3 B0 BB B1 CF 
+
+Function $85B6 -> Add <0D> lumber to ship #<0C>
+Args:
+<0C> Ship #
+<0D> Amt of lumber
+
+85BB 3D
+85BC 0C
+85BD 8B 18
+85BF B5
+85C0 8C B8 6A .. / $6AB8 (Lumber)
+85C3 BB
+85C4 B4
+85C5 B3
+85C6 B0
+85C7 BB
+85C8 B1
+85C9 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+85C0                               20 BF E4 FE FF A5
+85D0 67 70 8B 31 C8 D8 DD 85 89 32 D6 E7 85 A5 67 70
+85E0 5E B5 8C BD 67 BB D3 2B 0B 8F 32 53 B6 2B 8E B6
+85F0 85 8E 84 85 8E 7E 85 8E D7 8A 8E D0 8A 3B 62 E9
+8600 D4 83 0E CF 
+
+Function $85CA -> Player purchases lumber
+
+85CF A5 67 70 .. / $7067 (Current port)
+85D2 8B 31
+85D4 C8
+85D5 D8 DD 85
+
+if
+	85D8 89 32
+	89DA D6 E7 85
+else
+	85DD A5 67 70 .. / $7067 (Current port)
+	85E0 5E
+	85E1 B5
+	85E2 8C BD 67 .. / $67BD (Prices)
+	85E5 BB
+	85E6 D3
+
+85E7 2B
+
+85E8 0B
+85E9 8F 32
+85EB 53
+85EC B6
+85ED 2B
+
+85EE 8E B6 85    / $85B6 (add lumber to ship)
+85F1 8E 84 85    / $8584 ?
+85F4 8E 7E 85    / (nothing)
+85F7 8E D7 8A    / "bale"
+85FA 8E D0 8A    / "Lumber"
+85FD 3B
+85FE 62
+85FF E9 D4 83 0E / Call $83D4
+
+8603 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8600             20 BF E4 EF FF DE F7 FF B3 60 E9 26
+8610 D0 04 85 F5 40 85 F1 85 F3 40 D6 4C 86 DE F7 FF
+8620 B3 0B B4 BB D3 B3 E9 EA D9 02 CD 81 F1 BB 85 F1
+8630 DE F7 FF B3 0B B4 BB D3 B3 E9 32 D5 02 8F 12 B3
+8640 E9 26 D3 02 CD 81 F3 BB 85 F3 0B D0 2B 0B 83 F5
+8650 C6 D7 1D 86 81 F1 83 F3 C0 D8 6B 86 AC 13 80 AC
+8660 3F B8 8E FA 8A E9 F4 A3 02 40 CF 40 85 EF AC 13
+8670 80 AC 3F B8 61 8E 0E 8B E9 03 C0 04 62 63 8E DC
+8680 8A 62 68 8D 17 68 E9 56 A1 0E 2A 0A 8C FF 00 C1
+8690 D8 B2 86 8A F0 00 A9 63 70 0A D2 8C E2 8A BB B0
+86A0 DD CD 81 EF DB 85 EF 8E 83 86 8E DE 00 61 E9 3A
+86B0 DE 06 0A 8C FF 00 C1 D7 6E 86 40 CF 
+
+Function $8604
+
+8609 DE F7 FF
+860C B3
+860D 60
+860E E9 26 D0 04 / Call $D026 -> Assemble array of ship IDs
+8612 85 F5
+
+8614 40
+8615 85 F1
+8617 85 F3
+
+8619 40
+861A D6 4C 86
+
+Loop:
+	861D DE F7 FF
+	8620 B3
+	8621 0B
+	8622 B4
+	8623 BB
+	8624 D3 ..    .. / Current ship
+	8625 B3
+	8626 E9 EA D9 02 / Call $D9EA
+	862A CD
+	862B 81 F1
+	862D BB
+	862E 85 F1
+	8630 DE F7 FF
+	8633 B3
+	8634 0B
+	8635 B4
+	8636 BB
+	8637 D3
+	8638 B3
+	8639 E9 32 D5 02 / Call $D532 -> Get ptr to ship
+	863D 8F 12
+	863F B3
+	8640 E9 26 D3 02 / Call $D326 -> Get word
+	8644 CD
+	8645 81 F3
+	8647 BB
+	8648 85 F3
+	864A 0B
+	864B D0
+
+	864C 2B
+	864D 0B
+	864E 83 F5
+	8650 C6
+	8651 D7 1D 86
+	
+8654 81 F1
+8656 81 F3
+8658 C0
+8659 D8 6B 86
+
+If load of all ships is at max:
+	865C AC 13 80 .. / Call $8013
+	865F AC 3F B8 .. / Call $B83F
+	8662 8E FA 8A .. / $8AFA "All ships are full!"
+	8665 E9 F4 A3 02 / Call $A3F4 -> Print
+	8669 40
+	866A CF
+
+866B 40
+866C 85 EF
+
+866E AC 13 80 .. / Call $8013
+8671 AC 3F B8 .. / Call $B83F
+8674 61
+8675 8E 0E 8B .. / $8B0E "Restock which supply?"
+8678 E9 03 C0 04 / Call $C003 -> Print
+867C 62
+867D 63
+867E 8E DC 8A .. / $8ADC "Water"/"Food"/"Lumber"
+8681 62
+8682 68
+8683 8D 17
+8685 68
+8686 E9 56 A1 0E / Call $A156 -> Print menu and get player choice
+868A 2A
+
+868B 0A
+868C 8C FF 00
+868F C1
+8690 D8 B2 86
+
+	8693 8A F0 00
+	8696 A9 63 70 .. / $7063
+	8699 0A
+	869A D2
+	869B 8C E2 8A
+	869E BB
+	869F B0
+	86A0 DD
+	86A1 CD
+	86A2 81 EF
+	86A4 DB
+	86A5 85 EF
+	86A7 8E 83 86
+	86AA 8E DE 00
+	86AD 61
+	86AE E9 3A DE 06 / Call $DE3A -> DE:8683
+
+86B2 0A
+86B3 8C FF 00
+86B6 C1
+86B7 D7 6E 86
+
+86BA 40
+86BB CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+86B0                                     20 BF E4 C4
+86C0 FF 60 8D 12 8D 1C 62 62 E9 05 A4 0A 40 85 C4 DE
+86D0 C6 FF B3 81 C4 D2 B4 BB B3 40 B1 81 C4 D0 85 C4
+86E0 81 C4 8B 1D C6 D7 CF 86 8D 14 61 6C E9 D4 EE 06
+86F0 DE C6 FF B3 8E 14 98 8E C0 00 61 E9 3A DE 08 8E
+8700 03 80 8E DE 00 61 E9 3A DE 06 8A F0 00 A9 63 70
+8710 AC EC B7 60 8D 12 8D 1C 62 62 E9 9B A4 0A 8E 83
+8720 86 8E DE 00 61 E9 3A DE 06 40 CF 
+
+Function $86BC (C4 FF)
+
+86C1 60
+86C2 8D 12
+86C4 8D 1C
+86C6 62
+86C7 62
+86C8 E9 05 A4 0A / Call $A405
+
+86CC 40
+86CD 85 C4
+
+86CF DE C6 FF
+86D2 B3
+86D3 81 C4
+86D5 D2
+86D6 B4
+86D7 BB
+86D8 B3
+86D9 40
+86DA B1
+86DB 81 C4
+86DD D0
+86DE 85 C4
+86E0 81 C4
+86E2 8B 1D
+86E4 C6
+86E5 D7 CF 86
+
+86E8 8D 14
+86EA 61
+86EB 6C
+86EC E9 D4 EE 06 / Call $EED4 -> Sysop 0x0C (Clear sprites 0x01-0x14)
+
+86F0 DE C6 FF
+86F3 B3
+86F4 8E 14 98
+86F7 8E C0 00
+86FA 61
+86FB E9 3A DE 08 / Call $DE3A -> C0:9814
+
+86FF 8E 03 80
+8702 8E DE 00
+8705 61
+8706 E9 3A DE 06 / Call $DE3A -> DE:8003 (Set nametable palettes for current city)
+
+870A 8A F0 00
+870D A9 63 70
+
+8710 AC EC B7    / Call $B7EC
+
+8713 60
+8714 8D 12
+8716 8D 1C
+8718 62
+8719 62
+871A E9 9B A4 0A / Call $A49B
+
+871E 8E 83 86
+8721 8E DE 00
+8724 61
+8725 E9 3A DE 06 / Call $DE3A -> DE:8683
+
+8729 40
+872A CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8720                                  20 BF E4 FC FF
+8730 40 2A AC 13 80 AC 3F B8 61 8E 4E 8B E9 03 C0 04
+8740 62 63 8E 24 8B 62 67 8D 17 68 E9 56 A1 0E 2B 0B
+8750 8C FF 00 C1 D8 60 87 0B D2 8C 2C 8B BB B0 DD 2A
+8760 0B 8C FF 00 C0 D7 6C 87 0A D8 32 87 0A CF 
+
+Function $872B -> Harbor menu
+
+8730 40
+8731 2A
+
+8732 AC 13 80 .. / Call $8013
+8735 AC 3F B8 .. / Call $B83F
+
+8738 61
+8739 8E 4E 8B .. / $8B4E "What do ye want to do?"
+873C E9 03 C0 04 / Call $C003 -> Print
+
+8740 62
+8741 63
+8742 8E 24 8B .. / $8B24 "Sail"/"Restock"/"Transfer"
+8745 62
+8746 67
+8747 8D 17
+8749 68
+874A E9 56 A1 0E / Call $A156 -> Print menu and get player selection
+874E 2B
+
+874F 0B
+8750 8C FF 00
+8753 C1
+8754 D8 60 87
+
+	8757 0B
+	8758 D2
+	8759 8C 2C 8B
+	875C BB
+	875D B0
+	875E DD
+	875F 2A
+
+8760 0B
+8761 8C FF 00
+8764 C0
+8765 D7 6C 87
+
+8768 0A
+8769 D8 32 87
+
+876C 0A
+876D CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8760                                           20 BF
+8770 E4 00 00 40 A9 63 70 8A FD 00 CD A5 71 66 DA A9
+8780 71 66 41 CD A5 71 66 DB A9 71 66 40 A9 7E 73 CF
+
+Function $876E
+
+8773 40
+8774 A9 63 70 .. / $7063
+
+8777 8A FD 00
+877A CD
+877B A5 71 66 .. / $6671
+877E DA
+877F A9 71 66 .. / $6671
+
+8782 41
+8783 CD
+8784 A5 71 66 .. / $6671
+8787 DB
+8788 A9 71 66 .. / $6671
+
+878B 40
+878C A9 7E 73 .. / $737E
+
+878F CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8790 20 BF E4 00 00 3C 8E 66 8B E9 99 C7 04 CF 
+
+Function $8790 (00 00) -> Print <00> as an advisor quote
+
+8795 3C
+8796 8E 66 8B     / $8B66 "Captain, %s"
+8799 E9 99 C7 04  / Call $C799
+879C CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8790                                           20 BF
+87A0 E4 F8 FF 60 60 68 8D 1E 8D 14 61 68 E9 D4 EE 0E
+87B0 AC 89 B8 61 E9 1B B8 02 8D 5A E9 E1 CF 02 D7 C9
+87C0 87 8E 72 8B E9 90 87 02 CF A4 6D 66 57 DA 2B 0B
+87D0 51 DA D7 EE 87 A5 45 65 55 C6 D8 EE 87 8D 28 E9
+87E0 E1 CF 02 D7 EE 87 8E A3 8B E9 90 87 02 CF 0B 52
+87F0 DA D7 0D 88 A5 45 65 56 C6 D8 0D 88 8D 32 E9 E1
+8800 CF 02 D7 0D 88 8E D3 8B E9 90 87 02 CF 0B 54 DA
+8810 D7 2C 88 A5 45 65 57 C6 D8 2C 88 8D 32 E9 E1 CF
+8820 02 D7 2C 88 8E 00 8C E9 90 87 02 CF 8D 64 E9 E1
+8830 CF 02 8F 46 B3 A4 6B 66 B4 C6 D8 4D 88 63 E9 E1
+8840 CF 02 D7 4D 88 8E 2B 8C E9 90 87 02 CF A5 5F 70
+8850 51 DA D8 6F 88 A4 50 70 D3 59 C1 D8 6F 88 A4 50
+8860 70 D3 58 C1 D8 6F 88 63 E9 E1 CF 02 D8 78 88 8D
+8870 1E E9 E1 CF 02 D7 A6 88 A5 67 70 8B 32 C6 D8 A6
+8880 88 62 E9 E1 CF 02 D8 8F 88 8A 5D 8C D6 A0 88 62
+8890 E9 E1 CF 02 D8 9D 88 8A 7A 8C D6 A0 88 8A A1 8C
+88A0 B3 E9 90 87 02 CF DE F8 FF B3 60 E9 26 D0 04 51
+88B0 C0 D8 C4 88 6F E9 E1 CF 02 D7 C4 88 8E D1 8C E9
+88C0 90 87 02 CF 61 8E 07 8D E9 03 C0 04 CF
+
+Function $879E (F8 FF) -> Print a semi-random advisor quote
+
+87A3 60
+87A4 60
+87A5 68
+87A6 8D 1E
+87A8 8D 14
+87AA 61
+87AB 68
+87AC E9 D4 EE 0E / Call $EED4 -> Sysop 0x08 (Draw black rectangle)
+
+87B0 AC 89 B8    / Call $B889
+
+87B3 61
+87B4 E9 1B B8 02 / Call $B81B
+
+87B8 8D 5A
+87BA E9 E1 CF 02 / Call $CFE1 -> RNG [00-89]
+87BE D7 C9 87
+
+if ( 1/90 chance )
+{
+	87C1 8E 72 8B    / "a figurehead\nwould protect our shipfrom disaster"
+	87C4 E9 90 87 02 / Call $8790
+	87C8 CF
+}
+
+87C9 A4 6D 66    / $666D (Item flags)
+87CC 57
+87CD DA
+87CE 2B
+
+87CF 0B
+87D0 51
+87D1 DA
+87D2 D7 EE 87
+
+if (no telescope)
+{
+	87D5 A5 45 65    / $6545
+	87D8 55
+	87D9 C6
+	87DA D8 EE 87
+	
+	if ( )
+	{
+		87DD 8D 28
+		87DF E9 E1 CF 02 / Call $CFE1 -> RNG [00-39]
+		87E3 D7 EE 87
+		
+		if ( 1/40 chance )
+		{
+			87E6 8E A3 8B    / $8BA3 "we could\nsurely use a telescopewhen we set sail"
+			87E9 E9 90 87 02 / Call $8790
+			87ED CF
+		}
+	}
+}
+
+87EE 0B
+87EF 52
+87F0 DA
+87F1 D7 0D 88
+
+if (no sextant)
+{
+	87F4 A5 45 65    / $6545
+	87F7 56
+	87F8 C6
+	87F9 D8 0D 88
+	
+	if ()
+	{
+		87FC 8D 32
+		87FE E9 E1 CF 02 / Call $CFE1 -> RNG [00-49]
+		8802 D7 0D 88
+		
+		if ( 1/50 chance)
+		{
+			8805 8E D3 8B    / $8BD3 "a sextant\nwould be useful to\nguide our quest"
+			8808 E9 90 87 02 / Call $8790
+			880C CF
+		}
+	}
+}
+
+880D 0B
+880E 54
+880F DA
+8810 D7 2C 88
+
+if (no speculum)
+{
+	8813 A5 45 65    / $6545
+	8816 57
+	8817 C6
+	8818 D8 2C 88
+	
+	if ()
+	{
+		881B 8D 32
+		881D E9 E1 CF 02 / Call $CFE1 -> RNG [00-49]
+		8821 D7 2C 88
+		
+		if ( 1/50 chance )
+		{
+			8824 8E 00 8C    / $8C00 "we should\ntry to find a\nspeculum somewhere"
+			8827 E9 90 87 02 / Call $8790
+			882B CF
+		}
+	}
+}
+
+882C 8D 64
+882E E9 E1 CF 02 / Call $CFE1 -> RNG [00-99]
+8832 8F 46       / RNG [70-169]
+8834 B3
+8835 A4 6B 66    / $666B 
+8838 B4
+8839 C6
+883A D8 4D 88
+
+if (gold < RNG[70-169])
+{
+	883D 63
+	883E E9 E1 CF 02 / Call $CFE1 -> RNG [00-02]
+	8842 D7 4D 88
+	
+	if ( 1/3 chance)
+	{
+		8845 8E 2B 8C    / $8C2B "our gold is\nrunning low. This\ncould spell trouble"
+		8848 E9 90 87 02 / Call $8790
+		884C CF
+	}
+}
+
+884D A5 5F 70    / $705F -> Quest progress flags
+8850 51
+8851 DA
+8852 D8 6F 88
+
+if (0x01 flag set)
+{
+	8855 A4 50 70    / $7050
+	8858 D3
+	8859 59
+	885A C1
+	885B D8 6F 88
+	
+	if
+	{
+		885E A4 50 70 .. / $7050
+		8861 D3
+		8862 58
+		8863 C1
+		8864 D8 6F 88
+		
+		if
+		{
+			8867 63
+			8868 E9 E1 CF 02 / Call $CFE1 -> RNG [00-02]
+			886C D8 78 88
+		}
+	}
+}
+
+886F 8D 1E
+8871 E9 E1 CF 02 / Call $CFE1 -> RNG [00-29]
+8875 D7 A6 88
+	
+8878 A5 67 70    / $7067 (current port)
+887B 8B 32
+887D C6
+887E D8 A6 88
+
+if
+	8881 62
+	8882 E9 E1 CF 02 / Call $CFE1 -> RNG [00-01]
+	8886 D8 8F 88
+	
+	if
+		8889 8A 5D 8C .. / $8C5D "how about a\nstop at the inn?"
+		888C D6 A0 88
+	else
+		888F 62
+		8890 E9 E1 CF 02 / Call $CFE1 
+		8894 D8 9D 88
+		
+		if ( 1/2 chance )
+			8897 8A 7A 8C .. / $8C7A "let's catch\nthe latest news at\nthe inn"
+			889A D6 A0 88
+		else ( 1/2 chance)
+			889D 8A A1 8C .. / $8CA1 "let's go to\nthe inn for a bit of\nentertainment!"
+		
+	88A0 B3
+	88A1 E9 90 87 02 / Call $8790
+	88A5 CF
+	
+88A6 DE F8 FF
+88A9 B3
+88AA 60
+88AB E9 26 D0 04 / Call $D026
+88AF 51
+88B0 C0
+88B1 D8 C4 88
+
+if
+{
+	88B4 6F
+	88B5 E9 E1 CF 02 / Call $CFE1 (RNG 00-14)
+	88B9 D7 C4 88
+	
+	if ( 1/15 chance)
+	{
+		88BC 8E D1 8C .. / $8CD1 "if we could\nonly earn enough to\nbuy another vessel..."
+		88BF E9 90 87 02 / Call $8790
+		88C3 CF
+	}
+}
+
+88C4 61
+88C5 8E 07 8D    / $8D07 "Where to, Captain?"
+88C8 E9 03 C0 04 / Call $C003 -> Print
+
+88CC CF
+----------------------------------------------------
+88CE : 0F 12 16 38 | 0F 1A 16 38
+
+88D6 "%3d"
+88DA "Ship"
+88DF "Men"
+88E3 [1B 43 32 01] "%3d" [1B 43 30]
+88EE "We won't get anywhere\nlike this. Do ye stillwant to sail"
+8927 "We're not well\nprepared, Captain"
+8948 "Preparations are\ncomplete, Captain"
+896B "We can sail for %d\nday%s. Ready"
+898B "" (blank)
+898C "s"
+898E "Steady as ye go!"
+899F "You're free to load\nas much water as you\nneed"
+89CD "This ship is packed\nfull"
+89E6 "How many %ss\nwill you purchase\n"
+8A06 "" (blank)
+8A07 "That'll cost %d\ngold. Shall I start\nloading it"
+8A36 "Gold:"
+8A3C "%5d"
+8A40 "%s will cost ye\n%d gold per %s"
+8A5F "You don't have enough\ngold!"
+8A7B "Price:"
+8A82 "%d per"
+8A89 "%s"
+8A8C "Gold:"
+8A92 "%5d"
+8A96 "Restock which ship?"
+8AAA "That's all we can\nafford!"
+8AC4 "Food"
+8AC9 "barrel"
+8AD0 "Lumber"
+8AD7 "bale"
+
+$8ADC : String pointer table
+00 8AE8 "Water"
+01 8AEE "Food"
+02 8AF3 "Lumber"
+
+$8AE2 : Jump table
+00 8262
+01 8544
+02 85CA
+
+8AFA "All ships are full!"
+8B0E "Restock which supply?"
+
+$8B24 : String pointer table
+8B32 "Sail"
+8B37 "Restock"
+8B3F "Transfer"
+
+8B48 "check"
+
+$8B2C : Jump table
+00 81AC
+01 8604
+02 86BC
+
+8B4E "What do ye want to do?"
+8B65 "" (blank)
+8B66 "Captain, %s"
+8B72 "a figurehead\nwould protect our shipfrom disaster"
+8BA3 "we could\nsurely use a telescopewhen we set sail"
+8BD3 "a sextant\nwould be useful to\nguide our quest"
+8C00 "we should\ntry to find a\nspeculum somewhere"
+8C2B "our gold is\nrunning low. This\ncould spell trouble"
+8C5D "how about a\nstop at the inn?"
+8C7A "let's catch\nthe latest news at\nthe inn"
+8CA1 "let's go to\nthe inn for a bit of\nentertainment!"
+8CD1 "if we could\nonly earn enough to\nbuy another vessel..."
+
+8D07 "Where to, Captain?"

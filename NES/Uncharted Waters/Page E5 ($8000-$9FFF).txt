@@ -1,0 +1,529 @@
+Page E5
+ROM: 4A010 - 4C00F
+
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8000 4C 3D 83
+
+Function $8000 -> Jump to main page function
+
+8000 JMP $833D
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8000          20 BF E4 F9 FF 8E EA 84 DE F9 FF B3 E9 
+8010 A6 DE 04 0C D3 A2 FF FF D8 AD 80 A0 FF FF D9 02 
+8020 00 0A 00 2B 80 1B 00 39 80 66 80 61 8E ED 84 E9 
+8030 03 C0 04 0C D0 2C D6 13 80 0C D0 2C 0C D3 A2 FE 
+8040 FF D9 03 00 4B 00 52 80 48 00 52 80 57 00 5B 80 
+8050 33 80 A0 FE FF A2 FA FF D6 33 80 8D 78 8D 11 E9 
+8060 D4 EE 04 D6 33 80 0C D0 D3 A2 FE FF A0 FE FF 8C 
+8070 DE 00 C0 D7 80 80 A0 FE FF 8C DF 00 C0 D8 96 80 
+8080 0C D0 2C A0 FF FF A2 FB FF A0 FE FF A2 FC FF 40 
+8090 A2 FD FF D6 A0 80 A0 FF FF A2 FB FF 40 A2 FC FF 
+80A0 61 DE F9 FF B3 E9 03 C0 04 67 D6 5D 80 CF 
+
+Function $8003 (F9 FF)
+
+8008 8E EA 84
+800B DE F9 FF
+800E B3
+800F E9 A6 DE 04 / Call $DEA6 -> Transfer string to local memory
+
+8013 0C
+8014 D3
+8015 A2 FF FF
+8018 D8 AD 80
+
+	801B A0 FF FF
+	801E D9 02 00
+		 0A 00 2B 80
+		 1B 00 39 80
+			   66 80
+	Case 0A		   
+		802B 61
+		802C 8E ED 84    / "\n"
+		802F E9 03 C0 04 / Call $C003 -> Print
+		8033 0C
+		8034 D0
+		8035 2C
+		8036 D6 13 80
+	Case 1B
+		8039 0C
+		803A D0
+		803B 2C
+		803C 0C
+		803D D3
+		803E A2 FE FF
+		8041 D9 03 00
+		     4B 00 52 80
+			 48 00 52 80
+			 57 00 5B 80
+			       33 80
+				   
+		Case 48/4B
+			8052 A0 FE FF
+			8055 A2 FA FF
+			8058 D6 33 80
+		Case 57
+			805B 8D 78
+			805D 8D 11
+			805F E9 D4 EE 04 / Call $EED4 -> Sysop 0x11 : Wait 2 seconds (120 frames)
+			8063 D6 33 80
+	Default
+		8066 0C
+		8067 D0
+		8068 D3
+		8069 A2 FE FF
+		806C A0 FE FF
+		806F 8C DE 00
+		8072 C0
+		8073 D7 80 80
+		
+		8076 A0 FE FF
+		8079 8C DF 00
+		807C C0
+		807D D8 96 80
+		
+		if
+			8080 0C
+			8081 D0
+			8082 2C
+			8083 A0 FF FF
+			8086 A2 FB FF
+			8089 A0 FE FF
+			808C A2 FC FF
+			808F 40
+			8090 A2 FD FF
+			8093 D6 A0 80
+		else
+			8096 A0 FF FF
+			8099 A2 FB FF
+			809C 40
+			809D A2 FC FF
+
+		80A0 61
+		80A1 DE F9 FF
+		80A4 B3
+		80A5 E9 03 C0 04 / Call $C003
+		
+		80A9 67
+		80AA D6 5D 80
+			
+80AD CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+80A0                                           20 BF 
+80B0 E4 EC FF 0C D7 D7 80 8D 10 DE F0 FF B3 8E CA 84 
+80C0 E9 E0 DD 06 8D 10 60 DE F0 FF B3 66 E9 D4 EE 08 
+80D0 6F 8D 11 E9 D4 EE 04 40 23 8D 10 DE F0 FF B3 3D 
+80E0 E9 E0 DD 06 40 22 0C D2 D2 13 BB 8C EF 84 BB D3 
+80F0 B3 DE F0 FF B3 02 B4 BB B4 B3 D3 DA D4 02 D0 22 
+8100 02 8B 10 C2 D7 E6 80 8D 10 60 DE F0 FF B3 66 E9 
+8110 D4 EE 08 6F 8D 11 E9 D4 EE 04 03 D0 23 03 54 C2 
+8120 D7 D9 80 0C D8 47 81 8D 10 DE F0 FF B3 8E CA 84 
+8130 E9 E0 DD 06 8D 10 60 DE F0 FF B3 66 E9 D4 EE 08 
+8140 6F 8D 11 E9 D4 EE 04 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8140                         20 BF E4 00 00 8D 64 E9 
+8150 8D CE 02 61 8E F7 84 E9 03 C0 04 8E E7 00 8E 32 
+8160 B9 8E 2A B8 6B 8D 18 6E 64 69 E9 D4 EE 10 6F 66 
+8170 E9 0B C7 04 CF 
+
+Function $8148 (00 00)
+
+814D 8D 64
+814F E9 8D CE 02 / Call $CE8D (Wait 100 time units for input)
+
+8153 61
+8154 8E F7 84    / $84F7
+8157 E9 03 C0 04 / Call $C003
+
+815B 8E E7 00
+815E 8E 32 B9
+8161 8E 2A B8
+8164 6B
+8165 8D 18
+8167 6E
+8168 64
+8169 69
+816A E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 (Print)
+
+816E 6F
+816F 66
+8170 E9 0B C7 04 / Call $C70B
+
+8174 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8170                20 BF E4 00 00 60 8E FF 85 8E DE 
+8180 00 61 E9 3A DE 08 60 8E 02 85 E9 03 C0 04 AC 6D 
+8190 A3 60 8E 07 85 E9 03 C0 04 AC 9D A3 60 8E 09 85 
+81A0 E9 03 C0 04 AC 40 A3 60 8E 0C 85 E9 03 C0 04 AA 
+81B0 42 65 E9 6B D5 02 60 8E 18 85 E9 03 C0 04 AC 48 
+81C0 81 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+81C0       20 BF E4 FE FF 8D 78 8D 11 E9 D4 EE 04 8E 
+81D0 E2 00 8E 3E A9 8E A8 A8 6F 6A 66 6B 69 E9 D4 EE 
+81E0 10 8E 9A 84 60 E9 AE 80 04 8E B4 00 8D 11 E9 D4 
+81F0 EE 04 8E E2 00 8E 6A AA 8E D4 A9 6F 6A 66 6B 69 
+8200 E9 D4 EE 10 8E 96 00 8D 11 E9 D4 EE 04 8E E2 00 
+8210 8E 96 AB 8E 00 AB 6F 6A 66 6B 69 E9 D4 EE 10 8E 
+8220 2C 01 8D 11 E9 D4 EE 04 8E 9A 84 61 E9 AE 80 04 
+8230 60 60 60 67 E9 D4 EE 08 8D 78 8D 11 E9 D4 EE 04 
+8240 8E E2 00 8E 5C A4 8E 1C A4 68 68 67 68 69 E9 D4 
+8250 EE 10 8E AA 84 60 E9 AE 80 04 8D 78 8D 11 E9 D4 
+8260 EE 04 42 A9 8E 72 40 2B 61 8E D4 85 E9 03 C0 04 
+8270 0B D2 8C 35 85 BB B0 B3 E9 03 80 02 60 60 66 8D 
+8280 14 8D 11 68 68 E9 D4 EE 0E 0B D0 2B 0B 54 C2 D7 
+8290 68 82 8D 78 8D 11 E9 D4 EE 04 8E E2 00 8E DC A4 
+82A0 8E 9C A4 68 68 67 68 69 E9 D4 EE 10 8D 32 8D 11 
+82B0 E9 D4 EE 04 8E E2 00 8E 5C A5 8E 1C A5 68 68 67 
+82C0 68 69 E9 D4 EE 10 8D 32 8D 11 E9 D4 EE 04 8E E2 
+82D0 00 8E DC A5 8E 9C A5 68 68 67 68 69 E9 D4 EE 10 
+82E0 8E 2C 01 8D 11 E9 D4 EE 04 8E AA 84 61 E9 AE 80 
+82F0 04 60 60 60 67 E9 D4 EE 08 8E B4 00 8D 11 E9 D4 
+8300 EE 04 8E E2 00 8E 74 AC 8E 2C AC 66 6C 6E 6E 69 
+8310 E9 D4 EE 10 8E 9A 84 60 E9 AE 80 04 61 8D 16 E9 
+8320 D4 EE 04 8E 58 02 8D 11 E9 D4 EE 04 8E 9A 84 61 
+8330 E9 AE 80 04 60 60 60 67 E9 D4 EE 08 CF 
+
+Function $81C2 (FE FF)
+
+81C7 8D 78
+81C9 8D 11
+81CB E9 D4 EE 04 / Call $EED4 -> Sysop 0x11 : Wait 2 seconds (120 frames)
+
+81CF 8E E2 00
+81D2 8E 3E A9    / $A93E
+81D5 8E A8 A8    / $A8A8
+81D8 6F
+81D9 6A
+81DA 66
+81DB 6B
+81DC 69
+81DD E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 : Print graphic
+
+81E1 8E 9A 84    / $849A : 0F 32 3C 30 | 0F 16 27 38 | 0F 16 3C 38 | 0F 12 16 30
+81E4 60
+81E5 E9 AE 80 04 / Call $80AE
+
+81E9 8E B4 00
+81EC 8D 11
+81EE E9 D4 EE 04 / Call $D4EE -> Sysop 0x11 : Wait 3 seconds (180 frames)
+
+81F2 8E E2 00
+81F5 8E 6A AA
+81F8 8E D4 A9
+81FB 6F
+81FC 6A
+81FD 66
+81FE 6B
+81FF 69
+8200 E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 : Print graphic
+
+8204 8E 96 00
+8207 8D 11
+8209 E9 D4 EE 04 / Call $EED4 -> Sysop 0x11 : Wait 2.67 seconds (160 frames)
+
+820D 8E E2 00
+8210 8E 96 AB
+8213 8E 00 AB
+8216 6F
+8217 6A
+8218 66
+8219 6B
+821A 69
+821B E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 : Print graphic
+
+821F 8E 2C 01
+8222 8D 11
+8224 E9 D4 EE 04 / Call $EED4 -> Sysop 0x11 : Wait 5 seconds (300 frames)
+
+8228 8E 9A 84    / $849A : 0F 32 3C 30 | 0F 16 27 38 | 0F 16 3C 38 | 0F 12 16 30
+822B 61
+822C E9 AE 80 04 / Call $80AE
+
+8230 60
+8231 60
+8232 60
+8233 67
+8234 E9 D4 EE 08 / Call $EED4 -> Sysop 0x07
+
+8238 8D 78
+823A 8D 11
+823C E9 D4 EE 04 / Call $EED4 -> Sysop 0x11 : Wait 2 seconds (120 frames)
+
+8240 8E E2 00
+8243 8E 5C A4
+8246 8E 1C A4
+8249 68
+824A 68
+824B 67
+824C 68
+824D 69
+824E E9 D4 EE 10 / Call $EED4 -> Sysop 0x09 : Print graphic
+
+8252 8E AA 84    / $84AA : 0F 16 26 16 | 0F 16 33 24 | 0F 14 33 30 | 0F 16 26 36
+8255 60
+8256 E9 AE 80 04 / Call $80AE
+
+825A 8D 78
+825C 8D 11
+825E E9 D4 EE 04 / Call $EED4 -> Sysop 0x11 : Wait 2 seconds (120 frames)
+
+8262 42
+8263 A9 8E 72    / $728E (Text color?)
+
+8266 40
+8267 2B
+
+8268 61
+8269 8E D4 85    / $85D4 [1B 3D 31 28] [1B 52 28]
+826C E9 03 C0 04 / Call $C003 -> Print
+
+8270 0B
+8271 D2
+8272 8C 35 85    / $8535
+8275 BB
+8276 B0
+8277 B3
+8278 E9 03 80 02 / Call $8003
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+8260 EE 04 42 A9 8E 72 40 2B 61 8E D4 85 E9 03 C0 04 
+8270 0B D2 8C 35 85 BB B0 B3 E9 03 80 02 60 60 66 8D 
+8280 14 8D 11 68 68 E9 D4 EE 0E 0B D0 2B 0B 54 C2 D7 
+8290 68 82 8D 78 8D 11 E9 D4 EE 04 8E E2 00 8E DC A4 
+82A0 8E 9C A4 68 68 67 68 69 E9 D4 EE 10 8D 32 8D 11 
+82B0 E9 D4 EE 04 8E E2 00 8E 5C A5 8E 1C A5 68 68 67 
+82C0 68 69 E9 D4 EE 10 8D 32 8D 11 E9 D4 EE 04 8E E2 
+82D0 00 8E DC A5 8E 9C A5 68 68 67 68 69 E9 D4 EE 10 
+82E0 8E 2C 01 8D 11 E9 D4 EE 04 8E AA 84 61 E9 AE 80 
+82F0 04 60 60 60 67 E9 D4 EE 08 8E B4 00 8D 11 E9 D4 
+8300 EE 04 8E E2 00 8E 74 AC 8E 2C AC 66 6C 6E 6E 69 
+8310 E9 D4 EE 10 8E 9A 84 60 E9 AE 80 04 61 8D 16 E9 
+8320 D4 EE 04 8E 58 02 8D 11 E9 D4 EE 04 8E 9A 84 61 
+8330 E9 AE 80 04 60 60 60 67 E9 D4 EE 08 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8330                                        20 BF E4 
+8340 FE FF 44 CD A5 87 6B DB A9 87 6B 48 CD A5 87 6B 
+8350 DB A9 87 6B AC D6 E0 A5 67 72 55 C6 D8 69 83 6F 
+8360 E9 8C E0 02 61 E9 C1 E0 02 A5 67 72 D5 FF FF 04 
+8370 00 3A 84 7B 83 9F 83 CA 83 23 84 AC 75 81 61 8E 
+8380 DC 85 E9 03 C0 04 AC 48 81 61 8E 24 86 E9 03 C0 
+8390 04 AC 48 81 61 8E 6E 86 E9 03 C0 04 D6 23 84 AC 
+83A0 75 81 8D 14 E9 8D CE 02 61 8E BB 86 E9 03 C0 04 
+83B0 AC 48 81 8D 14 E9 8D CE 02 61 8E F2 86 E9 03 C0 
+83C0 04 8D 14 E9 8D CE 02 D6 23 84 60 8E FF 85 8E DE 
+83D0 00 61 E9 3A DE 08 A5 68 70 2B 40 A9 68 70 60 8E 
+83E0 3F 87 E9 03 C0 04 AA 42 65 E9 6B D5 02 60 8E 6C 
+83F0 87 E9 03 C0 04 AC 6D A3 60 8E 7E 87 E9 03 C0 04 
+8400 AC 9D A3 60 8E 80 87 E9 03 C0 04 AC 40 A3 8D 3C 
+8410 E9 8D CE 02 AC 48 81 61 8E 83 87 E9 03 C0 04 0B 
+8420 A9 68 70 60 E9 C1 E0 02 8D 78 E9 8D CE 02 8E F1 
+8430 88 8E DE 00 61 E9 3A DE 06 CF AC 37 CE 8D 40 60 
+8440 6C E9 D4 EE 06 60 60 8D 12 E9 D4 EE 06 8E E6 00 
+8450 61 62 E9 D4 EE 06 AC C2 81 8D 3C 8D 11 E9 D4 EE 
+8460 04 8E E2 00 8E B0 A0 8E 74 A0 66 6A 67 6B 69 E9 
+8470 D4 EE 10 8E E2 00 8E 72 A8 8E 3C A8 63 8D 12 6F 
+8480 67 69 E9 D4 EE 10 8E BA 84 60 E9 AE 80 04 8D 18 
+8490 E9 D4 EE 02 D7 8E 84 D6 97 84
+
+Function $833D (FE FF)
+Plays an ending sequence
+
+8342 44
+8343 CD
+8344 A5 87 6B
+8347 DB          
+8348 A9 87 6B    / Turn on ???
+
+834B 48
+834C CD
+834D A5 87 6B
+8350 DB
+8351 A9 87 6B    / Turn on BGM
+
+8354 AC D6 E0    
+
+8357 A5 67 72
+835A 55
+835B C6
+835C D8 69 83
+
+if
+	835F 6F
+	8360 E9 8C E0 02 / Call $E08C
+	8364 61
+	8365 E9 C1 E0 02 / Call $E0C1
+
+8369 A5 67 72    / $7267 (Load ending flag)
+836C D5 FF FF
+        04 00
+	Default : $843A
+	Case 01 : $837B
+	Case 02 : $839F
+	Case 03 : $83CA
+	Case 04 : $8423
+	
+Case 01:
+837B AC 75 81    /
+837E 61
+837F 8E DC 85    / "According to one
+                    story, the fleet
+					used up all of its
+					precious supplies."
+8382 E9 03 C0 04 /
+8386 AC 48 81
+8389 61
+838A 8E 24 86    / "They say the crew
+                    lingered on bravely
+					until their fates
+					met up with them."
+838D E9 03 C0 04 /
+8391 AC 48 81    /
+8394 61          /
+8395 8E 6E 86    / "The Captain perished
+                    boldly at sea, a
+					common fate in the
+					Age of Exploration."
+8398 E9 03 C0 04 /
+839C D6 23 84    /
+
+Case 02:
+839F AC 75 81    / 
+83A2 8D 14       /
+83A4 E9 8D CE 02 / Call $CE8D (wait 20 time units for player input)
+
+83A8 61          /
+83A9 8E BB 86    / "A terrible storm
+                    ravaged his fleet
+					beyond imagination."
+83AC E9 03 C0 04 /
+83B0 AC 48 81    /
+83B3 8D 14       /
+83B5 E9 8D CE 02 / Call $CE8D (wait 20 time units for player input)
+83B9 61          /
+83BA 8E F2 86    / "The Captain perished
+                    boldly at sea, a
+					common fate in the
+					Age of Exploration."
+83BD E9 03 C0 04 /
+83C1 8D 14       /
+83C3 E9 8D CE 02 / Call $CE8D (wait 20 time units for player input)
+83C7 D6 23 84
+					
+Case 03:
+83CA 60          /
+83CB 8E FF 85    / 
+83CE 8E DE 00    /
+83D1 61          /
+83D2 E9 3A DE 08 / Call $DE3A -> DE:85FF
+
+83D6 A5 68 70
+83D9 2B
+83DA 40
+83DB A9 68 70
+
+83DE 60
+83DF 8E 3F 87    / "
+                    After 20 long years
+					
+					of the sailor's life
+					
+					                    "
+83E2 E9 03 C0 04 /
+
+83E6 AA 42 65    /
+83E9 E9 6B D5 02 /
+
+83ED 60
+83EE 8E 6C 87    / " passed
+
+                     away on
+					        "
+83F1 E9 03 C0 04
+
+83F5 AC 6D A3
+
+83F8 60
+83F9 8E 7E 87    / "
+                    "
+83FC E9 03 C0 04
+					
+8400 AC 9D A3
+8403 60
+8404 8E 80 87    / ".
+                     "
+8407 E9 03 C0 04 /
+
+840B AC 40 A3
+
+840E 8D 3C
+
+8410 E9 8D CE 02 / Wait 60 time units for player input
+
+8414 AC 48 81
+
+8417 61
+8418 8E 83 87    / "He was just short of
+                    reaching the goal he
+					had aspired for all
+					his life.           "
+841B E9 03 C0 04
+
+841F 0B
+8420 A9 68 70
+					
+Case 04:
+8423 60
+8424 E9 C1 E0 02 /
+
+8428 8D 78       /
+842A E9 8D CE 02 / Wait 120 time units for player input
+
+842E 8E F1 88    /
+8431 8E DE 00    /
+8434 61
+8435 E9 3A DE 06 / Call DE:88F1
+
+8439 CF
+
+Default (Win Sequence):
+843A AC 37 CE .. / Call $CE37 -> Wipe sprites and black out nametable
+
+843D 8D 40
+843F 60
+8440 6C
+8441 E9 D4 EE 06 / Call $EED4 -> Sysop 0x0C (Clear sprites)
+
+8445 60
+8446 60
+8447 8D 12
+8449 E9 D4 EE 06 / Call $EED4 -> Sysop 0x12 (Reset PPU_SCROLL)
+
+844D 8E E6 00
+8450 61
+8451 62
+8452 E9 D4 EE 06 / Call $EED4 -> Sysop 0x02 (Run page E6) -> Win sequence
+
+8456 AC C2 81
+8459 
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8450 61 62 E9 D4 EE 06 AC C2 81 8D 3C 8D 11 E9 D4 EE 
+8460 04 8E E2 00 8E B0 A0 8E 74 A0 66 6A 67 6B 69 E9 
+8470 D4 EE 10 8E E2 00 8E 72 A8 8E 3C A8 63 8D 12 6F 
+8480 67 69 E9 D4 EE 10 8E BA 84 60 E9 AE 80 04 8D 18 
+8490 E9 D4 EE 02 D7 8E 84 D6 97 84
+----------------------------------------------------
+$8535 String pointer table
+
+00 853D "Uncharted\nWaters...\W"
+01 8553 "In the Age of\nExploration...\W"
+02 8572 "When those with\ncourage challenged\nthe unknown\W"
+03 85A3 "A glorious page\nin the great book\nof history\W\W"
+----------------------------------------------------

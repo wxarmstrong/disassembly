@@ -1,0 +1,708 @@
+Page FA
+ROM: 74010 - 7600F
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A000 4C 00 00 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A000          00 04 
+
+$A005
+00 -> 00 02
+01 -> 01 02
+02 -> 02 00
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A000                                  00
+----------------------------------------------------
+$A00C - String pointer table
+
+00: 36 A0 "Carlotta"
+01: 3F A0 "Marguerite"
+02: 4A A0 "Selma"
+03: 50 A0 "Maria"
+04: 56 A0 "Isabel"
+05: 5D A0 "Sharee"
+06: 64 A0 "Rosanna"
+07: 6C A0 "Paulina"
+08: 74 A0 "Matilde"
+09: 7C A0 "Nina"
+0A: 81 A0 "Julia"
+0B: 87 A0 "Bonita"
+0C: 8E A0 "Clara"
+0D: 94 A0 "Patoria"
+0E: 9C A0 "Lucetta"
+0F: A4 A0 "Sharon"
+10: AB A0 "Preetha"
+11: B3 A0 "Oharu"
+12: B9 A0 "Mei Ling"
+13: C2 A0 "Olivia"
+14: C9 A0 "Christiana"
+----------------------------------------------------
+$A0D4 - Port of Origin for Ship ID x
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+0000 00 00 00 00 00 00 01 01 01 01 01 02 02 02 02 02
+----------------------------------------------------
+0010 32 32 34 34 33 0B 01 07 08 0B 01 09 07 01 05 08
+0020 00 00 01 0B 08 02 0C 03 01 00 01 07 13 01 03 00
+0030 14 04 07 00 01 00 00 00 00 00 00 00 00 00 00 00
+0040 00 09 03 0B 13 00 0C 01 08 00 00 00 00 00 00 00
+0050 00 05 09 01 00 08 0C 01 03 00 04 07 0C 05 09 00
+0060 0B 0D 00 01 07 00 00 00 00 00 00 00 00 00 00 00
+0070 00 00 07 08 09 09 0C 01 03 00 00 00 00 00 01 09
+0080 0C 00 02 01 03 00 00 00 00 00 00 00 00 00 07 0D
+0090 01 00 00 00 00 06 0E 00 09 06 0E 00 09 00 00 00
+00A0 00 02 01 06 0E 00 00 00 00 09 0E 03 00 00 00 00
+00B0 00 00 00 00 00 00 02 01 03 00 00 00 00 00 00 00
+00C0 00 00 00 00 00 00 00 00 00 02 06 09 0E 00 00 00
+00D0 00 00 00 00 00 0A 0E 16 06 0A 0E 16 02
+----------------------------------------------------
+$A1B1 - Name strings (size = 0x0F)
+00	A1B1	Leon Franco
+01	A1C0	Fernando
+02	A1CF	Alfonso
+03	A1DE	Christopher
+04	A1ED	Americus
+05	A1FC	Dias
+06	A20B	Benedetto
+07	A21A	Vicente
+08	A229	Cyran
+09	A238	Regis
+0A	A247	Jose
+0B	A256	Roberto
+0C	A265	Rinaldo
+0D	A274	Francisco
+0E	A283	Oswaldo
+0F	A292	Nicolas
+10	A2A1	Ammul
+11	A2B0	Miguel
+12	A2BF	Aljuena
+13	A2CE	Conrad
+14	A2DD	Marco
+15	A2EC	Juan
+16	A2FB	Ramone
+17	A30A	Frederico
+18	A319	Luciano
+19	A328	Pedro
+1A	A337	Giacopo
+1B	A346	Luigi
+1C	A355	Idelgo
+1D	A364	Emanuele
+1E	A373	Carlos
+1F	A382	Muhammed
+20	A391	Hashid
+21	A3A0	Nader
+22	A3AF	Ali
+23	A3BE	Omar
+24	A3CD	Singleton
+25	A3DC	El Drago
+26	A3EB	Morgan
+27	A3FA	Gonzales
+28	A409	Gregorio
+----------------------------------------------------
+$A418 - Default ship data (Size = 0x15)
+
+     NAME    MEN            
+00 "Hermes" 14 00 0A 46 00 00
+01 "null"   00 00 00 00 00 00
+02 "null"   00 00 00 00 00 00
+03 "null"   00 00 00 00 00 00
+04 "null"   00 00 00 00 00 00
+----------------------------------------------------
+$A481 - Ship type data (Size = 0x15)
+
+     NAME      
+00 "Latin"     14 00 0A 46 00 01
+01 "Redonda"   14 00 0A 46 00 11
+02 "Bergantin" 19 00 14 69 00 21
+03 "Nao"       3C 00 1E 36 01 55
+04 "Carrack"   5A 00 28 A4 01 75
+05 "Galleon"   A0 00 32 EA 01 99
+----------------------------------------------------
+$A4FF - String pointer table
+00	A5B3	Eduardo
+01	A5BB	Alonzo
+02	A5C2	Augusto
+03	A5CA	Americo
+04	A5D2	El Toro
+05	A5DA	Alberto
+06	A5E2	Andreas
+07	A5EA	El Bueno
+08	A5F3	Emallio
+09	A5FB	Leopoldo
+0A	A604	Enrique
+0B	A60C	Horatio
+0C	A614	Caspero
+0D	A61C	Cesareo
+0E	A624	Don Parma
+0F	A62E	Flores
+10	A635	El Bravo
+11	A63E	Valdes
+12	A645	Guiellermo
+13	A650	Sebastian
+14	A65A	Gustaf
+15	A661	Godfredo
+16	A66A	Gonzalla
+17	A673	Sancho
+18	A67A	Geraldo
+19	A682	Gomez
+1A	A688	Chavez
+1B	A68F	Martinez
+1C	A698	El Primo
+1D	A6A1	Hernandez
+1E	A6AB	Mendoza
+1F	A6B3	Jorge
+20	A6B9	Julio
+21	A6BF	Canalejas
+22	A6C9	Gilbert
+23	A6D1	Stefano
+24	A6D9	Simancas
+25	A6E2	Diego
+26	A6E8	Domingo
+27	A6F0	Calderon
+28	A6F9	Dino
+29	A6FE	Duarte
+2A	A705	Tomas
+2B	A70B	Manrique
+2C	A714	Vasquez
+2D	A71C	Jaime
+2E	A722	Paolo
+2F	A728	Baptista
+30	A731	Xavier
+31	A738	Pablo
+32	A73E	Carlitos
+33	A747	Pietro
+34	A74E	Poncho
+35	A755	Vittorio
+36	A75E	Salvador
+37	A767	Don Juan
+38	A770	Filipo
+39	A777	Martin
+3A	A77E	Felipe
+3B	A785	Francesco
+3C	A78F	Federigo
+3D	A798	Morales
+3E	A7A0	Benito
+3F	A7A7	Bovadillo
+40	A7B1	Baltazar
+41	A7BA	Bernardo
+42	A7C3	Fernandez
+43	A7CD	Hector
+44	A7D4	Don Hugo
+45	A7DD	El Duro
+46	A7E5	Mateo
+47	A7EB	Mario
+48	A7F1	Manuel
+49	A7F8	Marcano
+4A	A800	Cortez
+4B	A807	Moncado
+4C	A80F	Michel
+4D	A816	Lucas
+4E	A81C	Ricardo
+4F	A824	Romeo
+50	A82A	Lorenzo
+51	A832	Luis
+52	A837	Recalde
+53	A83F	Leonardo
+54	A848	Roduego
+55	A850	Rodrigo
+56	A858	Rodriguez
+57	A862	Lopez
+58	A868	Recalde
+59	A870	Trujillo
+----------------------------------------------------
+$A879 - String pointer table
+00	A92D	Aishar
+01	A934	Asad
+02	A939	Abbas
+03	A93F	Arasheed
+04	A948	Alanir
+05	A94F	Abul
+06	A954	Ahbud
+07	A95A	Abdul
+08	A960	Amir
+09	A965	Amadan
+0A	A96C	Akim
+0B	A971	Abashad
+0C	A979	Aljeb
+0D	A97F	Salabim
+0E	A987	Almutar
+0F	A98F	Ishmael
+10	A997	Ibrahim
+11	A99F	Iben
+12	A9A4	Jamil
+13	A9AA	Jumad
+14	A9B0	Atri
+15	A9B5	Reza
+16	A9BA	Kahim
+17	A9C0	Kahdil
+18	A9C7	Kalil
+19	A9CD	Kashim
+1A	A9D4	Karim
+1B	A9DA	Akbar
+1C	A9E0	Tibil
+1D	A9E6	Chizil
+1E	A9ED	Said
+1F	A9F2	Sharam
+20	A9F9	Sandib
+21	AA00	Samsari
+22	AA08	Jatin
+23	AA0E	Sharim
+24	AA15	Saliman
+25	AA1D	Selim
+26	AA23	Tasam
+27	AA29	Tahih
+28	AA2F	Tahlib
+29	AA36	Talhari
+2A	AA3E	Tabul
+2B	AA44	Nasser
+2C	AA4B	Navdib
+2D	AA52	Numan
+2E	AA58	Hadil
+2F	AA5E	Bajet
+30	AA64	Bakul
+31	AA6A	Hassan
+32	AA71	Hashim
+33	AA78	Harib
+34	AA7E	Pani
+35	AA83	Jabbar
+36	AA8A	Habib
+37	AA90	Vasad
+38	AA96	Farhad
+39	AA9D	Farak
+3A	AAA3	Hassein
+3B	AAAB	Hussed
+3C	AAB2	Mumahn
+3D	AAB9	Muhangir
+3E	AAC2	Mafdi
+3F	AAC8	Mumal
+40	AACE	Malwan
+41	AAD5	Mahdi
+42	AADB	Mussulman
+43	AAE5	Ozal
+44	AAEA	Feza
+45	AAEF	Prektar
+46	AAF7	Panshur
+47	AAFF	Musa
+48	AB04	Punjab
+49	AB0B	Shareef
+4A	AB13	Mustafa
+4B	AB1B	Mohamar
+4C	AB23	Salman
+4D	AB2A	Shavir
+4E	AB31	Prashir
+4F	AB39	Muftadi
+50	AB41	Fellik
+51	AB48	Kasem
+52	AB4E	Mefamet
+53	AB56	Amman
+54	AB5C	Jasheed
+55	AB64	Ahmed
+56	AB6A	Rasheed
+57	AB72	Hussein
+58	AB7A	Rashad
+59	AB81	Jamaal
+----------------------------------------------------
+$AB88 - String pointer table
+
+00	AC3C	Snarling Jo
+01	AC48	Lockjaw
+02	AC50	Sea Tiger
+03	AC5A	Jolly Dirk
+04	AC65	Scratch
+05	AC6D	Turncoat
+06	AC76	Tattoo Kid
+07	AC81	Gristlebait
+08	AC8D	Double Iron
+09	AC99	Blacktooth
+0A	ACA4	Hearty Bart
+0B	ACB0	Hollowhead
+0C	ACBB	Nasty Nate
+0D	ACC6	Timberfoot
+0E	ACD1	Seasick Sam
+0F	ACDD	Shiver Jim
+10	ACE8	Mean Ole Mo
+11	ACF4	Burly Burt
+12	ACFF	Leadbelly
+13	AD09	Quickdraw
+14	AD13	Checkie
+15	AD1B	Lucky Dino
+16	AD26	Prankster
+17	AD30	Greedy Lou
+18	AD3B	Evil Eye
+19	AD44	Black Patch
+1A	AD50	Brighty
+1B	AD58	Hammerhand
+1C	AD63	Silver Stan
+1D	AD6F	Sneaky Pete
+1E	AD7B	Lumpy Lou
+1F	AD85	Shark Tooth
+20	AD91	Lightning
+21	AD9B	Poison Ice
+22	ADA6	Rotten Al
+23	ADB0	Whiskers
+24	ADB9	Old Gunner
+25	ADC4	Yellow Jack
+26	ADD0	Blue Streak
+27	ADDC	Mighty Max
+28	ADE7	Stinkpot
+29	ADF0	Bully Bo
+2A	ADF9	Smiley
+2B	AE00	Lazy Jack
+2C	AE0A	Whirliwind
+2D	AE15	Stinger
+2E	AE1D	Cranky Kirk
+2F	AE29	Groggy Gus
+30	AE34	Sinbad Sal
+31	AE3F	Wirebeard
+32	AE49	Scarbrow
+33	AE52	Scurvy Dog
+34	AE5D	Tangle Fang
+35	AE69	Green Gus
+36	AE73	Hackie
+37	AE7A	Mean Ivan
+38	AE84	Bickeroo
+39	AE8D	Scabby
+3A	AE94	Leatherneck
+3B	AEA0	Stubby
+3C	AEA7	Gnarly Nate
+3D	AEB3	Thunderclap
+3E	AEBF	Tripper
+3F	AEC7	Slick Mick
+40	AED2	Snouter
+41	AEDA	Tiptoe Tom
+42	AEE5	Redbeard
+43	AEEE	Razor Rick
+44	AEF9	Warrior
+45	AF01	Angry Ali
+46	AF0B	Hungry Hans
+47	AF17	Slashback
+48	AF21	Billy Bones
+49	AF2D	Tidal Tim
+4A	AF37	Slipper
+4B	AF3F	Briny Beau
+4C	AF4A	Goldmonger
+4D	AF55	Skullface
+4E	AF5F	Rusty Dirk
+4F	AF6A	Tricky Ex
+50	AF74	Eel Face
+51	AF7D	Gusty Jake
+52	AF88	Lava Luke
+53	AF92	Queasy Kirk
+54	AF9E	Ironjaw
+55	AFA6	Fast Fritz
+56	AFB1	Pepper
+57	AFB8	Quicksword
+58	AFC3	Pegleg Lou
+59	AFCE	Salty Sam
+----------------------------------------------------
+$AFD8 - $B509: City coordinates
+
+        00             0F 10 11 12
+00 AFD8 Lisbon         20 08 03 0C
+01 AFEB Seville        20 0A 06 05
+02 AFFE Istanbul       26 09 0B 02
+03 B011 Genoa          24 08 02 0A
+04 B024 Venice         24 08 0B 00
+05 B037 Pisa           24 09 05 01
+06 B04A Marseille      23 09 01 02
+07 B05D Valencia       21 0A 0A 06
+08 B070 Algiers        22 0B 01 08
+09 B083 Majorca        24 0A 06 07
+0A B096 Tunis          23 0A 0A 0B
+0B B0A9 Naples         24 09 0B 09
+0C B0BC Alexandria     26 0B 06 07
+0D B0CF Trebizond      28 09 05 0A
+0E B0E2 Azov           28 07 05 07
+0F B0F5 London         22 05 05 05
+10 B108 Bordeaux       22 07 05 0A
+11 B11B Oslo           23 05 05 02
+12 B12E Hamburg        23 05 08 0B
+13 B141 Antwerp        22 06 09 03
+14 B154 Santo Domingo  13 10 0C 00
+15 B167 Jamaica        12 10 0A 07
+16 B18A Guatemala      10 10 08 08
+17 B19D Panama         11 11 09 09
+18 B1A0 Veracruz       0E 0F 08 0A
+19 B1B3 Caracas        13 11 07 09
+1A B1C6 Pernambuco     1A 16 0A 0C
+1B B1D9 Argin          20 12 05 0B
+1C B1EC San Jorge      22 12 05 0A
+1D B1FF Sofala         2A 17 00 04
+1E B212 Mozambique     2A 15 08 0C
+1F B225 Mombasa        2A 14 05 04
+20 B238 Muscat         2D 0E 08 0B
+21 B24A Baghdad        2C 0C 03 02
+22 B25E Aden           2A 10 05 05
+23 B571 Mecca          29 0D 05 09
+24 B584 Hormuz         2D 0D 04 09
+25 B297 Goa            30 10 07 04
+26 B2AA Diu            2F 0D 07 0A
+27 B2BD Malacca        35 12 09 09
+28 B5D0 Ceylon         32 12 0B 0B
+29 B5E3 Sumatra        35 15 06 06
+2A B5F6 Java           37 16 04 07
+2B B309 Amboina        3B 15 04 09
+2C B31C Ternate        3A 16 00 03
+2D B32F Calicut        31 11 05 0A
+2E B342 Cochin         31 12 0B 01
+2F B355 Nagasaki       3B 0C 06 02
+30 B368 Macao          38 0E 05 06
+31 B37B Zeiton         39 0D 0C 03
+32 B38E Nova Granada   11 12 0B 01
+33 B3A1 Rio de Janeiro 16 1F 08 0B
+34 B3B4 Da Nang        37 10 06 08
+35 B3C7 Guam           40 0F 0A 0B
+36 B3DA Kailua         01 10 08 05
+37 B3ED Eureka         08 08 0D 07
+38 B400 Virginia       13 09 05 07
+39 B413 Copiapo        14 1B 0A 0B
+3A B426 Rio Grande     19 1A 0A 02
+3B B439 Cape Town      27 1B 06 07
+3C B44C Luanda         25 16 06 09
+3D B45F Verde          1E 10 01 07
+3E B472 Injiga         28 04 05 05
+3F B485 Madang         3E 16 09 0B
+40 B498 Leveque        39 1A 09 09
+41 B4AB Tanisk         40 05 01 06
+42 B4BE Sibir          30 04 0A 07
+43 B4D1 Chanchan       12 18 03 04
+44 B4E4 Ruwen          29 13 03 01
+45 B4F7 Acapulco       0C 0F 09 05
+----------------------------------------------------
+$B50A - Port market data?
+
+                             Market type? (pos in $B864)
+                            /  Special good
+                           /  /  x 50 = Economic Worth requirement for special good to appear
+                          /  /  /  Desired good
+                         /  /  /  /  ?
+                        /  /  /  /  /                      DESIRED
+                       00 01 02 03 04 |  SPECIAL GOOD   |   GOOD    |
+--------------------------------------|-----------------|-----------|
+00 B50A Lisbon         00 07 01 00 00 | Sugar     @  50 | Pepper    |
+01 B50F Seville        00 FF 00 01 00 | --------------- | Cinnamon  |
+02 B514 Istanbul       00 18 03 07 00 | Artwork   @ 150 | Sugar     |
+03 B519 Genoa          00 FF 00 04 00 | --------------- | Cloves    |
+04 B51E Venice         00 17 00 03 00 | Porcelain @   0 | Pimento   | 
+05 B523 Pisa           00 18 03 FF 00 | Artwork   @ 150 | --------- |
+06 B528 Marseille      00 FF 00 FF 00 | --------------- | --------- |
+07 B52D Valencia       00 12 00 FF 00 | Wool      @   0 | --------- |
+08 B532 Algiers        00 FF 00 FF 00 | --------------- | --------- |
+09 B537 Majorca        00 09 00 FF 00 | Grain     @   0 | --------- |
+0A B53C Tunis          00 FF 00 FF 00 | --------------- | --------- |
+0B B541 Naples         00 12 02 FF 00 | Wool      @ 100 | --------- |
+0C B546 Alexandria     00 10 03 0A 00 | Cotton    @ 150 | Gold      |
+0D B54B Trebizond      00 10 04 FF 00 | Cotton    @ 200 | --------- |
+0E B550 Azov           01 FF 00 FF 00 | --------------- | --------- |
+0F B555 London         01 12 02 08 00 | Wool      @ 100 | Cheese    |
+10 B55A Bordeaux       01 06 02 05 00 | Grapes    @ 100 | Olive Oil |
+11 B55F Oslo           01 16 07 FF 00 | Wood      @ 350 | --------- |
+12 B564 Hamburg        01 12 07 09 00 | Wool      @ 350 | Grain     |
+13 B569 Antwerp        01 07 02 13 00 | Sugar     @ 100 | Cloth     |
+14 B56E Santo Domingo  04 0D 01 FF 05 | Coral     @ 100 | --------- |
+15 B573 Jamaica        04 FF 00 FF 05 | --------------- | --------- |
+16 B578 Guatemala      04 09 03 FF 05 | Grain     @ 150 | --------- |
+17 B57D Panama         04 FF 00 06 05 | --------------- | Grapes    |
+18 B582 Veracruz       04 03 04 0B 05 | Pimento   @ 200 | Silver    |
+19 B587 Caracas        04 FF 00 FF 05 | --------------- | --------- |
+1A B58C Pernambuco     04 16 04 0F 06 | Wood      @ 200 | Pearl     |
+1B B591 Argin          02 FF 00 FF 01 | --------------- | --------- |
+1C B596 San Jorge      02 0E 02 FF 01 | Ivory     @ 100 | --------- |
+1D B59B Sofala         03 0A 02 FF 02 | Gold      @ 100 | --------- |
+1E B5A0 Mozambique     03 0A 01 0C 02 | Gold      @  50 | Quartz    |
+1F B5A5 Mombasa        03 0E 02 FF 02 | Ivory     @ 100 | --------- |
+20 B5AA Muscat         05 FF 00 FF 02 | --------------- | --------- |
+21 B5AF Baghdad        05 18 04 0D 02 | Artwork   @ 200 | Coral     |
+22 B5B4 Aden           05 0C 02 FF 02 | Quartz    @ 100 | --------- |
+23 B5B9 Mecca          05 18 03 02 02 | Artwork   @ 150 | Nutmeg    |
+24 B5BE Hormuz         05 03 01 FF 02 | Pimento   @  50 | ----------|
+25 B5C3 Goa            07 13 03 0E 02 | Cloth     @ 150 | Ivory     |
+26 B5C8 Diu            05 FF 00 FF 02 | --------------- | --------- |
+27 B5CD Malacca        07 00 01 FF 03 | Pepper    @  50 | --------- |
+28 B5D2 Ceylon         07 01 01 FF 02 | Cinnamon  @  50 | --------- |
+29 B5D7 Sumatra        07 00 01 FF 03 | Pepper    @  50 | --------- |
+2A B5DC Java           07 00 01 FF 03 | Pepper    @  50 | --------- |
+2B B5E1 Amboina        07 02 01 FF 03 | Nutmeg    @  50 | --------- |
+2C B5E6 Ternate        07 04 01 FF 03 | Cloves    @  50 | --------- |
+2D B5EB Calicut        07 00 01 10 02 | Pepper    @  50 | Cotton    |
+2E B5F0 Cochin         07 FF 00 FF 02 | --------------- | --------- |
+2F B5F5 Nagasaki       06 0B 01 11 04 | Silver    @  50 | Raw Silk  |
+30 B5FA Macao          06 FF 01 FF 04 | --------------- | --------- |
+31 B5FF Zeiton         06 11 03 12 04 | Raw Silk  @ 150 | Wool      |
+---------------------------------------------------------------------
+B604 - B812: Item data
+                       0F 10
+-------------------------------------
+00 B604 Telescope      E8 03 ->  1000
+01 B615 Sextant        20 03 ->   800
+02 B626 Speculum       E0 2E -> 12000
+03 B637 Nymph Amulet   DC 05 ->  1500
+04 B648 Sun Amulet     B8 0B ->  3000
+05 B659 Angel Amulet   4C 1D ->  7500
+06 B66A Shining Amulet E0 2E -> 12000
+07 B67B Dagger         EE 02 ->   750
+
+08 B68C Sword          D0 07 ->  2000
+09 B69D Sabre          AC 0D ->  3500
+0A B6AE Chinese Sword  40 1F ->  8000
+0B B6BF Falcon Icon    B0 04 ->  1200
+0C B6D0 Hawk Icon      C0 12 ->  4800
+0D B6E1 Eagle Icon     80 25 ->  9600
+0E B6F2 Dragon Icon    98 3A -> 15000
+0F B703 Coral Ring     D0 07 ->  2000
+
+10 B714 Ivory Box      A0 0F ->  4000
+11 B725 Candlestick    40 1F ->  8000
+12 B736 Gold Nugget    E0 2E -> 12000
+13 B747 Silver Rosary  20 03 ->   800
+14 B758 Pearl Bracelet 28 0A ->  2600
+15 B769 Coral Bracelet 88 13 ->  5000
+16 B77A Gold Bracelet  58 1B ->  7000
+17 B78B Sapphire       10 27 -> 10000
+
+18 B79C Ruby           E0 2E -> 12000
+19 B7AD Opal           1C 25 ->  9500
+1A B7BE Emerald        C8 32 -> 13000
+1B B7CF Crown          98 3A -> 15000
+1C B7E0 Jewelled Ladle 28 23 ->  9000
+1D B7F1 Ring           D0 07 ->  2000
+1E B802 Silver Comb    40 1F ->  8000
+----------------------------------------------------
+$B825 (Entry size 0x02)
+
+$B864 (Entry size 0x58)
+
+00 B864
+01 02 02 07 00 00 00 00 00 ->        50,    100,   100,      350 
+05 06 13 15 FF FF FF FF FF -> Olive Oil, Grapes, Cloth, Firearms
+
+2A 00 26 00 3C 00 64 00 FF 00 FF 00 FF 00
+FF 00 FF 00 50 00 46 00 64 00 6E 00 69 00
+14 00 1C 00 2D 00 28 00 14 00 E8 03 78 00
+40 01 18 01 2C 01 DC 00 50 00 78 00 41 00
+28 00 8C 00 4B 00 3C 00 69 00 90 01 40 01
+
+01 B8BC
+01 00 05 06 06 00 00 00 00 ->     50,     0,   250,      300,       300
+08 09 13 15 17 FF FF FF FF -> Cheese, Grain, Cloth, Firearms, Porcelain
+
+23 00 0C 00 3E 00 69 00 3C 00 FF 00 FF 00
+FF 00 FF 00 6E 00 50 00 69 00 78 00 6C 00
+37 00 3E 00 31 00 11 00 08 00 E8 03 78 00
+45 01 13 01 5E 01 DC 00 6E 00 82 00 37 00
+28 00 96 00 46 00 3A 00 28 00 90 01 54 01
+
+02 B914
+00 04 00 00 00 00 00 00 00 ->    0,    200
+0A 10 FF FF FF FF FF FF FF -> Gold, Cotton
+
+EE 02 1E 00 FF 00 FF 00 FF 00 FF 00 FF 00
+FF 00 FF 00 34 00 20 00 1E 00 23 00 2A 00
+3C 00 1E 00 32 00 2D 00 23 00 90 01 50 00
+DC 00 22 01 C8 00 AA 00 0F 00 28 00 0C 00
+54 00 2D 00 8C 00 23 00 28 00 1E 00 8C 00
+
+03 B96C
+02 00 00 00 00 00 00 00 00       100,      0,    0
+0C 10 16 FF FF FF FF FF FF -> Quartz, Cotton, Wood
+
+B4 00 19 00 1C 00 FF 00 FF 00 FF 00 FF 00
+FF 00 FF 00 23 00 2B 00 1C 00 1E 00 1D 00
+26 00 1E 00 32 00 28 00 2A 00 2C 01 18 01
+62 00 04 01 C3 00 A0 00 0B 00 28 00 10 00
+59 00 30 00 BE 00 0A 00 23 00 2D 00 78 00
+
+04 B9C4 
+03 00 00 00 00 00 00 00 00     150,      0
+0A 10 FF FF FF FF FF FF FF -> Gold, Cotton
+
+90 01 16 00 FF 00 FF 00 FF 00 FF 00 FF 00
+FF 00 FF 00 40 00 28 00 20 00 19 00 1E 00
+3A 00 19 00 30 00 32 00 28 00 FA 00 64 00
+E6 00 0E 01 DC 00 AF 00 0A 00 32 00 15 00
+50 00 32 00 AA 00 12 00 2D 00 2C 01 73 00
+
+05 BA1C
+00 01 02 02 06 00 00 00 00            0,    50,    100,  100,    300
+05 09 10 12 19 FF FF FF FF -> Olive Oil, Grain, Cotton, Wool, Carpet
+
+1E 00 12 00 14 00 14 00 46 00 FF 00 FF 00
+FF 00 FF 00 2A 00 1E 00 1C 00 0F 00 1E 00
+12 00 14 00 32 00 3A 00 09 00 7A 03 7C 01
+2C 01 5E 01 22 01 E6 00 0A 00 50 00 0E 00
+55 00 32 00 E6 00 3C 00 28 00 96 00 1E 00
+
+06 BA74
+03 06 00 06 00 00 00 00 00      150,  300,         0,     300
+0F 14 17 18 FF FF FF FF FF -> Pearl, Silk, Porcelain, Artwork
+
+AA 00 2D 00 19 00 8C 00 FF 00 FF 00 FF 00
+FF 00 FF 00 14 00 14 00 14 00 1E 00 14 00
+02 00 28 00 2A 00 32 00 05 00 84 03 C8 00
+40 01 78 00 8C 00 6E 00 2A 00 5A 00 0A 00
+5C 00 19 00 F0 00 0F 00 0A 00 78 00 32 00
+
+07 BACC
+00 02 00 00 00 00 00 00 00 ->     0,    100
+09 10 FF FF FF FF FF FF FF -> Grain, Cotton
+
+0A 00 0F 00 FF 00 FF 00 FF 00 FF 00 FF 00
+FF 00 FF 00 02 00 03 00 03 00 04 00 04 00
+0A 00 0F 00 2D 00 3E 00 06 00 1A 04 6E 00
+4A 01 69 00 78 00 78 00 08 00 55 00 10 00
+10 00 46 00 CD 00 0A 00 23 00 A0 00 4B 00
+
+----------------------------------------------------
+$BB24 - String pointer table
+00 BB2C Portugal
+01 BB35 Spain
+02 BB3B Turkey
+03 BB42 Pirate
+----------------------------------------------------
+$BB49 - String pointer table
+00	BB7D	Pepper
+01	BB84	Cinnamon
+02	BB8D	Nutmeg
+03	BB94	Pimento
+04	BB9C	Cloves
+05	BBA3	Olive Oil
+06	BBAD	Grapes
+07	BBB4	Sugar
+08	BBBA	Cheese
+09	BBC1	Grain
+0A	BBC7	Gold
+0B	BBCC	Silver
+0C	BBD3	Quartz
+0D	BBDA	Coral
+0E	BBE0	Ivory
+0F	BBE6	Pearl
+10	BBEC	Cotton
+11	BBF3	Raw Silk
+12	BBFC	Wool
+13	BC01	Cloth
+14	BC07	Silk
+15	BC0C	Firearms
+16	BC15	Wood
+17	BC1A	Porcelain
+18	BC24	Artwork
+19	BC2C	Carpet
+----------------------------------------------------
+$BC33 - String pointer table
+00 BC3B None
+01 BC40 Saker
+02 BC46 Culverin
+03 BC4F Cannon
+----------------------------------------------------
+$BC56 - String pointer table
+00 BC6A (blank)
+01 BC6B Page
+02 BC70 Squire
+03 BC77 Knight
+04 BC7E Baronet
+05 BC86 Baron
+06 BC8C Viscount
+07 BC95 Count
+08 BC9B Marquis
+09 BCA3 Duke

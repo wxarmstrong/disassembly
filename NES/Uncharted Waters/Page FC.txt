@@ -1,0 +1,2 @@
+Page FC
+ROM: 78010 - 7A00F
