@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" href="../css/font-awesome.all.min.css">
+		<link rel="stylesheet" href="../css/main.css">
+		<link rel="stylesheet" href="study.css">
+		<title>Bookworm Adventures</title>
+		<script>
+			var title = "BA2 Study Tool";
+		</script>
+	</head>
+	<body>
+	
+		<nav class="navbar navbar-expand bg-dark navbar-dark">
+			<a class="navbar-brand" href="../">
+				Dugongue.com
+			</a>
+			<ul class="navbar-nav" id="dropList"></ul>
+		</nav>
+		
+		<div id="mainBlock">
+			<nav area-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item active" aria-current="page">
+						<a href="http://www.dugongue.com">Home</a>
+						 / 
+						<a href="index.html">Bookworm Adventures</a>
+						 / 
+						BA2 Study Tool
+					</li>
+				</ol>
+			</nav>
+			<br>
+		</div>
+		
+   <div class="container">
+		<div class="row">
+			<div class="col-12 col-md-8">
+				<table id="gameBoard" class="fixed">
+					<col width="125px"/>
+					<col width="125px"/>
+					<col width="125px"/>
+					<col width="125px"/>
+					<tr>
+						<td id="1">_</td>
+						<td id="2">_</td> 
+						<td id="3">_</td>
+						<td id="4">_</td>
+					</tr>
+					<tr>
+						<td id="5">_</td>
+						<td id="6">_</td> 
+						<td id="7">_</td>
+						<td id="8">_</td>
+					</tr>
+					<tr>
+						<td id="9">_</td>
+						<td id="10">_</td> 
+						<td id="11">_</td>
+						<td id="12">_</td>
+					</tr>
+					<tr>
+						<td id="13">_</td>
+						<td id="14">_</td> 
+						<td id="15">_</td>
+						<td id="16">_</td>
+					</tr>
+				</table>
+				<br>
+				<input value="" id="wordEntry" autocomplete="off">
+				<button id="entryButton" onclick="javascript: submitWord()">Submit</button>
+				<button id="scrambleButton" onclick="javascript: scramble()">Scramble</button>
+				<button id="customButton" onclick="javascript: customBoard()">Custom</button>
+				<p id="alert"></p>
+				<form action="/action_page.php">
+					<h5>Treasure:</h5>
+					<input type="radio" id="t0" name="xyz" value="t0" checked>
+					<label for="t0">None</label>
+					<input type="radio" id="t1" name="xyz" value="t1">
+					<label for="t1">Almanac</label>
+					<input type="radio" id="t2" name="xyz" value="t2">
+					<label for="t1">Zodiac</label>
+				</form>
+				<br>
+			</div>
+			<div class="col-12 col-md-4">
+				<div id="topDiv">
+					<h5>Words missed last round:</h5>
+					<table id="roundWords">
+						<tr>
+						</tr>
+					</table>
+				</div>
+				<br>
+				<div id="bottomDiv">
+					<h5>Most missed words:</h5>
+					<table id="totalWords">
+						<tr>
+						</tr>
+					</table>
+				</div>
+				<br>
+			</div>
+			
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">Word Trainer</h5>
+					<h6 class="card-subtitle mb-2 text-muted">for Bookworm Adventures, Vol. 2</h6>
+					<p class="card-text">Enter your guess for the best word and click <b>Submit</b> or press <b>Enter</b>. A list will then show which higher-scoring words were on that board.</p>
+					<hr>
+					<h5 class="card-title">Treasure notes:</h5>
+					<ul>
+						<li><b>Mac's Almanac</b> - Damage from <b>adjectives</b> is multiplied by <b>1.625</b> (rounded down to the nearest quarter-heart).</li>
+						<li><b>Master's Zodiac</b> - Damage from <b>verbs</b> is multiplied by <b>1.625</b> (rounded down to the nearest quarter-heart).</li>
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+		
+	</div>
+	
+	<br>
+    <script src="ba2-wordlist.js"></script>
+	<script src="adjectives.js"></script>
+	<script src="verbs.js"></script>
+	<script src="ba2-study.js"></script>
+	<script src="http://www.dugongue.com/js/font-awesome.all.min.js"></script>
+	<!-- jQuery necessary for page generation -->
+	<script src="http://www.dugongue.com/js/jquery-3.4.1.min.js"></script>
+	<!-- Required for navbar -->
+	<script src="http://www.dugongue.com/js/bootstrap.min.js"></script>
+	<!-- Generate elements from game list -->
+	<script src="http://www.dugongue.com/js/games.js"></script>
+	<!-- Generate elements from game list -->
+	<script src="http://www.dugongue.com/js/navbar.js"></script>
+
+		
+
+	</body>
+
+	
+
+</html>
