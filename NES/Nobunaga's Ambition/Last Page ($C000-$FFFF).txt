@@ -1,0 +1,3041 @@
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+C000 78 D8 A2 FD 9A A9 FF 8D FF 9F A9 0E 8D FF 9F 4A
+C010 8D FF 9F 4A 8D FF 9F 4A 8D FF 9F 4A 8D FF 9F A9
+C020 00 8D FF BF 8D FF BF 8D FF BF 8D FF BF 8D FF BF
+C030 8D F0 FF 8D F0 FF 8D F0 FF 8D F0 FF 8D F0 FF 8D
+C040 73 00 A9 00 8D 80 00 8D B0 00 A9 10 20 A6 C6 20
+C050 37 C5 20 37 C5 A9 1E 20 70 C5 A2 00 A9 3E 9D 90
+C060 00 9D 00 07 E8 E0 20 D0 F5 A9 FF 8D 74 00 A2 00
+C070 A9 F8 9D 00 06 9D 03 06 E8 E8 E8 E8 D0 F4 A9 FF
+C080 85 02 A9 05 85 03 A9 20 85 1C A9 00 85 1D A9 30
+C090 85 1E A9 00 85 1F A9 1F 8D 15 40 A9 C0 8D 17 40
+C0A0 A2 00 A9 00 9D 20 07 E8 E0 05 D0 F8 A2 00 A9 00
+C0B0 9D 34 07 8A 18 69 09 AA E0 2D D0 F2 A9 04 8D 83
+C0C0 00 8D 85 00 A9 D2 8D 84 00 8D 86 00 A9 00 8D 89
+C0D0 00 20 8A C6 20 57 C7 4C 00 80 48 8A 48 98 48 AD
+C0E0 02 20 20 4F C5 A9 00 8D 03 20 A9 06 8D 14 40 AD
+C0F0 B0 00 D0 37 A9 00 20 28 C6 A9 01 20 28 C6 20 D4
+C100 C6 20 A5 C7 AD 89 00 D0 22 18 AD 86 00 69 02 8D
+C110 86 00 AD 85 00 69 00 8D 85 00 18 AD 84 00 69 02
+C120 8D 84 00 AD 83 00 69 00 8D 83 00 A9 00 8D 81 00
+C130 20 8A C6 68 A8 68 AA 68 40
+----------------------------------------------------
+Function $C139 -> Interrupt
+
+ 0F:C139:48        PHA
+ 0F:C13A:8A        TXA
+ 0F:C13B:48        PHA
+ 0F:C13C:98        TYA
+ 0F:C13D:48        PHA
+ 0F:C13E:BA        TSX
+ 0F:C13F:BD 04 01  LDA $0104,X
+ 0F:C142:29 10     AND #$10
+ 0F:C144:F0 26     BEQ $C16C
+ 
+ if
+	 0F:C146:A9 00     LDA #$00
+	 0F:C148:8D 66 00  STA $0066
+	 0F:C14B:8D 67 00  STA $0067
+	 0F:C14E:A9 C1     LDA #$C1
+	 0F:C150:48        PHA
+	 0F:C151:A9 6C     LDA #$6C
+	 0F:C153:48        PHA
+	 0F:C154:AE 50 00  LDX $0050
+	 0F:C157:A0 03     LDY #$03
+	 0F:C159:20 AD C6  JSR $C6AD
+	 0F:C15C:18        CLC
+	 0F:C15D:98        TYA
+	 0F:C15E:69 73     ADC #$73
+	 0F:C160:8D 68 00  STA $0068
+	 0F:C163:8A        TXA
+	 0F:C164:69 C1     ADC #$C1
+	 0F:C166:8D 69 00  STA $0069
+	 0F:C169:6C 68 00  JMP ($0068)
+ 
+ 0F:C16C:EA        NOP
+ 0F:C16D:68        PLA
+ 0F:C16E:A8        TAY
+ 0F:C16F:68        PLA
+ 0F:C170:AA        TAX
+ 0F:C171:68        PLA
+ 0F:C172:40        RTI
+----------------------------------------------------
+$C173 -> Sysops
+
+ 0F:C173:4C 00 C0  JMP $C000 -> Sysop 00
+ 0F:C176:4C 64 C2  JMP $C264 -> Sysop 01 (Graphic?)
+ 0F:C179:4C 4B C3  JMP $C34B -> Sysop 02 (NOP)
+ 0F:C17C:4C CB C2  JMP $C2CB -> Sysop 03
+ 0F:C17F:4C 4C C3  JMP $C34C -> Sysop 04
+ 0F:C182:4C 12 C3  JMP $C312 -> Sysop 05
+ 0F:C185:4C 9E C3  JMP $C39E -> Sysop 06
+ 0F:C188:4C 39 C3  JMP $C339 -> Sysop 07
+ 0F:C18B:4C F0 C2  JMP $C2F0 -> Sysop 08
+ 0F:C18E:4C AD C3  JMP $C3AD -> Sysop 09 
+ 0F:C191:4C CF C3  JMP $C3CF -> Sysop 0A (Audio)
+ 0F:C194:4C 27 C4  JMP $C427 -> Sysop 0B (NOP)
+ 0F:C197:4C 37 C4  JMP $C437 -> Sysop 0C
+ 0F:C19A:4C E0 C4  JMP $C4E0 -> Sysop 0D
+ 0F:C19D:4C 35 C5  JMP $C535 -> Sysop 0E (NOP)
+ 0F:C1A0:4C 36 C5  JMP $C536 -> Sysop 0F (NOP)
+ 0F:C1A3:4C 2C C2  JMP $C22C -> Sysop 10
+ 0F:C1A6:4C C3 C1  JMP $C1C3 -> Sysop 11 (Return RNG value)
+ 0F:C1A9:4C 6C C3  JMP $C36C -> Sysop 12
+ 0F:C1AC:4C B8 C1  JMP $C1B8 -> Sysop 13 (Wait 1 frame)
+ 0F:C1AF:4C 28 C4  JMP $C428 -> Sysop 14
+ 0F:C1B2:4C 0C C6  JMP $C60C -> Sysop 15
+ 0F:C1B5:4C AA C5  JMP $C5AA -> Sysop 16
+----------------------------------------------------
+Function $C1B8 -> Sysop 13 (Wait 1 frame)
+ 0F:C1B8:A9 01     LDA #$01
+ 0F:C1BA:8D 81 00  STA $0081 = #$00
+ 0F:C1BD:AD 81 00  LDA $0081 = #$00
+ 0F:C1C0:D0 FB     BNE $C1BD
+ 0F:C1C2:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C1C3 -> Sysop 11
+
+ 0F:C1C3:AD 88 00  LDA $0088 = #$00
+ 0F:C1C6:09 01     ORA #$01
+ 0F:C1C8:8D 88 00  STA $0088 = #$00
+ 0F:C1CB:A0 05     LDY #$05
+ 0F:C1CD:A9 00     LDA #$00
+ 0F:C1CF:99 8A 00  STA $008A,Y
+ 0F:C1D2:88        DEY
+ 0F:C1D3:10 FA     BPL $C1CF
+ 0F:C1D5:A0 05     LDY #$05
+ 0F:C1D7:B9 26 C2  LDA $C226,Y
+ 0F:C1DA:8D 75 00  STA $0075
+ 0F:C1DD:A9 08     LDA #$08
+ 0F:C1DF:8D 6C 00  STA $006C
+ 0F:C1E2:A2 05     LDX #$05
+ 0F:C1E4:18        CLC
+ 0F:C1E5:3E 8A 00  ROL $008A,X
+ 0F:C1E8:CA        DEX
+ 0F:C1E9:10 FA     BPL $C1E5
+ 0F:C1EB:0E 75 00  ASL $0075
+ 0F:C1EE:90 0F     BCC $C1FF
+ 0F:C1F0:A2 05     LDX #$05
+ 0F:C1F2:18        CLC
+ 0F:C1F3:BD 83 00  LDA $0083,X
+ 0F:C1F6:7D 8A 00  ADC $008A,X
+ 0F:C1F9:9D 8A 00  STA $008A,X
+ 0F:C1FC:CA        DEX
+ 0F:C1FD:10 F4     BPL $C1F3
+ 0F:C1FF:CE 6C 00  DEC $006C
+ 0F:C202:D0 DE     BNE $C1E2
+ 0F:C204:88        DEY
+ 0F:C205:10 D0     BPL $C1D7
+ 0F:C207:38        SEC
+ 0F:C208:A2 05     LDX #$05
+ 0F:C20A:BD 8A 00  LDA $008A,X
+ 0F:C20D:49 FF     EOR #$FF
+ 0F:C20F:69 00     ADC #$00
+ 0F:C211:9D 83 00  STA $0083,X
+ 0F:C214:CA        DEX
+ 0F:C215:10 F3     BPL $C20A
+ 0F:C217:AD 83 00  LDA $0083
+ 0F:C21A:29 7F     AND #$7F
+ 0F:C21C:8D 67 00  STA $0067
+ 0F:C21F:AD 84 00  LDA $0084
+ 0F:C222:8D 66 00  STA $0066
+ 0F:C225:60        RTS -----------------------------------------
+----------------------------------------------------
+Table $C226 : Value used for advancing RNG
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+C220                   C5 87 01 0E 90 E0
+----------------------------------------------------
+Function $C22C -> Sysop 0x10
+
+ 0F:C22C:AD 73 00  LDA $0073 = #$00
+ 0F:C22F:48        PHA
+ 0F:C230:AD 52 00  LDA $0052 = #$00
+ 0F:C233:20 77 C5  JSR $C577
+ 0F:C236:A2 00     LDX #$00
+ 0F:C238:AD 58 00  LDA $0058 = #$E7
+ 0F:C23B:D0 08     BNE $C245
+ 0F:C23D:AD 59 00  LDA $0059 = #$05
+ 0F:C240:F0 1D     BEQ $C25F
+ 0F:C242:CE 59 00  DEC $0059 = #$05
+ 0F:C245:A1 54     LDA ($54,X) @ $FFFF = #$C1
+ 0F:C247:81 56     STA ($56,X) @ $00FF = #$FF
+ 0F:C249:EE 54 00  INC $0054 = #$20
+ 0F:C24C:D0 03     BNE $C251
+ 0F:C24E:EE 55 00  INC $0055 = #$00
+ 0F:C251:EE 56 00  INC $0056 = #$6D
+ 0F:C254:D0 03     BNE $C259
+ 0F:C256:EE 57 00  INC $0057 = #$EB
+ 0F:C259:CE 58 00  DEC $0058 = #$E7
+ 0F:C25C:4C 38 C2  JMP $C238
+ 0F:C25F:68        PLA
+ 0F:C260:20 77 C5  JSR $C577
+ 0F:C263:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C264 -> Sysop 0x01
+
+ 0F:C264:AD 73 00  LDA $0073 = #$00
+ 0F:C267:48        PHA
+ 0F:C268:AD 52 00  LDA $0052 = #$00
+ 0F:C26B:20 77 C5  JSR $C577
+ 0F:C26E:AD 57 00  LDA $0057 = #$EB
+ 0F:C271:8D 6B 00  STA $006B = #$24
+ 0F:C274:AD 56 00  LDA $0056 = #$6D
+ 0F:C277:8D 6A 00  STA $006A = #$00
+ 0F:C27A:AD 55 00  LDA $0055 = #$00
+ 0F:C27D:8D 69 00  STA $0069 = #$C1
+ 0F:C280:AD 54 00  LDA $0054 = #$20
+ 0F:C283:8D 68 00  STA $0068 = #$85
+ 0F:C286:A0 00     LDY #$00
+ 0F:C288:AD 58 00  LDA $0058 = #$E7
+ 0F:C28B:8D 6C 00  STA $006C = #$00
+ 0F:C28E:A2 10     LDX #$10
+ 0F:C290:20 93 C6  JSR $C693
+ 0F:C293:AD 6B 00  LDA $006B
+ 0F:C296:8D 06 20  STA PPU_ADDRESS
+ 0F:C299:AD 6A 00  LDA $006A
+ 0F:C29C:8D 06 20  STA PPU_ADDRESS = #$00
+ 0F:C29F:B1 68     LDA ($68),Y @ $C185 = #$4C
+ 0F:C2A1:8D 07 20  STA PPU_DATA = #$00
+ 0F:C2A4:C8        INY
+ 0F:C2A5:D0 03     BNE $C2AA
+ 0F:C2A7:EE 69 00  INC $0069 = #$C1
+ 0F:C2AA:CA        DEX
+ 0F:C2AB:D0 F2     BNE $C29F
+ 0F:C2AD:18        CLC
+ 0F:C2AE:AD 6A 00  LDA $006A = #$00
+ 0F:C2B1:69 10     ADC #$10
+ 0F:C2B3:8D 6A 00  STA $006A = #$00
+ 0F:C2B6:AD 6B 00  LDA $006B = #$24
+ 0F:C2B9:69 00     ADC #$00
+ 0F:C2BB:8D 6B 00  STA $006B = #$24
+ 0F:C2BE:20 58 C5  JSR $C558
+ 0F:C2C1:CE 6C 00  DEC $006C = #$00
+ 0F:C2C4:D0 C8     BNE $C28E
+ 0F:C2C6:68        PLA
+ 0F:C2C7:20 77 C5  JSR $C577
+ 0F:C2CA:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C2CB -> Sysop 03
+
+ 0F:C2CB:20 4F C5  JSR $C54F
+ 0F:C2CE:AD 52 00  LDA $0052 = #$00
+ 0F:C2D1:0A        ASL
+ 0F:C2D2:0A        ASL
+ 0F:C2D3:AA        TAX
+ 0F:C2D4:AD 56 00  LDA $0056 = #$6D
+ 0F:C2D7:9D 00 06  STA $0600,X @ $0661 = #$00
+ 0F:C2DA:AD 5A 00  LDA $005A = #$EB
+ 0F:C2DD:9D 01 06  STA $0601,X @ $0662 = #$00
+ 0F:C2E0:AD 58 00  LDA $0058 = #$E7
+ 0F:C2E3:9D 02 06  STA $0602,X @ $0663 = #$F8
+ 0F:C2E6:AD 54 00  LDA $0054 = #$20
+ 0F:C2E9:9D 03 06  STA $0603,X @ $0664 = #$F8
+ 0F:C2EC:20 8A C6  JSR $C68A
+ 0F:C2EF:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C2CB -> Sysop 08
+
+ 0F:C2F0:20 93 C6  JSR $C693 
+ 
+ 0F:C2F3:AD 52 00  LDA $0052
+ 0F:C2F6:0A        ASL
+ 0F:C2F7:0A        ASL
+ 0F:C2F8:18        CLC
+ 0F:C2F9:69 23     ADC #$23
+ 0F:C2FB:8D 06 20  STA PPU_ADDRESS
+ 0F:C2FE:A9 C0     LDA #$C0
+ 0F:C300:8D 06 20  STA PPU_ADDRESS
+ 0F:C303:AD 54 00  LDA $0054
+ 0F:C306:A2 40     LDX #$40
+ 
+ do
+	0F:C308:8D 07 20  STA PPU_DATA
+	0F:C30B:CA        DEX
+ while
+	0F:C30C:D0 FA     BNE $C308
+ 
+ 0F:C30E:20 58 C5  JSR $C558
+ 0F:C311:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C312 - Sysop 05
+Args:
+$52 = ?
+$54 = ?
+
+ 0F:C312:20 93 C6  JSR $C693
+ 
+ 0F:C315:AD 52 00  LDA $0052
+ 0F:C318:0A        ASL
+ 0F:C319:0A        ASL
+ 0F:C31A:18        CLC
+ 0F:C31B:69 20     ADC #$20
+ 0F:C31D:8D 06 20  STA PPU_ADDRESS
+ 0F:C320:A9 00     LDA #$00
+ 0F:C322:8D 06 20  STA PPU_ADDRESS
+ 0F:C325:A0 1E     LDY #$1E
+ 0F:C327:AD 54 00  LDA $0054
+ 
+ do
+	 0F:C32A:A2 20     LDX #$20
+	 
+	 do
+	 
+		 0F:C32C:8D 07 20  STA PPU_DATA
+		 0F:C32F:CA        DEX
+		 
+	 while
+	 
+		 0F:C330:D0 FA     BNE $C32C
+		 
+	 0F:C332:88        DEY 
+ while
+	 0F:C333:D0 F5     BNE $C32A
+ 
+ 0F:C335:20 58 C5  JSR $C558
+ 0F:C338:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C339 -> Sysop 0x07
+
+ 0F:C339:AD 73 00  LDA $0073 = #$00
+ 0F:C33C:48        PHA
+ 0F:C33D:AD 52 00  LDA $0052 = #$00
+ 0F:C340:20 77 C5  JSR $C577
+ 0F:C343:20 00 80  JSR $8000
+ 0F:C346:68        PLA
+ 0F:C347:20 77 C5  JSR $C577
+ 0F:C34A:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C34B -> Sysop 02 (NOP)
+
+ 0F:C34B:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C34C -> Sysop 04
+
+ 0F:C34C:AD 80 00  LDA $0080 = #$00
+ 0F:C34F:F0 0C     BEQ $C35D
+ 0F:C351:AE 52 00  LDX $0052 = #$00
+ 0F:C354:AD 54 00  LDA $0054 = #$20
+ 0F:C357:9D 90 00  STA $0090,X @ $00F1 = #$00
+ 0F:C35A:4C 6B C3  JMP $C36B
+ 0F:C35D:AE 52 00  LDX $0052 = #$00
+ 0F:C360:AD 54 00  LDA $0054 = #$20
+ 0F:C363:9D 00 07  STA $0700,X @ $0761 = #$00
+ 0F:C366:A9 FF     LDA #$FF
+ 0F:C368:8D 74 00  STA $0074 = #$00
+ 0F:C36B:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C36C -> Sysop 12
+
+ while
+	 0F:C36C:AD 74 00  LDA $0074
+	 0F:C36F:D0 FB     BNE $C36C
+ 
+ 0F:C371:AD 52 00  LDA $0052
+ 0F:C374:4D 80 00  EOR $0080
+ 0F:C377:F0 24     BEQ $C39D
+ 
+ if
+	 0F:C379:A2 00     LDX #$00
+	 
+	 for (x = 0, x < 20, x++)
+		 0F:C37B:BD 00 07  LDA $0700,X
+		 0F:C37E:BC 90 00  LDY $0090,X
+		 0F:C381:9D 90 00  STA $0090,X
+		 0F:C384:98        TYA
+		 0F:C385:9D 00 07  STA $0700,X
+		 0F:C388:E8        INX
+		 0F:C389:E0 20     CPX #$20
+		 0F:C38B:D0 EE     BNE $C37B
+	 
+	 0F:C38D:A9 FF     LDA #$FF
+	 0F:C38F:8D 74 00  STA $0074
+	 
+	 while
+		 0F:C392:AD 74 00  LDA $0074
+		 0F:C395:D0 FB     BNE $C392
+		 
+	 0F:C397:AD 52 00  LDA $0052
+	 0F:C39A:8D 80 00  STA $0080
+	 
+ 0F:C39D:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C39E -> Sysop 06
+
+ 0F:C39E:AE 52 00  LDX $0052
+ 0F:C3A1:BD 6E 00  LDA $006E,X
+ 0F:C3A4:8D 66 00  STA $0066
+ 0F:C3A7:F0 03     BEQ $C3AC
+ 0F:C3A9:8D 89 00  STA $0089
+ 0F:C3AC:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C3AD -> Sysop 09
+
+ 0F:C3AD:20 4F C5  JSR $C54F
+ 0F:C3B0:AD 52 00  LDA $0052 = #$00
+ 0F:C3B3:0A        ASL
+ 0F:C3B4:18        CLC
+ 0F:C3B5:6D 52 00  ADC $0052 = #$00
+ 0F:C3B8:AA        TAX
+ 0F:C3B9:AD 56 00  LDA $0056 = #$6D
+ 0F:C3BC:9D 26 07  STA $0726,X @ $0787 = #$FF
+ 0F:C3BF:AD 57 00  LDA $0057 = #$EB
+ 0F:C3C2:9D 27 07  STA $0727,X @ $0788 = #$00
+ 0F:C3C5:AD 54 00  LDA $0054 = #$20
+ 0F:C3C8:9D 25 07  STA $0725,X @ $0786 = #$FF
+ 0F:C3CB:20 8A C6  JSR $C68A
+ 0F:C3CE:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C3CF -> Sysop 0A (audio)
+
+ 0F:C3CF:AE 52 00  LDX $0052 = #$00
+ 0F:C3D2:AD 54 00  LDA $0054 = #$20
+ 0F:C3D5:F0 22     BEQ $C3F9
+ 0F:C3D7:C9 02     CMP #$02
+ 0F:C3D9:F0 15     BEQ $C3F0
+ 0F:C3DB:20 4F C5  JSR $C54F
+ 0F:C3DE:A9 01     LDA #$01
+ 0F:C3E0:9D 20 07  STA $0720,X @ $0781 = #$00
+ 0F:C3E3:A0 09     LDY #$09
+ 0F:C3E5:20 AD C6  JSR $C6AD
+ 0F:C3E8:A9 00     LDA #$00
+ 0F:C3EA:99 34 07  STA $0734,Y @ $0734 = #$00
+ 0F:C3ED:4C 23 C4  JMP $C423
+ 0F:C3F0:BD 20 07  LDA $0720,X @ $0781 = #$00
+ 0F:C3F3:8D 66 00  STA $0066 = #$00
+ 0F:C3F6:4C 26 C4  JMP $C426
+ 0F:C3F9:20 4F C5  JSR $C54F
+ 0F:C3FC:A2 00     LDX #$00
+ 0F:C3FE:A9 00     LDA #$00
+ 0F:C400:9D 20 07  STA $0720,X @ $0781 = #$00
+ 0F:C403:E8        INX
+ 0F:C404:E0 05     CPX #$05
+ 0F:C406:D0 F8     BNE $C400
+ 0F:C408:A2 00     LDX #$00
+ 0F:C40A:A9 00     LDA #$00
+ 0F:C40C:9D 34 07  STA $0734,X @ $0795 = #$FF
+ 0F:C40F:8A        TXA
+ 0F:C410:18        CLC
+ 0F:C411:69 09     ADC #$09
+ 0F:C413:AA        TAX
+ 0F:C414:E0 2D     CPX #$2D
+ 0F:C416:D0 F2     BNE $C40A
+ 0F:C418:A9 00     LDA #$00
+ 0F:C41A:8D 00 40  STA SQ1_VOL = #$0F
+ 0F:C41D:8D 04 40  STA SQ2_VOL = #$0F
+ 0F:C420:8D 08 40  STA TRI_LINEAR = #$17
+ 0F:C423:20 8A C6  JSR $C68A
+ 0F:C426:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C427 -> Sysop 0B (NOP)
+
+ 0F:C427:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C428 -> Sysop 14
+
+ 0F:C428:AD 73 00  LDA $0073 = #$00
+ 0F:C42B:48        PHA
+ 0F:C42C:AD 5E 00  LDA $005E = #$89
+ 0F:C42F:20 77 C5  JSR $C577
+ 0F:C432:A9 01     LDA #$01
+ 0F:C434:4C 39 C4  JMP $C439
+ 0F:C437:A9 00     LDA #$00
+ 0F:C439:8D 82 00  STA $0082 = #$01
+ 0F:C43C:AC 56 00  LDY $0056 = #$6D
+ 0F:C43F:A2 20     LDX #$20
+ 0F:C441:20 AD C6  JSR $C6AD
+ 0F:C444:98        TYA
+ 0F:C445:18        CLC
+ 0F:C446:6D 54 00  ADC $0054 = #$20
+ 0F:C449:A8        TAY
+ 0F:C44A:8A        TXA
+ 0F:C44B:69 00     ADC #$00
+ 0F:C44D:8D 68 00  STA $0068 = #$85
+ 0F:C450:AD 52 00  LDA $0052 = #$00
+ 0F:C453:0A        ASL
+ 0F:C454:0A        ASL
+ 0F:C455:18        CLC
+ 0F:C456:69 20     ADC #$20
+ 0F:C458:6D 68 00  ADC $0068 = #$85
+ 0F:C45B:8D 68 00  STA $0068 = #$85
+ 0F:C45E:8C 69 00  STY $0069 = #$C1
+ 0F:C461:EE 5A 00  INC $005A = #$EB
+ 0F:C464:AD 5A 00  LDA $005A = #$EB
+ 0F:C467:38        SEC
+ 0F:C468:ED 56 00  SBC $0056 = #$6D
+ 0F:C46B:8D 6C 00  STA $006C = #$00
+ 0F:C46E:EE 58 00  INC $0058 = #$E7
+ 0F:C471:AD 58 00  LDA $0058 = #$E7
+ 0F:C474:38        SEC
+ 0F:C475:ED 54 00  SBC $0054 = #$20
+ 0F:C478:8D 75 00  STA $0075 = #$12
+ 0F:C47B:A2 00     LDX #$00
+ 0F:C47D:20 93 C6  JSR $C693
+ 0F:C480:AD 68 00  LDA $0068 = #$85
+ 0F:C483:8D 06 20  STA PPU_ADDRESS = #$00
+ 0F:C486:AD 69 00  LDA $0069 = #$C1
+ 0F:C489:8D 06 20  STA PPU_ADDRESS = #$00
+ 0F:C48C:AD 75 00  LDA $0075 = #$12
+ 0F:C48F:8D 6D 00  STA $006D = #$00
+ 0F:C492:AD 5C 00  LDA $005C = #$B4
+ 0F:C495:AD 82 00  LDA $0082 = #$01
+ 0F:C498:F0 18     BEQ $C4B2
+ 0F:C49A:A1 5C     LDA ($5C,X) @ $FFFF = #$C1
+ 0F:C49C:48        PHA
+ 0F:C49D:18        CLC
+ 0F:C49E:AD 5C 00  LDA $005C = #$B4
+ 0F:C4A1:69 01     ADC #$01
+ 0F:C4A3:8D 5C 00  STA $005C = #$B4
+ 0F:C4A6:AD 5D 00  LDA $005D = #$89
+ 0F:C4A9:69 00     ADC #$00
+ 0F:C4AB:8D 5D 00  STA $005D = #$89
+ 0F:C4AE:68        PLA
+ 0F:C4AF:4C B5 C4  JMP $C4B5
+ 0F:C4B2:AD 5C 00  LDA $005C = #$B4
+ 0F:C4B5:8D 07 20  STA PPU_DATA = #$00
+ 0F:C4B8:CE 6D 00  DEC $006D = #$00
+ 0F:C4BB:D0 D8     BNE $C495
+ 0F:C4BD:AD 69 00  LDA $0069 = #$C1
+ 0F:C4C0:18        CLC
+ 0F:C4C1:69 20     ADC #$20
+ 0F:C4C3:8D 69 00  STA $0069 = #$C1
+ 0F:C4C6:AD 68 00  LDA $0068 = #$85
+ 0F:C4C9:69 00     ADC #$00
+ 0F:C4CB:8D 68 00  STA $0068 = #$85
+ 0F:C4CE:20 58 C5  JSR $C558
+ 0F:C4D1:CE 6C 00  DEC $006C = #$00
+ 0F:C4D4:D0 A7     BNE $C47D
+ 0F:C4D6:AD 82 00  LDA $0082 = #$01
+ 0F:C4D9:F0 04     BEQ $C4DF
+ 0F:C4DB:68        PLA
+ 0F:C4DC:20 77 C5  JSR $C577
+ 0F:C4DF:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C4E0 -> Sysop 0D
+
+ 0F:C4E0:EE 58 00  INC $0058
+ 0F:C4E3:AD 58 00  LDA $0058 = #$E7
+ 0F:C4E6:38        SEC
+ 0F:C4E7:ED 54 00  SBC $0054 = #$20
+ 0F:C4EA:8D 77 00  STA $0077 = #$FF
+ 0F:C4ED:8D 6C 00  STA $006C = #$00
+ 0F:C4F0:EE 5A 00  INC $005A = #$EB
+ 0F:C4F3:AD 5A 00  LDA $005A = #$EB
+ 0F:C4F6:38        SEC
+ 0F:C4F7:ED 56 00  SBC $0056 = #$6D
+ 0F:C4FA:8D 6D 00  STA $006D = #$00
+ 0F:C4FD:AD 54 00  LDA $0054 = #$20
+ 0F:C500:8D 78 00  STA $0078 = #$00
+ 0F:C503:AD 77 00  LDA $0077 = #$FF
+ 0F:C506:8D 6C 00  STA $006C = #$00
+ 0F:C509:AD 78 00  LDA $0078 = #$00
+ 0F:C50C:8D 54 00  STA $0054 = #$20
+ 0F:C50F:AD 5C 00  LDA $005C = #$B4
+ 0F:C512:8D 58 00  STA $0058 = #$E7
+ 
+ 0F:C515:20 93 C6  JSR $C693
+ 0F:C518:20 40 C6  JSR $C640
+ 0F:C51B:20 73 C6  JSR $C673
+ 0F:C51E:20 11 C7  JSR $C711
+ 0F:C521:20 58 C5  JSR $C558
+ 0F:C524:EE 54 00  INC $0054 = #$20
+ 0F:C527:CE 6C 00  DEC $006C = #$00
+ 0F:C52A:D0 E3     BNE $C50F
+ 0F:C52C:EE 56 00  INC $0056 = #$6D
+ 0F:C52F:CE 6D 00  DEC $006D = #$00
+ 0F:C532:D0 CF     BNE $C503
+ 0F:C534:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C535 -> Sysop 0E (NOP)
+
+ 0F:C535:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C536 -> Sysop 0F (NOP)
+
+ 0F:C536:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C537
+
+ 0F:C537:AD 80 00  LDA $0080 = #$00
+ 0F:C53A:D0 12     BNE $C54E
+ 0F:C53C:48        PHA
+ 0F:C53D:8A        TXA
+ 0F:C53E:48        PHA
+ 0F:C53F:98        TYA
+ 0F:C540:48        PHA
+ 0F:C541:20 A5 C7  JSR $C7A5
+ 0F:C544:68        PLA
+ 0F:C545:A8        TAY
+ 0F:C546:68        PLA
+ 0F:C547:AA        TAX
+ 0F:C548:68        PLA
+ 0F:C549:AD 02 20  LDA PPU_STATUS = #$10
+ 0F:C54C:10 FB     BPL $C549
+ 0F:C54E:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C54F
+
+ 0F:C54F:AD 71 00  LDA $0071 = #$90
+ 0F:C552:29 7F     AND #$7F
+ 0F:C554:20 A6 C6  JSR $C6A6
+ 0F:C557:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C558
+
+ 0F:C558:A9 00     LDA #$00
+ 0F:C55A:8D 05 20  STA PPU_SCROLL = #$00
+ 0F:C55D:8D 05 20  STA PPU_SCROLL = #$00
+ 0F:C560:20 67 C5  JSR $C567
+ 0F:C563:20 8A C6  JSR $C68A
+ 0F:C566:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C567
+
+ 0F:C567:AD 72 00  LDA $0072
+ 0F:C56A:09 18     ORA #$18
+ 0F:C56C:20 70 C5  JSR $C570 ; Set PPU_MASK
+ 0F:C56F:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C570 -> Set PPU_MASK to (A)
+
+ 0F:C570:8D 01 20  STA PPU_MASK = #$1E
+ 0F:C573:8D 72 00  STA $0072 = #$1E
+ 0F:C576:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C577 
+
+ 0F:C577:CD 73 00  CMP $0073 = #$00
+ 0F:C57A:F0 2D     BEQ $C5A9
+ 0F:C57C:48        PHA
+ 0F:C57D:AD 71 00  LDA $0071 = #$90
+ 0F:C580:48        PHA
+ 0F:C581:10 03     BPL $C586
+ 0F:C583:20 4F C5  JSR $C54F
+ 0F:C586:68        PLA
+ 0F:C587:8D 71 00  STA $0071 = #$90
+ 0F:C58A:68        PLA
+ 0F:C58B:8D 73 00  STA $0073 = #$00
+ 0F:C58E:8D F0 FF  STA $FFF0 = #$FF
+ 0F:C591:4A        LSR
+ 0F:C592:8D F0 FF  STA $FFF0 = #$FF
+ 0F:C595:4A        LSR
+ 0F:C596:8D F0 FF  STA $FFF0 = #$FF
+ 0F:C599:4A        LSR
+ 0F:C59A:8D F0 FF  STA $FFF0 = #$FF
+ 0F:C59D:4A        LSR
+ 0F:C59E:8D F0 FF  STA $FFF0 = #$FF
+ 0F:C5A1:AD 71 00  LDA $0071 = #$90
+ 0F:C5A4:10 03     BPL $C5A9
+ 0F:C5A6:20 8A C6  JSR $C68A
+ 0F:C5A9:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C5AA
+
+ 0F:C5AA:A5 03     LDA $0003 = #$05
+ 0F:C5AC:C9 02     CMP #$02
+ 0F:C5AE:F0 FA     BEQ $C5AA
+ 0F:C5B0:20 4F C5  JSR $C54F
+ 0F:C5B3:A9 00     LDA #$00
+ 0F:C5B5:8D FF BF  STA $BFFF = #$FF
+ 0F:C5B8:8D FF BF  STA $BFFF = #$FF
+ 0F:C5BB:8D FF BF  STA $BFFF = #$FF
+ 0F:C5BE:AD 52 00  LDA $0052 = #$00
+ 0F:C5C1:8D FF BF  STA $BFFF = #$FF
+ 0F:C5C4:4A        LSR
+ 0F:C5C5:8D FF BF  STA $BFFF = #$FF
+ 0F:C5C8:A0 00     LDY #$00
+ 0F:C5CA:B1 56     LDA ($56),Y @ $EB6D = #$EB
+ 0F:C5CC:99 00 02  STA $0200,Y @ $0200 = #$00
+ 0F:C5CF:C8        INY
+ 0F:C5D0:98        TYA
+ 0F:C5D1:CD 58 00  CMP $0058 = #$E7
+ 0F:C5D4:D0 F4     BNE $C5CA
+ 0F:C5D6:A9 00     LDA #$00
+ 0F:C5D8:8D FF BF  STA $BFFF = #$FF
+ 0F:C5DB:8D FF BF  STA $BFFF = #$FF
+ 0F:C5DE:8D FF BF  STA $BFFF = #$FF
+ 0F:C5E1:AD 54 00  LDA $0054 = #$20
+ 0F:C5E4:8D FF BF  STA $BFFF = #$FF
+ 0F:C5E7:4A        LSR
+ 0F:C5E8:8D FF BF  STA $BFFF = #$FF
+ 0F:C5EB:A0 00     LDY #$00
+ 0F:C5ED:B9 00 02  LDA $0200,Y @ $0200 = #$00
+ 0F:C5F0:91 56     STA ($56),Y @ $EB6D = #$EB
+ 0F:C5F2:18        CLC
+ 0F:C5F3:6D 66 00  ADC $0066 = #$00
+ 0F:C5F6:8D 66 00  STA $0066 = #$00
+ 0F:C5F9:AD 67 00  LDA $0067 = #$00
+ 0F:C5FC:69 00     ADC #$00
+ 0F:C5FE:8D 67 00  STA $0067 = #$00
+ 0F:C601:C8        INY
+ 0F:C602:98        TYA
+ 0F:C603:CD 58 00  CMP $0058 = #$E7
+ 0F:C606:D0 E5     BNE $C5ED
+ 0F:C608:20 8A C6  JSR $C68A
+ 0F:C60B:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C60C -> Sysop 15
+
+ 0F:C60C:20 4F C5  JSR $C54F
+ 0F:C60F:A9 00     LDA #$00
+ 0F:C611:8D FF BF  STA $BFFF = #$FF
+ 0F:C614:8D FF BF  STA $BFFF = #$FF
+ 0F:C617:8D FF BF  STA $BFFF = #$FF
+ 0F:C61A:AD 52 00  LDA $0052 = #$00
+ 0F:C61D:8D FF BF  STA $BFFF = #$FF
+ 0F:C620:4A        LSR
+ 0F:C621:8D FF BF  STA $BFFF = #$FF
+ 0F:C624:20 8A C6  JSR $C68A
+ 0F:C627:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C628 -> Poll Controller (A)
+
+ 0F:C628:AA        TAX
+ 0F:C629:A9 01     LDA #$01
+ 0F:C62B:8D 16 40  STA JOY1 = #$00
+ 0F:C62E:A9 00     LDA #$00
+ 0F:C630:8D 16 40  STA JOY1 = #$00
+ 0F:C633:A0 08     LDY #$08
+ 0F:C635:BD 16 40  LDA JOY1,X @ $4077 = #$FF
+ 0F:C638:4A        LSR
+ 0F:C639:7E 6E 00  ROR $006E,X @ $00CF = #$FF
+ 0F:C63C:88        DEY
+ 0F:C63D:D0 F6     BNE $C635
+ 0F:C63F:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C640
+
+ 0F:C640:AD 56 00  LDA $0056 = #$6D
+ 0F:C643:4A        LSR
+ 0F:C644:4A        LSR
+ 0F:C645:0A        ASL
+ 0F:C646:0A        ASL
+ 0F:C647:0A        ASL
+ 0F:C648:8D 68 00  STA $0068 = #$85
+ 0F:C64B:AD 54 00  LDA $0054 = #$20
+ 0F:C64E:4A        LSR
+ 0F:C64F:4A        LSR
+ 0F:C650:18        CLC
+ 0F:C651:6D 68 00  ADC $0068 = #$85
+ 0F:C654:8D 68 00  STA $0068 = #$85
+ 0F:C657:AD 52 00  LDA $0052 = #$00
+ 0F:C65A:0A        ASL
+ 0F:C65B:0A        ASL
+ 0F:C65C:69 20     ADC #$20
+ 0F:C65E:8D 69 00  STA $0069 = #$C1
+ 0F:C661:18        CLC
+ 0F:C662:A9 C0     LDA #$C0
+ 0F:C664:6D 68 00  ADC $0068 = #$85
+ 0F:C667:8D 68 00  STA $0068 = #$85
+ 0F:C66A:A9 03     LDA #$03
+ 0F:C66C:6D 69 00  ADC $0069 = #$C1
+ 0F:C66F:8D 69 00  STA $0069 = #$C1
+ 0F:C672:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C673
+
+ 0F:C673:AD 54 00  LDA $0054 = #$20
+ 0F:C676:29 03     AND #$03
+ 0F:C678:4A        LSR
+ 0F:C679:8D 75 00  STA $0075 = #$12
+ 0F:C67C:AD 56 00  LDA $0056 = #$6D
+ 0F:C67F:29 03     AND #$03
+ 0F:C681:4A        LSR
+ 0F:C682:0A        ASL
+ 0F:C683:6D 75 00  ADC $0075 = #$12
+ 0F:C686:8D 75 00  STA $0075 = #$12
+ 0F:C689:60        RTS -----------------------------------------
+----------------------------------------------------
+Function $C68A
+
+ 0F:C68A:AD 71 00  LDA $0071
+ 0F:C68D:09 80     ORA #$80
+ 0F:C68F:20 A6 C6  JSR $C6A6
+ 0F:C692:60        RTS -----------------------------------------
+----------------------------------------------------
+
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+C540 48 20 A5 C7 68 A8 68 AA 68 AD 02 20 10 FB 60 AD
+C550 71 00 29 7F 20 A6 C6 60 A9 00 8D 05 20 8D 05 20
+C560 20 67 C5 20 8A C6 60 AD 72 00 09 18 20 70 C5 60
+C570 8D 01 20 8D 72 00 60 CD 73 00 F0 2D 48 AD 71 00
+C580 48 10 03 20 4F C5 68 8D 71 00 68 8D 73 00 8D F0
+C590 FF 4A 8D F0 FF 4A 8D F0 FF 4A 8D F0 FF 4A 8D F0
+C5A0 FF AD 71 00 10 03 20 8A C6 60 A5 03 C9 02 F0 FA
+C5B0 20 4F C5 A9 00 8D FF BF 8D FF BF 8D FF BF AD 52
+C5C0 00 8D FF BF 4A 8D FF BF A0 00 B1 56 99 00 02 C8
+C5D0 98 CD 58 00 D0 F4 A9 00 8D FF BF 8D FF BF 8D FF
+C5E0 BF AD 54 00 8D FF BF 4A 8D FF BF A0 00 B9 00 02
+C5F0 91 56 18 6D 66 00 8D 66 00 AD 67 00 69 00 8D 67
+C600 00 C8 98 CD 58 00 D0 E5 20 8A C6 60 20 4F C5 A9
+C610 00 8D FF BF 8D FF BF 8D FF BF AD 52 00 8D FF BF
+C620 4A 8D FF BF 20 8A C6 60 AA A9 01 8D 16 40 A9 00
+C630 8D 16 40 A0 08 BD 16 40 4A 7E 6E 00 88 D0 F6 60
+C640 AD 56 00 4A 4A 0A 0A 0A 8D 68 00 AD 54 00 4A 4A
+C650 18 6D 68 00 8D 68 00 AD 52 00 0A 0A 69 20 8D 69
+C660 00 18 A9 C0 6D 68 00 8D 68 00 A9 03 6D 69 00 8D
+C670 69 00 60 AD 54 00 29 03 4A 8D 75 00 AD 56 00 29
+C680 03 4A 0A 6D 75 00 8D 75 00 60 AD 71 00 09 80 20
+C690 A6 C6 60 20 4F C5 20 37 C5 20 9D C6 60 AD 72 00
+C6A0 29 E7 20 70 C5 60 8D 00 20 8D 71 00 60 A9 00 8D
+C6B0 75 00 8D 76 00 E0 00 F0 14 18 98 6D 75 00 8D 75
+C6C0 00 AD 76 00 69 00 8D 76 00 CA 4C B7 C6 AC 75 00
+C6D0 AE 76 00 60 AD 74 00 F0 37 20 9D C6 A9 3F 8D 06
+C6E0 20 A9 00 8D 06 20 AA BD 00 07 8D 07 20 E8 E0 20
+C6F0 D0 F5 A9 3F 8D 06 20 A9 00 8D 06 20 8D 06 20 8D
+C700 06 20 8D 05 20 8D 05 20 20 67 C5 A9 00 8D 74 00
+C710 60 AD 69 00 8D 06 20 AD 68 00 8D 06 20 AD 07 20
+C720 AD 07 20 8D 76 00 A9 FC AE 75 00 F0 0E 38 2A 2A
+C730 18 2E 58 00 2E 58 00 CA 4C 2B C7 2D 76 00 0D 58
+C740 00 8D 76 00 AD 69 00 8D 06 20 AD 68 00 8D 06 20
+C750 AD 76 00 8D 07 20 60 20 93 C6 A9 00 8D 06 20 8D
+C760 06 20 A2 00 A9 FF BD 75 C7 8D 07 20 E8 E0 30 D0
+C770 F5 20 58 C5 60 FF FF FF FF FF FF FF FF FF FF FF
+C780 FF FF FF FF FF 60 78 7E 7F 7E 78 60 00 60 78 7E
+C790 7F 7E 78 60 00 00 00 00 00 00 00 00 00 00 00 00
+C7A0 00 00 00 00 00 20 AC C7 20 17 C8 60 A9 00 8D 79
+C7B0 00 A9 34 8D 7A 00 A9 07 8D 7B 00 20 DE C7 20 C9
+C7C0 C7 AD 79 00 C9 05 D0 F3 60 EE 79 00 AD 7A 00 18
+C7D0 69 09 8D 7A 00 AD 7B 00 69 00 8D 7B 00 60 A0 00
+C7E0 B1 7A F0 0A C9 05 90 03 4C EE C7 20 EF C7 60 AA
+C7F0 CA 8A 18 69 05 A0 00 91 7A 8A 0A 0A AA AD 20 07
+C800 F0 07 AD 79 00 C9 02 F0 0D A0 01 B1 7A 9D 00 40
+C810 E8 C8 C0 05 D0 F5 60 A9 00 8D 79 00 A9 34 8D 7A
+C820 00 A9 07 8D 7B 00 AD 79 00 AA BD 20 07 F0 03 20
+C830 3D C8 20 C9 C7 AD 79 00 C9 05 D0 EA 60 A0 00 B1
+C840 7A C9 05 90 0B 20 C4 C8 D0 0C 20 CE C8 4C 56 C8
+C850 20 57 C8 4C 4A C8 60 20 77 C8 20 94 C8 A0 00 91
+C860 7A 20 94 C8 A0 01 91 7A 20 94 C8 A0 02 91 7A 20
+C870 94 C8 A0 04 91 7A 60 AD 79 00 0A 18 6D 79 00 AA
+C880 BD 25 07 A0 05 91 7A BD 26 07 C8 91 7A C8 BD 27
+C890 07 91 7A 60 AD 73 00 48 A0 05 B1 7A 20 77 C5 A0
+C8A0 06 B1 7A 8D 7C 00 18 69 01 91 7A C8 B1 7A 8D 7D
+C8B0 00 69 00 91 7A A2 00 A1 7C 8D 7E 00 68 20 77 C5
+C8C0 AD 7E 00 60 A0 08 B1 7A AA CA 8A 91 7A 60 20 94
+C8D0 C8 C9 F0 B0 09 20 29 C9 20 90 C9 4C E3 C8 20 E4
+C8E0 C8 90 EB 60 C9 F0 F0 03 4C 06 C9 A0 00 B1 7A 38
+C8F0 E9 05 0A 0A AA A9 00 9D 00 40 AE 79 00 A9 00 9D
+C900 20 07 91 7A 38 60 AD 79 00 0A 18 6D 79 00 AA A0
+C910 05 BD 25 07 91 7A C8 BD 26 07 91 7A C8 BD 27 07
+C920 91 7A A0 00 A9 00 91 7A 60 20 4B C9 A0 04 B1 7A
+C930 29 F8 0D 7F 00 91 7A 88 AD 7E 00 91 7A A0 00 B1
+C940 7A C9 05 90 05 38 E9 04 91 7A 60 48 29 0F 0A AA
+C950 BD 70 C9 8D 7E 00 E8 BD 70 C9 8D 7F 00 68 4A 4A
+C960 4A 4A AA F0 0A 4E 7F 00 6E 7E 00 CA 4C 63 C9 60
+C970 F9 03 C0 03 8A 03 57 03 27 03 FA 02 CF 02 A7 02
+C980 81 02 5D 02 3B 02 1B 02 00 00 00 00 00 00 00 00
+C990 20 94 C8 0A 0A 0A A0 08 91 7A 60 FF FF FF FF FF
+C9A0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+C9B0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+C9C0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+C9D0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+C9E0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+C9F0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+CA00 4C 00 00 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CA00          20 23 E8 00 00 0C A8 E5 7F 6A E9 B1 CB
+CA10 02 CF 
+
+Function $CA03 (00 00)
+
+CA08 0C
+CA09 A8 E5 7F    / $7FE5
+
+CA0C 6A
+CA0D E9 B1 CB 02 / Call $CBB1 -> Sysop 07 (Wrapper)
+
+CA11 CF          / Return
+
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CA10       20 23 E8 00 00 3C A0 0D 00 B3 0C D3 B4 C2
+CA20 D8 27 CA 40 D6 2F CA A0 0D 00 B3 0C D3 B4 BC D4
+CA30 CF 
+
+Function $CA12 (00 00) -> Reduce <00> by <02> to minimum of zero
+
+CA17 3C
+CA18 A0 0D 00
+CA1B B3
+CA1C 0C
+CA1D D3         
+CA1E B4
+CA1F C2
+CA20 D8 27 CA
+
+if
+	CA23 40
+	CA24 D6 2F CA
+else
+	CA27 A0 0D 00
+	CA2A B3
+	CA2B 0C
+	CA2C D3
+	CA2D B4
+	CA2E BC
+	
+CA2F D4
+CA30 CF
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CA10       20 23 E8 00 00 3C A0 0D 00 B3 0C D3 B4 C2
+CA20 D8 27 CA 40 D6 2F CA A0 0D 00 B3 0C D3 B4 BC D4
+CA30 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CA30    20 23 E8 FE FF 0C B0 1D BC 2B 50 C2 D8 42 CA
+CA40 40 2B 3C 0B B1 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CA40                   20 23 E8 00 00 8D 11 E9 26 F2
+CA50 02 CF 
+
+Function $CA46 (00 00) -> Perform sysop 11 (wrapper)
+
+CA4B 8D 11
+CA4D E9 26 F2 02 / Call $F226 -> Sysop 11 (
+CA51 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CA50       20 23 E8 00 00 0C 51 C2 D8 5F CA 40 CF AC
+CA60 46 CA 1C B9 CF 
+
+Function $CA52 (00 00) - Get RNG MOD <00>
+
+CA57 0C
+CA58 51
+CA59 C2
+CA5A D8 5F CA
+
+if
+	CA5D 40
+	CA5E CF
+
+CA5F AC 46 CA    / Call $CA46 -> Sysop 11 (Wrapper): Get RNG
+CA62 1C
+CA63 B9
+CA64 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CA60                20 23 E8 00 00 89 30 1C C7 D8 78
+CA70 CA 0C 8B 39 C7 D7 7C CA 40 D6 7D CA 41 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CA70                                           20 23
+CA80 E8 FE FF 40 2B D6 90 CA 0C D0 2C D1 0B D0 2B D1
+CA90 0C D3 D7 88 CA 0B CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CA90                      20 23 E8 00 00 D6 AB CA 0C
+CAA0 D0 2C D1 B3 A0 0F 00 D4 0D D1 2D 0D D7 9F CA CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CAB0 20 23 E8 00 00 D6 C7 CA 0C D3 D7 BF CA 40 CF 0C
+CAC0 D0 2C D1 0D D0 2D D1 0D D3 B3 0C D3 B4 C0 D7 B8
+CAD0 CA 0D D3 B3 0C D3 B4 BC CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CAD0                            20 23 E8 FE FF 0C 2B
+CAE0 0C D0 2C D1 B3 0D D0 2D D1 D3 D4 D7 E0 CA 0B CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CAF0 20 23 E8 00 00 D6 0B CB A0 0D 00 B3 0C D3 B4 C0
+CB00 D8 05 CB 0C CF 0C D0 2C 0E D1 2E 0E D7 F8 CA 40
+CB10 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CB10    20 23 E8 00 00 A0 0B 00 B3 89 61 B4 C3 D8 2A
+CB20 CB A0 0B 00 8B 7A C3 D7 2E CB 40 D6 2F CB 41 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CB30 20 23 E8 00 00 A0 0B 00 B3 E9 11 CB 02 D8 48 CB
+CB40 A0 0B 00 8F E0 D6 4B CB A0 0B 00 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CB40                                     20 23 E8 00
+CB50 00 0C 50 C2 D8 5C CB 0C CB D6 5D CB 0C CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CB50                                           20 23
+CB60 E8 00 00 0C 1D C2 D8 6D CB 0C D6 6E CB 0D CF 
+
+Function $CB5E (00 00) -> Returns the smaller of <00> & <02> (signed)
+
+CB63 0C
+CB64 1D
+CB65 C2
+CB66 D8 6D CB
+
+if 
+	CB69 0C
+	CB6A D6 6E CB
+else
+	CB6D 0D
+
+CB6E CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CB60                                              20
+CB70 23 E8 00 00 0C 1D C4 D8 7E CB 0C D6 7F CB 0D CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CB80 20 23 E8 FF FF 0C D3 A2 FF FF 3C 0D D3 D4 3D A0
+CB90 FF FF D4 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CB90             20 23 E8 FE FF 0C B0 2B 3C 0D B0 B1
+CBA0 3D 0B B1 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CBA0             20 23 E8 00 00 3C 8D 15 E9 26 F2 04
+CBB0 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CBB0    20 23 E8 00 00 3C 67 E9 26 F2 04 CF 
+
+Function $CBB1 (00 00) -> Sysop 07 (Wrapper)
+
+CBB6 3C
+CBB7 67
+CBB8 E9 26 F2 04 / Call $F226 -> Sysop 07
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CBB0                                        20 23 E8
+CBC0 00 00 3F 3E 3D 3C 8D 10 E9 26 F2 0A CF 
+
+Function $CBBD (00 00)
+
+CBC2 3F
+CBC3 3E
+CBC4 3D
+CBC5 3C
+CBC6 8D 10
+CBC8 E9 26 F2 0A / Call $F226 -> Sysop 10
+CBCC CF
+----------------------------------------------------
+Function $CBCD
+
+ 0F:CBCD:A9 FF     LDA #$FF
+ 0F:CBCF:85 08     STA $0008
+ 0F:CBD1:85 09     STA $0009
+ 0F:CBD3:A0 03     LDY #$03
+ 0F:CBD5:B1 02     LDA ($02),Y @ $05D9 = #$00
+ 0F:CBD7:30 5B     BMI $CC34
+ 
+ if
+	 0F:CBD9:85 44     STA $0044
+	 0F:CBDB:88        DEY
+	 0F:CBDC:B1 02     LDA ($02),Y
+	 0F:CBDE:85 45     STA $0045
+	 0F:CBE0:A9 00     LDA #$00
+	 0F:CBE2:85 40     STA $0040
+	 0F:CBE4:85 41     STA $0041
+	 0F:CBE6:85 42     STA $0042
+	 0F:CBE8:85 43     STA $0043
+	 0F:CBEA:A2 08     LDX #$08
+	 0F:CBEC:06 45     ASL $0045
+	 0F:CBEE:26 44     ROL $0044
+	 0F:CBF0:26 43     ROL $0043
+	 0F:CBF2:26 42     ROL $0042
+	 0F:CBF4:06 45     ASL $0045
+	 0F:CBF6:26 44     ROL $0044
+	 0F:CBF8:26 43     ROL $0043
+	 0F:CBFA:26 42     ROL $0042
+	 0F:CBFC:38        SEC
+	 0F:CBFD:26 41     ROL $0041
+	 0F:CBFF:26 40     ROL $0040
+	 0F:CC01:A0 02     LDY #$02
+	 0F:CC03:38        SEC
+	 0F:CC04:A5 43     LDA $0043
+	 0F:CC06:E5 41     SBC $0041
+	 0F:CC08:85 43     STA $0043
+	 0F:CC0A:A5 42     LDA $0042
+	 0F:CC0C:E5 40     SBC $0040
+	 0F:CC0E:85 42     STA $0042
+	 0F:CC10:B0 0E     BCS $CC20
+	 
+	 if
+		 0F:CC12:A0 00     LDY #$00
+		 0F:CC14:A5 43     LDA $0043 = #$00
+		 0F:CC16:65 41     ADC $0041 = #$00
+		 0F:CC18:85 43     STA $0043 = #$00
+		 0F:CC1A:A5 42     LDA $0042 = #$00
+		 0F:CC1C:65 40     ADC $0040 = #$00
+		 0F:CC1E:85 42     STA $0042 = #$00
+		 
+	 0F:CC20:98        TYA
+	 0F:CC21:05 41     ORA $0041 = #$00
+	 0F:CC23:29 FE     AND #$FE
+	 0F:CC25:85 41     STA $0041 = #$00
+	 0F:CC27:CA        DEX
+	 0F:CC28:D0 C2     BNE $CBEC
+	 
+	 0F:CC2A:A5 40     LDA $0040 = #$00
+	 0F:CC2C:4A        LSR
+	 0F:CC2D:85 09     STA $0009 = #$00
+	 0F:CC2F:A5 41     LDA $0041 = #$00
+	 0F:CC31:6A        ROR
+	 0F:CC32:85 08     STA $0008 = #$00
+	 
+ 0F:CC34:60        RTS -----------------------------------------
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CC30                20 23 E8 00 00 3C 8D 12 E9 26 F2
+CC40 04 CF 
+
+Function $CC35 (00 00) -> Sysop 12 (wrapper)
+
+CC3A 3C
+CC3B 8D 12
+CC3D E9 26 F2 04 / Call $F226 -> Sysop 12
+CC41 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CC40       20 23 E8 00 00 87 13 3F 3E 3D 3C 60 6C E9
+CC50 26 F2 0E CF 
+
+Function $CC42 (00 00)
+
+CC47 87 13
+CC49 3F
+CC4A 3E
+CC4B 3D
+CC4C 3C
+CC4D 60
+CC4E 6C
+CC4F E9 26 F2 0E / Call $F226 -> Sysop 0C
+CC53 CF          / Return
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CC50             20 23 E8 00 00 87 15 87 13 3F 3E 3D
+CC60 3C 60 8D 14 E9 26 F2 10 CF 
+
+Function $CC54 (00 00)
+
+CC59 87 15
+CC5B 87 13
+CC5D 3F
+CC5E 3E
+CC5F 3D
+CC60 3C
+CC61 60
+CC62 8D 14
+CC64 E9 26 F2 10 / Call $F226 -> Sysop 14
+CC68 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CC60                            20 23 E8 00 00 61 8D
+CC70 12 8D 1D 67 8D 16 E9 42 CC 0A CF 
+
+Function $CC69 (00 00)
+
+CC6E 61
+CC6F 8D 12
+CC71 8D 1D
+CC73 67
+CC74 8D 16
+CC76 E9 42 CC 0A / Call $CC42
+
+CC7A CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CC70                                  20 23 E8 00 00
+CC80 0C A8 CD 7F 0D A8 CF 7F CF 
+
+Function $CC7B (00 00)
+
+CC80 0C
+CC81 A8 CD 7F .. / $7FCD
+
+CC84 0D
+CC85 A8 CF 7F .. / $7FCF
+
+CC88 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CC80                            20 23 E8 00 00 61 8D
+CC90 19 8D 13 A4 D1 7F D8 9E CC 89 14 D6 A0 CC 89 16
+CCA0 B3 62 E9 42 CC 0A A4 D1 7F D8 B1 CC 89 14 D6 B3
+CCB0 CC 89 16 B3 62 E9 7B CC 04 CF 
+
+Function $CC89 (00 00)
+
+CC8E 61
+CC8F 8D 19
+CC91 8D 13
+CC93 A4 D1 7F    / $7FD1
+CC96 D8 9E CC
+
+	If
+	CC99 89 14
+	CC9B D6 A0 CC
+	
+	Else
+	CC9E 89 16
+	
+CCA0 B3
+CCA1 62
+CCA2 E9 42 CC 0A / Call $CC42
+
+CCA6 A4 D1 7F    / $7FD1
+CCA9 D8 B1 CC
+
+	If
+	CCAC 89 14
+	CCAE D6 B3 CC
+	
+	Else
+	CCB1 89 16
+	
+CCB3 B3
+CCB4 62
+CCB5 E9 7B CC 04 / Call $CC7B
+
+CCB9 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CCB0                               20 23 E8 00 00 61
+CCC0 8D 19 8D 1D 8D 14 8D 14 E9 42 CC 0A 40 A8 F9 7B
+CCD0 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CCD0    20 23 E8 00 00 61 63 8D 1D 63 62 E9 42 CC 0A
+CCE0 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CCE0    20 23 E8 00 00 61 8D 1A 8D 1D 8D 1A 62 E9 42
+CCF0 CC 0A 8A FF 00 A8 DF 7F CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CCF0                            20 23 E8 00 00 61 8D
+CD00 13 8D 1F 64 60 E9 42 CC 0A A4 5D 6F 8C FF 00 C1
+CD10 D8 1F CD A4 5D 6F A8 E6 7B 8A FF 00 A8 5D 6F CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CD20 20 23 E8 FE FF 61 E9 35 CC 02 AC 50 CF AC 5D CF
+CD30 A4 C9 7F D8 4F CD 8D 21 67 E9 8B CF 04 8D 30 6B
+CD40 E9 8B CF 04 8D 30 6F E9 8B CF 04 40 A8 C9 7F A4
+CD50 C7 7F D8 7E CD 40 2B 0B D2 8C 7A F6 BB B0 B3 3B
+CD60 E9 8B CF 04 0B D0 2B 0B 54 C6 D7 57 CD 8D 24 8E
+CD70 B0 15 8E 5C 84 64 E9 7C CF 08 40 A8 C7 7F 60 E9
+CD80 35 CC 02 A4 5D 6F 8C FF 00 C1 D8 99 CD A4 5D 6F
+CD90 A8 E6 7B 8A FF 00 A8 5D 6F 8A FF 00 A8 DF 7F 8D
+CDA0 14 62 E9 7B CC 04 40 A8 F9 7B 40 A8 FB 7B CF 
+
+Function $CD20 (FE FF)
+
+CD25 61
+CD26 E9 35 CC 02 / Call $CC35
+
+CD2A AC 50 CF    / Call $CF50
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CD20 20 23 E8 FE FF 61 E9 35 CC 02 AC 50 CF AC 5D CF
+CD30 A4 C9 7F D8 4F CD 8D 21 67 E9 8B CF 04 8D 30 6B
+CD40 E9 8B CF 04 8D 30 6F E9 8B CF 04 40 A8 C9 7F A4
+CD50 C7 7F D8 7E CD 40 2B 0B D2 8C 7A F6 BB B0 B3 3B
+CD60 E9 8B CF 04 0B D0 2B 0B 54 C6 D7 57 CD 8D 24 8E
+CD70 B0 15 8E 5C 84 64 E9 7C CF 08 40 A8 C7 7F 60 E9
+CD80 35 CC 02 A4 5D 6F 8C FF 00 C1 D8 99 CD A4 5D 6F
+CD90 A8 E6 7B 8A FF 00 A8 5D 6F 8A FF 00 A8 DF 7F 8D
+CDA0 14 62 E9 7B CC 04 40 A8 F9 7B 40 A8 FB 7B CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CDA0                                              20
+CDB0 23 E8 00 00 42 A8 CD 7F A4 CF 7F D0 A8 CF 7F 8B
+CDC0 1B C8 D8 C9 CD 43 A8 CF 7F CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CDC0                               20 23 E8 00 00 A0
+CDD0 0B 00 8B 5F C5 D8 F4 CD A0 0B 00 8B 7A C3 D8 F4
+CDE0 CD 89 2F D6 11 CE A0 0B 00 8B 5A C3 D8 FD CD 89
+CDF0 2B D6 11 CE A0 0B 00 8B 41 C5 D7 E6 CD A0 0B 00
+CE00 8B 2D C5 D8 1D CE A0 0B 00 8B 3A C3 D8 1D CE 89
+CE10 28 CD A0 0B 00 BC A2 0B 00 A0 0B 00 CF A0 0B 00
+CE20 D9 0C 00 20 00 55 CE 21 00 55 CE 23 00 5A CE 25
+CE30 00 5F CE 28 00 64 CE 29 00 64 CE 2A 00 69 CE 2B
+CE40 00 69 CE 2C 00 69 CE 3C 00 73 CE 3E 00 78 CE 3F
+CE50 00 78 CE 7D CE 89 1F D6 11 CE 89 4C D6 16 CE 89
+CE60 4D D6 16 CE 89 25 D6 11 CE 89 24 CD A0 0B 00 BB
+CE70 D6 16 CE 89 13 D6 16 CE 89 2A D6 11 CE 40 D6 16
+CE80 CE 
+
+Function $CDCA (00 00)
+
+CDCF A0 0B 00
+CDD2 8B 5F
+CDD4 C5
+CDD5 D8 F4 CD
+
+	CDD8 A0 0B 00
+	CDDB 8B 7A
+	CDDD C3
+	CDDE D8 F4 CD
+	
+		CDE1 89 2F
+		CDE3 D6 11 CE
+		
+	CDE6 A0 0B 00
+	CDE9 8B 5A
+	CDEB C3
+	CDEC D8 FD CD
+	
+	CDEF 89 2B
+	CDF1 D6 11 CE
+
+CDF4 A0 0B 00
+CDF7 8B 41
+CDF9 C5
+CDFA D7 E6 CD
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CDE0 CD 89 2F D6 11 CE A0 0B 00 8B 5A C3 D8 FD CD 89
+CDF0 2B D6 11 CE A0 0B 00 8B 41 C5 D7 E6 CD A0 0B 00
+CE00 8B 2D C5 D8 1D CE A0 0B 00 8B 3A C3 D8 1D CE 89
+CE10 28 CD A0 0B 00 BC A2 0B 00 A0 0B 00 CF A0 0B 00
+CE20 D9 0C 00 20 00 55 CE 21 00 55 CE 23 00 5A CE 25
+CE30 00 5F CE 28 00 64 CE 29 00 64 CE 2A 00 69 CE 2B
+CE40 00 69 CE 2C 00 69 CE 3C 00 73 CE 3E 00 78 CE 3F
+CE50 00 78 CE 7D CE 89 1F D6 11 CE 89 4C D6 16 CE 89
+CE60 4D D6 16 CE 89 25 D6 11 CE 89 24 CD A0 0B 00 BB
+CE70 D6 16 CE 89 13 D6 16 CE 89 2A D6 11 CE 40 D6 16
+CE80 CE 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CE80    20 23 E8 00 00 A0 0B 00 5A C0 D8 92 CE AC AF
+CE90 CD CF A0 0B 00 B3 E9 CA CD 02 A2 0B 00 A0 0B 00
+CEA0 B3 AA CF 7F AA CD 7F AA CF 7F AA CD 7F 60 6C E9
+CEB0 26 F2 0E A4 CD 7F D0 A8 CD 7F 8B 1F C8 D8 C3 CE
+CEC0 AC AF CD CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CEC0             20 23 E8 DB FF D6 1E CF A0 FD FF 5A
+CED0 C0 D8 EC CE 0B A6 CD 7F C1 D8 1B CF 64 DE DB FF
+CEE0 B3 AA CF 7F A4 CD 7F D1 B3 D6 13 CF 81 FB D0 85
+CEF0 FB D1 B3 A0 FD FF B3 E9 CA CD 02 D4 A4 CD 7F D0
+CF00 A8 CD 7F 8B 20 C0 D8 27 CF 64 DE DB FF B3 AA CF
+CF10 7F 8D 1F AA CF 7F 3B E9 54 CC 0C AC AF CD A4 CD
+CF20 7F 2B DE DB FF 85 FB 0C D0 2C D1 D3 A2 FD FF D7
+CF30 CC CE 0B A6 CD 7F C1 D8 4F CF 64 DE DB FF B3 AA
+CF40 CF 7F A4 CD 7F D1 B3 AA CF 7F 3B E9 54 CC 0C CF
+
+Function $CEC4 (DB FF)
+
+CEC9 D6 1E CF
+
+Loop:
+	CECC A0 FD FF
+	CECF 5A
+	CED0 C0
+	CED1 D8 EC CE
+	
+		CED4 0B
+		CED5 A6 CD 7F    / $7FCD
+		CED8 C1
+		CED9 D8 1B CF
+		
+		CEDC 64
+		CEDD DE DB FF
+		CEE0 B3
+		CEE1 AA CF 7F    / $7FCF
+		CEE4 A4 CD 7F
+		CEE7 D1
+		CEE8 B3
+		CEE9 D6 13 CF
+	
+	CEEC 81 FB
+	CEEE D0
+	CEEF 85 FB
+	CEF1 D1
+	CEF2 B3
+	CEF3 A0 FD FF
+	CEF6 B3
+	CEF7 E9 CA CD 02 / Call $CDCA
+
+Bounds check:
+	CF1E
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CEF0 FB D1 B3 A0 FD FF B3 E9 CA CD 02 D4 A4 CD 7F D0
+CF00 A8 CD 7F 8B 20 C0 D8 27 CF 64 DE DB FF B3 AA CF
+CF10 7F 8D 1F AA CF 7F 3B E9 54 CC 0C AC AF CD A4 CD
+CF20 7F 2B DE DB FF 85 FB 0C D0 2C D1 D3 A2 FD FF D7
+CF30 CC CE 0B A6 CD 7F C1 D8 4F CF 64 DE DB FF B3 AA
+CF40 CF 7F A4 CD 7F D1 B3 AA CF 7F 3B E9 54 CC 0C CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CF50 20 23 E8 00 00 61 60 65 E9 26 F2 06 CF 
+
+Function $CF50
+
+CF55 61
+CF56 60
+CF57 65
+CF58 E9 26 F2 06 / Call $F226 -> Sysop 05
+CF5C CF          / Return
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CF50                                        20 23 E8
+CF60 00 00 60 60 68 E9 26 F2 06 CF 
+
+Function $CF5D (00 00)
+
+CF62 60
+CF63 60
+CF64 68
+CF65 E9 26 F2 06 / Call $F226 -> Sysop 08
+CF69 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CF60                               20 23 E8 00 00 87
+CF70 13 3F 3E 3D 3C 60 6D E9 26 F2 0E CF 
+
+Function $CF6A (00 00)
+
+CF6F 87 13
+CF71 3F
+CF72 3E
+CF73 3D
+CF74 3C
+CF75 60
+CF76 6D
+CF77 E9 26 F2 0E / Call $F226 -> Sysop 0D
+CF7B CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CF70                                     20 23 E8 00
+CF80 00 3F 3E 3D 3C 61 E9 26 F2 0A CF 
+
+Function $CF7C (00 00) -> Sysop 01 (Wrapper)
+
+CF81 3F
+CF82 3E
+CF83 3D
+CF84 3C
+CF85 61
+CF86 E9 26 F2 0A / Call $F226 -> Sysop 01
+CF8A CF          / Return
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CF80                                  20 23 E8 00 00
+CF90 3D 3C 64 E9 26 F2 06 CF 
+
+Function $CF8B (00 00) -> Sysop 04 (Wrapper)
+
+CF90 3D
+CF91 3C
+CF92 64
+CF93 E9 26 F2 06 / Call $F226 -> Sysop 04
+CF97 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CF90                         20 23 E8 FE FF 0D 1E C6
+CFA0 D8 BC CF 0C B3 B0 D0 B1 D1 B3 0D 5A C6 D8 B6 CF
+CFB0 0D 8F 30 D6 B9 CF 0D 8F 37 D4 41 CF 3E 0D 1E B8
+CFC0 B3 3C E9 98 CF 06 2B 3E 0D 1E BA B3 3C E9 98 CF
+CFD0 06 0B D0 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CFD0             20 23 E8 FD FF 40 2B D6 ED CF 0B 5A
+CFE0 B5 B3 A0 FD FF B4 BB 2B 0C B3 B0 D0 B1 0C B0 D3
+CFF0 8F D0 A2 FD FF 5A C2 D7 DE CF 0B CF 
+
+Function $CFD4 (FD FF)
+
+CFD9 40
+CFDA 2B
+
+CFDB D6 ED CF
+
+Loop:
+	CFDE 0B
+	CFDF 5A
+	CFE0 B5
+	CFE1 B3
+	CFE2 A0 FD FF
+	CFE5 B4
+	CFE6 BB
+	CFE7 2B
+	CFE8 0C
+	CFE9 B3
+	CFEA B0
+	CFEB B0
+	CFEC B1
+Bounds check:
+	CFED 0C
+	CFEE B0
+	CFEF D3
+	CFF0 8F D0
+	CFF2 A2 FD FF
+	CFF5 5A
+	CFF6 C2
+	CFF7 D7 DE CF
+	
+CFFA 0B
+CFFB CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+CFF0                                     20 23 E8 E9
+D000 FF 0C 72 2C 8F FE B0 85 FD 0C 85 E9 D6 18 D0 0D
+D010 D0 2D D1 B3 A0 FF FF D4 81 FD D0 85 FD D1 D3 A2
+D020 FF FF D8 30 D1 A0 FF FF 8B 25 C0 D8 0F D0 DE F3
+D030 FF 85 F1 46 85 EB 40 85 EF 81 FD D3 A2 FF FF A0
+D040 FF FF B3 E9 65 CA 02 D8 55 D0 DE FD FF B3 E9 D4
+D050 CF 02 D6 56 D0 40 85 ED 81 FD D0 85 FD D1 D3 A2
+D060 FF FF 8B 2E C0 D8 7F D0 DE FD FF B3 E9 D4 CF 02
+D070 85 EB 41 85 EF 81 FD D0 85 FD D1 D3 A2 FF FF A0
+D080 FF FF B3 E9 30 CB 02 D9 04 00 00 00 2F D1 43 00
+D090 D0 D0 44 00 9C D0 53 00 B7 D0 0F D0 6A 81 E9 72
+D0A0 85 E9 8F FE B0 B3 DE F1 FF B3 E9 98 CF 06 CD 81
+D0B0 ED BC 85 ED D6 E5 D0 81 E9 72 85 E9 8F FE B0 85
+D0C0 F1 87 F1 E9 7E CA 02 CD 81 ED BC 85 ED D6 FC D0
+D0D0 81 ED D1 85 ED 81 F1 D0 85 F1 D1 B3 81 E9 72 85
+D0E0 E9 8F FE B0 D4 87 F1 40 D4 DE F3 FF 85 F1 40 85
+D0F0 EF D6 FC D0 0D D0 2D D1 B3 89 20 D4 81 ED D1 85
+D100 ED D0 50 C4 D7 F4 D0 81 F1 D3 D8 18 D0 81 EF D8
+D110 19 D1 81 EB 50 C4 D8 27 D1 0D D0 2D D1 B3 81 F1
+D120 D3 D4 81 EB D1 85 EB 81 F1 D0 85 F1 D6 07 D1 CF
+D130 3D 40 D4 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D130             20 23 E8 6A FF DE 6A FF B3 DE 0B 00
+D140 B3 E9 FC CF 04 DE 6A FF B3 E9 C4 CE 02 CF 
+
+Function $D134 (6A FF)
+Args:
++0B 
+
+D139 DE 6A FF
+D13C B3
+D13D DE 0B 00
+D140 B3
+D141 E9 FC CF 04 / Call $CFFC
+
+D145 DE 6A FF
+D148 B3
+D149 E9 C4 CE 02 / Call $CEC4 -> Print
+
+D14D CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D140                                           20 23
+D150 E8 F8 FF 42 2B A4 D3 7F D5 00 00 05 00 6B D1 69
+D160 D1 E1 D1 E8 D1 EE D1 4E D2 40 2B 0B 51 C8 D7 C9
+D170 D1 0B 51 DA 2B A6 DF 7F C1 D8 AD D1 A4 CD 7F 29
+D180 A4 CF 7F 28 61 8D 1A 8D 1D 8D 1A 8D 14 E9 6A CF
+D190 0A 8D 1A 8D 15 E9 7B CC 04 0B D0 B3 8E 8A F6 E9
+D1A0 34 D1 04 38 39 E9 7B CC 04 0B A8 DF 7F A4 E7 7F
+D1B0 52 C1 D8 69 D2 A4 E9 7F D1 A8 E9 7F D9 02 00 64
+D1C0 00 52 D2 00 00 70 D2 69 D2 40 2B 3A E9 72 D7 02
+D1D0 B3 0B 8C D5 7F BB D3 B4 C1 D8 71 D1 0B D0 D6 CA
+D1E0 D1 A4 5F 6F 2A D6 6B D1 A4 63 6F D6 E4 D1 A4 E1
+D1F0 7F 8C FF 00 C0 D8 3D D2 40 D6 FE D1 0B D0 2B AC
+D200 7E D7 B3 0B 8C D5 7F BB D3 B4 C1 D8 14 D2 0B 58
+D210 C6 D7 FC D1 0B 58 C9 D8 37 D2 40 D6 20 D2 0B D0
+D220 2B AA 63 6F E9 72 D7 02 B3 0B 8C D5 7F BB D3 B4
+D230 C1 D7 1E D2 0B D0 2B 0B 51 DA A8 E1 7F A4 E1 7F
+D240 2B A4 E8 7B D8 6B D1 41 CD 0B DC D6 6A D1 41 D6
+D250 6A D1 AA E7 7F 60 A4 CF 7F 53 BD D1 B3 A4 CD 7F
+D260 53 BD B3 60 63 E9 26 F2 0C 3B 66 E9 26 F2 04 CF
+D270 62 60 8E F8 00 8E F8 00 60 63 E9 26 F2 0C 8A C8
+D280 00 A8 E9 7F D6 69 D2 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D280                      20 23 E8 FE FF AC 4E D1 D7
+D290 8C D2 40 2B AC 4E D1 2B D8 94 D2 0B CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D290                                        20 23 E8
+D2A0 00 00 0C D8 AB D2 0C D1 D6 AC D2 42 A8 E7 7F 0C
+D2B0 D7 CA D2 62 60 8E F8 00 8E F8 00 60 63 E9 26 F2
+D2C0 0C 8D 13 E9 26 F2 02 D6 F8 D2 0C 51 C0 D8 DB D2
+D2D0 62 60 8E F8 00 8E F8 00 D6 EC D2 AA E7 7F 60 A4
+D2E0 CF 7F 53 BD D1 B3 A4 CD 7F 53 BD B3 60 63 E9 26
+D2F0 F2 0C 8A C8 00 A8 E9 7F CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D2F0                            20 23 E8 00 00 61 8D
+D300 13 69 68 62 E9 42 CC 0A CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D300                            20 23 E8 00 00 61 8D
+D310 1A 69 8D 14 62 E9 42 CC 0A CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D310                               20 23 E8 00 00 AC
+D320 59 D7 AC 09 D3 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D320                   20 23 E8 00 00 A4 C5 7F D8 38
+D330 D3 AC 09 D3 40 A8 C5 7F A4 D1 7F D8 43 D3 89 14
+D340 D6 45 D3 89 16 B3 62 E9 7B CC 04 3C E9 C4 CE 02
+D350 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D350    20 23 E8 FE FF 3C E9 C4 CE 02 61 E9 9D D2 02
+D360 AC 87 D2 2B 8B 40 C1 D8 78 D3 0B 8C 80 00 C1 D8
+D370 78 D3 0B 52 C1 D7 60 D3 60 E9 9D D2 02 0B 8B 40
+D380 C0 D8 8E D3 8D 3C E9 81 CE 02 41 D6 A1 D3 0B 8C
+D390 80 00 C0 D8 A0 D3 8D 3E E9 81 CE 02 40 D6 A1 D3
+D3A0 42 2B AC 89 CC 0B CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D3A0                      20 23 E8 FE FF 8E 95 F6 E9
+D3B0 C4 CE 02 61 E9 9D D2 02 AC 87 D2 2B 8B 40 C1 D8
+D3C0 CA D3 0B 8C 80 00 C1 D7 B8 D3 60 E9 9D D2 02 0B
+D3D0 8B 40 C0 D8 E0 D3 8D 59 E9 81 CE 02 41 D6 E7 D3
+D3E0 8D 4E E9 81 CE 02 40 2B AC 89 CC 0B CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D3E0                                        20 23 E8
+D3F0 EC FF 40 24 40 26 41 25 DE F4 FF B3 05 D2 B4 BB
+D400 B3 8A FF 00 B1 05 D0 25 05 55 C3 D7 F8 D3 36 8E
+D410 9E F6 E9 34 D1 04 A4 CD 7F D1 A8 CD 7F 61 E9 9D
+D420 D2 02 AC 87 D2 40 22 AC 4E D1 D9 06 00 01 00 59
+D430 D4 02 00 47 D4 10 00 69 D4 20 00 AF D4 40 00 DB
+D440 D4 80 00 11 D5 60 D4 60 E9 9D D2 02 A4 E0 7B 51
+D450 C0 D8 57 D4 89 FF CF 40 CF 60 E9 9D D2 02 41 22
+D460 02 D8 27 D4 40 23 D6 73 D5 DE F4 FF B3 04 D2 B4
+D470 BB B3 B0 D0 B1 5A C9 D8 85 D4 DE F4 FF B3 04 D2
+D480 B4 BB B3 40 B1 DE F4 FF B3 04 D2 B4 BB B0 B3 8E
+D490 A1 F6 E9 34 D1 04 A4 CD 7F D1 A8 CD 7F 60 E9 9D
+D4A0 D2 02 62 E9 3E D7 02 61 E9 9D D2 02 D6 60 D4 DE
+D4B0 F4 FF B3 04 D2 B4 BB B3 B0 D1 B1 5A C9 D8 CB D4
+D4C0 DE F4 FF B3 04 D2 B4 BB B3 49 B1 DE F4 FF B3 04
+D4D0 D2 B4 BB B0 B3 8E A4 F6 D6 92 D4 04 D8 60 D4 60
+D4E0 E9 9D D2 02 8E A7 F6 E9 C4 CE 02 42 CD A4 CD 7F
+D4F0 BC A8 CD 7F 61 E9 9D D2 02 DE F4 FF B3 04 D1 24
+D500 D0 D2 B4 BB B3 8A FF 00 B1 62 E9 3E D7 02 D6 60
+D510 D4 0C D1 14 C1 D8 60 D4 04 D7 28 D5 DE F4 FF B3
+D520 04 D2 B4 BB B0 D8 60 D4 60 E9 9D D2 02 A4 CD 7F
+D530 D0 A8 CD 7F DE F4 FF B3 04 D0 24 D2 B4 BB B3 40
+D540 B1 DE F4 FF B3 04 D2 B4 BB B0 B3 8E A9 F6 E9 34
+D550 D1 04 A4 CD 7F D1 A8 CD 7F 61 E9 9D D2 02 D6 09
+D560 D5 DE F4 FF B3 05 D2 B4 BB B0 B3 03 5A B5 B4 BB
+D570 23 05 D0 25 DE F4 FF B3 05 D2 B4 BB B0 8C FF 00
+D580 C1 D7 61 D5 03 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D580                   20 23 E8 FE FF 40 D6 96 D5 4A
+D590 CD 0C B6 2C 0B D0 2B 0C D7 8F D5 0B CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D590                                        20 23 E8
+D5A0 F6 FF 3D E9 86 D5 02 2B A4 CD 7F 29 A4 CF 7F 28
+D5B0 38 39 E9 7B CC 04 40 D6 C2 D5 8D 20 E9 81 CE 02
+D5C0 0A D0 2A 0A 1B C2 D7 BA D5 38 39 E9 7B CC 04 3B
+D5D0 E9 ED D3 02 27 07 50 C3 D7 E7 D5 07 1C C5 D8 B0
+D5E0 D5 07 1D C3 D8 B0 D5 07 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D5E0                            20 23 E8 FE FF 3D 3C
+D5F0 8E AC F6 E9 34 D1 06 3D 3C E9 9D D5 04 2B 0B 50
+D600 C4 D8 07 D6 AC 89 CC 0B CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D600                            20 23 E8 FE FF 8D 1A
+D610 62 E9 7B CC 04 8E B7 F6 E9 C4 CE 02 AC 87 D2 2B
+D620 AC 89 CC AC E1 CC 0B CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D620                         20 23 E8 FC FF 40 2A 2B
+D630 D6 4E D6 0A 8C A2 6D BB D3 D7 48 D6 3A E9 8D D9
+D640 02 8C FF 00 C0 D8 4B D6 0B D0 2B 0A D0 2A 0A A6
+D650 9D 6D C6 D7 33 D6 0B 51 C0 D8 6B D6 AC 82 D9 D8
+D660 66 D6 40 D6 67 D6 41 CD 0B DA 2B 0B 51 C1 D8 75
+D670 D6 40 D6 76 D6 41 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D670                      20 23 E8 00 00 AA 9F 6D 8E
+D680 C4 F6 E9 34 D1 04 CF 
+
+Function $D677 (00 00) -> Print the year
+
+D67C AA 9F 6D    / $6D9F (Year)
+D67F 8E C4 F6    / $F6C4 "%d"
+D682 E9 34 D1 04 / Call $D134 -> Print
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D680                      20 23 E8 00 00 A4 5F 6D D5
+D690 00 00 04 00 A5 D6 9E D6 A6 D6 AC D6 B2 D6 8E C7
+D6A0 F6 E9 C4 CE 02 CF 8E CE F6 D6 A1 D6 8E D5 F6 D6
+D6B0 A1 D6 8E DA F6 D6 A1 D6 
+
+Function $D687 (00 00) -> Print the season
+
+D68C A4 5F 6D    / $6D5F (Season)
+D68F D5 00 00
+     04 00 A5 D6 / $D6A5 -> Default
+	       9E D6 / $D69E -> Case 00
+		   A6 D6 / $D6A6 -> Case 01
+		   AC D6 / $DCAC -> Case 02
+		   B2 D6 / $DCB2 -> Case 03
+Case 00:
+	D69E 8E C7 F6    / $F6C7 "Spring"
+	D6A1 E9 C4 CE 02 / Call $CEC4 -> Print
+	
+Default:
+	D6A5 CF
+	
+Case 01:
+	D6A6 8E CE F6    / $F6CE "Summer"
+	D6A9 D6 A1 D6
+	
+Case 02:
+	D6AC 8E D5 F6    / $F6D5 "Fall"
+	D6AF D6 A1 D6
+	
+Case 03:
+	D6B2 8E DA F6    / $F6DA "Winter"
+	D6B5 D6 A1 D6
+	
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D6B0                         20 23 E8 00 00 0E D8 DB
+D6C0 D6 0E B7 25 B7 14 0D B7 25 B7 14 0C B7 25 B7 15
+D6D0 B7 01 B7 15 B7 02 B7 27 D6 DD D6 89 FF CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D6D0                                           20 23
+D6E0 E8 00 00 0C D7 ED D6 0D D7 ED D6 40 CF 0D B7 26
+D6F0 B7 14 0C B7 26 B7 15 B7 03 B7 14 0C B7 26 B7 19
+D700 64 00 00 00 B7 01 B7 15 B7 02 B7 27 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D700                                        20 23 E8
+D710 00 00 0D 8B 64 C0 D8 1B D7 0C CF 0C 5A B6 B3 0D
+D720 5A B6 B4 B5 B3 0C 5A B9 1D B5 8B 64 B6 B3 0C 5A
+D730 B6 B3 0D 5A B9 B4 B5 5A B6 B4 BB B4 BB CF 
+
+Function $D70D (00 00)
+
+D712 0D
+D713 8B 64
+D715 C0
+D716 D8 1B D7
+
+	If
+	D719 0C
+	D71A CF
+
+D71B 0C
+D71C 5A
+D71D B6
+D71E B3
+D71F 0D
+D720 5A
+D721 B6
+D724 B4
+D725 B5
+D726 5A
+D727 B9
+D728 1D
+D729 B5
+D72A 8B 64
+D72C B6
+D72D B3
+D72E 0C
+D72F 5A
+D730 B6
+D731 B3
+D732 0D
+D733 5A
+D734 B9
+D735 B4
+D736 B5
+D737 5A
+D738 B6
+D739 B4
+D73A BB
+D73B B4
+D73C BB
+
+D73F CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D730                                           20 23
+D740 E8 FE FF D6 51 D7 8A F0 00 2B 0B D1 2B 0B D7 4A
+D750 D7 0C D1 2C D0 D7 46 D7 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D750                            20 23 E8 00 00 AA 65
+D760 6D E9 3E D7 02 CF 
+
+Function $D759 (00 00)
+
+D75E AA 65 6D    / $6D65
+D761 E9 3E D7 02 / Call $D73E
+D765 CF          / Return
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D760                   20 23 E8 00 00 AC 59 D7 AC 89
+D770 CC CF 
+
+Function $D766 (00 00)
+
+D76B AC 59 D7    / Call $D759
+D76E AC 89 CC    / Call $CC89
+D771 CF          / Return
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D770       20 23 E8 00 00 0C 8C 15 6E BB D3 CF 
+
+Function $D772 (00 00) -> Returns the daimyo # of fief <00>
+Arg:
+<00> Fief
+
+D777 0C
+D778 8C 15 6E    / $6E15 (ruler-of-fief array)
+D77B BB
+D77C D3
+D77D CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D770                                           20 23
+D780 E8 00 00 AA 5F 6F E9 72 D7 02 CF 
+
+Function $D77E (00 00) -> Returns the daimyo # of the active fief
+
+D783 AA 5F 6F    / $6F5F (active fief)
+D786 E9 72 D7 02 / Call $D772 -> Get daimyo #
+D78A CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D780                                  20 23 E8 FE FF
+D790 8E E1 F6 E9 C4 CE 02 3C E9 72 D7 02 59 B5 8C A8
+D7A0 77 BB 2B B3 E9 C4 CE 02 8D 2C E9 81 CE 02 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D7A0                                              20
+D7B0 23 E8 FE FF 8E E7 F6 E9 C4 CE 02 3C E9 72 D7 02
+D7C0 59 B5 8C A8 77 BB 2B B3 E9 C4 CE 02 CF 
+
+Function $D7AF (FE FF)
+
+D7B4 8E E7 F6    / $F6E7 "Lord\n"
+D7B7 E9 C4 CE 02 / Call $CEC4 -> Print
+
+D7BB 3C
+D7BC E9 72 D7 02 / Call $D772 -> Get daimyo #
+D7C0 59
+D7C1 
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D7A0                                              20
+D7B0 23 E8 FE FF 8E E7 F6 E9 C4 CE 02 3C E9 72 D7 02
+D7C0 59 B5 8C A8 77 BB 2B B3 E9 C4 CE 02 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D7C0                                        20 23 E8
+D7D0 00 00 0C 57 B5 8C 2F 75 BB CF 
+
+Function $D7CD (00 00)
+
+D7D2 0C
+D7D3 57
+D7D4 B5
+D7D5 8C 2F 75    / $752F
+D7D8 BB
+D7D9 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D7D0                               20 23 E8 00 00 3C
+D7E0 E9 72 D7 02 B3 E9 CD D7 02 CF 
+
+Function $D7DA (00 00) -> Returns ptr to fief <00>'s daimyo stats
+Args:
+<00> Fief
+
+D7DF 3C
+D7E0 E9 72 D7 02 / Call $D772 -> Get daimyo #
+D7E4 B3
+D7E5 E9 CD D7 02 / Call $D7CD -> Get ptr to stats
+D7E9 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D7E0                               20 23 E8 00 00 AA
+D7F0 5F 6F E9 DA D7 02 CF 
+
+Function $D7EA (00 00) -> Returns ptr to stats of active fief's daimyo
+
+D7EF AA 5F 6F    / $6F5F (active fief)
+D7F2 E9 DA D7 02 / Call $D7DA -> Get ruler stats
+D7F6 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D7F0                      20 23 E8 FE FF 0C 8B 1A B5
+D800 8C 01 70 BB 2B 0B 78 B0 D7 14 D8 0B 7C B3 0B 7E
+D810 B3 40 B1 B1 CF 
+
+Function $D7F7 (FE FF)
+
+D7FC 0C
+D7FD 8B 1A
+D7FF B5
+D800 8C 01 70    / $7001
+D803 BB
+D804 2B
+
+D805 0B
+D806 78
+D807 B0
+D808 D7 14 D8
+
+	D80B 0B
+	D80C 7C
+	D80D B3
+	D80E 0B
+	D80F 7E
+	D810 B3
+	D811 40
+	D812 B1
+	D813 B1
+
+D814 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D810                20 23 E8 FC FF 0C 8B 1A B5 8C 11
+D820 70 BB 2B 0B B0 D7 35 D8 0B 72 B3 0B 74 B3 0B 76
+D830 B3 40 B1 B1 B1 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D830                   20 23 E8 F4 FF 0C 8B 1A B5 8C
+D840 01 70 BB 27 07 2A D6 63 D8 3B 07 8F 18 B0 B3 0B
+D850 B0 B3 E9 5E CB 04 B1 0B B0 50 C2 D8 61 D8 3B 40
+D860 B1 0B 72 2B 0A 8F 18 B3 0B B4 C6 D7 49 D8 07 7A
+D870 B3 8D 64 07 7A B0 B3 E9 5E CB 04 B1 40 29 3C E9
+D880 DA D7 02 26 28 D6 A9 D8 08 D3 8C EB 00 C4 D8 94
+D890 D8 38 40 D4 08 D3 8C D2 00 C4 D8 A1 D8 38 89 D2
+D8A0 D4 08 D0 28 D1 09 D0 29 D1 09 56 C6 D7 88 D8 3C
+D8B0 E9 15 D8 02 3C E9 F7 D7 02 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D8B0                               20 23 E8 FC FF 0C
+D8C0 51 C2 D8 C7 D8 40 CF 3C E9 CD CB 02 B3 0E B0 B3
+D8D0 0D B0 B4 BB 52 B6 B3 E9 CD CB 02 B4 BB B3 46 A6
+D8E0 63 6D BC B3 3C E9 B8 D6 06 2B 0B D7 F0 D8 41 CF
+D8F0 0B CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D8F0       20 23 E8 FC FF 0C 78 B3 0C 7C B3 3D E9 BA
+D900 D8 06 2B 0C 7C B0 B3 0C 8F 18 B0 B4 BC 2A B3 0B
+D910 B4 C4 D8 17 D9 0A CF 0B CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D910                            20 23 E8 FC FF 0C 74
+D920 B3 0C 7E B3 3D E9 BA D8 06 2B 0C 7E B0 B3 0C 8F
+D930 18 B0 B4 BC 2A B3 0B B4 C4 D8 3E D9 0A CF 0B CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D940 20 23 E8 00 00 3D 3C E9 F2 D8 04 B3 0C 7C B4 B3
+D950 B0 BB B1 3D 3C E9 19 D9 04 B3 0C 7E B4 B3 B0 BB
+D960 B1 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D960       20 23 E8 00 00 89 80 CD A5 A1 6D DB A9 A1
+D970 6D CF 
+
+Function $D962 (00 00)
+
+D967 89 80
+D969 CD
+D96A A5 A1 6D    / $6DA1 (bit flags)
+D96D DB
+D96E A9 A1 6D    / $6DA1 (set 0x80 flag)
+D971 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D970       20 23 E8 00 00 3C E9 72 D7 02 8C D4 6D BB
+D980 D3 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D980       20 23 E8 00 00 A4 09 6E 58 C9 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D980                                        20 23 E8
+D990 00 00 0C 8C F7 6C BB D3 CF 
+
+Function $D98D (00 00) -> Returns ? of fief <00>
+Args:
+<00> Fief
+
+D992 0C
+D993 8C F7 6C    / $6CF7
+D996 BB
+D997 D3
+D998 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D990                            20 23 E8 00 00 0C 8C
+D9A0 F7 6C BB D3 8C FF 00 C0 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D9A0                            20 23 E8 00 00 A4 5F
+D9B0 6F 8C A2 6D BB D3 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D9B0                      20 23 E8 00 00 AC 7E D7 B3
+D9C0 3C E9 72 D7 02 B4 C0 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D9C0                         20 23 E8 00 00 0C 8C F7
+D9D0 6C BB CF 
+
+Function $D9C8 (00 00)
+
+D9CD 0C
+D9CE 8C F7 6C    / $6CF7
+D9D1 BB
+D9D2 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D9D0          20 23 E8 00 00 0C 5A B5 8C 85 79 BB B3
+D9E0 E9 C4 CE 02 CF 
+
+Function $D9D3 (00 00)
+Args:
+<00> Fief #
+
+D9D8 0C
+D9D9 5A
+D9DA B5
+D9DB 8C 85 69    / $6985
+D9DE BB
+D9DF B3
+B9E0 E9 C4 CE 02 / Call $CEC4
+B9E4 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D9E0                20 23 E8 00 00 0C 8C 65 6F BB D3
+D9F0 8C 80 00 DA 50 C1 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+D9F0                      20 23 E8 FE FF 0C 8C 79 7B
+DA00 BB D3 56 C0 D8 0D DA 8A ED F6 D6 21 DA 0C 8C 79
+DA10 7B BB D3 57 C0 D8 1E DA 8A F5 F6 D6 21 DA 8A FE
+DA20 F6 2B 0B CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DA20             20 23 E8 00 00 87 13 3F 3E E9 DE D6
+DA30 04 B3 0D 51 DB B3 E9 0D D7 04 B3 3E 3F E9 DE D6
+DA40 04 B3 3C E9 0D D7 04 B4 BB B3 E9 5E CB 04 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DA40                                              20
+DA50 23 E8 00 00 A4 5F 6F A6 63 6F C6 D8 6A DA A4 5F
+DA60 6F 8B 36 B5 A6 63 6F D6 73 DA A4 63 6F 8B 36 B5
+DA70 A6 5F 6F BB 8C 93 61 BB B3 89 46 D4 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DA70                                        20 23 E8
+DA80 FC FF AC 7E D7 2B AA 63 6F E9 72 D7 02 2A 0B 1A
+DA90 C6 D8 9C DA 0A 8B 36 B5 1B D6 A1 DA 0B 8B 36 B5
+DAA0 1A BB 8C 93 61 BB B3 89 5A D4 CF 
+
+Function $DA7D (FC FF)
+
+DA82 AC 7E D7    / Call $D77E (Get daimyo of active fief)
+DA85 2B
+
+DA86 AA 63 6F    / $6F63 (target fief)
+DA89 E9 72 D7 02 / Call $D772 (Get daimyo of target fief)
+DA8D 2A
+
+DA8E 0B
+DA8F 1A
+DA90 C6
+DA91 D8 9C DA
+
+if
+	DA94 0A
+	DA95 8B 36
+	DA97 B5
+	DA98 1B
+	DA99 D6 A1 DA
+else
+	DA9C 0B
+	DA9D 8B 36
+	DA9F B5
+	DAA0 1A
+	
+DAA1 BB
+DAA2 8C 93 61 .. / $6193 (diplomacy?)
+DAA5 BB
+DAA6 B3
+DAA7 89 5A       / 90
+DAA9 D4
+DAAA CF          / Return
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DAA0                                  20 23 E8 00 00
+DAB0 68 8E 4F 6F A4 9D 6D 8B 11 C0 D8 C6 DA 0C 53 BD
+DAC0 8C 00 83 D6 CC DA 0C 53 BD 8C 04 80 BB B3 64 E9
+DAD0 BD CB 08 8A 4F 6F CF 
+
+Function $DAAB (00 00)
+
+DAB0 68
+DAB1 8E 4F 6F    / $6F4F
+DAB4 A4 9D 6D    / $6D9D (# of fiefs)
+DAB7 8B 11
+DAB9 C0
+DABA D8 C6 DA
+
+if 17 fiefs:
+	DABD 0C
+	DABE 53
+	DABF BD
+	DAC0 8C 00 83
+	DAC3 D6 CC DA
+if 50 fiefs:
+	DAC6 0C
+	DAC7 53
+	DAC8 BD
+	DAC9 8C 04 80
+	
+DACC BB
+DACD B3
+DACE 64
+DACF E9	BD CB 08 / Call $CBBD (Transfer data)
+
+DAD3 8A 4F 6F    / $6F4F
+DAD6 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DAD0                      20 23 E8 FC FF AA 5F 6F E9
+DAE0 AB DA 02 8A 4F 6F 2A 2B D6 04 DB 0A D3 B3 E9 8D
+DAF0 D9 02 8C FF 00 C1 D8 01 DB 0B D0 2B D1 B3 0A D3
+DB00 D4 0A D0 2A 0A D3 8C FF 00 C1 D7 EB DA 3B 89 FF
+DB10 D4 CF 
+
+Function $DAD7 (FC FF)
+
+DADC AA 5F 6F .. / $6F5F (Active province)
+DADF E9 AB DA 02 / Call $DAAB
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DB10       20 23 E8 00 00 A4 9D 6D 8B 11 C0 D8 2A DB
+DB20 AA 63 6F E9 72 D7 02 53 C0 CF AA 63 6F E9 72 D7
+DB30 02 8B 14 C0 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DB30                20 23 E8 00 00 A4 09 6E D0 A8 09
+DB40 6E AC 82 D9 D8 4A DB AC 62 D9 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DB40                                  20 23 E8 00 00
+DB50 0C 8C F7 6C BB D3 8C FF 00 C1 D8 6D DB 3C E9 72
+DB60 D7 02 59 B5 8C A8 77 BB B3 E9 C4 CE 02 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DB60                                           20 23
+DB70 E8 00 00 0C 8C F7 6C BB D3 8C FF 00 C1 D8 8F DB
+DB80 3C E9 72 D7 02 59 B5 8C A8 77 BB B3 D6 92 DB 8E
+DB90 06 F7 E9 C4 CE 02 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DB90                      20 23 E8 F8 FF 3C E9 DA D7
+DBA0 02 76 B3 41 D4 40 28 65 E9 52 CA 02 B3 65 E9 52
+DBB0 CA 02 55 B5 B3 65 E9 52 CA 02 8B 19 B5 B3 65 E9
+DBC0 52 CA 02 8B 7D B5 B4 BB B4 BB B4 BB 2A A4 9D 6D
+DBD0 8B 32 C0 D8 DB DB 89 35 D6 DD DB 89 11 29 40 2B
+DBE0 41 28 D6 F6 DB 0B D2 8C B1 6E BB B0 1A C0 D8 F3
+DBF0 DB 40 28 0B D0 2B 0B 19 C6 D7 E5 DB 08 D8 A7 DB
+DC00 3C E9 72 D7 02 D2 8C B1 6E BB B3 0A B1 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DC00                                           20 23
+DC10 E8 00 00 0C 8B 31 C8 D8 2A DC A5 4A 6E D1 A9 4A
+DC20 6E A5 4A 6E 8C 4B 6E BB D3 CF A5 4A 6E D0 A9 4A
+DC30 6E A5 4A 6E 8C 4A 6E BB B3 0C D4 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DC30                                     20 23 E8 FC
+DC40 FF 8A 7F 6E 2A 40 2B D6 5D DC 0A D3 1C C0 D8 55
+DC50 DC 3A 89 FF D4 0A D0 2A D1 0B D0 2B D1 0B A6 9D
+DC60 6D C6 D7 4A DC CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DC60                   20 23 E8 00 00 0C 8B 32 C8 D8
+DC70 74 DC 0C CF A4 9D 6D 8B 32 C0 D8 81 DC 0C D6 87
+DC80 DC 0C 8C 0E F7 BB D3 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DC80                         20 23 E8 FF FF 61 DE FF
+DC90 FF B3 0D 5B B5 B3 AA 63 6F E9 66 DC 02 8B 37 B5
+DCA0 B4 BB 1C BB 8C 7E A5 BB B3 64 E9 BD CB 08 A0 FF
+DCB0 FF CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DCB0       20 23 E8 F3 FF DE F3 FF 29 6B E9 52 CA 02
+DCC0 D2 2B 6B E9 52 CA 02 D2 2A 39 0B 8C 30 F9 BB D3
+DCD0 D4 09 D0 29 B3 0B D0 2B 8C 30 F9 BB D3 D4 09 D0
+DCE0 29 B3 0A 8C 5D F9 BB D3 D4 09 D0 29 B3 0A D0 2A
+DCF0 8C 5D F9 BB D3 D4 09 D0 29 B3 40 D4 40 28 40 D6
+DD00 1C DD 0B 59 B5 8C A8 77 BB B3 DE F3 FF B3 E9 B0
+DD10 CA 04 D7 1A DD 41 28 D6 25 DD 0B D0 2B 0B A6 9D
+DD20 6D C6 D7 02 DD 08 D7 B7 DC DE F3 FF B3 0C 59 B5
+DD30 8C A8 77 BB B3 E9 D9 CA 04 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DD30                               20 23 E8 F4 FF DE
+DD40 F8 FF 26 0D D6 67 DD 07 D3 B3 E9 B7 D9 02 1C DC
+DD50 D7 65 DD 07 D3 B3 E9 99 D9 02 D7 65 DD 06 D0 26
+DD60 D1 B3 07 D3 D4 07 D0 27 07 D3 8C FF 00 C1 D7 47
+DD70 DD 36 89 FF D4 68 3D DE F8 FF B3 60 E9 BD CB 08
+DD80 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DD80    20 23 E8 F8 FF 3C E9 DA D7 02 B3 8D 14 E9 52
+DD90 CA 02 8F 14 D4 3C E9 DA D7 02 D0 2A D6 C8 DD 3B
+DDA0 8D 14 E9 52 CA 02 8F 32 B3 0B D3 B3 E9 0D D7 04
+DDB0 D4 0B D3 8B 1E C2 D8 BE DD 89 1E D6 BF DD 40 B3
+DDC0 0B B4 B3 D3 BB D4 0B D0 2B 0A 74 B3 0B B4 C7 D7
+DDD0 9F DD 0C 8B 1A B5 8C 01 70 BB 28 D6 45 DE 0C 8B
+DDE0 1A B5 8C 17 70 BB 19 C0 D8 0A DE 39 8D 1F E9 52
+DDF0 CA 02 8F 32 B3 09 B0 B3 E9 0D D7 04 B1 09 B0 8B
+DE00 32 C2 D8 3B DE 89 32 D6 3C DE 39 0C 8C A2 6D BB
+DE10 D3 D8 1F DE 8D 14 E9 52 CA 02 8F 32 D6 27 DE 8D
+DE20 1E E9 52 CA 02 8F 1E B3 09 B0 B3 E9 0D D7 04 B1
+DE30 09 B0 5A C2 D8 3B DE 4A D6 3C DE 40 B3 09 B4 B3
+DE40 B0 BB B1 09 72 29 08 8F 18 B3 09 B4 C6 D7 DE DD
+DE50 8D 32 0C 8B 1A B5 8C 0D 70 BB B4 B3 B0 BB B1 8D
+DE60 32 0C 8B 1A B5 8C 13 70 BB B4 B3 B0 BB B1 0C 8C
+DE70 2D 6D BB B3 89 14 D4 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DE70                         20 23 E8 FE FF A5 A1 6D
+DE80 8B 20 DA D8 8A DE 8A 2E F7 CF A5 A1 6D 8B 10 DA
+DE90 D8 97 DE 8A 6A 79 CF 0C D9 04 00 07 00 AD DE 0D
+DEA0 00 B3 DE 17 00 AD DE 1E 00 B3 DE B9 DE 8A 20 F7
+DEB0 2B 0B CF 8A 28 F7 D6 B0 DE 3C E9 F7 D9 02 D6 B0
+DEC0 DE 
+
+Function $DE78 (FE FF)
+Args:
+<0C> Province #
+
+DE7D A5 A1 6D    / $6DA1 (bit flags)
+DE80 8B 20
+DE82 DA          / check for 0x20 flag
+DE83 D8 8A DE
+
+if
+	DE86 8A 2E F7    / $F72E
+	DE89 CF
+
+DE8A A5 A1 6D
+DE8D 8B 10
+DE8F DA
+DE90 D8 97 DE
+
+if
+	DE93 8A 6A 79    / $796A
+	DE96 CF
+
+DE97 0C
+DE98 D9 04 00
+     07 00 AD DE
+	 0D 00 B3 DE
+	 17 00 AD DE
+	 1E 00 B3 DE
+	       B9 DE 
+	
+Province 08 or 24	
+	DEAD 8A 20 F7
+	DEB0 2B
+	
+	DEB1 0B
+	DEB2 CF
+
+Province 14 or 31
+	DEB3 8A 28 F7
+	DEB6 D6 B0 DE
+
+Else
+	DEB9 3C
+	DEBA E9 F7 D9 02 / Call $D9F7
+	DEBE D6 B0 DE
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DEC0    20 23 E8 F8 FF A4 57 6F A6 63 6F C0 D8 D6 DE
+DED0 A4 5F 6F D6 D9 DE A4 63 6F 28 B3 E9 72 D7 02 2A
+DEE0 AA 57 6F E9 72 D7 02 29 B3 E9 0E DC 02 39 E9 3C
+DEF0 DC 02 40 D6 33 DF 3B E9 72 D7 02 19 C0 D8 31 DF
+DF00 3B E9 99 D9 02 D7 31 DF 0B 8C 15 6E BB B3 0A D4
+DF10 0B 8C A2 6D BB B3 40 D4 0B 8C F7 6C BB B3 38 E9
+DF20 8D D9 02 D8 2A DF 45 D6 2B DF 40 D4 3B E9 54 E5
+DF30 02 0B D0 2B 0B A6 9D 6D C6 D7 F6 DE CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DF30                                        20 23 E8
+DF40 FE FF 3C E9 DA D7 02 2B 0B 72 B3 D3 D0 D4 0B 74
+DF50 B3 D3 D0 D4 0B 75 B3 D3 D0 D4 3D E9 DA D7 02 2B
+DF60 0B 72 B3 D3 D1 D4 0B 74 B3 D3 D1 D4 0B 75 B3 D3
+DF70 D1 D4 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DF70          20 23 E8 F8 FF A4 5F 6F 8B 1A B5 8C 13
+DF80 70 BB 29 A4 63 6F 8B 1A B5 8C 13 70 BB 2A 0A 76
+DF90 B0 2B 40 28 3A 3B AA 87 6F AA 81 6F 09 B0 B3 0A
+DFA0 B0 B3 E9 24 DA 0A B1 08 D0 28 D1 0A 72 2A 8F FE
+DFB0 09 72 29 8F FE 08 53 C6 D7 94 DF CF 
+
+Function $DF73 (F8 FF)
+
+DF78 A4 5F 6F    / $6F5F (active fief)
+DF7B 8B 1A
+DF7D B5
+DF7E 8C 13 70
+DF81 BB
+DF82 29          / Start of stats?
+
+DF83 A4 63 6F    / $6F63
+DF86 8B 1A
+DF88 B5
+DF89 8C 13 70
+DF8C BB
+DF8D 2A          / Start of stats?
+
+DF8E 0A
+DF8F 76
+DF90 B0
+DF91 2B
+
+DF92 40
+DF93 28
+
+DF94 3A
+DF95 3B
+DF96 AA 87 6F    / $6F87
+DF99 AA 81 6F    / $6F81
+DF9C 09
+DF9D B0
+DF9E B3
+DF9F 0A
+DFA0 B0
+DFA1 B3
+DFA2 E9 24 DA 0A / Call $DA24
+DFA6 B1
+
+DFA7 08
+DFA8 D0
+DFA9 28
+DFAA D1
+
+DFAB 0A
+DFAC 72
+DFAD 2A
+DFAE 8F FE
+
+DFB0 09
+DFB1 72
+DFB2 29
+DFB3 8F FE
+
+DFB5 08
+DFB6 53
+DFB7 C6
+DFB8 D7 94 DF
+
+DFBB CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DFB0                                     20 23 E8 FE
+DFC0 FF A4 63 6F 2B 40 D6 EC DF AC 12 DB D8 E8 DF A4
+DFD0 63 6F 8C 2D 6D BB D3 8B 1E C4 D8 E8 DF A4 63 6F
+DFE0 8C 2D 6D BB B3 89 1E D4 A4 63 6F D0 A8 63 6F A4
+DFF0 63 6F A6 9D 6D C6 D7 C9 DF 0B A8 63 6F CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DFF0                                           20 23
+E000 E8 FE FF 0D 8F 16 B0 8B 32 B6 8F 14 2B 0C 55 B5
+E010 8C AB 76 BB D3 1B C8 D8 3B E0 0C 55 B5 8C AB 76
+E020 BB D3 1B BC B3 0C 55 B5 8C A9 76 BB B4 B3 D3 BB
+E030 D4 0C 55 B5 8C AB 76 BB B3 0B D4 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E030                                     20 23 E8 F4
+E040 FF AA 63 6F E9 36 D8 02 A4 63 6F 8B 1A B5 8C 01
+E050 70 BB 26 A4 5F 6F 8B 32 C0 28 A4 57 6F A6 63 6F
+E060 C0 29 09 D8 80 E0 65 A4 63 6F 55 B5 8C A9 76 BB
+E070 B3 A4 5F 6F 55 B5 8C A9 76 BB B3 64 E9 BD CB 08
+E080 08 D7 A6 E0 AC 73 DF 36 AA 63 6F E9 FE DF 04 09
+E090 D8 9C E0 AA 63 6F AA 5F 6F D6 A2 E0 AA 5F 6F AA
+E0A0 63 6F E9 3D DF 04 A5 A1 6D 8B 20 DA D7 B3 E0 08
+E0B0 D7 B7 E0 40 D6 B8 E0 41 27 07 D8 CB E0 09 D7 CB
+E0C0 E0 40 A8 81 6F A8 7F 6F A8 7D 6F 36 A4 7D 6F A6
+E0D0 83 6F BB B1 06 76 B3 A4 7F 6F A6 85 6F BB B1 06
+E0E0 8F 10 B3 A4 81 6F A6 87 6F BB B1 07 D8 06 E1 6A
+E0F0 E9 52 CA 02 7A B3 06 78 B0 B3 E9 0D D7 04 B3 06
+E100 78 B4 B3 B0 BC B1 A4 63 6F 8C 15 6E BB 2A 08 D7
+E110 20 E1 39 E9 E5 D9 02 D8 20 E1 AC C1 DE D6 9C E1
+E120 09 D8 9C E1 08 D8 78 E1 A4 63 6F 8C A2 6D BB D3
+E130 D8 6E E1 0A D3 B3 E9 0E DC 02 0A D3 B3 E9 3C DC
+E140 02 40 D6 65 E1 0A D3 B3 3B E9 72 D7 02 B4 C0 D8
+E150 63 E1 0B A6 63 6F C1 D8 63 E1 3B E9 C8 D9 02 B3
+E160 89 FF D4 0B D0 2B 0B A6 9D 6D C6 D7 45 E1 AA 63
+E170 6F E9 1B E2 02 D6 9C E1 3A AC 7E D7 D4 AA 63 6F
+E180 E9 C8 D9 02 B3 AA 5F 6F E9 8D D9 02 D8 93 E1 45
+E190 D6 94 E1 40 D4 AA 63 6F E9 54 E5 02 08 D7 C7 E1
+E1A0 09 D8 C7 E1 A4 63 6F 8C A2 6D BB B3 A5 65 6F 57
+E1B0 BF D4 A4 63 6F 8C A2 6D BB D3 B3 A4 5F 6F 8C A2
+E1C0 6D BB B4 B3 D3 DC D4 89 8F CD A5 A1 6D DA A9 A1
+E1D0 6D AC BC DF AA 63 6F E9 36 D8 02 08 D7 E6 E1 AA
+E1E0 5F 6F E9 36 D8 02 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E1E0                      20 23 E8 FE FF 8D 1D E9 03
+E1F0 CA 02 40 D6 11 E2 0C 8B 36 B5 1B BB 8C 93 61 BB
+E200 B3 0B 8B 36 B5 1C BB 8C 93 61 BB B3 40 D4 D4 0B
+E210 D0 2B 0B A6 9D 6D C6 D7 F6 E1 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E210                                  20 23 E8 00 00
+E220 0C 8C 15 6E BB B3 8E FF 00 E9 0E DC 02 D4 3C E9
+E230 72 D7 02 B3 E9 B2 DC 02 3C E9 72 D7 02 59 B5 8C
+E240 A8 77 BB B3 E9 26 D3 02 0C D0 B3 8E 35 F7 E9 34
+E250 D1 04 0C 8C F7 6C BB B3 40 D4 0C 8C A2 6D BB B3
+E260 41 D4 3C E9 81 DD 02 3C E9 97 DB 02 3C E9 54 E5
+E270 02 AC 66 D7 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E270                20 23 E8 00 00 3C E9 E7 E1 02 3C
+E280 E9 72 D7 02 59 B5 8C A8 77 BB B3 E9 26 D3 02 8E
+E290 4F F7 E9 C4 CE 02 3C E9 8D D9 02 D8 AB E2 AA 9F
+E2A0 6D 0C D0 B3 8E 5B F7 E9 34 D1 06 AC 66 D7 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E2A0                                              20
+E2B0 23 E8 FC FF 40 2A 0C 55 B5 8C A9 76 BB 2B D6 CF
+E2C0 E2 0B D0 2B D1 B3 0D D0 2D D1 D3 D4 0A D0 2A 0A
+E2D0 55 C6 D7 C1 E2 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E2D0                   20 23 E8 00 00 AC 89 CC 8E 77
+E2E0 F7 E9 26 D3 02 AA 63 6F E9 72 D7 02 59 B5 8C A8
+E2F0 77 BB B3 E9 C4 CE 02 8E 7D F7 E9 C4 CE 02 AC 7E
+E300 D7 59 B5 8C A8 77 BB B3 E9 C4 CE 02 3C 8E 7F F7
+E310 E9 34 D1 04 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E310                20 23 E8 FA FF AA 63 6F E9 8D D9
+E320 02 D8 61 E3 A4 D3 7F 29 42 A8 D3 7F 8E 98 F7 E9
+E330 D6 E2 02 8E A6 F7 E9 C4 CE 02 AC A7 D3 D8 59 E3
+E340 8E 8C F7 E9 26 D3 02 8E 0F 27 61 E9 E9 D5 04 2B
+E350 D7 5B E3 AC 89 CC D6 5B E3 40 2B 09 A8 D3 7F 0B
+E360 CF AA 63 6D E9 52 CA 02 D7 A2 E3 AA 5F 6F E9 72
+E370 D9 02 D8 7D E3 63 E9 52 CA 02 D7 A2 E3 A4 5F 6F
+E380 8B 1A B5 8C 01 70 BB B0 2A 8C C8 00 C4 D8 A2 E3
+E390 8D 1E E9 52 CA 02 8F 32 B3 3A E9 0D D7 04 90 C8
+E3A0 00 CF 40 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E3A0             20 23 E8 FA FF AA 63 6F E9 8D D9 02
+E3B0 D8 DE E3 A4 D3 7F 29 42 A8 D3 7F 8E AD F7 E9 D6
+E3C0 E2 02 8E 8C F7 E9 C4 CE 02 8E 0F 27 61 E9 E9 D5
+E3D0 04 2B D7 D8 E3 AC 89 CC 09 A8 D3 7F 0B CF AA 5F
+E3E0 6F E9 72 D9 02 D8 F0 E3 63 E9 52 CA 02 D7 23 E4
+E3F0 A4 5F 6F 8B 1A B5 8C 01 70 BB B0 2A AA 63 6D E9
+E400 52 CA 02 D7 21 E4 8D 32 E9 52 CA 02 B3 3A E9 0D
+E410 D7 04 B3 8D 32 3A E9 0D D7 04 B4 BB 8F 14 D6 22
+E420 E4 40 CF 40 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E420                20 23 E8 FE FF 3C E9 72 D7 02 2C
+E430 3C E9 3C DC 02 40 D6 4A E4 3B E9 72 D7 02 1C C0
+E440 D8 48 E4 3B E9 54 E4 02 0B D0 2B 0B A6 9D 6D C6
+E450 D7 39 E4 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E450             20 23 E8 00 00 0C 8C F7 6C BB D3 8C
+E460 FF 00 C1 D8 A1 E4 8E B2 F7 E9 26 D3 02 0C D0 B3
+E470 8E B8 F7 E9 34 D1 04 AC 66 D7 0C 8C F7 6C BB B3
+E480 89 FF D4 0C 8C A2 6D BB B3 40 D4 0C 8C 2D 6D BB
+E490 B3 89 14 D4 8E A3 77 3C E9 AF E2 04 3C E9 54 E5
+E4A0 02 CF 
+
+Function $E454 (00 00) -> Fief #<00> loses its ruler
+Args:
+<0C> Fief #
+
+E459 0C
+E45A 8C F7 6C
+E45D BB
+E45E D3
+E45F 8C FF 00
+E462 C1
+E463 D8 A1 E4
+
+if
+	E466 8E B2 F7    / $F7B2 "Fief "
+	E469 E9 26 D3 02 / Call $D326 -> Print
+
+	E46D 0C
+	E46E D0
+	E46F B3
+	E470 8E B8 F7    / $F7B8 "%d lost its\nleader"
+	E473 E9 34 D1 04 / Call $D134 -> Print
+	
+	E477 AC 66 D7    / Call $D766
+	
+	E47A 0C
+	E47B 8C F7 6C
+	E47E BB
+	E47F B3
+	E480 89 FF
+	E482 D4
+	
+	E483 0C
+	E484 8C A2 6D
+	E487 BB
+	E488 B3
+	E489 40
+	E48A D4
+	
+	E48B 0C
+	E48C 8C 2D 6D
+	E48F BB
+	E490 B3
+	E491 89 14
+	E493 D4
+	
+	E494 8E A3 77
+	E497 3C
+	E498 E9 AF E2 04 / Call $E2AF
+	
+	E49C 3C
+	E49D E9 54 E5 02 / Call $E554
+
+E4A1 CF          / Return
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E4A0       20 23 E8 FC FF A4 5F 6F 2A 8A 89 6F 2B 40
+E4B0 D6 C6 E4 AC A9 D9 D8 C2 E4 0B D0 2B D1 B3 A4 5F
+E4C0 6F D4 A4 5F 6F D0 A8 5F 6F A4 5F 6F A6 9D 6D C6
+E4D0 D7 B3 E4 3B 89 FF D4 0A A8 5F 6F CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E4D0                                     20 23 E8 FC
+E4E0 FF AC A2 E4 8A 89 6F 2A D6 01 E5 0B D3 B3 E9 72
+E4F0 D7 02 1C C1 D8 FF E4 0A D0 2A D1 B3 0B D3 D4 0B
+E500 D0 2B 0B D3 8C FF 00 C1 D7 EB E4 3A 89 FF D4 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E510 20 23 E8 FA FF 8A 89 6F 29 40 2A 40 D6 45 E5 3B
+E520 E9 99 D9 02 D7 43 E5 3B E9 B7 D9 02 1C DC D7 43
+E530 E5 A4 5F 6F 1B C1 D8 43 E5 09 D0 29 D1 B3 0B D4
+E540 0A D0 2A 0B D0 2B 0B A6 9D 6D C6 D7 1F E5 39 89
+E550 FF D4 0A CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E550             20 23 E8 D8 FF A4 5D 6F 58 C7 D8 94
+E560 E5 A4 CD 7F 2B A4 CF 7F 2A 8D 22 DE DA FF B3 A4
+E570 5D 6F 8B 22 B5 8C 3C 9E BB B3 64 E9 BD CB 08 DE
+E580 DA FF 85 D8 81 D8 D3 8C FF 00 C1 D7 95 E5 3A 3B
+E590 E9 7B CC 04 CF 81 D8 D0 85 D8 D1 D3 A8 CD 7F 81
+E5A0 D8 D0 85 D8 D1 D3 A8 CF 7F 81 D8 D0 85 D8 D1 D3
+E5B0 1C C0 D8 84 E5 64 A4 CF 7F 8F FC 8B 1C B5 B3 A4
+E5C0 5D 6F 8C C0 01 B5 B4 BB A6 CD 7F BB 8C 5A 8D BB
+E5D0 B3 AA CF 7F 8D 1D A4 CD 7F 78 B3 E9 5E CB 04 B3
+E5E0 AA CF 7F AA CD 7F E9 54 CC 0C 3C E9 6E DB 02 D6
+E5F0 8E E5 
+
+Function $E554 (D8 FF)
+
+E559 A4 5D 6F
+E55C 58
+E55D C7
+E55E D8 94 E5
+
+if
+	E561 A4 CD 7F    / $7FCD
+	E564 2B
+	
+	E565 A4 CF 7F    / $7FCF
+	E568 2A
+	
+	E569 8D 22
+	E56B DE DA FF
+	E56E B3
+	E56F A4 5D 6F    / $6F5D
+	E572 8B 22
+	E574 B5
+	E575 8C 3C 9E
+	E578 BB
+	E579 B3
+	E57A 64
+	E57B E9 BD CB 08 / $CBBD
+
+E594
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E560 E5 A4 CD 7F 2B A4 CF 7F 2A 8D 22 DE DA FF B3 A4
+E570 5D 6F 8B 22 B5 8C 3C 9E BB B3 64 E9 BD CB 08 DE
+E580 DA FF 85 D8 81 D8 D3 8C FF 00 C1 D7 95 E5 3A 3B
+E590 E9 7B CC 04 CF 81 D8 D0 85 D8 D1 D3 A8 CD 7F 81
+E5A0 D8 D0 85 D8 D1 D3 A8 CF 7F 81 D8 D0 85 D8 D1 D3
+E5B0 1C C0 D8 84 E5 64 A4 CF 7F 8F FC 8B 1C B5 B3 A4
+E5C0 5D 6F 8C C0 01 B5 B4 BB A6 CD 7F BB 8C 5A 8D BB
+E5D0 B3 AA CF 7F 8D 1D A4 CD 7F 78 B3 E9 5E CB 04 B3
+E5E0 AA CF 7F AA CD 7F E9 54 CC 0C 3C E9 6E DB 02 D6
+E5F0 8E E5 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E5F0       20 23 E8 D8 FF 0C A6 5D 6F C1 D8 93 E6 61
+E600 E9 35 CC 02 61 8D 13 8D 1F 64 8D 1E E9 42 CC 0A
+E610 64 0C 8C C0 01 B5 8C 5C 8D BB B3 8D 13 8D 1D 64
+E620 62 E9 54 CC 0C 62 8E C8 23 0C 55 BD 8C 1C 9D BB
+E630 B3 64 E9 7C CF 08 0C A8 5D 6F A4 CD 7F 2B A4 CF
+E640 7F 2A 8D 22 DE DA FF B3 0C 8B 22 B5 8C 3C 9E BB
+E650 B3 64 E9 BD CB 08 DE DA FF 85 D8 D6 7E E6 81 D8
+E660 D0 85 D8 D1 D3 A8 CD 7F 81 D8 D0 85 D8 D1 D3 A8
+E670 CF 7F 81 D8 D0 85 D8 D1 D3 B3 E9 6E DB 02 81 D8
+E680 D3 8C FF 00 C1 D7 5E E6 3A 3B E9 7B CC 04 60 E9
+E690 35 CC 02 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E690             20 23 E8 00 00 A4 9D 6D 8B 32 C0 D8
+E6A0 AB E6 A4 DD 7F 8C A6 FE D6 B1 E6 A4 DD 7F 8C D8
+E6B0 FE BB D3 B3 E9 F2 E5 02 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E6B0                            20 23 E8 F6 FF A4 5B
+E6C0 6F D2 8C B1 6E BB B0 2B 0B 55 B8 29 0B 55 BA 2A
+E6D0 09 55 B8 28 09 55 BA 29 08 55 B8 27 08 55 BA 28
+E6E0 6C 8E B0 15 0A 8C C0 00 B5 8C 04 A6 BB B3 68 E9
+E6F0 7C CF 08 66 8E 70 16 09 8B 60 B5 8C C4 A9 BB B3
+E700 68 E9 7C CF 08 66 8E D0 16 08 8B 60 B5 8C A4 AB
+E710 BB B3 68 E9 7C CF 08 6C 8E 30 17 07 8C C0 00 B5
+E720 8C 84 AD BB B3 68 E9 7C CF 08 6C 3C 0A 5C B5 8C
+E730 34 AE BB B3 69 E9 BD CB 08 66 0C 7C B3 09 56 B5
+E740 8C 70 AE BB B3 69 E9 BD CB 08 66 0C 8F 12 B3 08
+E750 56 B5 8C 8E AE BB B3 69 E9 BD CB 08 6C 0C 8F 18
+E760 B3 07 5C B5 8C AC AE BB B3 69 E9 BD CB 08 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E760                                              20
+E770 23 E8 D4 FF 40 85 DA 81 DA D2 8C CC F7 BB B0 B3
+E780 87 DA E9 8B CF 04 81 DA D0 85 DA 81 DA 54 C6 D7
+E790 77 E7 A4 5B 6F 8B 35 C9 D7 A7 E7 AA 5B 6F E9 CD
+E7A0 D7 02 76 D3 D7 EE E7 AA 5B 6F E9 66 DC 02 D2 D2
+E7B0 8C D0 BB BB 85 D8 64 DE D4 FF B3 87 D8 68 E9 BD
+E7C0 CB 08 DE D4 FF 85 D8 81 D8 D0 D3 B3 8E B0 15 81
+E7D0 D8 72 B0 B3 81 D8 D3 B3 E9 7C CF 08 68 AA 5B 6F
+E7E0 E9 66 DC 02 8B 24 B5 8C 44 B1 BB D6 FA E7 DE DC
+E7F0 FF B3 E9 B9 E6 02 68 DE DC FF B3 0D 75 B3 0C 75
+E800 B3 3D 3C E9 54 CC 0C 41 A8 C7 7F CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E800                                     20 23 E8 00
+E810 00 A5 A1 6D 54 DA D8 22 E8 0C A8 CB 7F 6E E9 B1
+E820 CB 02 CF 68 85 08 68 85 09 68 85 00 68 85 01 A0
+E830 07 38 A5 02 E9 09 85 0C A5 03 E9 00 85 0D B9 00
+E840 00 91 0C 88 10 F8 A0 01 18 A5 0C 85 04 71 08 85
+E850 02 C8 A5 0D 85 05 71 08 85 03 18 A5 08 69 03 85
+E860 06 A5 09 69 00 85 07 A0 00 B1 06 E6 06 D0 02 E6
+E870 07 AA BD 26 F0 85 00 BD 26 F1 85 01 6C 00 00 A9
+E880 E8 D0 2A A9 EA D0 26 A9 EC D0 22 A9 EE D0 1E A9
+E890 F0 D0 1A A9 F2 D0 16 A9 F4 D0 12 A9 F6 D0 0E A9
+E8A0 F8 D0 0A A9 FA D0 06 A9 FC D0 02 A9 FE 18 65 04
+E8B0 85 00 A9 FF 65 05 85 01 B1 00 85 08 C8 B1 00 85
+E8C0 09 4C 67 E8 A0 11 D0 0A A0 0F D0 06 A0 0D D0 02
+E8D0 A0 0B B1 04 85 08 C8 B1 04 85 09 4C 67 E8 A9 E8
+E8E0 D0 2A A9 EA D0 26 A9 EC D0 22 A9 EE D0 1E A9 F0
+E8F0 D0 1A A9 F2 D0 16 A9 F4 D0 12 A9 F6 D0 0E A9 F8
+E900 D0 0A A9 FA D0 06 A9 FC D0 02 A9 FE 18 65 04 85
+E910 00 A9 FF 65 05 85 01 B1 00 85 0C C8 B1 00 85 0D
+E920 4C 67 E8 A0 11 D0 0A A0 0F D0 06 A0 0D D0 02 A0
+E930 0B B1 04 85 0C C8 B1 04 85 0D 4C 67 E8 A9 E8 D0
+E940 2A A9 EA D0 26 A9 EC D0 22 A9 EE D0 1E A9 F0 D0
+E950 1A A9 F2 D0 16 A9 F4 D0 12 A9 F6 D0 0E A9 F8 D0
+E960 0A A9 FA D0 06 A9 FC D0 02 A9 FE 18 65 04 85 00
+E970 A9 FF 65 05 85 01 A5 08 91 00 C8 A5 09 91 00 4C
+E980 67 E8 A0 11 D0 0A A0 0F D0 06 A0 0D D0 02 A0 0B
+E990 A5 08 91 04 C8 A5 09 91 04 4C 67 E8 A9 E8 D0 2A
+E9A0 A9 EA D0 26 A9 EC D0 22 A9 EE D0 1E A9 F0 D0 1A
+E9B0 A9 F2 D0 16 A9 F4 D0 12 A9 F6 D0 0E A9 F8 D0 0A
+E9C0 A9 FA D0 06 A9 FC D0 02 A9 FE 18 65 04 85 00 A9
+E9D0 FF 65 05 85 01 C8 B1 00 AA 88 B1 00 4C 08 F0 A0
+E9E0 12 D0 0A A0 10 D0 06 A0 0E D0 02 A0 0C B1 04 AA
+E9F0 88 B1 04 4C 08 F0 8A 29 0F 85 08 84 09 4C 67 E8
+EA00 84 08 84 09 4C 67 E8 8A 29 0F 85 0C 84 0D 4C 67
+EA10 E8 84 0C 84 0D 4C 67 E8 8A 29 0F A2 00 4C 08 F0
+EA20 8A 29 0F 18 65 08 85 08 90 02 E6 09 4C 67 E8 20
+EA30 EC EF 90 03 20 A6 EF B1 00 85 08 C8 B1 00 85 09
+EA40 4C 67 E8 20 D5 EF 90 EF 20 A6 EF B1 00 85 0C C8
+EA50 B1 00 85 0D 4C 67 E8 20 EC EF 90 EF 20 D5 EF 90
+EA60 EA 20 A6 EF A5 08 91 00 C8 A5 09 91 00 4C 67 E8
+EA70 20 EC EF 90 EF 20 D5 EF 90 EA 20 A6 EF C8 B1 00
+EA80 AA 88 B1 00 4C 08 F0 20 EC EF 90 F1 20 D5 EF 90
+EA90 EC 20 BF EF 65 04 85 08 8A 65 05 85 09 4C 67 E8
+EAA0 20 BF EF 65 04 85 0C 8A 65 05 85 0D 4C 67 E8 20
+EAB0 97 EF 85 08 86 09 4C 67 E8 20 BF EF 90 F4 20 97
+EAC0 EF 85 0C 86 0D 4C 67 E8 20 BF EF 90 F4 20 97 EF
+EAD0 4C 08 F0 20 BF EF 4C 08 F0 20 97 EF 65 08 85 08
+EAE0 8A 65 09 85 09 4C 67 E8 20 BF EF 90 EF 20 EC EF
+EAF0 B1 00 85 08 84 09 4C 67 E8 20 D5 EF 90 F2 20 EC
+EB00 EF B1 00 85 0C 84 0D 4C 67 E8 20 D5 EF 90 F2 20
+EB10 EC EF A5 08 91 00 4C 67 E8 20 D5 EF 90 F4 20 EC
+EB20 EF B1 00 A2 00 4C 08 F0 20 D5 EF 90 F4 A5 08 85
+EB30 00 A5 09 85 01 4C 3B EB 20 D5 EF 20 57 EB A0 00
+EB40 4C 9E EB A5 08 85 00 A5 09 85 01 4C 51 EB 20 D5
+EB50 EF 20 57 EB 4C 67 E8 38 A5 02 E9 02 85 02 B0 02
+EB60 C6 03 A5 06 91 02 C8 A5 07 91 02 20 7A EB 18 A5
+EB70 02 69 02 85 02 90 02 E6 03 60 6C 00 00 20 BF EF
+EB80 A0 00 86 00 AA D0 07 C6 00 10 03 4C 67 E8 B1 08
+EB90 91 0C C8 D0 04 E6 09 E6 0D CA F0 EB D0 F0 20 97
+EBA0 EF 65 02 85 02 90 02 E6 03 4C 67 E8 20 BF EF 65
+EBB0 02 85 02 8A 65 03 85 03 4C 67 E8 20 BF EF 85 06
+EBC0 86 07 4C 67 E8 A5 08 05 09 D0 F0 20 BF EF 4C 67
+EBD0 E8 A5 08 05 09 F0 E4 D0 F2 20 97 EF 65 06 85 06
+EBE0 B0 02 C6 07 4C 67 E8 A5 08 05 09 D0 EC 20 97 EF
+EBF0 4C 67 E8 A5 08 05 09 F0 E0 D0 F2 20 97 EF 65 06
+EC00 85 06 90 02 E6 07 4C 67 E8 A5 08 05 09 D0 EC 20
+EC10 97 EF 4C 67 E8 A5 08 05 09 F0 E0 D0 F2 B1 06 AA
+EC20 C8 B1 06 85 0C 18 A5 06 69 02 85 06 90 02 E6 07
+EC30 A0 00 8A D0 07 C6 0C 10 03 88 D0 1B CA B1 06 C5
+EC40 08 D0 07 C8 B1 06 C5 09 F0 0D 18 A5 06 69 04 85
+EC50 06 90 DD E6 07 B0 D9 C8 B1 06 AA C8 B1 06 85 07
+EC60 86 06 4C 67 E8 18 B1 06 65 08 85 08 C8 B1 06 65
+EC70 09 85 09 C8 A5 08 D1 06 C8 A5 09 F1 06 C8 B0 11
+EC80 A5 08 0A 26 09 65 06 85 06 A5 09 65 07 85 07 A0
+EC90 06 B1 06 AA C8 B1 06 85 07 86 06 4C 67 E8 B1 08
+ECA0 AA C8 B1 08 86 08 85 09 4C 67 E8 B1 08 85 08 84
+ECB0 09 4C 67 E8 20 DB EC A5 09 91 0C 88 A5 08 91 0C
+ECC0 4C 67 E8 20 DB EC 88 A5 08 91 0C 4C 67 E8 A5 08
+ECD0 A6 09 4C 08 F0 20 DB EC 4C 67 E8 B1 02 85 0C C8
+ECE0 B1 02 85 0D 18 A5 02 69 02 85 02 90 02 E6 03 60
+ECF0 A0 00 84 00 84 01 A0 10 A5 08 4A 90 0D 18 A5 00
+ED00 65 0C 85 00 A5 01 65 0D 85 01 66 01 66 00 66 09
+ED10 66 08 88 D0 E3 4C 67 E8 20 2E ED 4C 67 E8 20 7A
+ED20 ED 20 2E ED A5 0A 10 03 4C 09 EF 4C 67 E8 A0 00
+ED30 84 00 84 01 A0 10 06 08 26 09 26 00 26 01 38 A5
+ED40 00 E5 0C AA A5 01 E5 0D 90 06 86 00 85 01 E6 08
+ED50 88 D0 E3 60 20 7A ED 20 2E ED A5 00 85 08 A5 01
+ED60 85 09 A5 0B 10 03 4C 09 EF 4C 67 E8 20 2E ED A5
+ED70 00 85 08 A5 01 85 09 4C 67 E8 A5 09 85 0B 45 0D
+ED80 85 0A A5 09 10 0B 38 98 E5 08 85 08 98 E5 09 85
+ED90 09 A5 0D 10 0B 38 98 E5 0C 85 0C 98 E5 0D 85 0D
+EDA0 60 18 A5 08 65 0C 85 08 A5 09 65 0D 85 09 4C 67
+EDB0 E8 38 A5 08 E5 0C 85 08 A5 09 E5 0D 85 09 4C 67
+EDC0 E8 A6 0C D0 07 C6 0D 10 03 4C 67 E8 06 08 26 09
+EDD0 CA F0 F2 D0 F7 A5 09 10 15 A6 0C D0 07 C6 0D 10
+EDE0 03 4C 67 E8 38 66 09 66 08 CA F0 F1 D0 F6 A6 0C
+EDF0 D0 07 C6 0D 10 03 4C 67 E8 46 09 66 08 CA F0 F2
+EE00 D0 F7 A5 08 25 0C 85 08 A5 09 25 0D 85 09 4C 67
+EE10 E8 A5 08 05 0C 85 08 A5 09 05 0D 85 09 4C 67 E8
+EE20 A5 08 45 0C 85 08 A5 09 45 0D 85 09 4C 67 E8 A5
+EE30 09 C5 0D 84 09 D0 07 A5 08 C5 0C D0 01 C8 84 08
+EE40 4C 67 E8 A5 09 C5 0D 84 09 D0 06 A5 08 C5 0C F0
+EE50 01 C8 84 08 4C 67 E8 A5 08 C5 0C A5 09 E5 0D 84
+EE60 09 10 01 C8 98 50 02 49 01 85 08 4C 67 E8 A5 0C
+EE70 C5 08 A5 0D E5 09 84 09 10 01 C8 98 50 02 49 01
+EE80 85 08 4C 67 E8 A5 0C C5 08 A5 0D E5 09 84 09 30
+EE90 01 C8 98 50 02 49 01 85 08 4C 67 E8 A5 08 C5 0C
+EEA0 A5 09 E5 0D 84 09 30 01 C8 98 50 02 49 01 85 08
+EEB0 4C 67 E8 A5 08 C5 0C A5 09 E5 0D 84 09 B0 01 C8
+EEC0 84 08 4C 67 E8 A5 0C C5 08 A5 0D E5 09 84 09 B0
+EED0 01 C8 84 08 4C 67 E8 A5 0C C5 08 A5 0D E5 09 84
+EEE0 09 90 01 C8 84 08 4C 67 E8 A5 08 C5 0C A5 09 E5
+EEF0 0D 84 09 90 01 C8 84 08 4C 67 E8 A5 09 84 09 05
+EF00 08 D0 01 C8 84 08 4C 67 E8 38 98 E5 08 85 08 98
+EF10 E5 09 85 09 4C 67 E8 A5 08 49 FF 85 08 A5 09 49
+EF20 FF 85 09 4C 67 E8 A5 08 A6 0C 86 08 85 0C A5 09
+EF30 A6 0D 86 09 85 0D 4C 67 E8 E6 08 D0 02 E6 09 4C
+EF40 67 E8 A5 08 D0 02 C6 09 C6 08 4C 67 E8 06 08 26
+EF50 09 4C 67 E8 20 BF EF A0 08 20 03 F6 4C 67 E8 20
+EF60 BF EF A0 08 20 CD F5 4C 67 E8 20 BF EF A0 0C 20
+EF70 2C F6 4C 67 E8 A0 07 A5 04 85 0C A5 05 85 0D B1
+EF80 0C 99 00 00 88 10 F8 E6 00 D0 04 E6 01 A2 00 6C
+EF90 00 00 00 00 4C 67 E8 A2 00 B1 06 10 01 CA E6 06
+EFA0 D0 02 E6 07 18 60 18 A2 00 B1 06 10 01 CA 65 04
+EFB0 85 00 8A 65 05 85 01 E6 06 D0 02 E6 07 18 60 C8
+EFC0 B1 06 AA 88 B1 06 48 18 A5 06 69 02 85 06 90 03
+EFD0 E6 07 18 68 60 B1 06 85 00 C8 B1 06 85 01 88 18
+EFE0 A5 06 69 02 85 06 90 03 E6 07 18 60 18 B1 06 65
+EFF0 04 85 00 C8 B1 06 65 05 85 01 88 18 A5 06 69 02
+F000 85 06 90 03 E6 07 18 60 A8 38 A5 02 E9 02 85 02
+F010 B0 02 C6 03 98 A0 00 91 02 C8 8A 91 02 4C 67 E8
+F020 20 79 F6 4C 67 E8 7F 83 87 8B 8F 93 97 9B 9F A3
+F030 A7 AB D0 CC C8 C4 DE E2 E6 EA EE F2 F6 FA FE 02
+F040 06 0A 2F 2B 27 23 3D 41 45 49 4D 51 55 59 5D 61
+F050 65 69 8E 8A 86 82 9C A0 A4 A8 AC B0 B4 B8 BC C0
+F060 C4 C8 EB E7 E3 DF 00 F6 F6 F6 F6 F6 F6 F6 F6 F6
+F070 F6 F6 F6 F6 F6 F6 11 07 07 07 07 07 07 07 07 07
+F080 07 07 07 07 07 07 18 18 18 18 18 18 18 18 18 18
+F090 18 18 18 18 18 18 2C 20 20 20 20 20 20 20 20 20
+F0A0 20 20 20 20 20 20 92 34 2F 48 57 61 70 7A 87 AF
+F0B0 B9 BE C8 CD D3 D9 E8 92 92 92 92 92 92 92 92 92
+F0C0 92 92 92 92 92 92 ED FE 0F 1E 43 F9 5C 0A 75 19
+F0D0 8C 28 4E 7D 9E AC 9E B4 20 CE D5 F0 1E 46 18 54
+F0E0 6C A1 B1 C1 EE D5 2F 43 57 85 6E 9C B3 D7 C5 E9
+F0F0 FB 09 17 26 92 75 39 42 4D AB C3 65 BB C5 D1 1D
+F100 02 11 20 43 91 A0 54 5F 6A D9 E7 F3 FB 09 15 38
+F110 2D 92 92 92 92 92 92 92 92 92 92 92 92 92 92 92
+F120 92 92 92 92 92 93 E8 E8 E8 E8 E8 E8 E8 E8 E8 E8
+F130 E8 E8 E8 E8 E8 E8 E8 E8 E8 E8 E8 E8 E8 E8 E8 E9
+F140 E9 E9 E9 E9 E9 E9 E9 E9 E9 E9 E9 E9 E9 E9 E9 E9
+F150 E9 E9 E9 E9 E9 E9 E9 E9 E9 E9 E9 E9 E9 E9 E9 E9
+F160 E9 E9 E9 E9 E9 E9 EA E9 E9 E9 E9 E9 E9 E9 E9 E9
+F170 E9 E9 E9 E9 E9 E9 EA EA EA EA EA EA EA EA EA EA
+F180 EA EA EA EA EA EA EA EA EA EA EA EA EA EA EA EA
+F190 EA EA EA EA EA EA EA EA EA EA EA EA EA EA EA EA
+F1A0 EA EA EA EA EA EA EF EA EA EA EA EA EA EA EA EA
+F1B0 EA EA EA EA EA EA EA EF EF EF EF EF EF EF EF EF
+F1C0 EF EF EF EF EF EF EA EA EB EB EA EA EA EB EA EB
+F1D0 EA EB EB EB EB EB EC EC F0 EC EC EC ED F2 ED ED
+F1E0 ED ED ED ED ED ED EE EE EE EE EE EE EE EE EE EE
+F1F0 EE EF EF EF EF EF EF EF EF EC EC EC EB EB EB EC
+F200 EE EE EE EB EA EA EF EF EF EB EB EB EB EC EC EB
+F210 EB EF EF EF EF EF EF EF EF EF EF EF EF EF EF EF
+F220 EF EF EF EF EF EF
+----------------------------------------------------
+Function $F226 -> Perform sysop <00>
+Arg:
+<00> ?
+
+ 0F:F226:A0 17     LDY #$17
+ 0F:F228:B1 02     LDA ($02),Y
+ 0F:F22A:99 4E 00  STA $004E,Y
+ 0F:F22D:88        DEY
+ 0F:F22E:C0 01     CPY #$01
+ 0F:F230:D0 F6     BNE $F228
+ 0F:F232:A9 F2     LDA #$F2
+ 0F:F234:48        PHA
+ 0F:F235:A9 3C     LDA #$3C
+ 0F:F237:48        PHA
+ 0F:F238:08        PHP
+ 0F:F239:6C FE FF  JMP ($FFFE) = $C139
+ 0F:F23C:EA        NOP
+ 0F:F23D:A5 66     LDA $0066
+ 0F:F23F:85 08     STA $0008
+ 0F:F241:A5 67     LDA $0067
+ 0F:F243:85 09     STA $0009
+ 0F:F245:60        RTS -----------------------------------------
+----------------------------------------------------------------
+F220                   A0 17 B1 02 99 4E 00 88 C0 01
+F230 D0 F6 A9 F2 48 A9 3C 48 08 6C FE FF EA A5 66 85
+F240 08 A5 67 85 09 60 B1 06 E6 06 D0 02 E6 07 0A AA
+F250 BD 61 F2 85 00 BD 62 F2 85 01 A9 E8 48 A9 66 48
+F260 6C 00 00 C1 F2 F0 F2 7F F3 8C F3 27 F4 46 F4 57
+F270 F4 67 F4 95 F4 7E F4 AC F4 4D F5 5B F5 69 F5 77
+F280 F5 7C F5 81 F5 86 F5 8B F5 A3 F5 AC F5 C2 F5 31
+F290 F5 F4 F4 00 F5 3F F5 1A F5 15 F5 3B F4 6B F3 99
+F2A0 F3 B5 F3 F7 F3 03 F4 0F F4 1B F4 E9 F4 EF F4 F3
+F2B0 F4 33 F4 75 F4 A3 F4 8C F4 BA F4 DB F3 FB F2 62
+F2C0 F3 84 10 84 11 84 12 84 13 A0 20 A5 08 4A 90 0C
+F2D0 18 A2 FC B5 14 75 10 95 14 E8 D0 F7 46 13 66 12
+F2E0 66 11 66 10 66 0B 66 0A 66 09 66 08 88 D0 DC 60
+F2F0 20 FE F2 A5 40 10 03 4C 27 F4 60 4C 1C F3 A5 0B
+F300 85 41 45 0F 85 40 A5 0B 10 03 20 27 F4 A5 0F 10
+F310 0B A2 FC A9 00 F5 10 95 10 E8 D0 F7 A9 00 85 10
+F320 85 11 85 12 85 13 A0 20 06 08 26 09 26 0A 26 0B
+F330 26 10 26 11 26 12 26 13 38 A5 10 E5 0C 85 00 A5
+F340 11 E5 0D 85 01 A5 12 E5 0E AA A5 13 E5 0F 90 0E
+F350 86 12 85 13 A5 00 85 10 A5 01 85 11 E6 08 88 D0
+F360 C7 60 20 1C F3 84 41 A2 03 D0 05 20 FE F2 A2 03
+F370 B5 10 95 08 CA 10 F9 A5 41 30 01 60 4C 27 F4 18
+F380 A2 FC B5 0C 75 10 95 0C E8 D0 F7 60 38 A2 FC B5
+F390 0C F5 10 95 0C E8 D0 F7 60 18 A0 FF A2 FC 98 75
+F3A0 10 95 10 E8 D0 F8 AA 10 01 60 06 08 26 09 26 0A
+F3B0 26 0B 4C 99 F3 18 A5 0B 10 01 38 08 18 A0 FF A2
+F3C0 FC 98 75 10 95 10 E8 D0 F8 AA 10 02 28 60 28 08
+F3D0 66 0B 66 0A 66 09 66 08 4C BC F3 18 A0 FF A2 FC
+F3E0 98 75 10 95 10 E8 D0 F8 AA 10 01 60 46 0B 66 0A
+F3F0 66 09 66 08 4C DB F3 A2 03 B5 08 49 FF 95 08 CA
+F400 10 F7 60 A2 03 B5 08 35 0C 95 08 CA 10 F7 60 A2
+F410 03 B5 08 15 0C 95 08 CA 10 F7 60 A2 03 B5 08 55
+F420 0C 95 08 CA 10 F7 60 38 A2 FC 98 F5 0C 95 0C E8
+F430 D0 F8 60 20 3B F4 A5 08 49 01 60 A2 03 B5 08 D0
+F440 10 CA 10 F9 30 1C A2 03 B5 08 D5 0C D0 14 CA 10
+F450 F7 84 09 C8 84 08 60 A2 03 B5 08 D5 0C D0 F2 CA
+F460 10 F7 84 09 84 08 60 20 C3 F4 10 01 C8 98 50 02
+F470 49 01 85 08 60 20 C3 F4 B0 01 C8 84 08 60 20 D6
+F480 F4 10 01 C8 98 50 02 49 01 85 08 60 20 D6 F4 B0
+F490 01 C8 84 08 60 20 D6 F4 30 01 C8 98 50 02 49 01
+F4A0 85 08 60 20 D6 F4 90 01 C8 84 08 60 20 C3 F4 30
+F4B0 01 C8 98 50 02 49 01 85 08 60 20 C3 F4 90 01 C8
+F4C0 84 08 60 A5 08 C5 0C A5 09 E5 0D 84 09 A5 0A E5
+F4D0 0E A5 0B E5 0F 60 A5 0C C5 08 A5 0D E5 09 84 09
+F4E0 A5 0E E5 0A A5 0F E5 0B 60 A5 09 10 02 A0 FF 84
+F4F0 0A 84 0B 60 B1 06 99 08 00 C8 C0 04 D0 F6 F0 0A
+F500 B1 06 99 0C 00 C8 C0 04 D0 F6 A5 06 69 03 85 06
+F510 90 02 E6 07 60 A0 FF 98 D0 02 A9 01 18 A2 01 65
+F520 08 85 08 6A 2A 98 75 08 95 08 6A E8 E0 04 D0 F4
+F530 60 20 DB EC A0 03 B9 08 00 91 0C 88 10 F8 60 A2
+F540 03 B5 08 B4 0C 95 0C 94 08 CA 10 F5 60 20 EC EF
+F550 A0 03 B1 00 99 08 00 88 10 F8 60 20 EC EF A0 03
+F560 B1 00 99 0C 00 88 10 F8 60 20 EC EF A0 03 B9 08
+F570 00 91 00 88 10 F8 60 20 EC EF 90 12 20 D5 EF 90
+F580 CF 20 D5 EF 90 D8 20 D5 EF 90 E1 20 D5 EF 38 A5
+F590 02 E9 04 85 02 B0 02 C6 03 A0 03 B1 00 91 02 88
+F5A0 10 F9 60 A9 08 85 00 84 01 4C 8E F5 A0 03 B1 02
+F5B0 99 0C 00 88 10 F8 18 A5 02 69 04 85 02 90 02 E6
+F5C0 03 60 A5 08 85 00 A5 09 85 01 4C 50 F5 48 B9 00
+F5D0 00 85 00 B9 01 00 85 01 A0 00 B1 00 85 08 C8 B1
+F5E0 00 85 09 8A F0 07 46 09 66 08 CA D0 F9 68 20 69
+F5F0 F6 A5 08 25 0A 85 08 A5 09 25 0B 85 09 A9 00 AA
+F600 A0 01 60 20 CD F5 A5 0B 49 FF 85 0B 4A 25 09 85
+F610 00 A5 0A 49 FF 85 0A 6A 25 08 05 00 F0 0C A5 08
+F620 05 0A 85 08 A5 09 05 0B 85 09 8A 60 48 B9 00 00
+F630 85 00 B9 01 00 85 01 68 20 69 F6 8A F0 0B 06 08
+F640 26 09 06 0A 26 0B CA D0 F5 A5 08 25 0A 85 08 A5
+F650 09 25 0B 85 09 C8 B9 0A 00 49 FF 31 00 19 08 00
+F660 91 00 88 10 F1 8A A0 01 60 A8 A9 00 85 0A 85 0B
+F670 38 26 0A 26 0B 88 D0 F8 60 60 3E 00 12 00 29 00
+F680 30 00 3E 00 16 00 38 00 30 00 43 6F 6E 74 72 6F
+F690 6C 20 25 64 00 0A 28 59 2F 4E 29 3F 20 00 25 64
+F6A0 00 25 64 00 25 64 00 20 00 25 64 00 0A 28 25 64
+F6B0 2D 25 64 29 3F 20 00 48 69 74 20 61 6E 79 20 6B
+F6C0 65 79 00 00 25 64 00 53 70 72 69 6E 67 00 53 75
+F6D0 6D 6D 65 72 00 46 61 6C 6C 00 57 69 6E 74 65 72
+F6E0 00 4C 6F 72 64 20 00 4C 6F 72 64 0A 00 50 69 72
+F6F0 61 74 65 73 00 43 68 72 69 73 74 6E 73 00 52 69
+F700 6F 74 65 72 73 00 6E 6F 20 6C 6F 72 64 00 0F 09
+F710 0D 14 15 11 13 17 16 1F 1A 1B 19 1E 20 0E 18 00
+F720 5A 65 61 6C 6F 74 73 00 4D 6F 6E 6B 73 00 52 65
+F730 62 65 6C 73 00 20 69 73 20 6E 6F 77 0A 66 69 65
+F740 66 20 25 32 64 60 73 20 64 61 69 6D 79 6F 00 20
+F750 77 61 73 0A 6B 69 6C 6C 65 64 00 20 69 6E 20 66
+F760 69 65 66 20 25 32 64 0A 69 6E 20 74 68 65 20 79
+F770 65 61 72 20 25 64 00 4C 6F 72 64 20 00 0A 00 20
+F780 77 61 6E 74 73 20 61 0A 25 73 0A 00 44 65 6D 61
+F790 6E 64 20 67 6F 6C 64 00 6D 61 72 72 69 61 67 65
+F7A0 20 70 61 63 74 00 61 63 63 65 70 74 00 70 61 63
+F7B0 74 00 46 69 65 66 20 00 25 64 20 6C 6F 73 74 20
+F7C0 69 74 73 0A 6C 65 61 64 65 72 00 00 3E 00 38 00
+F7D0 28 00 30 00 E0 F7 EA F7 F5 F7 FE F7 07 F8 0F F8
+F7E0 48 6F 6D 65 20 66 69 65 66 00 49 6E 64 75 73 74
+F7F0 72 69 61 6C 00 4D 69 6C 69 74 61 72 79 00 42 61
+F800 6C 61 6E 63 65 64 00 46 61 72 6D 69 6E 67 00 44
+F810 69 72 65 63 74 00 40 F8 45 F8 49 F8 4D F8 52 F8
+F820 56 F8 5B F8 60 F8 66 F8 6C F8 71 F8 77 F8 7C F8
+F830 82 F8 87 F8 8D F8 94 F8 99 F8 9D F8 A3 F8 A9 F8
+F840 4D 6F 76 65 00 57 61 72 00 54 61 78 00 53 65 6E
+F850 64 00 44 61 6D 00 50 61 63 74 00 47 72 6F 77 00
+F860 4D 61 72 72 79 00 54 72 61 64 65 00 48 69 72 65
+F870 00 54 72 61 69 6E 00 56 69 65 77 00 42 75 69 6C
+F880 64 00 47 69 76 65 00 42 72 69 62 65 00 41 73 73
+F890 69 67 6E 00 52 65 73 74 00 4D 61 70 00 47 72 61
+F8A0 6E 74 00 4F 74 68 65 72 00 50 61 73 73 00 D2 F8
+F8B0 D6 F8 DB F8 E0 F8 E5 F8 EA F8 ED F8 F2 F8 F7 F8
+F8C0 FC F8 01 F9 08 F9 0D F9 13 F9 1A F9 1E F9 25 F9
+F8D0 2B F9 41 67 65 00 48 6C 74 68 00 44 72 69 76 00
+F8E0 4C 75 63 6B 00 43 68 61 72 00 49 51 00 47 6F 6C
+F8F0 64 00 44 65 62 74 00 54 6F 77 6E 00 52 69 63 65
+F900 00 4F 75 74 70 75 74 00 44 61 6D 73 00 4C 79 6C
+F910 74 79 00 57 65 61 6C 74 68 00 4D 65 6E 00 4D 6F
+F920 72 61 6C 65 00 53 6B 69 6C 6C 00 41 72 6D 73 00
+F930 41 69 41 6F 49 65 55 65 4F 69 4B 61 4B 69 4B 75
+F940 53 61 53 69 53 75 53 6F 54 61 54 75 54 6F 4E 61
+F950 4E 6F 48 61 48 69 48 75 59 75 59 6F 00 73 65 74
+F960 65 6E 6F 68 6F 6D 61 6D 69 6D 65 6D 6F 79 61 72
+F970 61 77 61 67 61 67 69 7A 61 7A 65 64 61 64 75 62
+F980 61 62 69 62 76 62 65 6A 6F 00 0A 6E 6F 20 66 69
+F990 65 66 73 00 20 20 46 69 65 66 73 20 00 48 6F 77
+F9A0 20 6D 75 63 68 00 48 6F 77 20 6D 61 6E 79 00 B5
+F9B0 F9 BD F9 C5 F9 52 69 66 6C 65 73 20 00 49 6E 66
+F9C0 6E 74 72 79 00 43 61 76 61 6C 72 79 00 0A 4D 6F
+F9D0 76 65 20 77 68 65 72 65 3F 0A 00 48 6F 77 20 6D
+F9E0 61 6E 79 20 6D 65 6E 00 57 69 6C 6C 20 79 6F 75
+F9F0 20 6C 65 61 64 0A 74 68 65 6D 20 70 65 72 73 6F
+FA00 6E 61 6C 6C 79 00 54 68 65 79 20 68 61 76 65 0A
+FA10 61 72 72 69 76 65 64 20 73 61 66 65 6C 79 00 0A
+FA20 41 74 74 61 63 6B 20 77 68 65 72 65 3F 0A 00 48
+FA30 6F 77 20 6D 61 6E 79 20 6D 65 6E 00 48 6F 77 20
+FA40 6D 75 63 68 20 72 69 63 65 0A 77 69 6C 6C 20 74
+FA50 68 65 79 20 74 61 6B 65 00 57 69 6C 6C 20 79 6F
+FA60 75 20 6C 65 61 64 0A 74 68 65 6D 20 70 65 72 73
+FA70 6F 6E 61 6C 6C 79 00 54 61 78 20 69 73 20 25 64
+FA80 0A 45 6E 74 65 72 20 6E 65 77 20 74 61 78 00 54
+FA90 68 65 20 70 65 61 73 61 6E 74 73 20 61 72 65 0A
+FAA0 64 65 6C 69 67 68 74 65 64 21 00 54 68 65 20 70
+FAB0 65 61 73 61 6E 74 73 20 61 72 65 0A 70 72 6F 74
+FAC0 65 73 74 69 6E 67 21 00 0A 53 65 6E 64 20 77 68
+FAD0 65 72 65 3F 20 00 4C 6F 72 64 2C 20 79 6F 75 20
+FAE0 61 72 65 20 74 6F 6F 0A 77 65 61 6B 20 66 6F 72
+FAF0 20 62 61 74 74 6C 65 21 00 00 47 6F 6C 64 00 52
+FB00 69 63 65 00 54 68 65 20 73 75 70 70 6C 69 65 73
+FB10 20 68 61 76 65 0A 61 72 72 69 76 65 64 20 73 61
+FB20 66 65 6C 79 00 25 73 20 69 73 20 25 64 0A 53 70
+FB30 65 6E 64 20 68 6F 77 20 6D 75 63 68 0A 6F 6E 20
+FB40 69 74 00 44 61 6D 73 20 76 61 6C 75 65 20 69 73
+FB50 0A 6E 6F 77 20 25 64 00 4F 75 74 70 75 74 20 69
+FB60 73 20 6E 6F 77 0A 25 64 00 4E 6F 20 6D 65 72 63
+FB70 68 61 6E 74 20 69 6E 0A 74 68 65 20 61 72 65 61
+FB80 00 52 65 63 72 75 69 74 20 77 68 69 63 68 00 00
+FB90 4C 6F 72 64 20 25 73 2C 20 77 65 0A 6E 6F 77 20
+FBA0 68 61 76 65 20 25 64 20 6D 65 6E 00 00 00 57 68
+FBB0 61 74 20 6D 69 73 73 69 6F 6E 00 45 6E 65 6D 79
+FBC0 20 6D 6F 72 61 6C 65 20 69 73 0A 66 61 6C 6C 69
+FBD0 6E 67 20 74 6F 20 70 69 65 63 65 73 21 00 53 6B
+FBE0 69 6C 6C 20 69 73 20 6E 6F 77 20 25 64 00 00 56
+FBF0 69 65 77 20 77 68 69 63 68 20 66 69 65 66 3F 0A
+FC00 00 4F 75 72 20 73 70 79 20 77 61 73 0A 63 61 75
+FC10 67 68 74 00 54 6F 77 6E 20 76 61 6C 75 65 20 69
+FC20 73 20 6E 6F 77 0A 25 64 00 47 6F 6C 64 20 66 6F
+FC30 72 20 73 70 79 00 25 64 20 70 65 61 73 61 6E 74
+FC40 73 0A 68 61 76 65 20 64 65 66 65 63 74 65 64 00
+FC50 4E 6F 20 70 65 61 73 61 6E 74 73 0A 64 65 66 65
+FC60 63 74 65 64 21 00 53 65 61 73 6F 6E 73 00 49 74
+FC70 20 77 69 6C 6C 20 64 6F 20 79 6F 75 0A 67 6F 6F
+FC80 64 00 4C 6F 72 64 2C 20 79 6F 75 20 61 72 65 0A
+FC90 74 72 75 6C 79 20 77 69 73 65 21 00 0A 57 68 69
+FCA0 63 68 20 66 69 65 66 3F 20 00 4C 6F 72 64 20 25
+FCB0 73 0A 74 68 65 79 60 76 65 20 72 65 66 75 73 65
+FCC0 64 21 00 59 6F 75 72 20 62 72 69 64 65 2D 74 6F
+FCD0 2D 62 65 0A 68 61 73 20 61 72 72 69 76 65 64 00
+FCE0 44 6F 6E 60 74 20 79 6F 75 20 6C 6F 6E 67 20 74
+FCF0 6F 0A 68 65 61 72 20 74 68 65 0A 70 69 74 74 65
+FD00 72 2D 70 61 74 74 65 72 20 6F 66 0A 61 20 6C 69
+FD10 74 74 6C 65 20 6C 6F 72 64 60 73 0A 66 6F 6F 74
+FD20 73 74 65 70 73 00 00 4C 6F 72 64 20 25 73 2C 0A
+FD30 25 73 20 77 61 6E 74 73 0A 25 64 20 67 6F 6C 64
+FD40 0A 50 61 79 00 4C 6F 72 64 20 25 73 2C 0A 25 73
+FD50 20 77 61 6E 74 73 0A 25 64 20 67 6F 6C 64 0A 50
+FD60 61 79 00 57 61 72 20 69 73 20 69 6E 65 76 69 74
+FD70 61 62 6C 65 0A 73 6F 20 64 6F 6E 60 74 20 6C 65
+FD80 74 20 79 6F 75 72 0A 67 75 61 72 64 20 64 6F 77
+FD90 6E 21 00 57 68 6F 20 6E 65 65 64 73 20 68 69 6D
+FDA0 0A 61 6E 79 77 61 79 00 47 69 76 65 20 68 6F 77
+FDB0 20 6D 75 63 68 00 54 68 61 6E 6B 20 79 6F 75 20
+FDC0 4C 6F 72 64 21 00 57 65 60 72 65 20 61 74 20 6F
+FDD0 75 72 0A 6C 69 6D 69 74 00 59 6F 75 20 68 61 76
+FDE0 65 20 6E 6F 20 67 6F 6C 64 21 00 59 6F 75 20 68
+FDF0 61 76 65 20 6E 6F 20 72 69 63 65 21 00 59 6F 75
+FE00 20 68 61 76 65 20 6E 6F 0A 73 6F 6C 64 69 65 72
+FE10 73 21 00 59 6F 75 20 68 61 76 65 20 6E 6F 0A 70
+FE20 65 61 73 61 6E 74 73 21 00 54 68 65 79 20 61 72
+FE30 65 20 79 6F 75 72 0A 61 6C 6C 69 65 73 21 00 00
+FE40 0A 57 68 69 63 68 20 66 69 65 66 20 00 0A 57 68
+FE50 61 74 20 61 72 65 20 79 6F 75 72 0A 6F 72 64 65
+FE60 72 73 3F 00 49 74 60 73 20 63 75 72 72 65 6E 74
+FE70 6C 79 20 61 0A 25 73 20 73 74 61 74 65 0A 4F 4B
+FE80 20 74 6F 20 6D 61 6B 65 20 69 74 20 61 0A 25 73
+FE90 20 73 74 61 74 65 00 0A 42 72 69 62 65 20 77 68
+FEA0 69 63 68 3F 20 00 02 02 02 02 02 02 02 04 04 04
+FEB0 04 04 04 04 03 03 03 03 03 05 03 05 05 05 05 06
+FEC0 06 06 06 06 06 06 06 06 07 07 07 07 08 07 07 07
+FED0 07 07 08 08 08 08 08 08 00 00 00 00 01 00 00 00
+FEE0 00 01 01 01 01 01 01 00 00 F7 FE 00 FF 04 FF 08
+FEF0 FF 0C FF 11 FF 15 FF 41 73 73 69 67 6E 0A 0A 00
+FF00 49 6E 64 00 4D 69 6C 00 42 61 6C 00 46 61 72 6D
+FF10 00 44 69 72 00 4D 65 6E 75 00 28 FF 2E FF 35 FF
+FF20 3A FF 3F FF 46 FF 4A FF 53 6F 75 6E 64 00 41 6E
+FF30 69 6D 61 74 00 57 61 69 74 00 53 61 76 65 00 42
+FF40 61 74 74 6C 65 00 45 6E 64 00 4D 65 6E 75 00 5B
+FF50 FF 60 FF 66 FF 6B FF 6F FF 74 FF 4C 6F 61 6E 00
+FF60 52 65 70 61 79 00 53 65 6C 6C 00 42 75 79 00 41
+FF70 72 6D 73 00 4D 65 6E 75 00 00 FF FF FF FF FF FF
+FF80 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+FF90 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+FFA0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+FFB0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+FFC0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+FFD0 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+FFE0 4E 4F 42 55 2D 4E 45 53 31 30 20 20 20 20 20 20
+FFF0 FF FF FF FF FF FF FF 09 FF FF DA C0 00 C0 39 C1
