@@ -1,0 +1,96 @@
+Page FA
+ROM: 0x34010-0x3600F
+-----------------------------------------------
+A000: 4C 00 00 00
+-----------------------------------------------
+$A004 - String pointer table
+
+===============================================
+DATA TABLE $A004
+
+Locates the first & second names of Officer
+
+A004 + 0x04*(ID)        = Address of first  name
+-----------------------------------------------
+DATA TABLE $A584
+
+Name strings retrieved from $A004 
+===============================================
+B1C8 - String pointer table
+Accessed by FE:D24F
+                                 E0:BEC1      Text template
+ 00 B20A supervise                 00     "Who will supervise?"
+ 01 B214 train soldiers            00     "Who will train soldiers?"
+ 02 B223 assign                    00     "Who will assign?"
+ 03 B22A hire soldiers             00     "Who will hire soldiers?"
+ 04 B238 Dismiss                   01     "Dismiss whom?"
+ 05 B240 Appoint whom as governor  03     "Appoint whom as governor?"
+ 06 B259 Appoint whom as advisor   03     "Appoint whom as advisor?"
+ 07 B271 search                    00     "Who will search?"
+ 08 B278 Recruit                   01     "Recruit whom?"
+ 09 B280 Send whom as messenger    02     "Send whom as messenger"
+ 0A B297 (blank)                   02     "Send whom as messenger"
+ 0B B298 (blank)                   02     "Send whom as messenger"
+ 0C B299 Send letter to            01     "Send letter to whom?"
+ 0D B2A8 (blank)                   02     "Send whom as messenger"
+ 0E B2A9 Tempt                     01     "Tempt whom?"
+ 0F B2AF Withdraw                  01     "Withdraw whom?"
+ 10 B2B8 Verify                    01     "Verify whom?"
+ 11 B2BF Send                      01     "Send whom?"
+ 12 B2C4 View                      01     "View whom?"
+ 13 B2C9 view                      00     "Who will view?"
+ 14 B2CE develop land              00     "Who will develop land?"
+ 15 B2DB supervise                 00     "Who will supervise?"
+ 16 B2E5 Give writings to          01     "Give writings to whom?"
+ 17 B2F6 Give horse to             01     "Give horse to whom?"
+ 18 B304 Give gold to              01     "Give gold to whom?"
+ 19 B311 give                      00     "Who will give?"
+ 1A B316 go to market              00     "Who will go to market?"
+ 1B B323 (blank)                   02     "Send whom as messenger"
+ 1C B324 View                      01     "View whom?"
+ 1D B329 (blank)                   01     "whom?"
+ 1E B32A Give                      01     "Give whom?"
+ 1F B32F View                      01     "View whom?"
+ 20 B334 view                      00     "Who will view?"
+===============================================
+DATA TABLE $B33A (E1:899F)
+
+ Retrieve text string from $B37E
+-----------------------------------------------
+DATA TABLE $B37E
+
+ 00 B37E Ruler is not in this province
+ 01 B39C No one is capable
+ 02 B3AE Not enough gold
+ 03 B3BE No negotiation partners
+ 04 B3D6 Oops! Escaped!
+ 05 B3E5 No province can launch an attack now
+ 06 B40A No provinces can send reinforcements
+ 07 B42F No generals can leave the field now
+ 08 B453 Can't send goods
+ 09 B464 Not enough rice
+ 0A B474 Can't hire more soldiers
+ 0B B48D No advisor here
+ 0C B49D That general can't become advisor
+ 0D B4BF Can't appoint
+ 0E B4CD No horses
+ 0F B4D7 No free generals
+ 10 B4E8 No generals to recruit
+ 11 B4FF No other provinces
+ 12 B512 Can't threaten that ruler
+ 13 B52C You have no daughters
+ 14 B542 Your daughter is already married
+ 15 B563 No rulers to trick
+ 16 B576 No generals to reward
+ 17 B58C No followers in that province
+ 18 B5AA No gold
+ 19 B5B2 No advisor here
+ 1A B5C2 No rice
+ 1B B5CA Can't impose special tax in fall
+ 1C B5EB Already collected special tax
+ 1D B609 Can't buy more weapons
+ 1E B620 Can't buy more horses
+ 1F B636 (Blank)
+ 20 B637 (Blank)
+ 21 B638 (Blank)
+===============================================

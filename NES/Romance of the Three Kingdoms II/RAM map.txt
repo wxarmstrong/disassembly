@@ -1,0 +1,187 @@
+0000/0001
+0002/0003
+0004/0005
+0006/0007
+0008/0009 Upper-level register #1
+000A/000B
+000C/000D Upper-level register #2
+
+0052 - Arguments for Sysops
+
+006E - Array
+
+0070 - PPU_CTRL Mirror
+0071 - PPU_MASK Mirror
+
+0072 - Flag to change palette data
+0073 - ?
+
+007D - ?
+007E - Flag to wait until the next frame
+
+0098 - Array?
+009E - ?
+009F - Array?
+
+00A5 - ?
+
+00A7-00AA
+00AB/00AC Destination pointer for PPU data
+
+00B0-00CF Primary palettes
+00D0-00EF Secondary palettes
+
+0700 - Array
+
+0709 - ?
+
+070B - ?
+
+070C      RAM Bank 0 - Mirror
+070D      RAM Bank 1 - Mirror
+070E      RAM Bank 2 - Mirror
+070F      RAM Bank 3 - Mirror
+0710      RAM Bank 4 - Mirror
+0711	  Extended RAM mode - Mirror
+0712      ?
+0713      ?
+0714	  ?
+
+0718	  
+
+0730      ?
+
+077B      ?
+
+077F      ?
+
+0783      ?
+
+0787      ?
+
+5100	  PRG mode
+5101	  CHR mode
+5102	  PRG RAM protect 1
+5103	  PRG RAM protect 2
+5104	  Extended RAM mode
+5105	  Nametable mapping
+5106	  Fill-mode tile
+5107	  Fill-mode color
+
+5010
+
+5105
+
+5113      RAM Bank 0
+5114      RAM Bank 1
+5115      RAM Bank 2
+5116      RAM Bank 3
+5117      RAM Bank 4
+
+5200      Vertical Split Mode
+5201	  Vertical Split Scroll
+5202	  Vertical Split Bank
+5203	  IRQ Scanline Compare Value
+5204	  Scanline IRQ Status
+
+5205/5206 Multiplier
+
+6006      Year
+6007      ?
+6008      Month
+
+601E/601F ?
+
+6021/6022 ?
+
+73F4      Start of province listings
+
+
+77F7	  Array of nations by ID
+
+782A/782B Nation?
+782C/782D ???
+782E      ???
+782F/7830 Active Province
+7831      ???
+
+7844      Game Level
+7845      ???
+
+7858/7859 ???
+
+785D      ???
+785E/785F Temp province?
+
+7863-     ???
+
+7905-7914 Char array
+
+7915      ???
+7916      ???
+
+7920	  ???
+7921      ???
+
+7922      ???
+
+7923-7924 ???
+
+7925      ???
+
+7926-7A0E Lists which entry #s in temp general list 7A0F
+          are affected by/involved in a particular function
+
+7A0F	  Temp general list		  
+		  
+7BF2-7BF3 ???
+7BF4      ???
+
+7C07      Attacking army?
+
+7C60      ???
+
+7C61      Start of array of 8-bit values
+
+7C81      ??? (bit flags)
+          xxxx 0000 = ?
+		  0000 xxxx = ?
+		
+7C82      ???
+
+7C87      ???
+7C88      ???
+7C89      ???
+
+7C94      Text color
+          0 = white
+          1 = green
+		  2 = blue
+		  3 = red?
+
+7D00	  Winning ruler
+
+7D30      ?
+          0C = Just moved goods?
+
+7D34/7D35 Temp for province		  
+7D36/7D37 Temp for nation		 
+7D38/7D39 Temp for general
+
+7D3A      Province ID?
+
+7D42/7D43 Temp for general
+7D44/7D45 Gold taken to province
+7D46/7D47 Rice taken to province
+
+GENERAL CREATION:
+
+7D4B Int
+7D4C War
+7D4D Chm
+
+7D4F Portrait ID
+7D50 Gender (1 = Male, 2 = Female)
+7D51 Age category
+
+7D7A	  String (used for advisor quotes)

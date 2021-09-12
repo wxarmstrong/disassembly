@@ -1,0 +1,837 @@
+Page F5
+ROM: 0x2A010-0x2C00F
+----------------------------------------------------
+Function $A000
+A000 JMP $A5A5
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A000          20 D1 E4 FC FF 41 A9 88 7C 41 A9 16 79
+A010 8E FF 00 A4 2F 78 72 B0 B3 E9 2F D9 02 B3 8E FF
+A020 00 64 63 61 AA 2F 78 8E 75 BB 8E E0 00 62 E9 12
+A030 F4 0A B3 60 8E B0 B3 8E E0 00 62 E9 12 F4 14 A2
+A040 FF FF A0 FF FF D7 4C A0 AC 24 97 CF 8E C0 AF 8E
+A050 E0 00 62 E9 12 F4 06 AC B3 C8 AC E5 96 3C E9 D1
+A060 95 02 B3 60 8E FC A7 E9 E0 CB 06 A8 44 7D A4 44
+A070 7D 8B FF C0 D8 7B A0 AC 96 C8 CF 3C E9 EB 95 02
+A080 2A AC E5 96 3A 60 8E 11 A8 E9 E0 CB 06 A8 46 7D
+A090 A4 46 7D 8B FF C0 D8 9D A0 AC 96 C8 CF AC E5 96
+A0A0 A0 FF FF B3 A4 2F 78 72 B0 B3 E9 2F D9 02 A2 FE
+A0B0 FF B4 C0 D8 C7 A0 8E 26 A8 E9 56 C4 02 AC 69 CC
+A0C0 D7 C7 A0 AC 96 C8 CF 89 30 A8 EF 7B 40 A9 F1 7B
+A0D0 3C AA 2F 78 E9 8B 9C 04 AC 96 C8 A0 FE FF B3 3C
+A0E0 8E D2 B5 8E E2 00 62 E9 12 F4 0A AC 24 97 CF 
+
+Function $A003 (FC FF)
+
+A008 41
+A009 A9 88 7C    / $7C88 = 1
+
+A00C 41
+A00D A9 16 79    / $7916 = 1
+
+A010 8E FF 00    /
+A013 A4 2F 78    / $782F
+A016 72
+A017 B0
+A018 B3
+A019 E9 2F D9 02 / Call $D92F
+A01D B3
+A01E 8E FF 00
+A021 64
+A022 63
+A023 61
+A024 AA 2F 78    /
+A027 8E 75 BB
+A02A 8E E0 00
+A02D 62
+A02E E9 12 F4 0A / Call $F412 -> E0:BB75
+A032 B3
+A033 60
+A034 8E B0 B3
+A037 8E E0 00
+A03A 62
+A03B E9 12 F4 14 / Call $F412 -> E0:B3B0
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A030 F4 0A B3 60 8E B0 B3 8E E0 00 62 E9 12 F4 14 A2
+A040 FF FF A0 FF FF D7 4C A0 AC 24 97 CF 8E C0 AF 8E
+A050 E0 00 62 E9 12 F4 06 AC B3 C8 AC E5 96 3C E9 D1
+A060 95 02 B3 60 8E FC A7 E9 E0 CB 06 A8 44 7D A4 44
+A070 7D 8B FF C0 D8 7B A0 AC 96 C8 CF 3C E9 EB 95 02
+A080 2A AC E5 96 3A 60 8E 11 A8 E9 E0 CB 06 A8 46 7D
+A090 A4 46 7D 8B FF C0 D8 9D A0 AC 96 C8 CF AC E5 96
+A0A0 A0 FF FF B3 A4 2F 78 72 B0 B3 E9 2F D9 02 A2 FE
+A0B0 FF B4 C0 D8 C7 A0 8E 26 A8 E9 56 C4 02 AC 69 CC
+A0C0 D7 C7 A0 AC 96 C8 CF 89 30 A8 EF 7B 40 A9 F1 7B
+A0D0 3C AA 2F 78 E9 8B 9C 04 AC 96 C8 A0 FE FF B3 3C
+A0E0 8E D2 B5 8E E2 00 62 E9 12 F4 0A AC 24 97 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A0E0                                              20
+A0F0 D1 E4 FA FF 60 E9 57 97 02 D8 FD A0 CF 8A F4 73
+A100 29 40 2A D6 4E A1 0A B3 AA 2F 78 E9 6E 8E 04 D8
+A110 39 A1 39 E9 B9 D4 02 D7 39 A1 39 E9 A0 D5 02 D7
+A120 2D A1 39 AA 2F 78 E9 85 D5 04 D8 39 A1 8D 40 09
+A130 8F 11 B4 B3 D3 DB D6 43 A1 8E BF 00 09 8F 11 B4
+A140 B3 D3 DA D4 0A D0 2A D1 09 8F 19 29 8F E7 0A 8B
+A150 29 C6 D7 06 A1 AC 79 97 AC E5 96 8E 3D A8 E9 56
+A160 C4 02 61 8E A5 B8 8E E0 00 62 E9 12 F4 08 2B 0B
+A170 8B FF C0 D8 7F A1 60 AA 2F 78 E9 60 8C 04 CF AC
+A180 3B D3 0B D1 2B 0B B3 E9 E2 E1 02 29 09 A8 60 78
+A190 0B B3 E9 E2 E1 02 B3 E9 03 A0 02 40 A8 60 78 AA
+A1A0 2F 78 E9 54 D5 02 D8 AF A1 AC 79 97 D6 B7 A1 61
+A1B0 AA 2F 78 E9 60 8C 04 CF 
+
+Function $A0EF (FA FF)
+
+A0F4 60
+A0F5 E9 57 97 02 / Call $9757
+A0F9 D8 FD A0
+
+A0FC	CF
+
+A0FD 8A F4 73    / $73F4
+A100 29
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A0F0 D1 E4 FA FF 60 E9 57 97 02 D8 FD A0 CF 8A F4 73
+A100 29 40 2A D6 4E A1 0A B3 AA 2F 78 E9 6E 8E 04 D8
+A110 39 A1 39 E9 B9 D4 02 D7 39 A1 39 E9 A0 D5 02 D7
+A120 2D A1 39 AA 2F 78 E9 85 D5 04 D8 39 A1 8D 40 09
+A130 8F 11 B4 B3 D3 DB D6 43 A1 8E BF 00 09 8F 11 B4
+A140 B3 D3 DA D4 0A D0 2A D1 09 8F 19 29 8F E7 0A 8B
+A150 29 C6 D7 06 A1 AC 79 97 AC E5 96 8E 3D A8 E9 56
+A160 C4 02 61 8E A5 B8 8E E0 00 62 E9 12 F4 08 2B 0B
+A170 8B FF C0 D8 7F A1 60 AA 2F 78 E9 60 8C 04 CF AC
+A180 3B D3 0B D1 2B 0B B3 E9 E2 E1 02 29 09 A8 60 78
+A190 0B B3 E9 E2 E1 02 B3 E9 03 A0 02 40 A8 60 78 AA
+A1A0 2F 78 E9 54 D5 02 D8 AF A1 AC 79 97 D6 B7 A1 61
+A1B0 AA 2F 78 E9 60 8C 04 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A1B0                         20 D1 E4 00 00 3C 8E E6
+A1C0 BA 8E E3 00 62 E9 12 F4 08 D7 CE A1 41 CF A4 44
+A1D0 7D 50 C8 D7 DE A1 A4 46 7D 50 C8 D8 24 A2 AC E5
+A1E0 96 8E 49 A8 E9 56 C4 02 AC 69 CC D8 24 A2 3D E9
+A1F0 E8 8C 02 4C A9 30 7D 0D A8 38 7D 0C A8 34 7D AA
+A200 2F 78 E9 05 96 02 8E 31 B2 8E E3 00 62 E9 12 F4
+A210 06 8E E8 B9 8E E3 00 62 E9 12 F4 06 AC 17 8F D8
+A220 24 A2 40 CF 41 CF 
+
+Function $A1B8 (00 00)
+Args:
+<0C> Province
+<0D> General
+
+A1BD 3C
+A1BE 8E E6 BA
+A1C1 8E E3 00
+A1C4 62
+A1C5 E9 12 F4 08 / Call $F412 -> E3:BAE6 (Ask how much gold & rice to take from province)
+
+A1C9 D7 CE A1
+
+If cancelled:
+A1CC	41
+A1CF	CF
+
+A1CE A4 44 7D    / $7D44 (gold taken)
+A1D1 50
+A1D2 C8
+A1D3 D7 DE A1
+
+A1D6 A4 46 7D / $7D46 (rice taken)
+A1D9 50
+A1DA C8
+A1DB D8 24 A2
+
+If gold or rice taken:
+A1DE	AC E5 96    / Call $96E5
+
+A1E1	8E 49 A8    / "Send goods"
+A1E4	E9 56 C4 04 / Call $C456
+
+A1E8	AC 69 CC    / Wait for player decision
+
+A1EB	D8 24 A2
+
+If player chose yes:
+A1EE	3D
+A1EF	E9 E8 8C 02 / Call $8CE8 (General has used their turn)
+A1F3	4C
+A1F4	A9 30 7D    /
+
+A1F7	0D
+A1F8	A8 38 7D    /
+A1FB	0C
+A1FC	A8 34 7D	/ 
+
+A1FF	AA 2F 78    / $782F -> Active province
+A202	E9 05 96 02 / Call $9605 (subtract gold/rice)
+
+A206	8E 31 B2
+A209	8E E3 00
+A20C	62
+A20D	E9 12 F4 06 / Call $F412 -> E3:B231
+
+If no gold or rice taken, or player chose no:
+A224 41
+A225 CF
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A200 2F 78 E9 05 96 02 8E 31 B2 8E E3 00 62 E9 12 F4
+A210 06 8E E8 B9 8E E3 00 62 E9 12 F4 06 AC 17 8F D8
+A220 24 A2 40 CF 41 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A220                   20 D1 E4 F7 FF 8A F4 73 29 40
+A230 2A D6 70 A2 39 E9 A0 D5 02 D7 4F A2 09 A6 2F 78
+A240 C0 D7 4F A2 AA 2F 78 39 E9 85 D5 04 D7 5C A2 8E
+A250 BF 00 09 8F 11 B4 B3 D3 DA D6 65 A2 8D 40 09 8F
+A260 11 B4 B3 D3 DB D4 0A D0 2A D1 09 8F 19 29 8F E7
+A270 0A 8B 29 C6 D7 34 A2 AC 79 97 AC E5 96 8E 54 A8
+A280 E9 56 C4 02 61 8E A5 B8 8E E0 00 62 E9 12 F4 08
+A290 2B 0B 8B FF C0 D8 9A A2 41 CF 41 A9 88 7C AC 3B
+A2A0 D3 0B D1 B3 E9 E2 E1 02 29 41 A9 16 79 60 60 63
+A2B0 61 AA 2F 78 8E 75 BB 8E E0 00 62 E9 12 F4 0A B3
+A2C0 62 8E 56 B3 8E E0 00 62 E9 12 F4 10 28 38 E9 3C
+A2D0 97 02 D8 D7 A2 41 CF 09 A8 60 78 AC B3 C8 38 39
+A2E0 E9 B8 A1 04 A2 F7 FF AC 96 C8 40 A8 60 78 A0 F7
+A2F0 FF CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A2F0       20 D1 E4 FF FF A4 2F 78 78 B0 D7 07 A3 A4
+A300 2F 78 7A B0 D8 10 A3 A4 2A 78 72 B0 B0 D7 16 A3
+A310 68 E9 9F 89 02 CF 60 E9 57 97 02 D8 1F A3 CF AC
+A320 26 A2 A2 FF FF A0 FF FF D8 36 A3 61 AA 2F 78 E9
+A330 60 8C 04 D6 39 A3 AC 79 97 CF 
+
+Function $A2F2 (FF FF)
+
+A2F7 A4 2F 78    / $782F (Active province)
+A2FA 78
+A2FB B0          / Active province - Gold
+A2FC D7 07 A3
+
+A2FF A4 2F 78
+A302 7A
+A303 B0          / Active province - Rice
+A304 D8 10 A3
+
+A307 A4 2A 78   / $782A (Active nation)
+A30A 72
+A30B B0         / Province list
+A30C B0         /
+A30D D7 16 A3
+
+A310 68
+A311 E9 9F 89 02 / Call $899F -> Print "Can't send goods"
+A315 CF          / Return
+
+A316
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A310 68 E9 9F 89 02 CF 60 E9 57 97 02 D8 1F A3 CF AC
+A320 26 A2 A2 FF FF A0 FF FF D8 36 A3 61 AA 2F 78 E9
+A330 60 8C 04 D6 39 A3 AC 79 97 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A330                               20 D1 E4 00 00 AC
+A340 17 8F D8 46 A3 CF 4F CD A5 82 7C DB A9 82 7C 61
+A350 AA 2F 78 E9 60 8C 04 CF 
+
+Function $A33A (00 00)
+
+A33F AC 17 8F    / Call $8F17
+A342 D8 46 A3
+
+A345    CF
+
+A346 4F
+A347 CD
+A348 A5 82 7C    / $7C82
+A34B DB
+A34C A9 82 7C    / $7C82
+
+A34F 61
+A350 AA 2F 78    / $782F (Active nation)
+A353 E9 60 8C 04 / Call $8C60
+
+A357 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A350                         20 D1 E4 FA FF 40 29 3C
+A360 8E 09 A9 8E E0 00 62 E9 12 F4 08 8A E1 7B D6 97
+A370 A3 3B E9 A0 D5 02 D7 95 A3 AA 2F 78 3B E9 85 D5
+A380 04 D8 95 A3 3B E9 B9 D4 02 D7 95 A3 3B E9 F0 D8
+A390 02 CD 09 BB 29 0A 72 2A 0A B0 2B D7 71 A3 09 56
+A3A0 B8 B3 A5 44 78 B3 44 B4 BC 8C F4 01 B5 B3 E9 4C
+A3B0 F3 04 CF 
+
+Function $A358 (FA FF) -> Returns the # of assigned soldiers divided by six in <00>'s enemy adjacent provinces, up to a maximum of 500*(4-Game Level)
+Args:
+<0C> Province
+
+A39E 09
+A39F 56
+A3A0 B8          / # of soldiers / 6
+A3A1 B3             
+A3A2 A5 44 78    / $7844 (Game level)
+A3A5 B3
+A3A6 44
+A3A7 B4
+A3A8 BC          / (4 - Game Level)
+A3A9 8C F4 01
+A3AC B5          / 500*(4-Game Level)
+A3AD E9 4C F3 04 / Call $F34C (Return smaller value)
+
+A35D 40
+A35E 29
+
+A35F 3C
+A360 8E 09 A9
+A363 8E E0 00
+A366 62
+A367 E9 12 F4 08 / Call $F412 -> E0:A909 (Assemble a list of adjacent provinces @ $7BE1)
+
+A36B 8A E1 7B
+A36E D6 97 A3
+
+Loop through adjacent provinces:
+	A371 3B
+	A372 E9 A0 D5 02 / Call $D5A0 -> Check if province is empty
+	A376 D7 95 A3
+
+	A379 AA 2F 78    / $782F (Active province)
+	A37C 3B
+	A37D E9 85 D5 04 / Call $D585 (Check if province belongs to active nation)
+	A381 D8 95 A3
+
+	A384 3B
+	A385 E9 B9 D4 02 / Call $D4B9 (Check if province is being invaded?)
+	A389 D7 95 A3
+
+		A38C 3B
+		A38D E9 F0 D8 02 / Call $D8F0 (Find # of assigned soldiers)
+		A391 CD
+		A392 09
+		A393 BB
+		A394 29
+
+	A395 0A
+	A396 72
+
+Bounds check:
+	A397 2A
+	A398 0A
+	A399 B0
+	A39A 2B
+	A39B D7 71 A3
+
+A39E 09
+A39F 56
+A3A0 B8          / # of soldiers / 6
+A3A1 B3             
+A3A2 A5 44 78    / $7844 (Game level)
+A3A5 B3
+A3A6 44
+A3A7 B4
+A3A8 BC          / (4 - Game Level)
+A3A9 8C F4 01
+A3AC B5          / 500*(4-Game Level)
+A3AD B3
+A3AE E9 4C F3 04 / Call $F34C (Return smaller value)
+
+A3B2 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A3B0          20 D1 E4 F6 FF 0C B0 2A 61 3A E9 5F C0
+A3C0 04 29 40 D6 DA A3 A0 FF FF D2 8C 60 A8 BB B0 19
+A3D0 C0 D8 D6 A3 40 CF A0 FF FF D0 A2 FF FF A0 FF FF
+A3E0 57 C6 D7 C6 A3 AC 88 8F D7 ED A3 40 CF 0C 72 B0
+A3F0 27 B0 D8 F7 A3 40 CF 0C 72 B0 B3 8E 09 A9 8E E0
+A400 00 62 E9 12 F4 08 8A E1 7B D6 1A A4 08 B0 B3 E9
+A410 A0 D5 02 D8 18 A4 40 CF 08 72 28 08 B0 D7 0C A4
+A420 37 E9 58 A3 02 B3 37 E9 F0 D8 02 B4 C8 D8 32 A4
+A430 40 CF A4 2A 78 76 D3 53 B8 B3 62 3A E9 19 C0 04
+A440 B3 89 64 B4 BC B4 BB CF 
+
+Function $A3B3 (F6 FF) -> Determines % chance of nation <00> surrendering
+Args:
+<0C> Nation
+Locs:
++FF  Loop counter (< 7)
+<0A> Ruler
+<09> Portrait ID of ruler
+<07> Province list
+
+A3B8 0C
+A3B9 B0
+A3BA 2A          / Ruler
+
+A3BB 61
+A3BC 3A
+A3BD E9 5F C0 04 / Call $C05F (Get portrait ID)
+A3C1 29
+
+A3C2 40
+A3C3 D6 DA A3
+
+Loop (Check to see if ruler is capable of surrendering)
+	A3C6 A0 FF FF
+	A3C9 D2
+	A3CA 8C 60 A8 / $A860 (List of rulers that can't surrender)
+	A3CD BB
+	A3CE B0
+	A3CF 19
+	A3D0 C0
+	A3D1 D8 D6 A3
+
+		A3D4 40
+		A3D5 CF   / Return 0 if ruler can't surrender
+
+	A3D6 A0 FF FF
+	A3D9 D0
+
+Bounds check:
+	A3DA A2 FF FF
+	A3DD A0 FF FF
+	A3E0 57
+	A3E1 C6
+	A3E2 D7 C6 A3
+	
+A3E5 AC 88 8F     / Call $8F88 -> Check if any provinces are being invaded
+A3E8 D7 ED A3
+
+	A3EB 40
+	A3EC CF       / Return 0 if any province is being invaded
+
+A3ED 0C
+A3EE 72
+A3EF B0
+A3F0 27           / Start of nation's province list
+
+A3F1 B0
+A3F2 D8 F7 A3
+
+	A3F5 40
+	A3F6 CF       / Return 0 if nation has more than 1 province
+
+A3F7 0C
+A3F8 72
+A3F9 B0
+A3FA B3           / Nation's sole province
+A3FB 8E 09 A9
+A3FE 8E E0 00
+A401 62
+A402 E9 12 F4 08 / Call $F412 -> E0:A909 (Assemble list of adjacent provinces)
+
+A406 8A E1 7B
+A409 D6 1A A4
+
+Loop through adjacent provinces:
+	A40C 08
+	A40D B0
+	A40E B3
+	A40F E9 A0 D5 02 / Call $D5A0 -> Check if province is empty
+	A413 D8 18 A4
+
+		A416 40
+		A417 CF      / Return 0 if province is empty
+
+	A418 08
+	A419 72
+
+Bounds check:
+	A41A 28
+	A41B 08
+	A41C B0
+	A41D D7 0C A4
+	
+A420 37          / Nation's sole province
+A421 E9 58 A3 02 / Call $A358 (# of adjacent enemy soldiers / 6) up to max of 500*(4-game level)
+A425 B3
+A426 37
+A427 E9 F0 D8 02 / Call $D8F0 (# of assigned soldiers)
+A42B B4
+A42C C8
+A42D D8 32 A4
+
+	A430 40
+	A431 CF
+
+A432 A4 2A 78    / $782A (Active nation)
+A435 76
+A436 D3
+A437 53
+A438 B8
+A439 B3
+	A43A 62
+	A43B 3A
+	A43C E9 19 C0 04 / Call $C019 -> Ruler's Ambition
+A440 B3
+A441 89 64
+A443 B4
+A444 BC          / (100 - Ruler's Ambition)
+A446 B4
+A447 BB          / (100 - Ruler's Ambition) + Active Nation's ???
+
+A448 CF
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A430 40 CF A4 2A 78 76 D3 53 B8 B3 62 3A E9 19 C0 04
+A440 B3 89 64 B4 BC B4 BB CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A440                         20 D1 E4 00 00 41 A9 88
+A450 7C 41 A9 16 79 6A 60 63 61 AA 2F 78 8E 75 BB 8E
+A460 E0 00 62 E9 12 F4 0A B3 63 8E 56 B3 8E E0 00 62
+A470 E9 12 F4 10 CF 
+
+Function $A448 (00 00)
+
+A44D 41
+A44E A9 88 7C    / $7C88
+A451 41
+A452 A9 16 79    / $7916
+
+A455 6A
+A456 60
+A457 63
+A458 61
+A459 AA 2F 78    / $782F (Active province)
+A45C 8E 75 BB
+A45F 8E E0 00
+A462 62
+A463 E9 12 F4 0A / Call $F412 -> E0:BB75
+A467 B3
+A468 63
+A469 8E 56 B3
+A46C 8E E0 00
+A46F 62
+A470 E9 12 F4 10 / Call $F412 -> E0:B356 (Get player choice for general)
+
+A474 CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A470                20 D1 E4 FD FF AC 48 A4 A8 38 7D
+A480 AC 24 97 A4 38 7D D7 8A A4 CF AA 38 7D E9 E8 8C
+A490 02 3C E9 B3 A3 02 B3 E9 69 D1 02 A2 FF FF AC 79
+A4A0 97 60 62 6F A0 FF FF B3 E9 F6 8C 08 D7 B0 A4 CF
+A4B0 60 0C B0 B3 E9 2D C1 04 85 FD 44 A9 30 7D 0C A8
+A4C0 40 7D 0C 72 B0 A8 34 7D A0 FF FF D8 D2 A4 40 D6
+A4D0 D3 A4 41 A9 32 7D 8E 31 B2 8E E3 00 62 E9 12 F4
+A4E0 06 8E 60 B3 8E E3 00 62 E9 12 F4 06 D8 F0 A4 CF
+A4F0 A5 32 7D D9 02 00 00 00 00 A5 01 00 24 A5 4A A5
+A500 8E 6E A8 8E 7A 7D E9 40 E1 04 87 FD 8E 7A 7D E9
+A510 57 E1 04 8E 7B A8 8E 7A 7D E9 57 E1 04 AC 58 8A
+A520 AC A2 D1 CF 8E 90 A8 8E 7A 7D E9 40 E1 04 87 FD
+A530 8E 7A 7D E9 57 E1 04 8E 92 A8 8E 7A 7D E9 57 E1
+A540 04 AC 58 8A AC 91 D1 D6 23 A5 8E 4F B3 8E E3 00
+A550 62 E9 12 F4 06 D6 23 A5 
+
+Function $A475 (FD FF) -> Threaten nation <00>
+Args:
+<0C> Nation
+
+A47A AC 48 A4    / Call $A448
+A47D A8 38 7D    / Set  $7D38 (Acting general)
+
+A480 AC 24 97    / Call $9724
+
+A483 A4 38 7D    / Load $7D38 (Acting general)
+A486 D7 8A A4
+
+if no acting general
+	A489 CF
+
+A48A AA 38 7D    / Push $7D38 (Acting general)
+A48D E9 E8 8C 02 / Call $8CE8 (General has used turn)
+
+A491 3C
+A492 E9 B3 A3 02 / Call $A3B3 -> Get % chance of surrender
+A496 B3
+A497 E9 69 D1 02 / Call $D169 -> RNG check
+A49B A2 FF FF    /
+
+A49E AC 79 97    / Call $9779
+
+A4A1 60
+A4A2 62
+A4A3 6F
+A4A4 A0 FF FF    / Result of RNG check
+A4A7 B3
+A4A8 E9 F6 8C 08 / Call $8CF6
+A4AC D7 B0 A4
+
+if
+	A4AF CF
+
+A4B0 60
+A4B1 0C
+A4B2 B0
+A4B3 B3
+A4B4 E9 2D C1 04 / Call $C12D -> Get name of ruler
+A4B8 85 FD
+
+A4BA 44
+A4BB A9 30 7D    / $7D30
+
+A4BE 0C
+A4BF A8 40 7D    / $7D40
+
+A4C2 0C
+A4C3 72
+A4C4 B0
+A4C5 A8 34 7D    / $7D34
+
+A4C8 A0 FF FF
+A4CB D8 D2 A4
+
+if
+	A4CE 40
+	A4CF D6 D3 A4
+else
+	A4D2 41
+
+A4D3 A9 32 7D    / $7D32
+
+A4D6 8E 31 B2
+A4D9 8E E3 00
+A4DC 62
+A4DD E9 12 F4 06 / Call $F412 -> E3:B231
+
+A4E1 8E 60 B3
+A4E4 8E E3 00
+A4E7 62
+A4E8 E9 12 F4 06 / Call $F412 -> E3:B360
+A4EC D8 F0 A4
+
+if
+	A4EF CF
+
+A4F0 A5 32 7D
+A4F3 D9 02 00
+     00 00 00 A5
+	 01 00 24 A5
+	       4A A5
+		   
+Case 00 - Success
+A500 8E 6E A8    / $A86E "\nWell done!\n"
+A503 8E 7A 7D    
+A506 E9 40 E1 04 / Call $E140 -> Transfer string
+
+A50A 87 FD       / Name of ruler
+A50C 8E 7A 7D
+A50F E9 57 E1 04 / Call $E157 -> Append string
+
+A513 8E 7B A8    / $A87B "\nhas submitted to us"
+A516 8E 7A 7D
+A519 E9 57 E1 04 / Call $E157 -> Append string
+
+A51D AC 58 8A
+A520 AC A2 D1
+A523 CF
+
+Case 01 - Failure
+A524 
+
+Default		   
+A54A
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A520 AC A2 D1 CF 8E 90 A8 8E 7A 7D E9 40 E1 04 87 FD
+A530 8E 7A 7D E9 57 E1 04 8E 92 A8 8E 7A 7D E9 57 E1
+A540 04 AC 58 8A AC 91 D1 D6 23 A5 8E 4F B3 8E E3 00
+A550 62 E9 12 F4 06 D6 23 A5 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A550                         20 D1 E4 FE FF 60 63 60
+A560 8E 5C B3 8E E2 00 62 E9 12 F4 0C 2B 0B D7 79 A5
+A570 61 AA 2F 78 E9 60 8C 04 CF 3B E9 E2 D4 02 D8 90
+A580 A5 61 AA 2F 78 E9 60 8C 04 8D 12 E9 9F 89 02 CF
+A590 61 E9 57 97 02 D8 99 A5 CF AC 24 97 3B E9 75 A4
+A5A0 02 AC 3A A3 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A5A0                20 D1 E4 FD FF A5 2E 78 8C F0 00
+A5B0 DA 54 BE A2 FE FF A5 2E 78 5F DA A2 FF FF A0 FE
+A5C0 FF D9 03 00 05 00 D2 A5 07 00 D7 A5 09 00 E3 A5
+A5D0 D6 A5 A4 B5 A8 DD CF A0 FF FF D2 8C B1 A8 BB B0
+A5E0 D6 D5 A5 AC C3 A7 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A5E0                      20 D1 E4 00 00 AC E5 96 8E
+A5F0 D6 A8 E9 56 C4 02 AC 69 CC D8 1C A6 89 20 CD A5
+A600 45 78 DB A9 45 78 8E 7A B1 8E F0 00 62 E9 12 F4
+A610 06 8A DF 00 CD A5 45 78 DA A9 45 78 AC 20 A6 CF
+
+Function $A5E7 (00 00) -> Ask player to save game
+
+A5EC AC E5 96    / Call $96E5
+
+A5EF 8E D6 A8    / $A8D6
+A5F2 E9 56 C4 02 / Call $C456
+
+A5F6 AC 69 CC    / Call $CC69 -> Ask player Y/N
+A5F9 D8 1C A6
+
+	A5FC 89 20
+	A5FE CD
+	A5FF A5 45 78    / $7845
+	A602 DB
+	A603 A9 45 78
+
+	A606 8E 7A B1
+	A609 8E F0 00
+	A60C 62
+	A60D E9 12 F4 06 / Call $F412 -> F0:B17A (Save the game)
+
+	A611 8A DF 00
+	A614 CD
+	A615 A5 45 78
+	A618 DA
+	A619 A9 45 78
+
+A61C AC 20 A6    / Call $A620
+A61F CF
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A620 20 D1 E4 00 00 AC E5 96 8E E4 A8 E9 56 C4 02 AC
+A630 69 CC D7 37 A6 40 CF AC A3 97 AC 3B D3 AC 79 97
+A640 AA 2A 78 E9 C6 E1 02 8C F7 77 BB B3 40 D4 AC 53
+A650 D4 D8 A1 A6 AC E5 96 8E EE A8 E9 56 C4 02 AC 69
+A660 CC D7 A1 A6 AC F2 E1 AC 3B D3 8E E0 A8 64 6C E9
+A670 81 D6 06 8E F3 00 8E 40 BD 8E 04 BD 66 6A 6B 6B
+A680 68 E9 E6 EE 10 8E F5 00 8E C8 A8 8E BA A8 61 6E
+A690 8D 13 69 68 E9 E6 EE 10 AC 0C D3 AC 3C D6 D6 9E
+A6A0 A6 AC E5 96 60 AA 2C 78 E9 2D C1 04 B3 8E 00 A9
+A6B0 E9 9D C6 04 AA 2F 78 E9 E3 8D 02 41 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A6B0                                        20 D1 E4
+A6C0 F9 FF AC E5 96 8E 29 A9 E9 56 C4 02 8D 18 68 E9
+A6D0 1D C4 04 8E 31 A9 E9 4A C4 02 61 61 60 65 8D 18
+A6E0 67 62 8E 3C A9 E9 0F CD 10 2B 0B D9 02 00 01 00
+A6F0 F8 A6 02 00 03 A7 01 A7 48 CD A5 45 78 DB A9 45
+A700 78 40 CF 8A F4 73 85 F9 40 2A 41 A2 FB FF D6 35
+A710 A7 87 F9 E9 B9 D4 02 D8 29 A7 40 A2 FB FF AC E5
+A720 96 8E 3D A9 E9 56 C4 02 CF 0A D0 2A D1 81 F9 8F
+A730 19 85 F9 8F E7 0A 8B 29 C6 D7 11 A7 8A F7 00 CD
+A740 A5 45 78 DA D6 FE A6 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A740                      20 D1 E4 FE FF AC E5 96 6A
+A750 61 8E 73 A9 E9 E0 CB 06 2B 0B 8B FF C1 D8 64 A7
+A760 0B A9 46 78 40 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A760                   20 D1 E4 00 00 A5 20 79 D7 90
+A770 A7 64 6A 6A 8E 6F AB 8E E0 00 62 E9 12 F4 0C 4C
+A780 A8 90 7C 6B 6C E9 1D C4 04 8E 84 A9 E9 4A C4 02
+A790 6D 8D 13 E9 1D C4 04 A5 46 78 B3 8E A1 A9 E9 8C
+A7A0 C6 04 6F 8D 12 E9 1D C4 04 A5 45 78 58 DA D8 B7
+A7B0 A7 8A A8 A9 D6 BA A7 8A AC A9 B3 8E A5 A9 E9 8C
+A7C0 C6 04 CF 
+----------------------------------------------------
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A7C0          20 D1 E4 FE FF AC 66 A7 AC E5 96 8E B6
+A7D0 A9 E9 56 C4 02 61 63 62 60 6D 6B 63 8E C3 A9 E9
+A7E0 0F CD 10 2B 0B 8B FF C1 D8 F7 A7 0B D1 D2 8C B0
+A7F0 A9 BB B0 DD D8 C8 A7 AC A3 97 CF
+
+Function $A7C3 (FE FF)
+
+A7C8 AC 66 A7    /
+A7CB AC E5 96    /
+
+A7CE 8E B6 A9    / "Select which"
+A7D1 E9 56 C4 02 / Call $C456 (print)
+
+A7D5 61
+A7D6 63
+A7D7 62
+A7D8 60
+A7D9 6D
+A7DA 6B
+A7DB 63
+A7DC 8E C3 A9    / ""
+A7DF E9 0F CD 10
+A7E3 2B
+
+A7E4 0B
+A7E5 8B FF
+A7E7 C1
+A7E8 D8 F7 A7
+
+A7EB	0B
+A7EC	D1
+A7ED	D2
+A7EE	8C B0 A9
+A7F1	BB
+A7F2	B0
+A7F3	DD
+A7F4	D8 C8 A7
+
+A7F7 AC A3 97
+A7FA CF
+----------------------------------------------------
+STRINGS
+
+A7FD "\nTake how much gold\n"
+A811 "\nTake how much rice\n"
+A826 "Abandon this province\n"
+A83D "Move where?"
+A849 "Send goods"
+A854 "Send where?"
+
+Table $A860 (List of Portrait IDs that can't surrender)
+A1 00 - Liu Bei
+67 00 - Cao Cao
+68 00
+01 00 - Sun Jian
+02 00 - Sun Ce
+6C 00
+86 00 - Dong Zhuo
+
+
+A86E "\nWell done!\n"
+A87B "\nhas submitted to us"
+A890 "\n"
+A892 "\nscorns the idea of\nsurrender!"
+
+$AF04 - String pointer table (Advisor quotes)
+
+Conditional quotes
+00 AF3C "There seems to be\ngenerals of ability\nwithin this province"
+01 AF77 " will\nprobably invade\nour country\nBe careful!"
+02 AFA5 " is\nrunning low on rice"
+03 AFBD " has\nlittle rice\nLet's use our\nadvantage"
+04 AFE6 " has built\nup its army,\nso watch out"
+05 B00B " is\na menace.\nLet's plot\nagainst them"
+06 B031 "We'll surely win\nif we invade\n"
+07 B050 "'s leader\nis inexperienced"
+08 B06B ". Let's\nnot be careless..."
+09 B086 " is\nquickly gathering\ntalented generals"
+0A B0AE "\ncan't be trusted"
+0B B0C0 "\nmay be plotting\nsomething"
+
+Random quotes (E6:B567)
+0C B0DB "Cao Cao leads well,\nbut other rulers\ndon't trust him"
+0D B110 "\nThe Han Dynasty has\ndecayed beyond repair\n...
+0E B13F "\nLu Bu's strength\nis unequaled"
+0F B15E "\nLu Bu is strong, but\nhe can't be trusted"
+10 B188 "\nHan's royal family\nmay rise again..."
+11 B1AE "\nChao Yun thrives\non danger"
+12 B1CA "\nChina is not the only\neastern civilization"
+13 B1F6 "\nYou need Hidden\nDragon's strength"
+14 B219 "\nThe Ma brothers show\nproper respect"
+15 B23E "If The Hare or\nBlack Lightning is\npresent, you can't\nbe caught"
+16 B27D "It's books\nwhich increase the\ngeneral's intellect"
+17 B2AF "It is the sword\nwhich increases the\ngeneral's military\npower"
+18 B2EC "If you have Hua Tuo's\nmedical book- Within\none month, injuries\ncan be healed"
+19 B339 "If you give a\nbeautiful jewel to\na general, his charm\nwill increase"
+
+1A B37D ""
+1B B37E	""
+

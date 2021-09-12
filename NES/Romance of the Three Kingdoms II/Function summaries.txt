@@ -1,0 +1,262 @@
+E0:A003 - Print composite general portrait <0E> to <0C>,<0D>.
+E0:A24E - Print general portrait <0E> to <0C>,<0D>.
+E0:A2EC - 
+E0:A38B - 
+E0:A401 -
+E0:A42C -
+E0:A48D - 
+E0:A4A8 - Show the game map
+E0:A56B - 
+E0:A670 - Remove general from list??
+E0:A690 - 
+E0:A6D5 -
+E0:A6E2 -
+E0:A701 -
+E0:A784 - 
+E0:A7C9 - 
+E0:A7F5 -
+E0:A857 -
+E0:A8CD -
+E0:A909 -
+E0:A95B - Nation <0C> gains ownership of province <0D>?
+E0:A99D -
+E0:A9CE -
+E0:AA01 -
+E0:AA33 -
+E0:AAAB -
+E0:AAC1 -
+E0:AAF0 -
+E0:AAFE -
+E0:AB6F -
+E0:ABFD -
+E0:AC48 -
+E0:AC74 -
+E0:AC9F -
+E0:AD41 -
+E0:AD74 -
+E0:AE56 -
+E0:AECC -
+E0:AEDD -
+E0:AF87 -
+E0:AFA1 -
+E0:AFC0 -
+E0:AFF0 -
+E0:B015 -
+E0:B061 -
+E0:B0E8 -
+E0:B10D -
+E0:B125 -
+E0:B1D6 -
+E0:B23D -
+E0:B356 -
+E0:B3B0 -
+E0:B67B -
+E0:B698 -
+E0:B6B1 -
+E0:B733 -
+E0:B758 -
+E0:B7FA -
+E0:B820 -
+E0:B835 -
+E0:B86E -
+E0:B8A5 -
+E0:B998 - Returns compatability difference between generals <00> and <02>.
+E0:B9BA -
+E0:BA3C -
+--------------------------------------------------
+E1:83E8 - Returns the # of generals in active province capable of acting
+E1:87C7 - Returns % chance of general <00> recruiting enemy general <02>
+          <04> = Recruitment type:
+		  00 = Letter
+		  01 = Special Attention
+		  02 = Horse
+		  03 = Gold
+E1:8A21 - Writes advisor quote <00> to $7D7A
+E1:8CE8 - General <00> uses up their turn (flag status)
+E1:9605 - Subtract sent gold/rice from province <00>
+E1:9779 - Display map
+--------------------------------------------------
+E3:BAE6 - Asks player how much gold & rice to take from province <00>.
+--------------------------------------------------
+PAGE E5 - "Army" and "Person" (except Reward) menu commands
+E5:A000 - Jump to $A94C (Main page function)
+
+E5:A014 - 
+E5:A035 - Army-Train
+E5:A129 -
+E5:A18C -
+E5:A36C - Army-Assign
+E5:A4B1 - Army-Hire
+E5:A802 - Army-War
+E5:A94C - Main page function (redirects to specific function)
+
+E5:AC45 - Attempt to appoint general from province <00> as <02> (00 = governor, 01 = advisor)
+E5:AD0B - Person-Appoint
+E5:AFAD - Person-Search
+E5:AFD0 - Return player choice for type of recruitment
+          FF = cancelled
+		  00 = Letter
+		  01 = Special Attention
+		  02 = Horse
+		  03 = Gold
+		  
+E5:B2B6 - Person-Recruit
+E5:B749 - Person-Delegate
+--------------------------------------------------
+E6:B567 - Retrieves a random (non-conditional) advisor quote.
+--------------------------------------------------
+E8:8DE5 - General <00> switches sides
+--------------------------------------------------
+ED:8224 - Display map
+--------------------------------------------------
+F0:B17A - Saves the game
+F0:B1E1 - Print message <00> from Table F0:B555
+F0:B1F5 - Print Month, Year & Season
+--------------------------------------------------
+F1:8015 - Print general portrait <0E> to <0C>,<0D>
+
+F1:9458 - Prints province # <00> & returns a pointer to that province object
+--------------------------------------------------
+F2:87A3 - Prints the win message "In %3d A.D.\n %s unified\n China!"
+
+F2:8830 - Print general <00>'s portrait to  5,12
+--------------------------------------------------
+FE:C003 - Prints the error message "bno get err"
+FE:C019 - 
+FE:C05F - 
+FE:C0C1 - Returns stat <0D> of General <0C>:
+          0 = Compatability
+		  1 = Birth Year
+FE:C12D - Retrieve ? <0D> of General/Province? <0C>:
+          0 = Name
+FE:C234 - 
+FE:C272 - 
+FE:C2CC - 
+FE:C311 - Returns rank of general <00>
+		0 = Ruler
+		1 = Governor
+		2 = Advisor 
+		3 = Other
+		4 = No nation (dead? free?)
+FE:C34D - 
+FE:C371 - 
+FE:C390 - Ensure that x/y pos of text are within normal bounds
+FE:C3D6 - Set x,y pos of text to <00>,<02>
+FE:C3F3 - Set x-pos of text to <00>
+FE:C400 - Set y-pos of text to <00>
+FE:C40D - 
+FE:C41D - Set x,y pos of text to <00>,<02>
+FE:C429 - 
+FE:C434 - 
+FE:C43F -
+FE:C44A - 
+FE:C456 - 
+FE:C462 - 
+FE:C484 -
+FE:C4DE - 
+FE:C68C - 
+FE:C805 - 
+FE:C824 - 
+
+FE:CD0F - Sets up menu & returns player's selection (FF = cancelled)
+<00> string (usually blank)
+<02> ?
+<04> initial x-pos of cursor?
+<06> initial y-pos of cursor?
+<08> ?
+<0A> ?
+<0C> ?
+<0E> ?
+
+FE:D126 - Wait for <00> frames or until input?
+
+FE:D4E2 - Checks if Nation <00> is player-controlled
+
+FE:D5B3 - Checks if General <00> is a ruler
+FE:D5D1 - Get square root of <00>
+FE:D63C -
+FE:D646 -
+FE:D664 - Blank out <02> palette values starting at <00>
+FE:D681 - 
+FE:D6AD - 
+FE:D70E - 
+FE:D71F - 
+FE:D733 - 
+FE:D744 - 
+FE:D763 - Get fraction <00> * (<02>/<04>)
+FE:D7A8 - Return <02>% of <00>
+FE:D7C5 - Returns random number from #$00-<00>
+
+FE:D875 - Store arg00 to $00/$01
+FE:D883 - Store $08/$09 to address $00/$01
+FE:D890 - Return smaller of <arg00> & <arg02> (redir to $F34C)
+FE:D8A3 - Returns nation address of General <00>
+FE:D8BA - Returns nation address of Province <00>
+FE:D8D8 - Returns address of Nation ID <00>
+FE:D8F0 - Returns the total soldiers assigned to generals in province <00>
+--------------------------------------------------
+FF:E037 - Triggers game ending
+FF:E07B - 
+FF:E157 - Append string <02> to string <00>
+FF:E1C6 - Returns ID of Nation address <00>
+FF:E1D4 - Returns ID of Province address <00>
+FF:E1E2 - Returns address of Province ID <00>
+FF:E4D1 - Runs the following upper-level function
+FF:EEE6 - Runs sysop <00>
+     00 $F500 Reset vector
+	 01 $FA5D Set nametable mapping to <00> & Extended RAM mode to <02>
+	 02 $FA6B Runs Page <02> on RAM bank <00>
+	 03 $FAAA Sets RAM bank <00> to <02>
+	 04 $FAB2 Returns value of RAM bank <00>
+	 05 $FABA Perform the CHR bank switching described at $<00>
+	 06 $FAC8 Autofill? (Blacks out screen if all arguments are zero)
+	 07 $FB11
+	 08 $FB56 Print graphic from page <0C>,
+			  data tables <0A> (pattern table for each tile),
+		      & <08> (list of tile IDs)
+			  with height <06> and width <04>,
+			  to <00>,<02>
+	 09 $FBD8 ? (another graphic print similar to 08)
+	 0A $FC00 
+	 0B $FC18 
+	 0C $FC23 Retrieve RNG value & advance seed
+	 0D $FC7C
+	 0E $FCA3 Wait 1 frame
+	 0F $FCAC Get pad<00> input
+	 10 $FCB7 
+	 11 $FCCC Wait <00> frames?
+	 12 $FCD1 
+	 13 $FD0A (DO NOTHING)
+	 14 $FD0B (DO NOTHING)
+	 15 $FD0C (DO NOTHING)
+	 16 $FD0D Something to do w/ Vertical Split Scroll
+	 17 $FD49 Something to do w/ Vertical Split Mode/Bank
+	 18 $FB5E
+	 19 $FD77
+	 1A $FDCF
+	 1B $FE48
+	 1C $FE53
+	 1D $FE86
+	 1E $FEC2
+	
+FF:F34C - Return smaller of <00> & <02>
+FF:F36C - Return larger  of <00> & <02>
+FF:F3E7 - Set RAM bank <00> to <02>
+FF:F412 - Runs function <04> on Page <02> of RAM bank <00>
+
+FF:F55F - Initialize bank switch data
+
+FF:F5A2 - Enable Extended RAM mode 1
+
+FF:F5BA - Wipe palettes/sprites (black out screen)
+
+FF:F5DF - Enables stack pointers on bootup
+
+FF:F982 - Set PPU_CTRL to (A)
+FF:F988 - Set PPU_MASK to (A)
+FF:F98E - Enable NMI
+FF:F996 - Disable NMI
+FF:F99E - Set RAM bank (X) to (A)
+FF:F9B9 - Poll PAD (A) input
+FF:F9D5 - Multiply? (X)(Y)
+FF:F9E2 - If flag is set, update palette/scroll data
