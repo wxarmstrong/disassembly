@@ -1,0 +1,5 @@
+0201      Speed
+
+021E-021F Distance remaining
+
+0500      Fuel
