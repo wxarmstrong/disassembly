@@ -1,0 +1,495 @@
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8000 4C 9B 82                                        ROM Address: 01E010
+8000 JMP $829B                                       
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8000          20 09 E5 FE FF 8E FF 00 E9 6F CF 02 AC
+8010 0B D0 8A FF 00 A9 59 7B 60 8E 18 AC 8E E0 00 62
+8020 E9 79 DD 08 A5 EF 6F 52 C0 D8 30 80 40 D6 31 80
+8030 41 B3 8E C5 A9 8E E0 00 62 E9 79 DD 08 8E C2 AB 
+8040 8E E0 00 62 E9 79 DD 06 8E 27 AB 8E E0 00 62 E9
+8050 79 DD 06 6F A5 13 60 B3 E9 60 D4 04 57 C0 D8 65
+8060 80 45 D6 66 80 40 2B 8E F3 00 0B 8B 2C B5 8C E8
+8070 A6 BB B3 0B 8B 2C B5 8C 54 A4 BB B3 64 6B 61 6B
+8080 69 E9 1E EF 10 60 E9 6F CF 02 CF
+
+FUNCTION $8003 (FE FF) $8008-$808A
+8008 8E FF 00    / Push #$00FF to metastack          (+2)
+800B E9 6F CF 02 / Run function $CF6F                (-2) Set screen to black
+800F AC 0B D0    / Run function $D00B                     Set $9F-$AD to default values 
+8012 8A FF 00    / Store #$00FF to M8
+8015 A9 59 7B    / Store #$FF to $7B59                    Disable map 
+8018 60          / Push #$0000 to metastack          (+2)
+8019 8E 18 AC    / Push #$AC18 to metastack          (+2)
+801C 8E E0 00    / Push #$00E0 to metastack          (+2)
+801F 62          / Push #$0002 to metastack          (+2)
+8020 E9 79 DD 08 / Run function $DD79                (-8)
+8024 A5 EF 6F    / Push value of $6FEF to $0008           Phase
+8027 52          / Store #$02 to MC
+8028 C0          / Check if M8=MC                         Check if national phase
+8029 D8 30 80    / Jump to $8030 if not
+802C 40          / Store #$00 to M8
+802D D6 31 80    / Jump to $8031
+8030 41          / Store #$01 to M8
+8031 B3          / Push M8 to metastack              (+2)
+8032 8E C5 A9    / Push #$A9C5 to metastack          (+2)
+8035 8E E0 00    / Push #$00E0 to metastack          (+2)
+8038 62          / Push #$0002 to metastack          (+2)
+8039 E9 79 DD 08 / Run function $DD79                (-8)
+803D 8E C2 AB    / Push #$ABC2 to metastack          (+2)
+8040 8E E0 00    / Push #$00E0 to metastack          (+2)
+8043 62          / Push #$0002 to metastack          (+2)
+8044 E9 79 DD 06 / Run function $DD79                (-6)
+8048 8E 27 AB    / Push #$AB27 to metastack          (+2)
+804B 8E E0 00    / Push #$00E0 to metastack          (+2)
+804E 62          / Push #$0002 to metastack          (+2)
+804F E9 79 DD 06 / Run function $DD79                (-6) Print Month/Year
+8053 6F          / Push #$000F to metastack          (+2)
+8054 A5 13 60    / Store value of $6013 to $0008          Napoleon status
+8057 B3          / Push M8 to metastack              (+2)
+8058 E9 60 D4 04 / Run function $D460                (-4)
+805C 57          / Store #$07 to MC
+805D C0          / Check if M8=MC
+805E D8 65 80    / Jump to $8065 if not
+8061 45          / Store #$05 to M8
+8062 D6 66 80    / Jump to $8066
+8065 40          / Store #$00 to M8
+8066 2B          / Store M8 to meta 01/02
+8067 8E F3 00    / Push #$00F3 to metastack          (+2)
+806A 0B          / Store meta 01/02 to M8
+806B 8B 2C       / Store #$2C to MC
+806D B5          / Multiply M8 by MC
+806E 8C E8 A6    / Store #$A6E8 to MC
+8071 BB          / Add MC to M8
+8072 B3          / Push M8 to metastack              (+2)
+8073 0B          / Store meta 01/02 to M8
+8074 8B 2C       / Store #$2C to MC
+8076 B5          / Multiply M8 by MC
+8077 8C 54 A4    / Store #$A454 to MC
+807A BB          / Add MC to M8
+807B B3          / Push M8 to metastack              (+2)
+807C 64          / Push #$0004 to metastack          (+2)
+807D 6B          / Push #$000B to metastack          (+2)
+807E 61          / Push #$0001 to metastack          (+2)
+807F 6B          / Push #$000B to metastack          (+2)
+8080 69          / Push #$0009 to metastack          (+2)
+8081 E9 1E EF 10 / Run function $EF1E               (-10)
+8085 60          / Push #$0000 to metastack          (+2)
+8086 E9 6F CF 02 / Run function $CF6F                (-2)
+808A CF          / Exit
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8080                                  20 09 E5 00 00
+8090 8A FF 00 A9 59 7B 8A FF 00 A9 5A 7B CF
+
+FUNCTION $808B (00 00) $8090-$809C
+8090 8A FF 00    / Store #$00FF to M8
+8093 A9 59 7B    / Store #$FF to $7B59 (set to no map)
+8096 8A FF 00    / Store #$00FF to M8
+8099 A9 5A 7B    / Store #$FF to $7B5A (?)
+809C CF          / Exit
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8090 
+80A0 
+80B0 
+80C0 
+80D0 
+80E0 
+80F0 
+8100 
+8110 
+8120 
+8130 
+8140 
+8150 
+8160 
+8170 
+8180 
+8190 
+81A0 
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+81A0    20 09 E5 00 00 60 E9 41 CF 02 AC 0B D0 60 E9
+81B0 6F CF 02 8D 1F 60 E9 C9 CF 04 60 E9 D9 C3 02 60
+81C0 60 E9 BC C3 04 CF 
+
+FUNCTION $81A1 (00 00) $81A6-$81C5
+
+81A6 60          / Push #$0000 to metastack (+2)
+81A7 E9 41 CF 02 / Run function $CF41       (-2) Set nametable mapping to #$00
+81AB AC 0B D0    / Run function $D00B            Set $9F-$AD to default values 
+81AE 60          / Push #$0000 to metastack (+2)
+81AF E9 6F CF 02 / Run function $CF6F       (-2) Set color palette to set 0
+81B3 8D 1F       / Push #$001F to metastack (+2)
+81B5 60          / Push #$0000 to metastack (+2)
+81B6 E9 C9 CF 04 / Run function $CFC9       (-4) Set $7B5F/$7B60 to #$00 and $7B61-$7B62 to #$1F
+81BA 60          / Push #$0000 to metastack (+2)
+81BB E9 D9 C3 02 / Run function $C3D9       (-2) Set $7B63 to 0
+81BF 60          / Push #$0000 to metastack (+2)
+81C0 60          / Push #$0000 to metastack (+2)
+81C1 E9 BC C3 04 / Run function $C3BC       (-4)
+81C5 CF          / Exit 
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+81C0                   20 09 E5 00 00 AC A1 81 60 E9
+81D0 75 E0 02 AC 8B 80 6C E9 E4 CD 02 AC 0B D0 8E FF
+81E0 00 E9 6F CF 02 60 8E 18 AC 8E E0 00 62 E9 79 DD
+81F0 08 8E F3 00 8E 07 B2 8E B3 B1 62 6D 61 6A 69 E9
+8200 1E EF 10 60 E9 6F CF 02 42 A9 EF 6F D6 64 82 67
+8210 68 8E 24 A9 8E E0 00 62 E9 79 DD 0A 8E C6 A8 8E
+8220 E0 00 62 E9 79 DD 06 60 60 8E AE A8 8E E0 00 62
+8230 E9 79 DD 0A 8E 84 87 E9 E9 C3 02 AC 86 CA D7 6D
+8240 82 8E E3 A8 8E E0 00 62 E9 79 DD 06 8E 12 A9 8E
+8250 E0 00 62 E9 79 DD 06 60 E9 75 E0 02 42 A9 EF 6F
+8260 40 A9 EE 6F AC B9 84 A5 EE 6F D8 0F 82 8E E3 A8
+8270 8E E0 00 62 E9 79 DD 06 8E 12 A9 8E E0 00 62 E9
+8280 79 DD 06 A5 EE 6F D7 8C 82 AC 9D 80 A5 EC 6F 5C
+8290 DA D7 97 82 AC 0F CE AC 03 80 CF
+
+FUNCTION $81C6 (00 00) $81CB-$829A
+
+81CB AC A1 81    / Run function $81A1 
+81CE 60          / Push #$00 to metastack            / (+2)
+81CF E9 75 E0 02 / Run function $E075                / (-2) Load stats for Scenario 1
+81D3 AC 8B 80    / Run function $808B       
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+81C0                   20 09 E5 00 00 AC A1 81 60 E9
+81D0 75 E0 02 AC 8B 80 6C E9 E4 CD 02 AC 0B D0 8E FF
+81E0 00 E9 6F CF 02 60 8E 18 AC 8E E0 00 62 E9 79 DD
+81F0 08 8E F3 00 8E 07 B2 8E B3 B1 62 6D 61 6A 69 E9
+8200 1E EF 10 60 E9 6F CF 02 42 A9 EF 6F D6 64 82 67
+8210 68 8E 24 A9 8E E0 00 62 E9 79 DD 0A 8E C6 A8 8E
+8220 E0 00 62 E9 79 DD 06 60 60 8E AE A8 8E E0 00 62
+8230 E9 79 DD 0A 8E 84 87 E9 E9 C3 02 AC 86 CA D7 6D
+8240 82 8E E3 A8 8E E0 00 62 E9 79 DD 06 8E 12 A9 8E
+8250 E0 00 62 E9 79 DD 06 60 E9 75 E0 02 42 A9 EF 6F
+8260 40 A9 EE 6F AC B9 84 A5 EE 6F D8 0F 82 8E E3 A8
+8270 8E E0 00 62 E9 79 DD 06 8E 12 A9 8E E0 00 62 E9
+8280 79 DD 06 A5 EE 6F D7 8C 82 AC 9D 80 A5 EC 6F 5C
+8290 DA D7 97 82 AC 0F CE AC 03 80 CF
+
+=====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8290                                  20 09 E5 00 00                                 
+82A0 8D 40 60 8E 9D A9 8E E0 00 62 E9 79 DD 0A A5 EB 
+82B0 6F D9 01 00 00 00 BA 82 C1 82 AC 0B D0 AC C6 81
+82C0 CF 6A E9 52 C0 02 AC 0B D0 AC CD 86 D6 C0 82
+
+FUNCTION $829B (00 00) $82A0-$82CE
+
+82A0 8D 40       / Push #$0040 to metastack      (+2)
+82A2 60          / Push #$0000 to metastack      (+2)
+82A3 8E 9D A9    / Push #$A99D to metastack      (+2) 
+82A6 8E E0 00    / Push #$00E0 to metastack      (+2)
+82A9 62          / Push #$0002 to metastack      (+2)
+82AA E9 79 DD 0A / Run function $DD79            (-A) Blank first #$40 icons
+82AE A5 EB 6F    / Store value of $6FEB to $0008 
+82B1 D9 01 00    / 
+     00 00 BA 82 / Jump to $82BA if M8 = #$0000
+      	   C1 82 / Jump to $82C1 otherwise
+82BA AC 0B D0    / Run function $D00B                 / Set $9F-$AD to default values 
+82BD AC C6 81    / Run function $81C6
+82C0 CF          / Exit
+82C1 6A          / Push #$000A to metastack      (+2)
+82C2 E9 52 C0 02 / Run function $C052            (-2) / Wait 60 frames
+82C6 AC 0B D0    / Run function $D00B                 / Set $9F-$AD to default values 
+82C9 AC CD 86    / Run function $86CD
+82CC D6 C0 82    / Jump to $82C0
+=====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+82C0
+82D0 
+82E0 
+82F0 
+8300 
+8310 
+8320 
+8330 
+8340 
+8350 
+8360 
+8370 
+8380 
+8390 
+83A0 
+83B0 
+83C0 
+83D0 
+83E0 
+83F0 
+8400 
+8410 00 62 E9 79 DD 06 CF
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8410                      20 09 E5 FD FF 40 A2 FD FF
+8420 8A 85 76 8C 04 60 BC D0 B3 8E 04 60 8E 04 80 61
+8430 61 61 8E 60 BD 8E E0 00 62 E9 79 DD 12 2B 0B D7
+8440 47 84 60 E9 75 E0 02 67 68 8E 24 A9 8E E0 00 62
+8450 E9 79 DD 0A 8E C6 A8 8E E0 00 62 E9 79 DD 06 60
+8460 60 8E AE A8 8E E0 00 62 E9 79 DD 0A 0B D7 80 84
+8470 8E FF 87 D6 79 84 8E 0E 88 E9 E9 C3 02 D6 91 84
+8480 0B 51 C0 D7 76 84 8E 20 88 E9 E9 C3 02 41 A2 FD
+8490 FF 8E 34 88 E9 E9 C3 02 AC 49 C6 8E E3 A8 8E E0
+84A0 00 62 E9 79 DD 06 8E 12 A9 8E E0 00 62 E9 79 DD
+84B0 06 41 A9 EE 6F A0 FD FF CF
+
+FUNCTION $8417 (FD FF) $841C-$84B8
+
+841C 40          / Store #$00 to M8
+841D A2 FD FF    / Store $0008 to meta 03
+
+8420 8A 85 76    / Store #$7685 to M8
+8423 8C 04 60    / Store #$6004 to MC
+8426 BC          / Subtract MC from M8
+8427 D0          / Increment M8                       / # of values to be loaded
+8428 B3          / Push M8 to metastack               / (+2)
+8429 8E 04 60    / Push #$6004 to metastack           / (+2)
+842C 8E 04 80    / Push #$8004 to metastack           / (+2)
+842F 61          / Push #$01 to metastack             / (+2)
+8430 61          / Push #$01 to metastack             / (+2)
+8431 61          / Push #$01 to metastack             / (+2)
+8432 8E 60 BD    / Push #$BD60 to metastack           / (+2)
+8435 8E E0 00    / Push #$00E0 to metastack           / (+2)
+8438 62          / Push #$02 to metastack             / (+2)
+8439 E9 79 DD 12 / Run function $DD79                 /(-12) Transfer save data to region starting at $6004
+
+843D 2B          / Store M8 to meta 01/02             /      Results of load attempt
+843E 0B          / Store meta 01/02 to M8             /      00=Corrupt, 02=Successful
+843F D7 47 84    / Jump to $8447 if not zero
+
+8442 60          / Push #$00 to metastack             / (+2)
+8443 E9 75 E0 02 / Run function $E075                 / (-2) Load stats for Scenario 1
+
+8447 67          / Push #$07 to metastack             / (+2)
+8448 68          / Push #$08 to metastack             / (+2)
+8449 8E 24 A9    / Push #$A924 to metastack           / (+2)
+844C 8E E0 00    / Push #$00E0 to metastack           / (+2)
+844F 62          / Push #$0002 to metastack           / (+2)
+8450 E9 79 DD 0A / Run function $DD79                 / (-A)
+
+8454 8E C6 A8    / Push #$A8C6 to metastack           / (+2)
+8457 8E E0 00    / Push #$00E0 to metastack           / (+2)
+845A 62          / Push #$0002 to metastack           / (+2)
+845B E9 79 DD 06 / Run function $DD79                 / (-6)
+
+845F 60          / Push #$0000 to metastack           / (+2)
+8460 60          / Push #$0000 to metastack           / (+2)
+8461 8E AE A8    / Push #$A8AE to metastack           / (+2)
+8464 8E E0 00    / Push #$00E0 to metastack           / (+2)
+8467 62          / Push #$0002 to metastack           / (+2)
+8468 E9 79 DD 0A / Run function $DD79                 / (-A)
+
+846C 0B          / Store meta 01/02 to M8
+846D D7 80 84    / Jump to $8480 if not zero
+
+8470 8E FF 87    / Push #$87FF to metastack           / (+2) "Can't use DATA"
+8473 D6 79 84    / Jump to $8479
+
+8476 8E 0E 88    / Push #$880E to metastack           / (+2) "Game is not saved"
+8479 E9 E9 C3 02 / Run function $C3E9                 / (-2) 
+847D D6 91 84    / Jump to $8491
+
+8480 0B          / Store meta 01/02 to M8
+8481 51          / Store #$01 to MC
+8482 C0          / Check if M8=MC
+8483 D7 76 84    / Jump to $8476 if so
+
+8486 8E 20 88    / Push #$8820 to metastack          / (+2) "Loading is finished"
+8489 E9 E9 C3 02 / Run function $C3E9                / (-2) 
+848D 41          / Store #$01 to M8
+848E A2 FD FF    / Store $0008 to meta 03
+
+8491 8E 34 88    / Push #$8834 to metastack          / (+2) "Press any button"
+8494 E9 E9 C3 02 / Run function $C3E9                / (-2) 
+8498 AC 49 C6    / Run function $C649                       Wait for input
+849B 8E E3 A8    / Push #$A8E3 to metastack          / (+2)
+849E 8E E0 00    / Push #$00E0 to metastack          / (+2)
+84A1 62          / Push #$0002 to metastack          / (+2)
+84A2 E9 79 DD 06 / Run function $DD79                / (-6)
+84A6 8E 12 A9    / Push #$A912 to metastack          / (+2)
+84A9 8E E0 00    / Push #$00E0 to metastack          / (+2)
+84AC 62          / Push #$0002 to metastack          / (+2)
+84AD E9 79 DD 06 / Run function $DD79                / (-2)
+
+84B1 41          / Store #$01 to M8
+84B2 A9 EE 6F    / Store $0008 to $6FEE              /      ???
+84B5 A0 FD FF    / Store meta 03 to $0008
+84B8 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+84B0                            20 09 E5 FC FF AC 3A
+84C0 83 63 64 E9 BC C3 04 8E 46 88 E9 E9 C3 02 60 65
+84D0 64 60 46 A8 F2 7C B3 43 A8 F0 7C B3 65 E9 EA CA
+84E0 0E D1 2A 61 3A E9 CF 82 04 0A 54 C0 D8 FF 84 AC
+84F0 17 84 D8 BE 84 A5 EE 6F D7 FE 84 AC 51 83 CF 3A
+8500 E9 75 E0 02 D6 F5 84
+
+FUNCTION $84B9 (FC FF) $84BE-$8506
+
+84BE AC 3A 83    / Run function $83EA                / 
+
+84C1 63          / Push #$03 to metastack            / (+2)
+84C2 64          / Push #$04 to metastack            / (+2)
+84C3 E9 BC C3 04 / Run function $C3BC                / (-4)
+
+84C7 8E 46 88    / Push #$8846 to metastack          / (+2)
+84CA E9 E9 C3 02 / Run function $C3E9                / (-2)
+
+84CE 60          / Push #$00 to metastack            / (+2)
+84CF 65          / Push #$05 to metastack            / (+2)
+84D0 64          / Push #$04 to metastack            / (+2)
+84D1 60          / Push #$00 to metastack            / (+2)
+84D2 46          / Store #$06 to M8
+84D3 A8 F2 7C    / Store M8 to $7CF2/$7CF3       
+84D6 B3          / Push M8 to metastack              / (+2)
+84D7 43          / Store #$03 to M8
+84D8 A8 F0 7C    / Store M8 to $7CF0/$7CF1
+84DB B3          / Push M8 to metastack              / (+2)
+84DC 65          / Push #$05 to metastack            / (+2)
+84DD E9 EA CA 0E / Run function $CAEA                / (-E)
+
+84E1 D1          / Decrement M8
+84E2 2A          / Store M8 to meta 3/4
+
+84E3 61          / Push #$01 to metastack            / (+2)
+84E4 3A          / Push meta 3/4 to metastack        / (+2)
+84E5 E9 CF 82 04 / Run function $82CF                / (-4)
+
+84E9 0A          / Store meta 3/4 to M8
+84EA 54          / Store #$04 to MC
+84EB C0          / Check if M8=MC
+84EC D8 FF 84    / Jump to $84FF if not
+
+84EF AC 17 84    / Run function $8417                /      Attempt to load game
+84F2 D8 BE 84    / Jump to $84BE if returned 0       /      Load failed?
+
+84F5 A5 
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+84F0 17 84 D8 BE 84 A5 EE 6F D7 FE 84 AC 51 83 CF 3A
+8500 E9 75 E0 02 D6 F5 84
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8500                      20 09 E5 00 00 8D 28 E9 52
+8510 C0 02 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8510          20 09 E5 FA FF 8E FF 00 DE FA FF B3 DE
+8520 FB FF B3 61 61 69 8D 13 6A E9 1E EF 10 40 2A D6
+8530 6F 85 62 E9 52 C0 02 8E F3 00 0A D2 8C 0F BF BB
+8540 B3 0A D2 8C 0E BF BB B3 61 61 0A D2 8C 83 88 BB
+8550 B0 B3 0A D2 8C 7B 88 BB B0 B3 69 E9 1E EF 10 0B
+8560 53 C0 D8 6A 85 0A D1 D6 6C 85 0A D0 2A 0B D0 2B
+8570 0B 55 C6 D7 32 85 62 E9 52 C0 02 A0 FA FF B3 A0 
+8580 FB FF B3 61 61 69 8D 13 68 E9 1E EF 0E CF 
+
+FUNCTION $8513 (FA FF) $8518-$8586
+8518 8E FF 00    / Push #$00FF to the metastack (+2)
+851B DE FA FF    / Store address of meta value 06 to M8
+851E B3          / Push M8 to metastack         (+2)
+851F DE FB FF    / Store address of meta value 05 to M8
+8522 B3          / Push M8 to metastack         (+2)
+8523 61          / Push #$0001 to metastack     (+2)
+8524 61          / Push #$0001 to metastack     (+2)
+8525 69          / Push #$0009 to metastack     (+2)
+8526 8D 13       / Push #$0013 to metastack     (+2)
+8528 6A          / Push #$000A to metastack     (+2)
+8529 E9 1E EF 10 / Run function $EF1E          (-10)
+852D 40          / Store #$0000 to M8
+852E 2A          / Store M8 to meta 03/04 
+852F D6 6F 85    / Jump to $856F
+8532 62          / Push #$0002 to metastack     (+2)
+8533 E9 52 C0 02 / Run function $C052           (-2)   / Wait 12 frames
+8537 8E F3 00    / Push #$00F3 to the metastack (+2)
+853A 0A          / Store meta 03/04 to M8
+853B D2          / Double M8
+853C 8C 0F BF    / Store #$BF0F to MC
+853F BB          / Add MC to M8
+8540 B3          / Push M8 to metastack         (+2)
+8541 0A          / Store meta 03/04 to M8
+8542 D2          / Double M8
+8543 8C 0E BF    / Store #$BF0E to MC
+8546 BB          / Add MC to M8
+8547 B3          / Push M8 to metastack         (+2)
+8548 61          / Push #$01 to metastack       (+2)
+8549 61          / Push #$01 to metastack       (+2)
+854A 0A          / Store meta 03/04 to M8
+854B D2          / Double M8
+854C 8C 83 88    / Store #$8883 to MC
+854F BB          / Add MC to M8
+8550 B0          / Replace M8 with 2-byte value
+8551 B3          / Push M8 to metastack         (+2)
+8552 0A          / Store meta 03/04 to M8
+8553 D2          / Double M8
+8554 8C 7B 88    / Store #$887B to MC
+8557 BB          / Add MC to M8
+8558 B0          / Replace M8 with 2-byte value
+8559 B3          / Push M8 to metastack         (+2)
+855A 69          / Push #$09 to metastack       (+2)
+855B E9 1E EF 10 / Run function $EF1E          (-10)
+855F 0B          / Store meta 01/02 to M8
+8560 53          / Store #$03 to MC
+8561 C0          / Check if M8=MC
+8562 D8 6A 85    / Jump to $856A if not
+8565 0A          / Store meta 03/04 to M8
+8566 D1          / Decrement M8
+8567 D6 6C 85    / Jump to $856C
+856A 0A          / Store meta 03/04 to M8
+856B D0          / Increment M8
+856C 2A          / Store M8 to meta 03/04
+856D 0B          / Store meta 01/02 to M8
+856E D0          / Increment M8
+856F 2B          / Store M8 to meta 01/02
+8570 0B          / Store meta 01/02 to M8
+8571 55          / Store #$05 to MC
+8572 C6          / Check if M8 < MC
+8573 D7 32 85    / Jump to $8532 if true
+8576 62          / Push #$02 to metastack      (+2)
+8577 E9 52 C0 02 / Run function $C052          (-2)  / Wait 12 frames
+857B A0 FA FF    / Store meta 06 to $0008
+857E B3          / Push M8 to metastack        (+2)
+857F A0 FB FF    / Store meta 05 to $0008
+8582 B3          / Push M8 to metastack        (+2)
+8583 61          / Push #$0001 to metastack    (+2)
+8584 61          / Push #$0001 to metastack    (+2)
+8585 69          / Push #$0009 to metastack    (+2)
+8586 8D 13       / Push #$0013 to metastack    (+2)
+8588 68          / Push #$0008 to metastack    (+2)
+8589 E9 1E EF 0E / Run function $EF1E          (-E)
+858D CF          / Exit
+====================================================
+DATA TABLE
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8870                                  0E 00 0E 00 13
+8880 00 13 00
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8880          0A 00 0A 00 09 00 09 00
+
+
+
+00 $A0C2 #$0E #$0A / Checks if (Nation 1) invades a city of (Nation 2) ?
+01 $A119 #$0E #$0A / 
+02 $A158 #$13 #$09 /
+03 $A221 #$13 #$09 /
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

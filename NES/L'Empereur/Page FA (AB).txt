@@ -1,0 +1,38 @@
+DATA PAGE FA                               				 ROM Address: 034010
+----------------------------------------------------------------------------
+A000: JMP $0000 						  Blank jump auto-added by compiler?
+A003: (blank)
+----------------------------------------------------------------------------
+A004: Nation data  - 10 x Nation ID
+Nation data structure:
+00 - 08: name
+     09: attributes
+		 bit 0: officers can join France? (France, Turkey, Russia, Austria
+		 bit 7: main enemy of France      (Spain, Russia, England)
+----------------------------------------------------------------------------
+A09A: City data    - 32 x City ID
+City data structure:
+00 - 12: name
+     13: max farming
+14 - 18: map x-position
+19 - 23: map y-position
+24 - 30: land neighbors
+     31: attributes
+	     bit 0: harbor
+		 bit 1: factory
+		 bit 2: southern coast?
+		 bit 3: icy?
+		 bit 4: UNUSED
+		 bit 5: cossacks
+		 bit 6: guerrillas
+		 bit 7: center of power
+----------------------------------------------------------------------------
+A650: Officer data - 17 x Officer ID
+Officer data structure:
+00 - 12: name
+	 13: portrait ID
+	 14:
+	 15: attributes
+	 16: appearance date (1790 + value)
+----------------------------------------------------------------------------
+B749

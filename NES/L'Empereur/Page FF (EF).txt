@@ -1,0 +1,1019 @@
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E000 4C 7D E1                                        ROM Address: 3E010
+
+====================================================
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E000          20 09 E5 FE FF 62 64 E9 1E EF 04 2B 3D
+E010 62 63 E9 1E EF 06 3C 61 62 E9 1E EF 06 3B 62 63
+E020 E9 1E EF 06 CF
+
+FUNCTION $E003 (FE FF) $E008-$E024
+Switch PRG banks 0 to (1) and 1 to (3), then runs $8000
+
+E008 62          / Push #$0002 to the metastack                (+2)
+E009 64          / Push #$0004 to the metastack                (+2)
+E00A E9 1E EF 04 / Run function $EF1E with 04 metastack values (-4)
+E00E 2B          / Store M8 to metastack values 01/02               / Store $5115
+E00F 3D          / Push preloaded values 03/04 to metastack    (+2) /
+E010 62          / Push #$0002 to the metastack                (+2)
+E011 63          / Push #$0003 to the metastack                (+2)
+E012 E9 1E EF 06 / Run function $EF1E with 06 metastack values (-6) / Set $5115 to (3)
+E016 3C          / Push preloaded values 01/02 to metastack    (+2) / Set $5114 to (1)
+E017 61          / Push #$0001 to the metastack                (+2)
+E018 62          / Push #$0002 to the metastack                (+2)
+E019 E9 1E EF 06 / Run function $EF1E with 06 metastack values (-6) / 
+E01D 3B          / Push metastack values 01/02 to metastack    (+2) 
+E01E 62          / Push #$0002 to the metastack                (+2)
+E01F 63          / Push #$0003 to the metastack                (+2)
+E020 E9 1E EF 06 / Run function $EF1E with 06 metastack values (-6) / Restore $5115
+E024 CF          / Exit 
+
+====================================================
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E020                20 09 E5 E0 FF 6F 8D 20 DE E0 FF
+E030 B3 E9 23 F4 06 8D 20 60 DE E0 FF B3 66 E9 1E EF
+E040 08 8A AD 7F 8C 50 7B BC D0 B3 8E 50 7B 8E 50 9B
+E050 8E F6 00 61 E9 A3 F3 0A 42 A9 EF 6F 8E 46 F4 65
+E060 E9 1E EF 04 60 61 60 61 E9 1E EF 08 60 60 60 67
+E070 E9 1E EF 08 CF
+
+FUNCTION $E025 (E0 FF) $E02A-$E074
+
+E02A 6F          / Push #$000F to metastack          / (+2)
+E02B 8D 20       / Push #$0020 to metastack          / (+2)
+E02D DE E0 FF    / Store address of meta 32 to M8
+E030 B3          / Push M8 to metastack              / (+2)
+E031 E9 23 F4 06 / Run function $F423                / (-6)
+E035 8D 20       / Push #$0020 to metastack          / (+2)
+E037 60          / Push #$0000 to metastack          / (+2)
+E038 DE E0 FF    / Store address of meta 32 to M8
+E03B B3          / Push M8 to metastack              / (+2)
+E03C 66          / Push #$06 to metastack            / (+2)
+E03D E9 1E EF 08 / Run function $EF1E                / (-6) Set all palettes to black
+E041 8A AD 7F    / Store #$7FAD to M8
+E044 8C 50 7B    / Store #$7B50 to MC 
+E047 BC          / Subtract MC from M8               
+E048 D0          / Increment M8
+E049 B3          / Push M8 to metastack              / (+2) 9/10
+E04A 8E 50 7B    / Push #$7B50 to metastack          / (+2) 78
+E04D 8E 50 9B    / Push #$9B50 to metastack          / (+2) 56
+E050 8E F6 00    / Push #$00F6 to metastack          / (+2) 3
+E053 61          / Push #$0001 to metastack          / (+2) 1
+E054 E9 A3 F3 0A / Run function $F3A3                / (-A) Set initial values for $7B50-$7FAD
+E058 42          / Store #$02 to M8
+E059 A9 EF 6F    / Store $0008 to $6FEF              /      National Phase? Doubles as something else?
+E05C 8E 46 F4    / Push #$F446 to metastack          / (+2)
+E05F 65          / Push #$0005 to metastack          / (+2)
+E060 E9 1E EF 04 / Run function $EF1E                / (-4) Set initial values for CHR bank switching
+E064 60          / Push #$0000 to metastack          / (+2)
+E065 61          / Push #$0001 to metastack          / (+2)
+E066 60          / Push #$0000 to metastack          / (+2) 
+E067 61          / Push #$0001 to metastack          / (+2)
+E068 E9 1E EF 08 / Run function $EF1E                / (-8)
+E06C 60          / Push #$0000 to metastack          / (+2)
+E06D 60          / Push #$0000 to metastack          / (+2)
+E06E 60          / Push #$0000 to metastack          / (+2)
+E06F 67          / Push #$0007 to metastack          / (+2)
+E070 E9 1E EF 08 / Run function $EF1E                / (-8)
+E074 CF          / Exit
+
+====================================================
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E070                20 09 E5 00 00 0C D8 84 E0 0C 53
+E080 C8 D8 99 E0 8A 85 76 8C 04 60 BC D0 B3 8E 04 60
+E090 8E 04 A0 8E F6 00 D6 AD EO 8A 66 70 8C 04 60 BC
+E0A0 D0 B3 8E 04 60 8E 04 A0 0C 90 F6 00 B3 62 E9 A3
+E0B0 F3 0A CF
+
+FUNCTION $E075 (00 00) $E07A-$E0B2
+Initialize all values for Scenario (1/2)
+Value of (1/2) + 1 = Scenario #
+
+E07A 0C           / Store preloaded 01/02 to M8
+E07B D8 84 E0     / Jump to $E084 if zero
+
+E07E 0C           / Store preloaded 01/02 to M8
+E07F 53           / Store #$03 to MC
+E080 C8           / Check if M8 > MC
+E081 D8 99 E0     / Jump to $E099 if it isn't
+
+E084 8A 85 76     / Store #$7685 to M8
+E087 8C 04 60     / Store #$6004 to MC
+E08A BC           / Subtract MC from M8 (#$1681)
+E08B D0           / Increment M8        (#$1682)
+E08C B3           / Push M8 to metastack        (+2)
+E08D 8E 04 60     / Push #$6004 to metastack    (+2)
+E090 8E 04 A0     / Push #$A004 to metastack    (+2)
+E093 8E F6 00     / Push #$00F6 to metastack    (+2)
+E096 D6 AD EO     / Jump to $EOAD
+
+E099 8A 66 70     / Store #$7066 to M8
+E09C 8C 04 60     / Store #$6004 to MC
+E09F BC           / Subtract MC from M8 (#$1062)
+E0A0 D0           / Increment M8        (#$1063)
+E0A1 B3           / Push M8 to metastack        (+2)
+E0A2 8E 04 60     / Push #$6004 to metastack    (+2)
+E0A5 8E 04 A0     / Push #$A004 to metastack    (+2)
+E0A8 0C           / Store preloaded 01/02 to M8 
+E0A9 90 F6 00     / Add #$00F6 to M8
+E0AC B3           / Push M8 to metastack        (+2)
+
+E0AD 62           / Push #$0002 to metastack    (+2) PRG Bank 1 page F6 
+E0AE E9 A3 F3     / Run function $F3A3          (-A)
+E0B2 CF           / End 
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E0B0          20 09 E5 00 00 8E F4 00 8E F0 00 E9 03
+E0C0 E0 04 CF
+
+FUNCTION $E0B3 (00 00) $E0B8-$E0C2
+Sets PRG bank 0 to #$F0 and PRG bank 1 to #$F4, then runs $8000
+(Prepares the win sequence?)
+
+E0B8 8E F4 00    / Push #$00F4 to the metastack                (+2)
+E0BB 8E F0 00    / Push #$00F0 to the metastack                (+2) 
+E0BE E9 03 E0 04 / Run function $E003 with 04 metastack values (-4)
+E0C2 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E0C0          20 09 E5 00 00 8E EF 00 61 62 E9 1E EF
+E0D0 06 CF 
+
+FUNCTION $E0C3 (00 00) $E0C8-$E0D1
+Sets PRG bank 0 to $EF, then runs $8000
+(Prepares the game over sequence?)
+
+E0C8 8E EF 00    / Push #$00EF to the metastack                (+2)
+E0CB 61          / Push #$0001 to the metastack                (+2)
+E0CC 62          / Push #$0002 to the metastack                (+2)
+E0CD E9 1E EF 06 / Run function $EF1E with 06 metastack values (-6)
+E0D1 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E0D0       20 09 E5 00 00 8E EB 00 8E EA 00 E9 03 E0
+E0E0 04 CF
+
+FUNCTION $E0D2 (00 00) $E0D7-$E0E1
+Sets PRG bank 0 to #$EA and PRG bank 1 to #$EB, then runs $8000
+
+E0D7 8E EB 00    / Push #$00EB to the metastack                (+2)
+E0DA 8E EA 00    / Push #$00EA to the metastack                (+2)
+E0DD E9 03 E0 04 / Run function $E003 with 04 metastack values (-4)
+E0E1 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E0E0       20 09 E5 00 00 40 A9 EB 6F 8E EF 00 61 62
+E0F0 E9 1E EF 06 CF
+
+FUNCTION $E0E2 (00 00) $E0E7-$E0F4
+Sets game state to 0, Sets PRG bank 0 to $EF, then runs $8000
+
+E0E7 40          / Store #$00 to M8
+E0E8 A9 EB 6F    / Store M8 to $6FEB                 / Set Game State to 0
+E0EB 8E EF 00    / Push #$00EF to metastack     (+2)
+E0EE 61          / Push #$0001 to metastack     (+2)
+E0EF 62          / Push #$0002 to metastack     (+2)
+E0F0 E9 1E EF 06 / Run function $EF1E           (-6) / Run $8000 on page EF
+E0F4 CF          / Exit                          
+
+====================================================
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E0F0                20 09 E5 00 00 8E E2 00 8E E1 00
+E100 E9 03 E0 04 CF
+
+FUNCTION $E0F5 (00 00) $E0FA-$E104
+Sets PRG bank 0 to #$E1 and PRG bank 1 to #$E2, then runs $8000
+
+E0FA 8E E2 00    / Push #$00E2 to metastack          / (+2)
+E0FD 8E E1 00    / Push #$00E1 to metastack          / (+2)
+E100 E9 03 E0 04 / Run function $E003                / (-4)
+E104 CF          / Exit
+
+====================================================
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E100                20 09 E5 00 00 8E F2 00 8E F1 00
+E110 E9 03 E0 04 CF 
+
+FUNCTION $E105 (00 00) $E10A-$E114
+Sets PRG bank 0 to #$F1 and PRG bank 1 to #$F2, then runs $8000
+
+E10A 8E F2 00    / Push #$00F2 to metastack          / (+2)
+E10D 8E F1 00    / Push #$00F1 to metastack          / (+2)
+E110 E9 03 E0 04 / Run function $E003                / (-4)
+E114 CF          / Exit
+
+====================================================
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E110                20 09 E5 FF FF 40 A2 FF FF A5 EB
+E120 6F D8 4B E1 A5 EC 6F 8C 80 00 DA D8 30 E1 41 CF
+E130 A5 EB 6F D9 03 00 05 00 44 E1 04 00 44 E1 03 00
+E140 4F E1 4B E1 AC C3 E0 41 A2 FF FF A0 FF FF CF AC
+E150 B3 E0 D6 4B E1
+
+FUNCTION $E115 (FF FF) $E11A-$E17C
+
+E11A 40          / Store #$00 to M8
+E11B A2 FF FF    / Store $0008 as metastack value 01
+E11E A5 EB 6F    / Store contents of $6FEB to $0008  / Game state
+E121 D8 4B E1    / Jump to $E14B if it equals zero
+E124 A5 EC 6F    / Store contents of $6FEC to $0008  / Settings
+E127 8C 80 00    / Store #$0080 to MC
+E12A DA          / MC AND M8 -> M8                   / Isolate autoplay flag
+E12B D8 30 E1    / Jump to $E130 if flag is off
+E12E 41          / Store #$01 to M8
+E12F CF          / Exit                              / If autoplay is on, return to
+                                                     / menu without playing an ending
+E130 A5 EB 6F    / Store contents of $6FEB to $0008
+E133 D9 03 00    / 3 conditional jumps (+ 1 failsafe)
+  05 00 44 E1    / Jump to $E144 if $6FEB = #$05 (Napoleon captured)
+  04 00 44 E1    / Jump to $E144 if $6FEB = #$04 (Napoleon dies)
+  03 00 4F E1    / Jump to $E14F if $6FEB = #$03 (Win the game)
+        4B E1    / Otherwise jump to $E14B
+E144 AC C3 E0    / Run function $E0C3              / Set up game over
+E147 41          / Store #$01 to M8
+E148 A2 FF FF    / Store $0008 as metastack value 01
+E14B A0 FF FF    / Store metastack value 01 to $0008
+E14E CF          / End
+E14F AC B3 E0    / Run function $E0B3              / Set up win sequence
+E152 D6 4B E1    / Jump to $E14B
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E150                20 09 E5 00 00 8E FE 00 63 63 E9
+E160 1E EF 06 8E E0 00 62 63 E9 1E EF 06 8E E1 00 61
+E170 63 E9 1E EF 06 65 60 63 E9 1E EF 06 CF
+
+FUNCTION $E155 ($E15A-$E17C)
+
+E15A 8E FE 00    / Push #$00FE to the metastack                 (+2)
+E15D 63          / Push #$0003 to the metastack                 (+2)
+E15E 63          / Push #$0003 to the metastack                 (+2)
+E15F E9 1E EF 06 / Store #$FE to $5116 (PRG bank 2 $C000-$DFFF) (-6)
+E163 8E E0 00    / Push #$00E0 to the metastack                 (+2)
+E166 62          / Push #$0002 to the metastack                 (+2)
+E167 63          / Push #$0003 to the metastack                 (+2)
+E168 E9 1E EF 06 / Store #$E0 to $5115 (PRG bank 1 $A000-$BFFF) (-6)
+E16C 8E E1 00    / Push #$00E1 to the metastack                 (+2)
+E16F 61          / Push #$0001 to the metastack                 (+2)
+E170 63          / Push #$0003 to the metastack                 (+2)
+E171 E9 1E EF 06 / Store #$E1 to $5114 (PRG bank 0 $8000-$9FFF) (-6)
+E175 65          / Push #$0005 to the metastack
+E176 60          / Push #$0000 to the metastack
+E177 63          / Push #$0003 to the metastack 
+E178 E9 1E EF 06 / Store #$05 to $5113 (PRG RAM bank) 
+E17C CF          / Exit
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E170                                        20 09 E5
+E180 00 00 AC 55 E1 60 8E 00 20 8E 00 60 E9 23 F4 06
+E190 AC 25 E0 40 A9 EB 6F AC B3 E0 AC 25 E0 D6 A9 E1
+E1A0 AC 05 E1 AC 15 E1 D8 AC E1 AC E2 E0 AC F5 E0 AC
+E1B0 15 E1 D8 A0 E1 D6 A9 E1
+
+FUNCTION $E17D (00 00) $E182-$E1B7
+E182 AC 55 E1    / Run function $E155 (Set $5113-$5116 to #$05/#$E1/#$E0/#$FE)
+E185 60          / Push #$0000 to metastack         (+2)
+E186 8E 00 20    / Push #$0020 to metastack         (+2)
+E189 8E 00 60    / Push #$0060 to metastack         (+2)
+E18C E9 23 F4 06 / Run function $F423               (-6)
+E190 AC 25 E0    / Run function $E025
+E193 40          / 
+E194 A9 EB 6F    / Store #$00 to $6FEB
+E197 AC B3 E0    / Run function $E0B3
+E19A AC 25 E0    / Run function $E025
+E19D D6 A9 E1    / Jump to $E1A9
+E1A0 AC 05 E1    / Run function $E105
+E1A3 AC 15 E1    / Run function $E115
+E1A6 D8 AC E1    / Jump to $E1AC if $0008=#$00
+E1A9 AC E2 E0    / Run function $E0E2
+E1AC AC F5 E0    / Run function $E0F5
+E1AF AC 15 E1    / Run function $E115
+E1B2 D8 A0 E1    / Jump to $E1A0 if $0008=#$00
+E1B5 D6 A9 E1    / Jump to $E1A9
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+E1B0                         20 09 E5 00 00 AC 23 F4
+E1C0 CF 
+
+FUNCTION $E1B8 (00 00) $E1BD-$E1C0
+E1BD AC 23 F4    / Run function $F423
+E1C0 CF          / Exit
+====================================================
+SUBROUTINE $E1C1
+ 0F:E1C1:20 BE E2  JSR $E2BE
+ 0F:E1C4:AA        TAX
+ 0F:E1C5:A5 44     LDA $0044 = #$00
+ 0F:E1C7:8D 06 52  STA $5206 = #$02
+ 0F:E1CA:A5 42     LDA $0042 = #$00
+ 0F:E1CC:8D 05 52  STA $5205 = #$20
+ 0F:E1CF:AD 05 52  LDA $5205 = #$20
+ 0F:E1D2:95 00     STA $00,X @ $006E = #$00
+ 0F:E1D4:AD 06 52  LDA $5206 = #$02
+ 0F:E1D7:85 47     STA $0047 = #$00
+ 0F:E1D9:A5 43     LDA $0043 = #$00
+ 0F:E1DB:8D 05 52  STA $5205 = #$20
+ 0F:E1DE:AD 05 52  LDA $5205 = #$20
+ 0F:E1E1:18        CLC
+ 0F:E1E2:65 47     ADC $0047 = #$00
+ 0F:E1E4:85 47     STA $0047 = #$00
+ 0F:E1E6:A5 45     LDA $0045 = #$00
+ 0F:E1E8:8D 06 52  STA $5206 = #$02
+ 0F:E1EB:A5 42     LDA $0042 = #$00
+ 0F:E1ED:8D 05 52  STA $5205 = #$20
+ 0F:E1F0:AD 05 52  LDA $5205 = #$20
+ 0F:E1F3:18        CLC
+ 0F:E1F4:65 47     ADC $0047 = #$00
+ 0F:E1F6:95 01     STA $01,X @ $006F = #$FB
+ 0F:E1F8:A9 00     LDA #$00
+ 0F:E1FA:AA        TAX
+ 0F:E1FB:A0 01     LDY #$01
+ 0F:E1FD:60        RTS -----------------------------------------
+====================================================
+SUBROUTINE $E1FE 
+ 0F:E1FE:20 BE E2  JSR $E2BE
+ 0F:E201:20 70 E2  JSR $E270
+ 0F:E204:AA        TAX
+ 0F:E205:38        SEC
+ 0F:E206:08        PHP
+ 0F:E207:A5 00     LDA $0000 = #$1E
+ 0F:E209:10 09     BPL $E214
+ 0F:E20B:28        PLP
+ 0F:E20C:A9 00     LDA #$00
+ 0F:E20E:F9 44 00  SBC $0044,Y @ $0045 = #$00
+ 0F:E211:08        PHP
+ 0F:E212:50 03     BVC $E217
+ 0F:E214:B9 44 00  LDA $0044,Y @ $0045 = #$00
+ 0F:E217:95 00     STA $00,X @ $006E = #$00
+ 0F:E219:E8        INX
+ 0F:E21A:C8        INY
+ 0F:E21B:C0 02     CPY #$02
+ 0F:E21D:D0 E8     BNE $E207
+ 0F:E21F:28        PLP
+ 0F:E220:4C F8 E1  JMP $E1F8
+
+SUBROUTINE $E223
+INPUT: X,Y, A(???)
+Divide 2-byte value of $00,Y by 2-byte value of $00,X
+Store the 2-byte result to $00,A
+
+
+E223 JSR $E2BE / Store 2-byte values of $00,X and $00,Y to $42/$43 and $44/$45
+E226 JSR $E26C / Divide $44/$45 by $42/$43
+E229 TAX 
+E22A LDA $0044 /
+E22C STA $00,X / Store 2-byte value of $44/$45 to $00,(A)
+E22E LDA $0045 /
+E230 STA $01,X /
+==================================================== 
+FUNCTION $E235
+$14/$15 = Number to use as modulo
+$08/$09 = Randomly-generated number
+
+E235 JSR $E2BE                   / Store $14/$15 to $42/43, Store $08/$09 to $44/$45
+E238 JSR $E26C                   / Divide RNG
+E23B TAX                         / 8
+E23C LDA $0040                   
+E23E STA $00,X
+E240 LDA $0041
+E242 STA $01,X
+E244 JMP $E1F8
+====================================================
+SUBROUTINE $E26C
+INPUT: $42/43 AND $44/$45
+
+DIVIDE $44/45 BY $42/43
+RESULT IS STORED IN $44/45
+
+E26C PHA                        / Store A0
+E26D JMP $E297
+
+E297 LDY #$00
+E299 STY $0040
+E29B STY $0041
+E29D LDY #$10
+E29F ASL $0044
+E2A1 ROL $0045
+E2A3 ROL $0040
+E2A5 ROL $0041
+E2A7 SEC
+E2A8 LDA $0040
+E2AA SBC $0042
+E2AC TAX
+E2AD LDA $0041
+E2AF SBC $0043
+E2B1 BCC $E2B9
+E2B3 STA $0041
+E2B5 STA $0040
+E2B7 INC $0044
+E2B9 DEY
+E2BA BNE $E29F
+E2BC PLA
+E2BD RTS -------------------------------------------
+
+====================================================
+SUBROUTINE $E2BE
+INPUT: X,Y
+Stores 2-byte value at $00,X to $42/$43
+Stores 2-byte value at $00,Y to $44/$45
+
+E2BE STA $0001
+E2C0 PLA
+E2C1 STA $0046                 
+E2C3 PLA
+E2C4 STA $0047                  / Store return address
+E2C6 LDA $0000,Y
+E2C9 STA $0044
+E2CB LDA $0001,Y
+E2CE STA $0045
+E2D0 LDA $00,X
+E2D2 STA $0042
+E2D4 LDA $01,X
+E2D6 STA $0043
+E2D8 LDA $0047
+E2DA PHA
+E2DB LDA $0046
+E2DD PHA
+E2DE LDA $0001                  / Retrieve return address
+E2E0 LDY #$00
+E2E2 RTS -----------------------------------------
+==================================================
+SUBROUTINE $E382
+E382 PLA
+E383 STA $0000
+E385 PLA
+E386 STA $0001                  / Store return address
+E388 SEC
+E389 LDY #$03
+E38B LDA $0002
+E38D SBC ($00),Y
+E38F STA $0002
+E391 BCS $E395
+E393 DEC $0003
+E395 LDA ($00),Y
+E397 TAX
+E398 LDY #$00
+E39A CLC
+E39B LDA $0000
+
+
+==================================================
+SUBROUTINE $E3DF - Push 2-byte value at zero page (X) to stack
+
+E3E2 LDA $0002
+E3E4 SBC #$02
+E3E6 STA $0002
+E3E8 BCS $E3EC
+E3EA DEC $0003
+
+E3EC LDA $00,X
+E3EE STA ($02),Y
+E3F0 INX
+E3F1 DEY
+E3F2 BPL $E3EC
+E3F4 LDY #$01
+E3F6 LDX #$00
+E3F8 TXA
+E3F9 RTS -----------------------------------------
+==================================================
+SUBROUTINE $E404
+E404 LDY #$01
+E406 LDA ($02),Y
+E408 STA $00,X
+E40A INX
+E40B DEY
+E40C BPL $E406
+E40E CLC
+E40F LDA $0002
+E411 ADC #$02
+E413 STA $0002
+E415 BCC $E419
+E417 INC $0003
+E419 LDY #$01
+E41B LDY #$00
+E41D TXA 
+E41E RTS -----------------------------------------
+==================================================
+SUBROUTINE $E4C9
+E4C9 PLA
+E4CA STA $0000
+E4CC PLA
+E4CD STA $0001
+E4CF
+==================================================
+SUBROUTINE $EFCB
+EFCB LDX #$00
+EFCD LDA #$00
+EFCF STA $0F,X 
+EFD1 DEX
+EFD2 BNE $EFCF
+EFD4 
+==================================================
+FUNCTION $F3A3
+arg00 = Bank to switch
+arg02 = Page to switch in
+
+ 0F:F3A3:A0 02     LDY #$02
+ 0F:F3A5:B1 02     LDA ($02),Y
+ 0F:F3A7:85 0C     STA $000C
+ 0F:F3A9:85 52     STA $0052
+ 0F:F3AB:A9 00     LDA #$00
+ 0F:F3AD:85 53     STA $0053
+ 0F:F3AF:A9 04     LDA #$04
+ 0F:F3B1:20 11 F4  JSR $F411 / Store status of PRG Bank <arg00>
+ 
+ 0F:F3B4:A5 66     LDA $0066
+ 0F:F3B6:85 0E     STA $000E
+ 0F:F3B8:A5 0C     LDA $000C
+ 0F:F3BA:85 52     STA $0052
+ 0F:F3BC:A0 04     LDY #$04
+ 0F:F3BE:B1 02     LDA ($02),Y 
+ 0F:F3C0:85 54     STA $0054
+ 0F:F3C2:A9 00     LDA #$00
+ 0F:F3C4:85 53     STA $0053
+ 0F:F3C6:85 55     STA $0055
+ 0F:F3C8:A9 03     LDA #$03
+ 0F:F3CA:20 11 F4  JSR $F411 / Bank switch to page <arg02>
+ 
+ 0F:F3CD:A0 06     LDY #$06
+ 0F:F3CF:B1 02     LDA ($02),Y
+ 0F:F3D1:99 0A 00  STA $000A,Y
+ 0F:F3D4:C8        INY
+ 0F:F3D5:C0 0C     CPY #$0C
+ 0F:F3D7:D0 F6     BNE $F3CF
+ 0F:F3D9:A0 00     LDY #$00
+ 0F:F3DB:4C F0 F3  JMP $F3F0
+ 0F:F3DE:B1 10     LDA ($10),Y @ $A1AB = #$FF
+ 0F:F3E0:91 12     STA ($12),Y @ $0569 = #$FF
+ 0F:F3E2:E6 10     INC $0010 = #$AB
+ 0F:F3E4:D0 02     BNE $F3E8
+ 0F:F3E6:E6 11     INC $0011 = #$A1
+ 0F:F3E8:E6 12     INC $0012 = #$69
+ 0F:F3EA:D0 02     BNE $F3EE
+ 0F:F3EC:E6 13     INC $0013 = #$05
+ 0F:F3EE:C6 14     DEC $0014 = #$01
+ 0F:F3F0:A5 14     LDA $0014 = #$01
+ 0F:F3F2:D0 EA     BNE $F3DE
+ 0F:F3F4:A5 15     LDA $0015 = #$00
+ 0F:F3F6:F0 05     BEQ $F3FD
+ 0F:F3F8:C6 15     DEC $0015 = #$00
+ 0F:F3FA:4C DE F3  JMP $F3DE
+ 0F:F3FD:A5 0C     LDA $000C = #$02
+ 0F:F3FF:85 52     STA $0052 = #$02
+ 0F:F401:A5 0E     LDA $000E = #$E0
+ 0F:F403:85 54     STA $0054 = #$FA
+ 0F:F405:A9 00     LDA #$00
+ 0F:F407:85 53     STA $0053 = #$00
+ 0F:F409:85 55     STA $0055 = #$00
+ 0F:F40B:A9 03     LDA #$03
+ 0F:F40D:20 11 F4  JSR $F411
+ 0F:F410:60        RTS -----------------------------------------
+================================================================
+ 0F:F411:85 50     STA $0050 = #$03
+ 0F:F413:A9 00     LDA #$00
+ 0F:F415:85 51     STA $0051 = #$00
+ 0F:F417:A9 F4     LDA #$F4
+ 0F:F419:48        PHA
+ 0F:F41A:A9 21     LDA #$21
+ 0F:F41C:48        PHA
+ 0F:F41D:08        PHP
+ 0F:F41E:6C DE FF  JMP ($FFDE) = $F961
+ 0F:F421:EA        NOP
+ 0F:F422:60        RTS -----------------------------------------
+==================================================
+SUBROUTINE $F423
+F423 LDY #$06
+F425 LDA ($02),Y
+==================================================
+FUNCTION $F961
+ 0F:F961:48        PHA
+ 0F:F962:8A        TXA
+ 0F:F963:48        PHA
+ 0F:F964:98        TYA
+ 0F:F965:48        PHA
+ 0F:F966:A9 00     LDA #$00
+ 0F:F968:85 66     STA $0066 = #$00
+ 0F:F96A:85 67     STA $0067 = #$00
+ 0F:F96C:A9 F9     LDA #$F9
+ 0F:F96E:48        PHA
+ 0F:F96F:A9 84     LDA #$84
+ 0F:F971:48        PHA
+ 0F:F972:A5 50     LDA $0050 = #$03
+ 0F:F974:0A        ASL
+ 0F:F975:AA        TAX
+ 0F:F976:BD 8B F9  LDA $F98B,X @ $FA74 = #$85
+ 0F:F979:85 6F     STA $006F = #$F6
+ 0F:F97B:E8        INX
+ 0F:F97C:BD 8B F9  LDA $F98B,X @ $FA74 = #$85
+ 0F:F97F:85 70     STA $0070 = #$FA
+ 0F:F981:6C 6F 00  JMP ($006F) = $FAF6
+ 0F:F984:EA        NOP
+ 0F:F985:68        PLA
+ 0F:F986:A8        TAY
+ 0F:F987:68        PLA
+ 0F:F988:AA        TAX
+ 0F:F989:68        PLA
+ 0F:F98A:40        RTI
+==================================================
+DATA TABLE $F98B
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+F980                                  00 F5 8F FA B8
+F990 FA F6 FA FE FA 05 FB 13 FB 2B FB 6B FB A7 FB AF
+F9A0 FB 1D FC 28 FC 4F FC 6D FC D3 FC F4 FC FB FC 0F
+F9B0 FD 4D FD 89 FD B7 FD 3C FE 46 FE 75 FE 8B FE 3A
+F9C0 FF
+
+00 $F500
+01 $FA8F
+02 $FAB8
+03 $FAF6
+04 $FAFE
+05 
+06 
+07 
+08 
+09 
+0A 
+0B 
+0C 
+0D 
+0E 
+0F 
+10 
+11 
+12 
+13 
+14 
+15 
+16 
+17 
+18 
+19 
+1A 
+
+====================================================
+SUBROUTINE $F9C1
+INPUT: A
+Stores value to PPU_CTRL which is mirrored to $68
+
+F9C1 STA $0068
+F9C3 STA PPU_CTRL
+F9C6 RTS -----------------------------------------
+==================================================
+SUBROUTINE $F9C7
+INPUT: A
+Stores value to PPU_MASK which is mirrored to $69
+
+F9C7 STA $0069
+F9C9 STA PPU_MASK
+F9CC RTS -----------------------------------------
+==================================================
+SUBROUTINE $F9CD
+Turns on the leftmost bit of PPU_CTRL (blocks writing to PPU)
+
+F9CD LDA $0068
+F9CF ORA #$80
+F9D1 $F9C1
+F9D4 RTS -----------------------------------------
+==================================================
+SUBROUTINE $F9D5
+Turns off the leftmost bit of PPU_CTRL (enables writing to PPU)
+
+F9D5 LDA $0068
+F9D7 AND #$7F
+F9D9 JSR $F9C1
+F9DC RTS -----------------------------------------
+==================================================
+SUBROUTINE $F9DD
+INPUT: A,X
+Temporarily disables PPU_CTRL if on.
+Stores A to $5113,X and which is mirrored to $97,X
+
+F9DD SEI
+F9DE PHA
+F9DF LDA $0068
+F9E1 PHA       / Check if leftmost bit of PPU_CTRL is on
+F9E2 BPL $F9E7 / Skip ahead if it's already off
+F9E4 JSR $F9D5 / Turn off PPU_CTRL
+F9E7 PLA
+F9E8 STA $0068
+F9EA PLA
+F9EB STA $97,X
+F9ED STA $5113,X
+F9F0 LDA $0068
+F9F2 BPL $F9F7
+F9F4 JSR $F9CD
+F9F7 RTS -----------------------------------------
+==================================================
+SUBROUTINE $F9F8
+INPUT: A,Y
+Controller input check?
+Repeats Y times?
+
+F9F8 TAX
+F9F9 LDA #$01
+F9FB STA JOY1
+F9FE LDA #$00
+FA00 STA JOY1
+FA03 LDY #$08
+FA05 LDA JOY1,X
+FA08 STA $009E
+FA0A LSR
+FA0B ORA $009E
+FA0D LSR
+FA0E ROR $9C,X
+FA10 DEY 
+FA11 BNE $FA05
+FA13 RTS -----------------------------------------
+==================================================
+SUBROUTINE $FA14
+INPUT: X,Y
+Input 1-byte values of Y and X, receive 2-byte product (Y)(X)
+
+FA14 STX $5206
+FA17 STY $5205
+FA1A LDY $5205
+FA1D LDX $5206
+FA20 RTS -----------------------------------------
+==================================================
+
+
+SUBROUTINE $FA8F
+FA8F JSR $F9D5   / Enable writing to PPU
+FA92 LDA $0052
+FA94 STA $5105
+FA97 LDA $0054
+FA99 STA $006A
+FA9B STA $5104 
+FA9E LDX $0056
+FAA0 STX $00CD
+FAA3 BIT $5204
+FAA6 BVS $FAA3
+FAA8 LDA $0068
+FAAA AND #$CF
+FAAC ORA $FAB6,X 
+FAAF JSR $F9C1   / Store A to PPU_CTRL
+FAB2 JSR $F9CD   / Disable writing to PPU
+FAB5 RTS -----------------------------------------
+
+
+
+
+
+EF1E
+====
+OPERATION 01 - $FA8F
+OPERATION 02 - $FAB8 - Go to the beginning of page (05) on bank (3)
+OPERATION 03 - $FAF6 - Store (05) to $5113,(03)
+OPERATION 04 - $FAFE - Store $5113,(03) to $0008
+OPERATION 09 - $FBA7
+OPERATION 11 - $FCFB 
+OPERATION 19 - $FE8B
+
+FAB8
+====
+OPERATION 01 - $8000 - $83EE
+OPERATION 02 - $A000 - 
+
+EA26 LDY #$00
+EA28 STY $0000
+EA2A STY $0001
+EA2C LDY #$10
+EA2E ASL $0008
+EA30 ROL $0009
+EA32 ROL $0000
+EA34 ROL $0001
+EA36 SEC
+EA37 LDA $0000
+EA39 SBC $000C
+EA3B TAX
+EA3C LDA $0001
+EA3E SBC $000D
+EA40 BCC $EA48
+EA42 STX $0000
+EA44 STA $0001
+EA46 INC $0008
+EA48 DEY
+EA49 BNE $EA2E
+EA4B RTS -----------------------------------------
+==================================================
+Jump Table 2 - Operation 00 - $F500
+==================================================
+FUNCTION $FA55
+ 0F:FA55:A9 20     LDA #$20
+ 0F:FA57:8D 06 52  STA $5206
+ 0F:FA5A:A5 54     LDA $0054
+ 0F:FA5C:8D 05 52  STA $5205 = #$40
+ 0F:FA5F:A5 52     LDA $0052 = #$02
+ 0F:FA61:29 1F     AND #$1F
+ 0F:FA63:85 6B     STA $006B = #$02
+ 0F:FA65:18        CLC
+ 0F:FA66:AD 05 52  LDA $5205 = #$40
+ 0F:FA69:65 6B     ADC $006B = #$02
+ 0F:FA6B:85 A4     STA $00A4 = #$62
+ 0F:FA6D:85 A6     STA $00A6 = #$62
+ 0F:FA6F:AD 06 52  LDA $5206 = #$02
+ 0F:FA72:69 00     ADC #$00
+ 0F:FA74:85 6B     STA $006B = #$02
+ 0F:FA76:A5 52     LDA $0052 = #$02
+ 0F:FA78:29 E0     AND #$E0
+ 0F:FA7A:F0 04     BEQ $FA80
+ 0F:FA7C:A9 24     LDA #$24
+ 0F:FA7E:D0 02     BNE $FA82
+ 0F:FA80:A9 20     LDA #$20
+ 0F:FA82:18        CLC
+ 0F:FA83:65 6B     ADC $006B = #$02
+ 0F:FA85:85 A5     STA $00A5 = #$23
+ 0F:FA87:18        CLC
+ 0F:FA88:A9 5C     LDA #$5C
+ 0F:FA8A:65 6B     ADC $006B = #$02
+ 0F:FA8C:85 A7     STA $00A7 = #$5F
+ 0F:FA8E:60        RTS -----------------------------------------
+==================================================
+Jump Table 2 - Operation 01 - $FA8F
+07 - 56 - PPU Master/Slave Select
+          0 = On : Output color on EXT pins
+		  1 = Off: Read backdrop from EXT pins 
+05 - 54 - Extended RAM mode
+03 - 52 - Nametable mapping
+
+FA8F JSR $F9D5                                      / Enable writing to PPU
+FA92 LDA $0052
+FA94 STA $5105                                      / Set nametable mapping
+FA97 LDA $0054
+FA99 STA $006A                                      / Mirror of Extended RAM mode?
+FA9B STA $5104                                      / Set extended RAM Mode
+FA9E LDX $0056
+FAA0 STX $00CD
+FAA3 BIT $5204                                      / Bit w/ IRC Status
+FAA6 BVS $FAA3                                      / Loop if interrupt status = ???
+FAA8 LDA $0068                                      / PPU_CTRL
+FAAA AND #$CF                                       / 11001111
+FAAC ORA $FAB6,X
+FAAF JSR $F9C1                                      / Set PPU_CTRL
+FAB2 JSR $F9CD                                      / Disable writing to PPU
+FAB5 RTS -----------------------------------------
+
+DATA TABLE
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+FAB0                   30 10
+
+00 - 30 = 00110000
+01 - 10 = 00010000
+==================================================
+Jump Table 2 - Operation 02 - $FAB8
+FAB8 LDX $0052
+FABA LDA $97,X
+FABC PHA                                           
+FABD TXA
+FABE PHA                                           
+FABF LDA $0054
+FAC1 JSR $F9DD
+
+
+==================================================
+Jump Table 2 - Operation 05 - $FB05
+FB05 LDX #$08
+FB07 LDY #$00
+FB09 LDA ($52),Y
+
+
+==================================================
+Jump Table 2 - Operation 06 - $FB13
+
+FB13 LDX $0054                                     (3) Field in $701 to transfer to
+FB15 LDY #$00
+FB17 DEC $0056                                     (5) # of values to transfer
+FB19 BMI $FB25
+FB1B LDA ($52),Y
+FB1D STA $0701,X
+FB20 INX
+FB21 INY
+FB22 JMP $FB17
+FB25 LDA #$FF
+FB27 STA $0700 = #$00
+FB2A RTS -----------------------------------------
+==================================================
+Jump table 2 - Operation 07 - $FB2B
+58 0
+56 0 
+54 0
+52 7
+
+
+FB2B LDA $0052
+FB2D ASL
+FB2E ASL
+FB2F CLC                                           / Multiply (3) by 4
+FB30 ADC #$20 
+FB32 STA $00A5
+FB34 LDA #$00
+FB36 STA $00A4
+FB38 STA $00A6
+FB3A LDA #$5C               0     4x+32   0     92
+FB3C STA $00A7             A4       A5    A6    A7
+FB3E LDA $0054
+FB40 STA $00AC
+FB42 LDA $0056
+FB44 STA $00AD
+
+==================================================
+FUNCTION $FB6B - Operation 08
+ 0F:FB6B:20 55 FA  JSR $FA55
+ 0F:FB6E:A9 00     LDA #$00
+ 0F:FB70:85 A0     STA $00A0 = #$FC
+ 0F:FB72:85 A1     STA $00A1 = #$00
+ 0F:FB74:85 A2     STA $00A2 = #$FC
+ 0F:FB76:85 A3     STA $00A3 = #$00
+ 0F:FB78:A5 56     LDA $0056 = #$01
+ 0F:FB7A:85 A8     STA $00A8 = #$1C
+ 0F:FB7C:A5 58     LDA $0058 = #$14
+ 0F:FB7E:85 AA     STA $00AA = #$00
+ 0F:FB80:85 AB     STA $00AB = #$00
+ 0F:FB82:A5 5A     LDA $005A = #$E8
+ 0F:FB84:85 AC     STA $00AC = #$00
+ 0F:FB86:A5 5C     LDA $005C = #$05
+ 0F:FB88:85 AD     STA $00AD = #$00
+ 0F:FB8A:A2 02     LDX #$02
+ 0F:FB8C:A5 56     LDA $0056 = #$01
+ 0F:FB8E:C9 10     CMP #$10
+ 0F:FB90:B0 06     BCS $FB98
+ 0F:FB92:C9 08     CMP #$08
+ 0F:FB94:B0 01     BCS $FB97
+ 0F:FB96:E8        INX
+ 0F:FB97:E8        INX
+ 0F:FB98:86 A9     STX $00A9 = #$02
+ 0F:FB9A:A9 83     LDA #$83
+ 0F:FB9C:85 9F     STA $009F = #$00
+ 0F:FB9E:A5 9F     LDA $009F = #$00
+ 0F:FBA0:29 03     AND #$03
+ 0F:FBA2:D0 FA     BNE $FB9E
+ 0F:FBA4:85 9F     STA $009F = #$00
+ 0F:FBA6:60        RTS -----------------------------------------
+
+==================================================
+
+Jump Table 2 - Operation 0C
+load #$F8 to every 4 values (05) times
+starting at $0600,(4*03)
+
+FC28 
+==================================================
+Jump Table 2 - Operation 0D
+Transfer data from ($52),0-($52),3
+                to region ($54)
+				$0600+(4*$54)
+
+FC4F LDA $0054
+FC51 ASL
+FC52 ASL
+FC53 TAX
+FC54 LDY #$00
+FC56 JMP $FC64
+FC59 LDA ($52),Y
+FC5B STA $0600,X
+FC5E INX
+FC5F INY
+FC60 DEC $0073
+FC62 BNE $FC59
+FC64 LDA #$04
+FC66 STA $0073
+FC68 DEC $0056
+FC6A BPL $FC59
+FC6C RTS -----------------------------------------
+
+(52,53) = Address to load from
+54      = Multiplied by 4
+56      = Counter (runs from -1 until underflow)
+
+0073 = counter starting at 4
+
+($52),Y
+
+==================================================
+JUMP TABLE 2 - OPERATION 10
+FCF4 LDX $0052
+FCF6 LDA $9C,X
+FCF8 STA $0066
+==================================================
+
+JUMP TABLE 2 - OPERATION 11
+FCFB LDA #$01
+FCFD LDX $0052                                       (01/02)
+FCFF BEQ $FD0A
+FD01 STA $007B
+FD03 LDY $007B
+FD05 BNE $FD03
+FD07 DEX
+FD08 BNE $FD01
+FD0A DEC $0053
+FD0C BPL $FD01
+FDOE RTS -----------------------------------------

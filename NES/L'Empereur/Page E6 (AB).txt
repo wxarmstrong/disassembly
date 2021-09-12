@@ -1,0 +1,307 @@
+ROM Address: 00C010
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A000 4C 03 A0
+
+A000 JMP $A003
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A000          20 09 E5 00 00 A5 A0 76 D2 8C 20 BA BB
+A010 BO DD CF 
+
+FUNCTION $A003 (00 00) $A008-$A012
+
+A008 A5 A0 76    / Store $76A0 to $0008              / Menu #
+A00B D2          / Double M8
+A00C 8C 20 BA    / Store #$BA20 to MC                / Retrieve function address from list
+A00F BB          / Add MC to M8
+A010 B0          / Replace 
+A011 DD          / Run function in M8
+A012 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+A010          20 09 E5 FF FF 0C 8C 68 70 C1 D8 47 A0
+A020 A5 D4 78 D8 47 A0 A5 28 7D D8 30 A0 46 D6 31 A0
+A030 41 B3 E9 7F D2 02 AC 75 CD A2 FF FF D8 43 A0 40
+A040 A9 D4 78 A0 FF FF CF 41 CF
+
+FUNCTION $A013 (FF FF) $A018-$A048
+Preloaded 01/02 = Nation
+
+A018 0C          / Store preloaded 01/02 to M8
+A019 8C 68 70    / Store #$7068 to MC
+A01C C1          / Check if M8 ! MC                  / Check if different than France
+A01D D8 47 A0    / Jump to $A047 if not
+
+A020 A5 D4 78    / Store $78D4 to $0008              / ???
+A023 D8 47 A0    / Jump to $A047 if zero
+
+A026 A5 27 7D    / Store $7D27 to $0008              / ???
+A029 D8 30 A0    / Jump to $A030 if zero
+
+A02C 46          / Store #$06 to M8
+A02D D6 31 A0    / Jump to $A031
+
+A030 41          / Store #$01 to M8
+
+A031 B3          / Push M8 to metastack              / (+2)
+A032 E9 7F D2 02 / Run function $D27F                / (-2)
+A036 AC 75 CD    / Run function $CD75
+A039 A2 FF FF    / Store $0008 to meta 01
+A03C D8 43 A0    / Jump to $A043 if zero
+
+A03F 40          / Store #$00 to M8
+A040 A9 D4 78    / Store $0008 to $78D4
+
+A043 A0 FF FF    / Store meta 01 to $0008
+A046 CF          / Exit
+
+A047 41          / Store #$01 to M8
+A048 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A040                            20 09 E5 FE FF 60 E9
+A050 5F C6 02 2B 0B 51 C0 D7 60 A0 0B 52 C0 D8 4E A0 
+A060 8D 25 60 8E 9D A9 8E E0 00 62 E9 79 DD 0A 60 E9
+A070 7F D2 02 0B 52 C0 D8 80 A0 41 D6 81 A0 D6 4E A0
+A080 40 CF
+
+FUNCTION $A049 (FE FF) $A04E-$A081
+
+A04E 60          / Push #$00 to metastack            / (+2)
+A04F E9 5F C6 02 / Run function $C65F                / (-2) Check controller 1 input
+A053 2B          / Store M8 to meta 01/02
+
+A054 0B          / Store meta 01/02 to M8
+A055 51          / Store #$01 to MC
+A056 C0          / Check if M8 = MC
+A057 D7 60 A0    / Jump to $A060 if so
+
+A05A 0B          / Store meta 01/02 to M8
+A05B 52          / Store #$02 to MC
+A05C C0          / Check if M8 = MC
+A05D D8 4E A0    / Jump to $A04E if not              /      Infinite loop until desired input
+
+A060 8D 25       / Push #$25 to metastack            / (+2)
+A062 60          / Push #$00 to metastack            / (+2)
+A063 8E 9D A9    / Push #$A99D to metastack          / (+2)
+A066 8E E0 00    / Push #$E0 to metastack            / (+2) 
+A069 62          / Push #$02 to metastack            / (+2)
+A06A E9 79 DD 0A / Run function $DD79                / (-A) Blank 0x25 icons starting with icon 0x00)
+A06E 60          / Push #$00 to metastack            / (+2)
+A06F E9 7F D2 02 / Run function $D27F                / (-2) Text pos #$00
+
+A073 0B          / Store meta 01/02 to M8            /      Controller 1 input
+A074 52          / Store #$02 to MC
+A075 C0          / Check if M8 = MC
+A076 D8 80 A0    / Jump to $A080 if not
+
+A079 41          / Store #$01 to M8
+A07A D6 81 A0    / Jump to $A081
+
+UNUSED CODE?
+A07D D6 4E A0    / Jump to $A04E
+
+A080 40          / Store #$00 to M8
+
+A081 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A080       20 09 E5 00 00 8E 30 BA E9 E9 C3 02 CF 
+
+FUNCTION $A082 (00 00) $A087-$A08E
+
+A087 8E 30 BA       / Push #$BA30 to metastack       / (+2)
+A08A E9 E9 C3 02    / Run function $C3E9             / (-2)
+A08E CF             / Exit 
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A080                                              20
+A090 09 E5 F7 FF A5 EF 6F 51 C0 D8 3C A1 A0 0B 00 D8
+A0A0 44 A1 A5 59 7B 8C FF 00 C0 D8 B9 A0 60 AA D1 7C
+A0B0 E9 A5 8B 02 B3 E9 B8 8B 04 61 E9 7F D2 02 8E 3D
+A0C0 BA E9 E9 C3 02 AC 82 A0 A5 59 7B D1 2B 41 A2 F9
+A0D0 FF A0 F9 FF D8 44 A1 8E F4 00 0B 8B 1E B5 8C D6
+A0E0 AC BB B3 8E B8 AC 65 66 8D 16 8D 12 69 E9 1E EF
+A0F0 10 60 0B D0 B3 E9 B8 8B 04 60 E9 5F C6 02 29 D8
+A100 F9 A0 09 D9 06 00 01 00 38 A1 02 00 20 A1 10 00
+A110 22 A1 20 00 22 A1 40 00 2A A1 80 00 2A A1 D1 A0
+A120 40 CF 0B 72 53 DA 2B D6 D1 A0 0B 51 BE D2 B3 0B
+A130 D0 51 DA B4 BB D6 26 A1 40 D6 CE A0 8E 68 70 60
+A140 E9 B8 8B 04 61 E9 7F D2 02 8E 5F BA E9 E9 C3 02
+A150 61 8E 54 AD 8E E2 00 62 E9 79 DD 08 2A 0A 8B FF
+A160 C0 D8 66 A1 40 CF 0A 8B 1C B5 8C 76 71 BB 85 F7
+A170 87 F7 E9 D2 C2 02 B3 E9 13 A0 02 D7 80 A1 40 CF
+A180 81 F7 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A180          20 09 E5 FE FF 8E FF 00 8E FF 00 68 8E
+A190 68 70 8E A5 B8 8E E4 00 62 E9 79 DD 0E 2B D7 A2
+A1A0 A1 CF 3B E9 13 A0 02 D7 AB A1 CF 60 E9 7F D2 02
+A1B0 61 3B E9 A2 86 04 8D 18 8D 11 E9 BC C3 04 8E 6B
+A1C0 BA E9 E9 C3 02 AC 49 A0 D8 88 A1 CF
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A1C0                                     20 09 E5 FE
+A1D0 FF 8D 13 E9 21 84 02 61 E9 7F D2 02 61 E9 8F A0 
+A1E0 02 2B A5 59 7B D8 F0 A1 60 E9 7F D2 02 D6 0B A2
+A1F0 8D 40 60 8E 9D A9 8E E0 00 62 E9 79 DD 0A 60 60
+A200 8D 16 8D 1C 65 62 68 E9 1E EF 0E 0B D7 10 A2 CF
+A210 60 3B E9 04 86 04 AC 49 A0 D8 D1 A1 61 8E 18 AC
+A220 8E E0 00 62 E9 79 DD 08 CF
+
+
+
+
+
+
+
+
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AD40                               20 09 E5 FE FF A0
+AD50 0B 00 A2 FF FF A0 FF FF D8 B0 AD AC C7 AB D6 B3
+AD60 AD 61 E9 7F D2 02 A0 FF FF D8 71 AD 8D 56 D6 73
+AD70 AD 8D 57 E9 4A 8C 02 B3 E9 27 C6 02 AC 86 CA D8
+AD80 90 AD A0 FF FF D8 8C AD 40 D6 52 AD 41 D6 52 AD 
+AD90 A5 D4 78 D7 AC AD 61 E9 7F D2 02 8E 0F BC E9 E9
+ADA0 C3 02 AC 86 CA D8 55 AD A0 FE FF CF A0 FE FF CF
+ADB0 AC 8E AC A2 FE FF A5 EF 6F 51 C0 D7 61 AD A0 FE
+ADC0 FF CF
+
+FUNCTION $AD4A (FE FF) $AD4F-$ADC1
+
+AD4F A0 0B 00    / Store preloaded 01 to $0008
+
+AD52 A2 FF FF    / Store $0008 to meta 01
+AD55 A0 FF FF    / Store meta 01 to $0008
+AD58 D8 B0 AD    / Jump to $ADB0 if zero
+
+AD5B AC C7 AB    / Run function $ABC7
+AD5E D6 B3 AD    / Jump to $ADB3
+
+AD61 61          / Push #$0001 to metastack          / (+2)
+AD62 E9 7F D2 02 / Run function $D27F                / (-2)
+AD66 A0 FF FF    / Store meta 01 to $0008
+AD69 D8 71 AD    / Jump to $AD71 if zero
+AD6C 8D 56       / Push #$0056 to metastack          / (+2)\  Load "See more in Summary?"
+AD6E D6 73 AD    / Jump to $AD73                            )
+AD71 8D 57       / Push #$0057 to metastack          / (+2)/  Load "See more through View?"
+AD73 E9 4A 8C 02 / Run function $8C4A                / (-2)
+AD77 B3          / Push M8 to metastack              / (+2)
+AD78 E9 27 C6 02 / Run function $C627                / (-2)   Print text
+AD7C AC 86 CA    / Run function $CA86                /        Wait for yes/no input 
+AD7F D8 90 AD    / Jump to $AD90 if zero
+
+AD82 A0 FF FF    / Store meta 01 to $0008
+AD85 D8 8C AD    / Jump to $AD8C if zero
+
+AD88 40          / Store #$00 to M8
+AD89 D6 52 AD    / Jump to $AD52
+AD8C 41          / Store #$01 to M8
+AD8D D6 52 AD    / Jump to $AD52
+
+AD90 A5 A4 78    / Store $78A4 to $0008
+AD93 D7 AC AD    / Jump to $ADAC if nonzero
+AD96 61          / Push #$0001 to metastack          / (+2)
+AD97 E9 7F D2 02 / Run function $D27F                / (-2)
+AD9B 8E 0F BC    / Push #$BC0F to metastack          / (+2)
+AD9E E9 E9 C3 02 / Run function $C3E9                / (-2) Print "OK to end?"
+ADA2 AC 86 CA    / Run function $CA86                /      Wait for yes/no input 
+ADA5 D8 55 AD    / Jump to $AD55 if zero
+ADA8 A0 FE FF    / Store meta 02 to $0008
+ADAB CF          / Exit
+ADAC A0 FE FF    / Store meta 02 to $0008
+ADAF CF          / Exit
+
+ADB0 AC 8E AC    / Run function $AC8E
+ADB3 A2 FE FF    / Store $0008 to meta 02
+ADB6 A5 EF 6F    / Store $6FEF to $0008              / Phase
+ADB9 51          / Store #$01 to MC
+ADBA C0          / Check if M8=MC
+ADBB D7 61 AD    / Jump to $AD61 if so
+ADBE A0 FE FF    / Store meta 02 to $0008\
+ADC1 CF          / Exit 
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B110       20 09 E5 00 00 40 A9 D4 78 61 E9 4A AD 02
+B120 CF
+
+FUNCTION $B112 (00 00) $B117-$B120
+
+B117 40          / Store #$00 to M8
+B118 A9 D4 78    / Store $0008 to $78D4 
+B11B 61          / Push #$0001 to metastack          / (+2)
+B11C E9 4A AD 02 / Run function $AD4A                / (-2)
+B120 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B120    20 09 E5 00 00 40 A9 D4 78 60 E9 4A AD 02 CF
+
+FUNCTION $B121 (00 00) $B126-$B12F
+
+B126 40          / Store #$00 to M8
+B127 A9 D4 78    / Store $0008 to $78D4 
+B12A 60          / Push #$0000 to metastack           / (+2)
+B12B E9 4A AD 02 / Run function $AD4A                 / (-2)
+B12F CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B130 20 09 E5 FE FF 43 A8 F0 7C 89 14 A8 F2 7C 8D 1C
+B140 E9 21 84 02 69 E9 5E 84 02 8D 14 8D 18 E9 BC C3
+B150 04 63 E9 D9 C3 02 8E D6 BC E9 E9 C3 02 60 E9 D9
+B160 C3 02 61 62 62 6A 89 14 A8 F2 7C B3 43 A8 F0 7C
+B170 B3 66 E9 EA CA 0E 2B 0B 8B FF C0 D7 B0 B1 0B 55
+B180 C0 D8 98 B1 61 E9 7F D2 02 8E DB BC E9 E9 C3 02
+B190 62 E9 62 C0 02 D6 3E B1 0B D1 B3 E9 88 AF 02 A5
+B1A0 EC 6F 8C 80 00 DA 50 C1 D8 3E B1 41 CF D6 3E B1
+B1B0 8A FF 00 CF
+
+
+
+
+
+	 
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F	 
+B320 20 09 E5 EC FF 3D 62 E9 BC C3 04 0C 8C 76 71 BC
+B330 
+B340 
+B350 
+B360 
+B370 
+B380 
+B390 
+B3A0 
+B3B0  
+B3C0 
+B3D0 
+B3E0 
+B3F0 
+B400 
+B410 BC C3 04 8E 48 BE E9 E9 C3 02 CF
+
+
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+BA20 12 B1 21 B1 30 B1 C2 AD D1 AD E0 AD A6 B0 EB B0
+
+00 - $B112
+01 - $B121
+02 - $B130
+03 - $ADC2
+04 - $ADD1
+05 - $ADE0
+06 - $B0A6
+07 - $B0EB

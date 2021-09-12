@@ -1,0 +1,318 @@
+ADDRESS IN ROM: 0x14010-0x1600F
+
+DEFAULT SETTING OF AB: EB
+
+     01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8000 4C 25 80
+
+8000 JMP $8025
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8000          20 09 E5 00 00 A0 0B 00 D2 8C CD 9E BB
+8010 D3 A9 A0 76 A0 0B 00 D2 8C CC 9E BB D3 B3 62 62
+8020 E9 1E EF 06 CF
+
+FUNCTION $8003 (00 00) $8008-$8024
+
+8008 A0 0B 00    / Store preloaded 01 to $0008
+800B D2          / Double M8
+800C 8C CD 9E    / Store #$9ECD to MC
+800F BB          / Add MC to M8
+8010 D3          / Replace M8 with 1-byte value
+8011 A9 A0 76    / Store $0008 to $76A0
+
+8014 A0 0B 00    / Store preloaded 01 to $0008
+8017 D2          / Double M8
+8018 8C CC 9E    / Store #$9ECC to MC
+801B BB          / Add MC to M8
+801C D3          / Replace M8 with 1-byte value
+801D B3          / Push M8 to metastack              / (+2)
+801E 62          / Push #$02 to metastack            / (+2)
+801F 62          / Push #$02 to metastack            / (+2)
+8020 E9 1E EF 06 / Run function $EF1E                / (-6)
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8020                20 09 E5 00 00 6F E9 03 80 02 A5
+8030 A0 7B 8C FF 00 C0 D8 42 80 8E EB 00 62 62 E9 1E
+8040 EF 06 8D 10 E9 03 80 02 CF
+
+FUNCTION $8025 (00 00) $802A-$8048
+
+802A 6F          / Push #$0F to metastack               / (+2)
+802B E9 03 80 02 / Run function $8003                   / (-2)
+802F A5 A0 7B    / Store $7BA0 to $0008                 /      Defender victory
+8032 8C FF 00    / Store #$FF to MC
+8035 C0          / Check if M8 = MC
+8036 D8 42 80    / Jump to $8042 if not
+
+8039 8E EB 00    / Push #$EB to metastack               / (+2)
+803C 62          / Push #$02 to metastack               / (+2)
+803D 62          / Push #$02 to metastack               / (+2)
+803E E9 1E EF 06 / Run function $EF1E                   / (-6)
+
+8042 8D 10       / Push #$10 to metastack               / (+2)
+8044 E9 03 80 02 / Run function $8003                   / (-2)
+8048 CF          / Exit                                 
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8040                            20 09 E5 FC FF 40 2A
+8050 0C D6 5F 80 0B 72 B0 79 D3 CD 0A BB 2A 0B B0 2B
+8060 0B D7 54 80 0A CF
+
+FUNCTION $8049 (FC FF) $804E-$8065
+Input: ??? (01/02)
+Output: sum of ???
+
+804E 40          / Store #$00 to M8
+804F 2A          / Store M8 to meta 03/04
+8050 0C          / Store preloaded 01/02 to M8
+8051 D6 5F 80    / Jump to $805F
+
+8054 0B          / Store meta 01/02 to M8
+8055 72          / Add #$02 to M8
+8056 B0          / Replace M8 with 2-byte value
+8057 79          / Add #$09 to M8
+8058 D3          / Replace M8 with 1-byte value
+8059 CD          / Swap M8 and MC
+805A 0A          / Store meta 03/04 to M8
+805B BB          / Add MC to M8
+805C 2A          / Store M8 to meta 03/04
+805D 0B          / Store meta 01/02 to M8
+805E B0          / Replace M8 with 2-byte value
+
+805F 2B          / Store M8 to meta 01/02
+8060 0B          / Store meta 01/02 to M8
+8061 D7 54 80    / Jump to $8054 if positive
+8064 0A          / Store meta 03/04 to M8
+8065 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8060                   20 09 E5 00 00 0D 5D B5 1C BB
+8070 8C A2 76 BB D3 B3 A5 3E 77 51 C0 D8 82 80 45 D6
+8080 83 80 42 B4 DA D8 8F 80 3D 3C E9 4B 9E 04 CF 40
+8090 CF
+
+FUNCTION $8066 (00 00) $806B-$8090
+806B 0D          / Store preloaded 03/04 to M8
+806C 5D          / Store #$0D to MC
+806D B5          / Multiply M8 by MC
+806E 1C          / Store preloaded 01/02 to M8
+806F BB          / Add MC to M8
+8070 8C A2 76    / Store #$76A2 to MC
+8073 BB          / Add MC to M8
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8070 8C A2 76 BB D3 B3 A5 3E 77 51 C0 D8 82 80 45 D6
+8080 83 80 42 B4 DA D8 8F 80 3D 3C E9 4B 9E 04 CF 40
+8090 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8090    20 09 E5 FE FF 0D B0 D7 9F 80 3D D6 AC 80 0D
+80A0 D6 A4 80 0B B0 2B 0B B0 D7 A3 80 3B 0C B1 3C 40
+80B0 B1 CF
+
+FUNCTION $8091 (FE FF) $8096-$80B1
+Appends (01/02) to end of (03/04)'s list
+
+8096 0D          / Store preloaded 03/04 to M8
+8097 B0          / Replace M8 with 2-byte value
+8098 D7 9F 80    / Jump to $809F if not zero
+
+809B 3D          / Push preloaded 03/04 to metastack / (+2)
+809C D6 AC 80    / Jump to $80AC
+
+809F 0D          / Store preloaded 03/04 to M8
+80A0 D6 A4 80    / Jump to $80A4
+
+80A3 0B          / Store meta 01/02 to M8
+
+80A4 B0          / Replace M8 with 2-byte value
+80A5 2B          / Store M8 to meta 01/02
+80A6 0B          / Store meta 01/02 to M8
+80A7 B0          / Replace M8 with 2-byte value
+80A8 D7 A3 80    / Jump to $80A3 if not zero 
+
+80AB 3B          / Push meta 01/02 to metastack      / (+2)
+80AC 0C          / Store preloaded 01/02 to M8
+80AD B1          / Pull 2 meta, store two-byte value / (-2)
+80AE 3C          / Push preloaded 01/02 to metastack / (+2)
+80AF 40          / Store #$00 to M8
+80B0 B1          / Pull 2 meta, store two-byte value / (-2)
+80B1 CF          / Exit 
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+80B0       20 09 E5 FE FF 0D B0 1C C0 D8 C8 80 3D 0C
+80C0 B0 B1 3C 40 B1 D6 DE 80 0D D6 D8 80 0B B0 1C C0
+80D0 D8 D7 80 3B D6 BF 80 0B B0 2B 0B D7 CC 80 CF
+
+FUNCTION $80B2 (FE FF) $80B7-$80DE
+
+80B7 0D          / Store preloaded 03/04 to M8
+80B8 B0          / Replace M8 with 2-byte value
+80B9 1C          / Store preloaded 01/02 to M8
+80BA C0          / Check if M8 = MC
+80BB D8 C8 80    / Jump to $80C8 if not
+
+80BE 3D          / Push preloaded 03/04 to metastack / (+2)
+80BF 0C          / Store preloaded 01/02 to M8
+80C0 B0          / Replace M8 with 2-byte value
+80C1 B1          / Pull 2 meta, store two-byte value / (-2)
+80C2 3C          / Push preloaded 01/02 to metastack / (+2)
+80C3 40          / Store #$00 to M8
+80C4 B1          / Pul 2 meta, store two-byte value  / (-2)
+80C5 
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+80C0 B0 B1 3C 40 B1 D6 DE 80 0D D6 D8 80 0B B0 1C C0
+80D0 D8 D7 80 3B D6 BF 80 0B B0 2B 0B D7 CC 80 CF
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+80D0                                              20
+80E0 09 E5 FA FF 66 E9 D1 D7 02 2B 66 E9 D1 D7 02 2A
+80F0 0B 8C 40 77 BB D3 29 0B 8C 40 77 BB B3 0A 8C 40
+8100 77 BB D3 D4 0A 8C 40 77 BB B3 09 D4 CF
+
+FUNCTION $80DF (FA FF) $80E4-$810C
+
+80E4 66          /
+80E5 E9 D1 D7 02 / Generate random number #$00-#$05
+80E9 2B          / Store M8 to meta 01/02
+80EA 66          /
+80EB E9 D1 D7 02 / Generate random number #$00-#$05
+80EF 2A          / Store M8 to meta 03/04
+80F0 0B          / Store meta 01/02 to M8
+80F1 8C 40 77    / Store #$7740 to MC
+80F4 BB          / Add MC to M8
+80F5 D3          / Double M8 (#$EE80+2x) a 
+80F6 29          / Store M8 to meta 05/06
+80F7 0B          / Store meta 01/02 to M8
+80F8 8C 40 77    / Store #$7740 to MC 
+80FB BB          / Add MC to M8 (#$7740+x)
+80FC B3          / Push M8 to metastack               / (+2)
+80FD 0A          / Store meta 03/04 to M8
+80FE 8C 40 77    / Store #$7740 to MC
+8101 BB          / Add MC to M8
+8102 D3          / Double M8 (#$EE80+2x) b
+8103 D4          / Pull 2 meta, store M8 to address   / (-2)
+8104 0A          / Store meta 03/04 to M8
+8105 8C 40 77    / Store #$7740 to MC
+8108 BB          / Add MC to M8
+8109 B3          / Push M8 to metastack               / (+2)
+810A 09          / Store meta 05/06 to M8 
+810B D4          / Pull 2 meta, store M8 to address   / (-2)
+810C CF          / Exit 
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8100                                        20 09 E5
+8110 FE FF 0C 72 B0 2B 0C 74 D3 52 DA D8 30 81 0B 7B
+8120 B3 0B 79 D3 55 B8 D4 0B 79 B3 0B 7B D3 55 B5 D4
+8130 0C 74 D3 51 DA D8 3F 81 0B 7A B3 0B 79 D3 D4 0C
+8140 72 B0 79 D3 D7 53 81 3B 8E 59 A5 8E E0 00 62 E9 
+8150 79 DD 08 0B 79 D3 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8150                      20 09 E5 00 00 3D 0C 72 B0
+8160 79 B3 E9 77 DE 04 3C E9 0D 81 02 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8160                                     20 09 E5 F8
+8170 
+8180 
+8190 
+81A0 
+81B0 
+81C0 
+81D0 
+
+
+
+
+
+
+
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+84D0                                  20 09 E5 F0 FF
+84E0 40 24 3C E9 43 8F 02 61 0C 76 D3 B3 0C 75 D3 B3
+84F0 E9 D0 90 06 04 D0 24 04 5F C6 D7 E2 84 0C 72 B0
+8500 2B 63 0B 75 D3 B3 E9 60 D4 04 5A B5 B3 64 60 3B
+8510 E9 7A D1 04 B3 E9 60 D4 04 D8 21 85 89 3C D6 23
+8520 85 89 5A B4 BC 25 05 B3 8D 64 E9 D1 D7 02 B4 C6
+8530 D8 45 85 3B 3E 59 A5 8E E0 00 62 E9 79 DD 08 3C
+8540 E9 24 97 02 CF AC DF 80 40 2A 8A FF 00 27 D6 84
+8550 85 0A 8C 40 77 BB D3 B3 3C E9 6C 81 04 28 17 C6
+8560 D8 81 85 A5 46 77 B3 A5 47 77 5D B5 B4 BB 8C A2
+8570 76 BB D3 57 DA D7 81 85 0A 8C 40 77 BB D3 29 08
+8580 27 0A D0 2A 0A 56 C6 D7 51 85 0C 74 D3 52 DA D8
+8590 A1 85 8E FD 00 0C 74 B4 B3 D3 DA D4 0B 7B B3 40
+85A0 D4 07 8C FF 00 C1 D8 E7 85 63 E9 D1 D7 02 73 B3
+85B0 0B 7D B4 B3 D3 B8 D4 0B 79 B3 63 E9 D1 D7 02 72 
+85C0 B3 0B 79 D3 B4 B8 D0 D4 3C E9 0D 81 02 39 0C 76
+85D0 D3 B3 0C 75 D3 B3 E9 6E 9C 06 3C E9 F9 85 02 3C
+85E0 E9 2B 83 02 D6 F8 85 3B 8E 59 A5 8E E0 00 62 E9
+85F0 79 DD 08 3C E9 24 97 02 CF
+
+FUNCTION $84DB (F0 FF) $84E0-$85F8
+
+84E0 40          / Store #$00 to M8
+84E1 24          / Store M8 to meta 15/16
+84E2 3C          / Push preloaded 01/02 to metastack  / (+2)
+84E3 E9 43 8F 02 / Run function $8F43
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+84E0 40 24 3C E9 43 8F 02 61 0C 76 D3 B3 0C 75 D3 B3
+84F0 E9 D0 90 06 04 D0 24 04 5F C6 D7 E2 84 0C 72 B0
+8500 2B 63 0B 75 D3 B3 E9 60 D4 04 5A B5 B3 64 60 3B
+8510 E9 7A D1 04 B3 E9 60 D4 04 D8 21 85 89 3C D6 23
+8520 85 89 5A B4 BC 25 05 B3 8D 64 E9 D1 D7 02 B4 C6
+8530 D8 45 85 3B 3E 59 A5 8E E0 00 62 E9 79 DD 08 3C
+8540 E9 24 97 02 CF AC DF 80 40 2A 8A FF 00 27 D6 84
+8550 85 0A 8C 40 77 BB D3 B3 3C E9 6C 81 04 28 17 C6
+8560 D8 81 85 A5 46 77 B3 A5 47 77 5D B5 B4 BB 8C A2
+8570 76 BB D3 57 DA D7 81 85 0A 8C 40 77 BB D3 29 08
+8580 27 0A D0 2A 0A 56 C6 D7 51 85 0C 74 D3 52 DA D8
+8590 A1 85 8E FD 00 0C 74 B4 B3 D3 DA D4 0B 7B B3 40
+85A0 D4 07 8C FF 00 C1 D8 E7 85 63 E9 D1 D7 02 73 B3
+85B0 0B 7D B4 B3 D3 B8 D4 0B 79 B3 63 E9 D1 D7 02 72 
+85C0 B3 0B 79 D3 B4 B8 D0 D4 3C E9 0D 81 02 39 0C 76
+85D0 D3 B3 0C 75 D3 B3 E9 6E 9C 06 3C E9 F9 85 02 3C
+85E0 E9 2B 83 02 D6 F8 85 3B 8E 59 A5 8E E0 00 62 E9
+85F0 79 DD 08 3C E9 24 97 02 CF
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8F40          20 09 E5 ED FF A4 E6 7C D8 77 8F 0C 76
+8F50
+8F60
+8F70
+8F80
+8F90
+8FA0
+8FB0
+8FC0
+8FD0
+8FE0
+8FF0
+9000
+9010
+9020
+9030
+9040
+9050
+9060
+9070
+9080
+9090
+90A0
+90B0
+90C0 FF B3 62 62 AA 70 78 AA 72 78 69 E9 1E EF 10 CF
+====================================================
+DATA TABLE $9ECD

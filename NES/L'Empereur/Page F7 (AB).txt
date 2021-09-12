@@ -1,0 +1,126 @@
+DATA PAGE
+     
+                                                ROM Address: 02E010
+									
+
+A001 - Scenario 2 stats				
+						
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F												
+B070                   26 B1 41 B1 73 B1 9A B1 BC B1
+B080 F6 B1 2A B2 6A B2 85 B2 BB B2 DE B2 18 B3 43 B3 
+B090 75 B3 AE B3 E1 B3 08 B4 3B B4 76 B4 9C B4 B9 B4
+B0A0 E1 B4 0C B5 27 B5 63 B5 8C B5 B1 B5 D9 B5 0E B6
+B0B0 2D B6 50 B6 79 B6 94 B6 BD B6 D4 B6 FB B6 0F B7
+B0C0 28 B7 46 B7 61 B7 81 B7 A8 B7 CE B7 EC B7 07 B8
+B0D0 1F B8 33 B8 4F B8 6D B8 7F B8 91 B8 A1 B8 B2 B8
+B0E0 C7 B8 DD B8 DE B8 DF B8 E0 B8 F1 B8 06 B9 19 B9
+B0F0 36 B9 4C B9 65 B9 71 B9 83 B9 92 B9 A8 B9 CD B9
+B100 E4 B9 F4 B9 14 BA 26 BA 39 BA 5D BA 73 BA 97 BA
+B110 B3 BA CE BA F5 BA 1C BB 49 BB 71 BB A0 BB C0 BB
+B120 E1 BB 0C BC 21 BC
+
+00 B076 B126 | Good fortune shines on me.
+01 B078 B141 | Charm is essential for a person who gives orders.
+02 B07A B173 | I fear no one, and I will defeat all!
+03 B07C B19A | I want an end to this bloodshed!
+04 B07E B1BC | When I have my composure, I am always incredibly skillful.
+05 B080 B1F6 | Simplicity and clarity are two of my strong points.
+06 B082 B22A | The most glorious events always come at the end of one's career.
+07 B084 B26A | I want to go home at once.
+08 B086 B285 | Corsican monster! Think about the people's condition.
+09 B088 B2BB | Our military is beyond comparison.
+0A B08A B2DE | My presence alone will intensify the strength of our army.
+0B B08C B318 | I dedicate my life to the glory of France.
+0C B08E B343 | Consulate is considering approval of your request.
+0D B090 B375 | The small amount left in the budget is a necessity so...
+0E B092 B3AE | It's terrible, but the Republic has nothing spare.
+0F B094 B3E1 | To achieve peace, we must end the war.
+10 B096 B408 | We want to make a 3 year non-aggression agreement.
+11 B098 B43B | Let's sign a treaty to promote peace between our countries.
+12 B09A B476 | We will stop trade with your country.
+13 B09C B49C | Stop trading with the enemy.
+14 B09E B4B9 | We stand at odds... I'm declaring war!
+15 B0A0 B4E1 | We are requesting an exchange of hostages.
+16 B0A2 B50C | Really? That's too bad...
+17 B0A4 B527 | %s asked for a temporary halt in fighting (Money given: %d)
+18 B0A6 B563 | %s has offered us a non-aggression pact.
+19 B0A8 B58C | %s has proposed a friendship treaty.
+1A B0AA B5B1 | %s has notified us of the strop in trade.
+1B B0AC B5D9 | %s has proposed a ban on trade with %s. Accept offer?
+1C B0AE B60E | %s declared war on our country.
+1D B0B0 B62D | %s offered an exchange of hostages.
+1E B0B2 B650 | %s has proposed that we engage in trade.
+1F B0B4 B679 |  and %s sealed an alliance.
+20 B0B6 B694 |  and %s concluded a treaty of friendship.
+21 B0B8 B6BD |  stopped trade with %s.
+22 B0BA B6D4 |  was offered to stop all trade with %s.
+23 B0BC B6FB |  declared war on %s.
+24 B0BE B70F |  is exporting food to %s.
+25 B0C0 B728 |  is exporting materials to %s.
+26 B0C2 B746 |  is importing good from %s.
+27 B0C4 B761 |  is importing materials from %s.
+28 B0C6 B781 | Will you please sell %d %s for %d gold?
+29 B0C8 B7A8 | Will you please buy %d %s for %d gold?
+2A B0CA B7CE | How about %d %s for %d gold?
+===================================================
+2B 00 B0CC B7EC | Commander can't be changed.
+2C 01 B0CE B807 | No reserves to dispatch.
+2D 02 B0D0 B81F | Can't dispatch more.
+2E 03 B0D2 B833 | Can't call up more reserves.
+2F 04 B0D4 B84F | We can't approach anyone now.
+30 05 B0D6 B86D | Can't import more.
+31 06 B0D8 B87F | Can't export more.
+32 07 B0DA B891 | Can't send more.
+33 08 B0DC B8A1 | Can't build more.
+34 09 B0DE B8B2 | Can't transport more.
+35 0A B0E0 B8C7 | There are no soldiers.
+36 0B B0E2 B8DD |    Not enough money.
+37 0C B0E4 B8DE |   Not enough money.
+38 0D B0E6 B8DF |  Not enough money.
+39 0E B0E8 B8E0 | Not enough money.
+3A 0F B0EA B8F1 | Can't construct more.
+3B 10 B0EC B906 | Can't recruit more.
+3C 11 B0EE B919 | Can't recruit more this year.
+3D 12 B0F0 B936 | Can't buy more horses.
+3E 13 B0F2 B94C | Hostility does not exist.
+3F 14 B0F4 B965 | No soldiers.
+40 15 B0F6 B971 | Can't deploy more.
+41 16 B0F8 B983 | Can't tax more.
+42 17 B0FA B992 | There are no officers.
+43 18 B0FC B9A8 | There are no reserves in any country.
+44 19 B0FE B9CD | No POWs in any country.
+45 1A B100 B9E4 | Can't send more.
+46 1B B102 B9F4 | Can't expand the reserves corps.
+47 1C B104 BA14 | There are no POWs.
+48 1D B016 BA26 | Can't recruit more.
+===================================================
+49 1E 00 B018 BA39 | The French fleet has been destroyed.
+4A 1F 01 B01A BA5D | The ball has begun!
+4B 20 02 B01C BA73 | Admiral Nelson was killed in action.
+4C 21 03 B01E BA97 | The negotiations broke down.
+4D 22 04 B020 BAB3 | All trade has been stopped.
+4E 23 05 B022 BACE |  has become an officer for our country.
+4F 24 06 B024 BAF5 | We are low on funds. Please send money.
+50 25 07 B026 BB1C | Our food is running low. Please send supplies.
+51 26 08 B028 BB49 | Materials are low. Please send supplies.
+52 27 09 B02A BB71 | There are not enough officers. Please dispatch.
+53 28 0A B02C BBA0 | We need guns. Forward them soon.
+54 29 0B B02E BBC0 | We need ships. Send them through.
+55 2A 0C B030 BBE1 | The tax rate is too high. Please change it.
+56 2B 0D B032 BC0C | See more in Summary?
+57 2C 0E B034 BC21 | See more through View?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,734 @@
+ROM Address: 008010
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+A000 4C 7D E1 20 09 E5 00 00 A0 0B 00 D8 13 A0 8D 1A
+A010 D6 15 A0 8D 1B E9 9F CD 02 61 E9 62 C0 02 CF 20
+A020 09 E5 00 00 0C 7B D3 D8 2C A0 42 CF 0C 7A D3 D8
+A030 36 A0 41 D6 37 A0 40 CF 20 09 E5 FC FF 0C 7A D3
+A040 D8 48 A0 89 30 D6 49 A0 4C A2 FC FF 0C 7B D3 D8
+A050 58 A0 8A C0 00 A2 FC FF 0C 7D D3 B3 0C 7C D3 B4
+A060 BB 51 BE 8F 32 2B 63 0C 75 D3 B3 E9 60 D4 04 B3
+A070 A0 FC FF B3 0C 75 D3 B3 E9 60 D4 04 53 B5 B4 BB
+A080 5A B5 7F A2 FD FF A0 FD FF B3 3B 0C 79 D3 B3 E9
+A090 0F DE 04 B3 E9 0F DE 04 53 B8 D0 CF 20 09 E5 00
+A0A0 00 0C 79 D3 D7 B1 A0 0C 7C B3 40 D4 0C 7D B3 40
+A0B0 D4 0C 7A D3 D8 C0 A0 0C 7A B3 0C 79 D3 D6 D7 A0
+A0C0 0C 7B D3 D8 D8 A0 0C 7B B3 0C 79 D3 55 B8 D4 0C
+A0D0 79 B3 0C 7B D3 55 B5 D4 CF 20 09 E5 FE FF A4 A2
+A0E0 76 76 B0 B3 E9 6E C2 02 2B A0 0B 00 52 C0 D8 FA 
+A0F0 A0 A4 A2 76 76 B0 B0 D6 0D A1 A0 0B 00 51 C0 D8
+A100 06 A1 4C D6 07 A1 43 B3 3B E9 13 9D 04 A8 C0 78
+A110 CF 20 09 E5 FF FF 8E 10 BA 8E D5 7C E9 0A C1 04
+A120 6F 0C 7E D3 B3 E9 60 D4 04 A2 FF FF A0 FF FF D8
+A130 3A A1 A0 FF FF 51 C0 D8 3E A1 8A D5 7C CF A0 FF
+A140 FF 55 C0 D8 5E A1 0C 8C 05 60 C0 D8 5A A1 A5 EA
+A150 6F 52 C0 D8 5A A1 46 D6 8B A1 45 D6 8B A1 A0 FF
+A160 FF 56 C0 D8 76 A1 0C 8C 05 60 C0 D8 72 A1 48 D6
+A170 8B A1 47 D6 8B A1 A0 FF FF 57 C0 D8 8E A1 3C E9
+A180 1F C3 02 D8 8A A1 4A D6 8B A1 49 A2 FF FF A0 FF
+A190 FF 8F FE D2 8C BE B9 BB B0 B3 8E D5 7C E9 0A C1
+A1A0 04 8A D5 7C CF 20 09 
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+A1A0                      20 09 E5 E6 FF 8D 18 DE E8
+A1B0 FF B3 8E 48 BA E9 1F DD 06 0D D8 04 A2 0C D9 02
+A1C0 00 00 00 CB A1 01 00 EC A1 F8 A1 42 85 E6 DE E8
+A1D0 FF B3 81 E6 D2 D2 B4 BB B3 8A F8 00 D4 8A E6 D0
+A1E0 85 E6 81 E6 56 C6 D7 CE A1 D6 22 A2 8A F8 00 A2
+A1F0 FC FF A2 F8 FF D6 22 A2 8A F8 00 A2 F4 FF A2 F0
+A200 FF D6 22 A2 40 85 E6 DE E8 FF B3 81 E6 D2 D2 B4
+A210 BB B3 8A F8 00 D4 81 E6 D0 85 E6 81 E6 56 C6 D7
+A220 07 A2 66 8D 2C DE E8 FF B3 6D E9 1E EF 08 CF
+
+FUNCTION $A1A7 (E6 FF) $A1AC-$A22E
+
+A1AC 8D 18       / Push #$0018 to metastack       (+2)
+A1AE DE E8 FF    / Store address of meta 18 to M8
+A1B1 B3          / Push M8 to metastack           (+2)
+A1B2 8E 48 BA    / Push #$BA48 to metastack       (+2)
+A1B5 E9 1F DD 06 / Run function $DD1F
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+A1B0 FF B3 8E 48 BA E9 1F DD 06 0D D8 04 A2 0C D9 02
+A1C0 00 00 00 CB A1 01 00 EC A1 F8 A1 42 85 E6 DE E8
+A1D0 FF B3 81 E6 D2 D2 B4 BB B3 8A F8 00 D4 8A E6 D0
+A1E0 85 E6 81 E6 56 C6 D7 CE A1 D6 22 A2 8A F8 00 A2
+A1F0 FC FF A2 F8 FF D6 22 A2 8A F8 00 A2 F4 FF A2 F0
+A200 FF D6 22 A2 40 85 E6 DE E8 FF B3 81 E6 D2 D2 B4
+A210 BB B3 8A F8 00 D4 81 E6 D0 85 E6 81 E6 56 C6 D7
+A220 07 A2 66 8D 2C DE E8 FF B3 6D E9 1E EF 08 CF
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+A220                                              20
+A230 09 E5 FC FF 0C 79 D3 A6 44 79 BB B3 8E C8 00 E9
+A240 D6 DC 04 2A 66 E9 7F D2 02 61 60 E9 A7 A1 04 8D
+A250 19 8D 19 E9 BC C3 04 8E 0F 27 0C 79 D3 A6 44 79
+A260 BB B3 E9 D6 DC 04 B3 8E 60 BA E9 27 C6 04 8D 19
+A270 63 E9 BC C3 04 3A 60 8E 64 BA E9 FF C9 06 2B 60
+A280 60 E9 A7 A1 04 66 E9 7F D2 02 0B 8B FF C0 D8 95
+A290 A2 8A FF 00 CF 3C 39 7A A1 02 0B CD A4 44 79 BC
+A2A0 A8 44 79 0C 79 B3 0B D4 4A CF
+
+FUNCTION $A22F (FC FF) $A234-$A2A9
+
+A234 0C          / Store preloaded 01/02 to M8
+A235 79          / Add #$09 to M8
+A236 D3          / Replace M8 with 1-byte value
+A237 A6 44 79    / Store value of $7944/$7945 to MC
+A23A BB          / Add MC to M8
+A23B B3          / Push M8 to metastack              (+2)
+A23C 8E C8 00    / Push #$00C8 to metastack          (+2)
+A23F E9 D6 DC 04 / Run function $DCD6                (-4) Pick smaller of two
+A243 2A          / Store M8 to meta 03/04
+A244 66          / Push #$0006 to metastack          (+2)
+A245 E9 7F D2 02 / Run function $D27F                (-2)
+A249 61          / Push #$0001 to metastack          (+2)
+A24A 60          / Push #$0000 to metastack          (+2)
+A24B E9 A7 A1 04 / Run function $A1A7                (-4)
+A24F 8D 19       / Push #$0019 to metastack          (+2)
+A251 8D 19       / Push #$0019 to metastack          (+2)
+A253 E9 BC C3 04 / Run function $C3BC                (-4)
+A257 8E 0F 27    / Push #$270F to metastack          (+2)
+A25A 0C          / Store preloaded 01/02 to M8
+A25B 79          / Add #$09 to M8
+A25C D3          / Replace M8 with 1-byte value
+A25D A6 44 79    / Store value of $7944/$7945 to MC
+A260 BB          / Add MC to M8
+A261 B3          / Push M8 to metastack              (+2)
+A262 E9 D6 DC 04 / Run function $DCD6                (-4) Pick smaller of two
+A266 B3          / Push M8 to metastack              (+2)
+A267 8E 60 BA    / Push #$8A60 to metastack          (+2)
+A26A E9 27 C6 04 / Run function $C627                (-4)
+A26E 8D 19       / Push #$0019 to metastack          (+2)
+A270 63          / Push #$0003 to metastack          (+2)
+A271 E9 BC C3 04 / Run function $C3BC                (-4)
+A275 3A          / Push meta 03/04 to metastack      (+2)
+A276 60          / Push #$0000 to metastack          (+2)
+A277 8E 64 BA    / Push #$BA64 to metastack          (+2)
+A27A E9 FF C9 06 / Run function $C9FF                (-6)
+A27E 2B          / Store M8 to meta 01/02
+A27F 60          / Push #$0000 to metastack          (+2)
+A280 60          / Push #$0000 to metastack          (+2)
+A281 E9 A7 A1 04 / Run function $A1A7                (-4)
+A285 66          / Push #$0006 to metastack          (+2)
+A286 E9 7F D2 02 / Run function $D27F                (-2)
+A28A 0B          / Store meta 01/02 to M8           
+A28B 8B FF       / Store #$FF to MC
+A28D C0          / Check if M8=MC
+A28E D8 95 A2    / Jump to $A295 if not
+A291 8A FF 00    / Store #$00FF to M8
+A294 CF          / End
+A295 3C          / Push preloaded 01/02 to metastack (+2)
+A296 E9 71 A1 02 / Run function $A171                (-2)
+A29A 0B          / Store meta 01/02 to M8
+A29B CD          / Swap contents of M8 and MC
+A29C A4 44 79    / Store value of $7944/$7945 to M8
+A29F BC          / Add MC to M8
+A2A0 A8 44 79    / Store M8 to $7944/$7945
+A2A3 0C          / Store preloaded 01/02 to M8
+A2A4 79          / Add #$09 to M8
+A2A5 B3          / Push M8 to metastack                (+2)
+A2A6 0B          / Store meta 01/02 to M8
+A2A7 D4          / Pull 2 meta, store $0008 to address (-2)
+A2A8 41          / Store #$01 to M8
+A2A9 CF          / Exit
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+A2A0 
+A2B0
+A2C0
+A2D0
+A2E0
+A2F0
+A300
+A310
+A320
+A330
+A340
+A350
+A360
+A370
+A380
+A390
+A3A0
+A3B0
+A3C0
+A3D0
+A3E0 
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+A660 
+A670
+A680
+A690
+A6A0
+A6B0
+A6C0
+A6D0
+A6E0
+A6F0
+A700
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+A800                20 09 E5 00 00 66 8D 1A 6A 63 E9
+A810 3D CE 08 6C 8D 27 6C E9 1E EF 06 3C E9 8D C2 02
+A820 B3 8E 03 A0 8E E0 00 62 E9 79 DD 08 A0 0D 00 8F
+A830 33 B3 E9 6C 8C 02 B3 E9 4B 8D 02 63 E9 62 C0 02
+A840 66 8D 1A 6A 63 E9 D5 CE 08 6C 8D 27 8E F5 7D 6D
+A850 E9 1E EF 08 CF
+
+FUNCTION $A805 (00 00) $A80A-$A854
+Preloaded 01/02 = Officer
+Preloaded 03    = Speech string
+
+A80A 66          / Push #$06 to metastack            / (+2)
+A80B 8D 1A       / Push #$1A to metastack            / (+2)
+A80D 6A          / Push #$0A to metastack            / (+2)
+A80E 63          / Push #$03 to metastack            / (+2)
+A80F E9 3D CE 08 / Run function $CE3D                / (-8) Fill mode?
+
+A813 6C          / Push #$0C to metastack            / (+2)
+A814 8D 27       / Push #$27 to metastack            / (+2)
+A816 6C          / Push #$0C to metastack            / (+2)
+A817 E9 1E EF 06 / Run function $EF1E                / (-6) Set palettes
+
+A81B 3C          / Push preloaded 01/02 to metastack / (+2)
+A81C E9 8D C2 02 / Run function $C28D                / (-2) Get portrait code
+A820 B3          / Push M8 to metastack              / (+2)
+A821 8E 03 A0    / Push #$A003 to metastack          / (+2)
+A824 8E E0 00    / Push #$00E0 to metastack          / (+2)
+A827 62          / Push #$0002 to metastack          / (+2)
+A828 E9 79 DD 08 / Run function $DD79                / (-8) Print portrait?
+
+A82C A0 0D 00    / Store preloaded 03 to $0008
+A82F 8F 33       / Add #$33 to M8
+A831 B3          / Push M8 to metastack              / (+2)
+A832 E9 6C 8C 02 / Run function $8C6C                / (-2) 
+A836 B3          / Push M8 to metastack              / (+2)
+A837 E9 4B 8D 02 / Run function $8D4B                / (-2) Print speech
+A83B 63          / Push #$03 to metastasck           / (+2)
+A83C E9 62 C0 02 / Run function $C062                / (-2) Wait 3 time units
+
+A840 66          / Push #$06 to metastack            / (+2)
+A841 8D 1A       / Push #$1A to metastack            / (+2)
+A843 6A          / Push #$0A to metastack            / (+2)
+A844 63          / Push #$03 to metastack            / (+2)
+A845 E9 D5 CE 08 / Run function $CED5                / (-8)
+
+A849 6C          / Push #$0C to metastack            / (+2)
+A84A 8D 27       / Push #$27 to metastack            / (+2)
+A84C 8E F5 7D    / Push #$7DF5 to metastack          / (+2)
+A84F 6D          / Push #$0D to metastack            / (+2)
+A850 E9 1E EF 08 / Run function $EF1E                / (-8)
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+A850                20 09 E5 FC FF A4 D1 7C 72 B0 2B
+A860 63 0B 74 D3 B3 E9 60 D4 04 5A B5 A2 FD FF 68 60
+A870 3B E9 7A D1 04 B3 E9 60 D4 04 D8 86 A8 4A CD A0
+A880 FD FF BB A2 FD FF 62 3B E9 50 C2 04 D6 BD A8 0B
+A890 79 D3 D8 BA A8 63 E9 D1 D7 02 B3 0B 7D D3 B3 A0
+A8A0 FD FF 8F 65 B4 BC 52 BE B4 BB A2 FC FF 8D 64 A0
+A8B0 FC FF B3 0B 7D B3 E9 3B DE 06 0B B0 2B 0B D7 8F
+A8C0 A8 CF
+
+FUNCTION $A855 (FC FF) $A85A-$A8C1
+
+A85A A4 D1 7C    / Store $7CD1/$7CD2 to M8           / Target City
+A85D 72          / Add #$02 to M8 
+A85E B0          / Replace M8 with 2-byte value      / Target City - Commander 
+A85F 2B          / Store M8 to meta 01/02
+A860 63          / Push #$03 to metastack            / (+2)
+A861 0B          / Store meta 01/02 to M8
+A862 74          / Add #$04 to M8
+A863 D3          / Replace M8 with 1-byte value      / Commander - Civil Stats
+A864 B3          / Push M8 to metastack              / (+2)
+A865 E9 60 D4 04 / Run function $D460                / (-2) Isolate Pol skill
+A869 5A          / Store #$0A to MC
+A86A B5          / Multiply M8 by MC
+A86B A2 FD FF    / Store $0008 to meta 03            / Pol * 10
+A86E 68          / Push #$08 to metastack            / (+2)
+A86F 60          / Push #$00 to metastack
+A870 3B          / Push meta 01/02 to metastack      / (+2)
+A871 E9 7A D1 04 / Run function $D17A                / (-4) Get hidden stat
+A875 B3          / Push M8 to metastack              / (+2)
+A876 E9 60 D4 04 / Run function $D460                / (-4) Check for Charm
+A87A D8 86 A8    / Jump to $A886 if zero
+
+A87D 4A          / Store #$0A to M8
+A87E CD          / Swap contents of MC and M8
+A87F A0 FD FF    / Store meta 03 to $0008
+A882 BB          / Add MC to M8
+A883 A2 FD FF    / Store $0008 to meta 03
+
+A886 62          / Push #$02 to metastack            / (+2)
+A887 3B          / Push meta 01/02 to metastack      / (+2)
+A888 E9 50 C2 04 / Run function $C250                / (-4) Increase exp by 2
+A88C D6 BD A8    / Jump to $A8BD
+----------------------------------------------------
+A88F 0B          / Store meta 01/02 to M8
+A890 79          / Add #$09 to M8
+A891 D3          / Replace M8 with 1-byte value      / Officer - Men
+A892 D8 BA A8    / Jump to $A8BA if zero
+
+A895 63          / Push #$03 to metastack            / (+2)
+A896 E9 D1 D7 02 / Generate random number from 00-02 / (-2)
+A89A B3          / Push M8 to metastack              / (+2)
+A89B 0B          / Store meta 01/02 to M8
+A89C 7D          / Add #$0D to M8
+A89D D3          / Replace M8 with 1-byte value      / Officer - Morale
+A89E B3          / Push M8 to metastack              / (+2)
+A89F A0 FD FF    / Store meta 03 to $0008
+A8A2 8F 65       / Add #$65 to M8 
+A8A4 B4          / Pull 2 meta to MC                 / (-2)
+A8A5 BC          / Subtract MC from M8
+A8A6 52          / Store #$02 to MC
+A8A7 BE          / Right shift M8 twice (divide 4)
+A8A8 B4          / Pull 2 meta to MC                 / (-2)
+A8A9 BB          / Add MC to M8
+A8AA A2 FC FF    / Store $0008 to meta 04
+A8AD 8D 64       / Push #$64 to metastack            / (+2)
+A8AF A0 FC FF    / Store meta 04 to $0008
+A8B2 B3          / Push M8 to metastack              / (+2)
+A8B3 0B          / Store meta 01/02 to M8
+A8B4 7D          / Add #$0D to M8
+A8B5 B3          / Push M8 to metastack              / (+2)
+A8B6 
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+A8A0 FD FF 8F 65 B4 BC 52 BE B4 BB A2 FC FF 8D 64 A0
+A8B0 FC FF B3 0B 7D B3 E9 3B DE 06 0B B0 2B 0B D7 8F
+A8C0 A8 CF
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+A8C0       20 09 E5 FE FF 66 E9 21 84 02 61 E9 7F D2
+A8D0 02 AC 75 CD D7 DB A8 8A FF 00 CF AC 55 A8 A4 D1
+A8E0 7C 72 B0 8C 05 60 C0 D8 F2 A8 64 E9 D1 D7 02 D6
+A8F0 F8 A8 64 E9 D1 D7 02 74 2B 3B A4 D1 7C 72 B0 B3
+A900 E9 05 A8 04 61 E9 7F D2 02 63 AA D1 7C 8E 2C A2
+A910 8E E0 00 62 E9 79 DD 0A B3 8D 11 E9 6C 8C 02 B3
+A920 E9 27 C6 04 62 E9 62 C0 02 41 CF
+
+FUNCTION $A8C2 (FE FF) $A8C7-$A92A
+
+A8C7 66          / Push #$06 to metastack            / (+2)
+A8C8 E9 21 84 02 / Run function $8421                / (-2) "Army-Speech"
+A8CC 61          / Push #$01 to metastack            / (+2)
+A8CD E9 7F D2 02 / Run function $D27F                / (-2) Screen setting 1
+A8D1 AC 75 CD    / Run function $CD75
+A8D4 D7 DB A8    / Jump to $A8DB if positive
+
+A8D7 8A FF 00    / Store #$00FF to M8
+A8DA CF          / Exit
+
+A8DB AC 55 A8    / Run function $A855
+A8DE A4 D1 7C    / Store $7CD1/$7CD2 to M8           / Active City
+A8E1 72          / Add #$02 to M8
+A8E2 B0          / Replace M8 with 2-byte value      / Active City - Commander
+A8E3 8C 05 60    / Store #$6005 to MC
+A8E6 C0          / Check if M8 = MC                  / Check if Napoleon is commander
+A8E7 D8 F2 A8    / Jump to $A8F2 if not         
+
+A8EA 64          / Push #$04 to metastack            / (+2)
+A8EB E9 D1 D7 02 / Run function $D7D1                / (-2) Random value from #$00-#$03
+A8EF D6 F8 A8    / Jump to $A8F8
+
+A8F2 64          / Push #$04 to metastack            / (+2)
+A8F3 E9 D1 D7 02 / Run function $D7D1                / (-2)
+A8F7 74          / Add #$04 to M8 
+A8F8 2B          / Store M8 to meta 01/02
+A8F9 3B          / Push M8 to metastack              / (+2)
+A8FA A4 D1 7C    / Store $7CD1/$7CD2 to M8           / Active City
+A8FD 72          / Add #$02 to M8
+A8FE B0          / Replace M8 with 2-byte            / Commander
+A8FF B3          / Replace M8 with 1-byte value
+A900 E9 05 A8 04 / Run function $A805                / (-4)
+
+A904 61          / Push #$01 to metastack            / (+2)
+A905 E9 7F D2 02 / Run function $D27F                / (-2) Text pos 01
+A909 63          / Push #$03 to metastack            / (+2)
+A90A AA D1 7C    / Push $7CD1/$7CD2 to metastack     / (+2)
+A90D 8E 2C A2    / Push #$A22C to metastack          / (+2)
+A910 8E E0 00    / Push #$00E0 to metastack          / (+2)
+A913 62          / Push #$02 to metastack            / (+2)
+A914 E9 79 DD 0A / Run function $DD79                / (-2) Avg # of men per officer weighted by morale
+A918 B3          / Push M8                           / (+2)
+A919 8D 11       / Push #$11                         / (+2)
+A91B E9 6C 8C 02 / Run function $8C6C                / (-2) Army morale is now %d
+A91F B3          / Push M8 to metastack              / (+2)
+A920 E9 27 C6 04 / Run function $C627                / (-4) Print "Army morale is now [avg]"
+A924 62          / Push #$02 to metastack            / (+2)
+A925 E9 62 C0 02 / Run function $C062                / (-2) Wait 1 time unit
+A929 41          / Store #$01 to M8
+A92A CF          / Exit
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+A920                                  20 09 E5 FC FF
+A930 63 60 3C E9 7A D1 04 B3 E9 60 D4 04 D2 B3 49 B4
+A940 BC A2 FF FF 0C 77 D3 B3 89 64 B4 BC 1D B5 B3 E9
+A950 6B DC 02 A2 FE FF 8D 64 64 E9 D1 D7 02 B3 A0 FF
+A960 FF B3 A0 FE FF B4 B8 B4 BB B3 0C 77 B3 E9 3B DE
+A970 06 CF 
+
+FUNCTION $A92B (FC FF) $A930-$A971
+Preloaded 01/02 = Officer
+Preloaded 03/04 = ???
+
+A930 63          / Push #$03 to metastack            / (+2)
+A931 60          / Push #$00 to metastack            / (+2)
+A932 3C          / Push preloaded 01/02 to metastack / (+2)
+A933 E9 7A D1 04 / Run function $D17A                / (-4) Check hidden stat for officer
+A937 B3          / Push M8 to metastack              / (+2)
+A938 E9 60 D4 04 / Run function $D460                / (-4) Check allegiance stat
+A93C D2          / Double M8
+A93D B3          / Push M8 to metastack              / (+2)
+A93E 49          / Store #$09 to M8
+A93F B4          / Pull 2 meta to MC                 / (-2)
+A940 BC          / Subtract MC from M8               /      9-(2*Allegiance)
+A941 A2 FF FF    / Store $0008 to meta 01
+A944 0C          / Store preloaded 01/02 to M8
+A945 77          / Add #$07 to M8
+A946 D3          / Replace M8 with 1-byte value      /      Officer - Loyalty
+A947 B3          / Push M8 to metastack              / (+2)
+A948 89 64       / Store #$64 to M8
+A94A B4          / Pull 2 meta to MC                 / (-2)
+A94B BC          / Subtract MC from M8               /      100-Loyalty
+A94C 1D          / Store preloaded 03/04 to MC
+A94D B5          / Multiply M8 by MC
+A94E B3          / Push M8 to metastack              / (+2)
+A94F E9 6B DC 02 / Run function $DC6B                / (-2)
+A953 A2 FE FF    / Store $0008 to meta 02
+A956 8D 64       / Push #$64 to metastack            / (+2)
+A958 64          / Push #$04 to metastack            / (+2)
+A959 E9 D1 D7 02 / Run function $D7D1                / (-2) Generate random number from #$00-#$03
+A95D B3          / Push M8 to metastack              / (+2)
+A95E A0 FF FF    / Store meta 01 to $0008
+A961 B3          / Push M8 to metastack              / (+2)
+A962 A0 FE FF    / Store meta 02 to $0008
+A965 B4          / Pull 2 meta to MC                 / (-2)
+A966 B8          / Divide M8 by MC
+A967 B4          / Pull 2 meta to MC                 / (-2)
+A968 BB          / Add M8 to MC
+A969 B3          / Push M8 to metastack              / (+2)
+A96A 0C          / Store preloaded 01/02 to M8
+A96B 77          / Add #$07 to M8
+A96C B3          / Push M8 to metastack              / (+2)
+A96D E9 3B DE 06 / Run function $DE3B                /      Increase loyalty
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+A960 FF B3 A0 FE FF B4 B8 B4 BB B3 0C 77 B3 E9 3B DE
+A970 06 CF 
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+A970       20 09 E5 FF FF 8D 64 E9 D1 D7 02 8B 46 C6 
+A980 D8 87 A9 48 D6 B0 A9 63 60 3C E9 7A D1 04 B3 E9
+A990 60 D4 04 A2 FF FF A5 EA 6F 54 C9 D8 AA A9 A0 FF
+A9A0 FF 52 C0 D8 AA A9 44 A2 FF FF 49 CD A0 FF FF BB
+A9B0 A2 FF FF A0 FF FF B3 3C E9 05 A8 04 61 E9 7F D2
+A9C0 02 0C 77 D3 B3 8D 14 E9 6C 8C 02 B3 E9 27 C6 04
+A9D0 62 E9 62 C0 02 CF
+
+FUNCTION $A972 (FF FF) $A977-$A9D5
+Preloaded 01/02 = Officer
+
+A977 8D 64       / Push #$64 to metastack            / (+2)
+A979 E9 D1 D7 02 / Run function $D7D1                / (-2)
+A97D 8B 46       / Store #$46 to MC                  /
+A97F C6          / Check if M8<MC                    /      70% chance
+A980 D8 87 A9    / Jump to $A987 if not
+
+A983 48          / Store #$08 to M8
+A984 D6 B0 A9    / Jump to $A9B0
+
+A987 63          / Push #$03 to metastack            / (+2)
+A988 60          / Push #$00 to metastack            / (+2)
+A989 3C          / Push preloaded 01/02 to metastack / (+2)
+A98A E9 7A D1 04 / Run function $D17A                / (-4) Isolate hidden stat
+A98E B3          / Push M8 to metastack              / (+2)
+A98F E9 60 D4 04 / Run function $D460                / (-4) Isolate Allegiance value
+A993 A2 FF FF    / Store $0008 to meta 01
+A996 A5 EA 6F    / Store $6FEA to $0008              /      Scenario
+A999 54          / Store #$04 to MC
+A99A C9          / Check if M8 >= MC                 /      Check if Scenario 4
+A99B D8 AA A9    / Jump to $A9AA if not
+
+A99E A0 FF FF    / Store meta 01 to $0008
+A9A1 52          / Store #$02 to MC
+A9A2 C0          / Check if M8=MC
+A9A3 D8 AA A9    / Jump to $A9AA if so
+
+A9A6 44          / Store #$04 to M8
+A9A7 A2 FF FF    / Store $0008 to meta 01
+
+A9AA 49          / Store #$09 to M8
+A9AB CD          / Swap MC and M8
+A9AC A0 FF FF    / Store meta 01 to $0008
+A9AF BB          / Add MC to M8
+
+A9B0 A2 FF FF    / Store $0008 to meta 01
+A9B3 A0 FF FF    / Store meta 01 to $0008
+A9B6 B3          / Push M8 to metastack              / (+2)
+A9B7 3C          / Push preloaded 01/02 to metastack / (+2)
+A9B8 E9 05 A8 04 / Run function $A805                / (-4)
+
+A9BC 61          / Push #$01 to metastack            / (+2)
+A9BD E9 7F D2 02 / Run function $D27F                / (-2) Set screen template to 1
+
+A9C1 0C          / Store preloaded 01/02 to M8
+A9C2 77          / Add #$07 to M8
+A9C3 D3          / Replace M8 with 1-byte value      / (-2) Loyalty
+A9C4 B3          / Push M8 to metastack              / (+2)
+A9C5 8D 14       / Push #$14 to metastack            / (+2)
+A9C7 E9 6C 8C 02 / Run function $8C6C                / (-2) Get string "Loyalty is now %d"
+A9CB B3          / Push M8 to metastack              / (+2)
+A9CC E9 27 C6 04 / Run function $C627                / (-4) Print string "Loyalty is now [officer loyalty]"
+A9D0 62          / Push #$02 to metastack            / (+2)
+A9D1 E9 62 C0 02 / Run function $C062                / (-2) Wait 2 time units for player input, then advance automatically
+A9D5 CF          / Exit 
+====================================================
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+AC00 D7 B7 AB A4 A4 78 D8 45 AC A0 0B 00 B3 E9 13 B6
+AC10 02 5A B8 B3 09 B4 C8 D8 45 AC 09 8C F4 01 C8 D8
+AC20 45 AC 37 09 B1 A0 0B 00 D0 B3 AA A4 78 8E E6 B4
+AC30 8E E0 00 62 E9 79 DD 0A B3 8D 32 39 E9 CA DD 06
+AC40 A8 BA 78 41 CF 40 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+AC40                      20 09 E5 FA FF A4 F0 7C 53
+AC50 BD 2A A4 F2 7C 53 BD 29 41 2B A4 F0 7C 1C C1 D8
+AC60 7C AC A4 F0 7C 1C C6 D8 74 AC A4 F0 7C 53 BD 1B
+AC70 BB D6 7B AC A4 F0 7C 53 BD 1B BC 2A A4 F2 7C 1D
+AC80 C1 D8 9E AC A4 F2 7C 1D C6 D8 96 AC A4 F2 7C 53
+AC90 BD 1B BB D6 9D AC A4 F2 7C 53 BD 1B BC 29 A0 0F
+ACA0 00 D8 AA AC 09 8F F4 D6 AD AC 8A F8 00 A9 5D 7D
+ACB0 0A 73 A9 60 7D 61 61 8E 5D 7D 6D E9 1E EF 08 0B
+ACC0 D0 2B 0B 59 C6 D7 5A AC 0C A8 F0 7C 0D A8 F2 7C
+ACD0 CF
+
+FUNCTION $AC47 (FA FF) $AC4C-$ACD0
+
+AC4C A4 F0 7C    / Store $7CF0 to M8 
+AC4F 53          / 
+AC50 BD          / Multiply M8 by 8
+AC51 2A          / Store M8 to meta 03/04
+
+AC52 A4 F2 7C    / Store $7CF2 to M8
+AC55 53          /
+AC56 BD          / Multiply M8 by 8
+AC57 29          / Store M8 to meta 05/06
+
+AC58 41          / Store #$01 to M8
+AC59 2B          / Store M8 to meta 01/02
+
+AC5A A4 F0 7C    / Store $7CF0 to M8
+AC5D 1C          / Store preloaded 01/02 to MC
+AC5E C1          / Check if M8 != MC
+AC5F D8 7C AC    / Jump to $AC7C if not
+
+AC62 A4 F0 7C    / Store $7CF0 to M8
+AC65 1C          / Store preloaded 01/02 to MC
+AC66 C6          / Check if M8 < MC
+AC67 D8 74 AC    / Jump to $AC74 if not
+
+AC6A A4 F0 7C    / Store $7CF0 to M8
+AC6D 53          /
+AC6E BD          / Multiply M8 by 8
+AC6F 1B          / Store meta 01/02 to MC
+AC70 BB          / Add MC to M8
+AC71 D6 7B AC    / Jump to $AC7B
+
+AC74 A4 F0 7C    / Store $7CF0 to M8
+AC77 53
+AC78 BD          / Multiply M8 by 8
+AC79 1B          / Store meta 01/02 to MC
+AC7A BC          / Subtract MC from M8
+
+AC7B 2A          / Store M8 to meta 03/04
+
+AC7C A4 F2 7C    / Store $7CF2 to M8
+AC7F 1D          / Store preloaded 03/04 to MC
+AC80 C1          / Check if M8 != MC
+AC81 D8 9E AC    / Jump to $AC9E if not
+
+
+
+A23B B3          / Push M8 to metastack              (+2)
+A23C 8E C8 00    / Push #$00C8 to metastack          (+2)
+A23F E9 D6 DC 04 / Run function $DCD6                (-4) Pick smaller of two
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+AC80 C1 D8 9E AC A4 F2 7C 1D C6 D8 96 AC A4 F2 7C 53
+AC90 BD 1B BB D6 9D AC A4 F2 7C 53 BD 1B BC 29 A0 0F
+ACA0 00 D8 AA AC 09 8F F4 D6 AD AC 8A F8 00 A9 5D 7D
+ACB0 0A 73 A9 60 7D 61 61 8E 5D 7D 6D E9 1E EF 08 0B
+ACC0 D0 2B 0B 59 C6 D7 5A AC 0C A8 F0 7C 0D A8 F2 7C
+ACD0 CF
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+ACD0 CF2009E5FAFF8A76712A402BD63FADA5
+ACE0
+ACF0
+AD00
+AD10
+AD20
+AD30
+AD40
+AD50
+AD60
+AD70
+AD80
+AD90
+ADA0
+ADB0
+ADC0
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+ADC0                         20 09 E5 F8 FF 8D 30 0C
+ADD0 74 D3 B3 E9 60 D4 04 8B 14 B5 8F 14 29 6C 0C 74
+ADE0 D3 B3 E9 60 D4 04 8B 14 B5 8F 14 28 08 5A B5 B3
+ADF0 8D 79 E9 D1 D7 02 B4 BB 19 BB 2B 0B 5A B5 B3 E9
+AE00 6B DC 02 2B A4 D1 7C 7B D3 B3 A4 D1 7C 75 B0 B3
+AE10 E9 0F DE 04 2A 3D A4 D1 7C 7D D3 B3 3B 3A E9 0F
+AE20 DE 04 B4 BB B1 3E A4 D1 7C 75 B0 5A B8 B3 A4 D1
+AE30 7C 79 D3 B3 A4 D1 7C 78 D3 B4 BB B4 BB B1 0B B3
+AE40 A4 D1 7C 7B B3 E9 B6 D3 04 CF
+====================================================
+
+AE40
+AE50
+AE60
+AE70
+AE80
+AE90
+AEA0
+AEB0
+AEC0
+AED0
+AEE0
+AEF0
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AEF0                         20 09 E5 FE FF A4 D1 7C
+AF00 72 D6 36 AF 0B 79 D3 D8 2A AF 8D 64 8D 10 E9 D1
+AF10 D7 02 B3 0B 77 B3 E9 3B DE 06 8D 64 8D 1A E9 D1
+AF20 D7 02 B3 0B 7D B3 E9 3B DE 06 64 E9 D1 D7 02 B3
+AF30 3B E9 50 C2 04 0B B0 2B 0B D7 04 AF CF
+
+FUNCTION $AEF8 (FE FF) $AEFD-$AF3C
+
+AEFD A4 D1 7C    / Store $7CD1/$7CD2 to M8
+AF00 72          / Add #$02 to M8
+AF01 D6 36 AF    / Jump to $AF36
+------------------
+AF04 0B          / Store meta 01/02 to M8            / Current officer
+AF05 79          / Add #$09 to M8
+AF06 D3          / Replace M8 with 1-byte value      / Men
+AF07 D8 2A AF    / Jump to $AF2A if zero
+
+AF0A 8D 64       / Push #$64 to metastack            / (+2)
+AF0C 8D 10       / Push #$10 to metastack            / (+2)
+AF0E E9 D1 D7 02 / Run function $D7D1                / (-2) RNG #$00-#$0F
+AF12 B3          / Push M8 to metastack              / (+2)
+AF13 0B          / Store meta 01/02 to M8
+AF14 77          / Add #$07 to M8
+AF15 B3          / Push M8 to metastack              / (+2) Loyalty
+AF16 E9 3B DE 06 / Run function $DE3B                / (-6) Increase by random number 00-15
+
+AF1A 8D 64       / Push #$64 to metastack            / (+2)
+AF1C 8D 1A       / Push #$1A to metastack            / (+2)
+AF1E E9 D1 D7 02 / Run function $D7D1                / (-2) RNG #$00-#$19
+AF22 B3          / Push M8 to metastack              / (+2)
+AF23 0B          / Store meta 01/02 to M8
+AF24 7D          / Add #$0D to M8
+AF25 B3          / Push M8 to metastack              / (+2) Morale
+AF26 E9 3B DE 06 / Run function $DE3B                / (-6) Increase by random number 00-25
+
+AF2A 64          / Push #$04 to metastack            / (+2)
+AF2B E9 D1 D7 02 / Run function $D7D1                / (-2)
+AF2F B3          / Push M8 to metastack              / (+2)
+AF30 3B          / Push meta 01/02 to metastack      / (+2)
+AF31 3B E9 50 C2 / Run function $C250                / (-4) Gain random EXP 00-03
+AF35 0B          / Store meta 01/02 to M8
+------------------
+AF36 B0          / Replace M8 with 2-byte value
+AF37 2B          / Store M8 to meta 01/02
+AF38 0B          / Store meta 01/02 to M8
+AF39 D7 04 AF    / Jump to $AF04 if nonzero
+
+AF3C CF          / Exit 
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AF30                                        20 09 E5
+AF40 00 00 8D 37 E9 21 84 02 61 E9 7F D2 02 AC 75 CD
+AF50 D7 57 AF 8A FF 00 CF 8D 64 E9 D1 D7 02 8B 22 C6
+AF60 D8 96 AF 6B E9 E4 CD 02 61 E9 7F D2 02 8D 10 E9
+AF70 B6 86 02 64 E9 7F D2 02 8D 4A E9 4A 8C 02 B3 E9
+AF80 F5 C3 02 8D 1B E9 6C 8C 02 B3 E9 F5 C3 02 AC F8
+AF90 AE 63 E9 62 C0 02 41 CF
+
+FUNCTION $AF3D (00 00) $AF42-$AF97
+
+AF42 8D 37       / Push #$37 to metastack            / (+2)
+AF44 E9 21 84 02 / Run function $8421                / (-2) "Rest"
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AF40 00 00 8D 37 E9 21 84 02 61 E9 7F D2 02 AC 75 CD
+AF50 D7 57 AF 8A FF 00 CF 8D 64 E9 D1 D7 02 8B 22 C6
+AF60 D8 96 AF 6B E9 E4 CD 02 61 E9 7F D2 02 8D 10 E9
+AF70 B6 86 02 64 E9 7F D2 02 8D 4A E9 4A 8C 02 B3 E9
+AF80 F5 C3 02 8D 1B E9 6C 8C 02 B3 E9 F5 C3 02 AC F8
+AF90 AE 63 E9 62 C0 02 41 CF
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AF90 
+AFA0
+AFB0
+AFC0
+AFD0
+AFE0
+AFF0
+B000
+B010
+B020
+B030
+B040
+B050
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+B8A0                20 09 E5 E3 FF A0 0F 00 B3 DE EE
+B8B0 FF B3 3C 8E 43 A4 8E E0 00 62 E9 79 DD 0C 85 EB
+B8C0 
+B8D0 
+B8E0 
+B8F0 
+B900 
+B910 
+B920 
+B930 
+B940 
+B950 
+B960 
+B970 
+B980 
+B990 
+B9A0 
+B9B0 
+B9C0 
+B9D0 
+B9E0 
+B9F0 
+BA00 
+BA10 
+BA20 
+BA30 87 A0 ED FF A9 59 7B 0B CF 

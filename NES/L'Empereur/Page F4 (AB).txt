@@ -1,0 +1,86 @@
+DATA PAGE
+     
+                                                     ROM Address: 028010
+	 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A000 	    		   5A A0 63 A0 83 A0 98 A0 B3 A0
+A010 D0 A0 E6 A0 1D A1 51 A1 9A A1 BC A1 CD A1 E0 A1
+A020 05 A2 34 A2 43 A2 5D A2 6E A2 81 A2 9E A2 BC A2
+A030 D5 A2 EA A2 FF A2 23 A3 39 A3 49 A3 61 A3 74 A3
+A040 89 A3 A7 A3 CA A3 E2 A3 F5 A3 11 A4 1E A4 40 A4
+A050 78 A4 9F A4 C8 A4 EE A4 1B A5 
+
+00 A05A How much
+01 A063  has no interest in our country
+02 A083 Distribute how much
+03 A098 Country's %s is not enough
+04 A0B3 %s distributed to every city
+05 A0D0 No %s in that country
+06 A0E6  This will certainly reflect on your honor as a nation
+07 A11D  Show me a little comparrison in these circumstances
+08 A151 Please rethink what is necessary for the prosperity of our two countries
+09 A19A That country has a shortage of %s
+0A A1BC Import how much
+0B A1CD Use how much gold
+0C A1E0  Let's agree to that amount of money
+0D A205  Unfortunately our trade talks were useless
+0E A234 There is no %s
+0F A243 %s sufficiency is too low
+10 A25D Export how much
+11 A26E Sell for how much
+12 A281 Issue command to which city
+13 A29E That city's command has ended
+14 A2BC Transport to which city?
+15 A2D5 Number of ships : %d
+16 A2EA Send how many ships
+17 A2FF %d ships have arrived in the harbor
+18 A323 Build how many ships
+19 A339 Scrap how many
+1A A349 Position in which city?
+1B A361 Position how many
+1C A374 City artillery : %d
+1D A389 %s has become a new commander
+1E A3A7 That person is already a commander
+1F A3CA Dispatch to which city
+20 A3E2 Make a tax payment
+21 AEF5 Make the city a supply base
+22 A411 Are you done
+23 A41E  I'm telling you - I want Austria!
+24 A440  Let's give a ball! We'll make it an extravagant event!
+25 A478  Darling, I really need a new dress
+26 A49F  I worry about you each day you're away!
+27 A4C8  I need comparrison and understanding!
+28 A4EE  Oh napoleon! You must come back victorious!
+29 A51B %d ship has arrived in the harbor
+
+
+
+							
+00 AD4E 02 12 1C 09 04 12 04 1E
+01 AD56 02 14 1C 07 04 14 04 1E
+02 AD5E 02 17 1C 04 03 17 03 1D
+03 AD66 02 17 1C 04 03 17 03 1E
+04 AD6E 02 14 14 07 04 14 04 16
+05 AD76 07 10 11 08 07 10 07 18
+06 AD7E 02 19 1C 02 03 19 03 1E
+07 AD86 08 19 16 02 08 19 09 1E
+08 AD8E 02 11 1C 0A 03 11 03 1E
+09 AD96 02 11 1B 08 03 11 03 1E
+0A AD9E 02 17 1C 04 02 17 02 1E
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+ADA0                   f
+
+00 January   | 
+01 February  | 
+02 March     | 
+03 April     | 
+04 May       | 
+05 June      | 
+06 July      | 
+07 August    | 
+08 September | 
+09 October   | 
+0A November  | 
+0B Decemeber | 
+
+Retrieves name of Month
