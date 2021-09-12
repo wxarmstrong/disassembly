@@ -1,0 +1,264 @@
+Function $81F0
+
+>1D:81F0:98        TYA
+ 1D:81F1:9D A0 03  STA $03A0,X @ $03B5 = #$60
+ 1D:81F4:B9 C9 82  LDA $82C9,Y @ $8329 = #$86
+ 1D:81F7:9D 2A 04  STA $042A,X @ $043F = #$59
+ 1D:81FA:B9 C9 83  LDA $83C9,Y @ $8429 = #$82
+ 1D:81FD:9D 13 04  STA $0413,X @ $0428 = #$94
+ 1D:8200:B9 C9 84  LDA $84C9,Y @ $8529 = #$29
+ 1D:8203:9D 41 04  STA $0441,X @ $0456 = #$3B
+ 1D:8206:98        TYA
+ 1D:8207:4A        LSR
+ 1D:8208:4A        LSR
+ 1D:8209:4A        LSR
+ 1D:820A:4A        LSR
+ 1D:820B:A8        TAY
+ 1D:820C:B9 C9 85  LDA $85C9,Y @ $8629 = #$AD
+ 1D:820F:9D 58 04  STA $0458,X @ $046D = #$20
+ 1D:8212:A9 01     LDA #$01
+ 1D:8214:9D B7 03  STA $03B7,X @ $03CC = #$00
+ 1D:8217:A9 00     LDA #$00
+ 1D:8219:9D DF 05  STA $05DF,X @ $05F4 = #$05
+ 1D:821C:9D F6 05  STA $05F6,X @ $060B = #$00
+ 1D:821F:9D 0D 06  STA $060D,X @ $0622 = #$00
+ 1D:8222:9D 24 06  STA $0624,X @ $0639 = #$00
+ 1D:8225:9D 83 05  STA $0583,X @ $0598 = #$70
+ 1D:8228:9D 6C 05  STA $056C,X @ $0581 = #$00
+ 1D:822B:9D B4 04  STA $04B4,X @ $04C9 = #$00
+ 1D:822E:60        RTS ----------------------------------------- 
+----------------------------------------------------------------
+Function $92A9
+
+ 1D:92A9:BD FC 03  LDA $03FC,X
+ 1D:92AC:10 3A     BPL $92E8
+ 1D:92AE:DE B1 05  DEC $05B1,X
+ 1D:92B1:D0 1B     BNE $92CE
+ 1D:92B3:FE B1 05  INC $05B1,X
+ 1D:92B6:DE C8 05  DEC $05C8,X
+ 1D:92B9:F0 87     BEQ $9242
+ 1D:92BB:BD B7 03  LDA $03B7,X @ $03CC = #$00
+ 1D:92BE:29 FE     AND #$FE
+ 1D:92C0:9D B7 03  STA $03B7,X @ $03CC = #$00
+ 1D:92C3:BD C8 05  LDA $05C8,X @ $05DD = #$1E
+ 1D:92C6:29 01     AND #$01
+ 1D:92C8:1D B7 03  ORA $03B7,X @ $03CC = #$00
+ 1D:92CB:9D B7 03  STA $03B7,X @ $03CC = #$00
+ 1D:92CE:BD 24 06  LDA $0624,X @ $0639 = #$00
+ 1D:92D1:85 ED     STA $00ED = #$01
+ 1D:92D3:A9 00     LDA #$00
+ 1D:92D5:85 EB     STA $00EB = #$01
+ 1D:92D7:20 1C 93  JSR $931C
+ 1D:92DA:A5 11     LDA $0011 = #$40
+ 1D:92DC:29 01     AND #$01
+ 1D:92DE:F0 31     BEQ $9311
+ 1D:92E0:A9 00     LDA #$00
+ 1D:92E2:9D 24 06  STA $0624,X
+ 1D:92E5:4C 11 93  JMP $9311
+ 
+ 1D:92E8:A5 F3     LDA $00F3 = #$53
+ 1D:92EA:29 07     AND #$07
+ 1D:92EC:D0 19     BNE $9307
+ 1D:92EE:A9 00     LDA #$00
+ 1D:92F0:85 11     STA $0011 = #$40
+ 1D:92F2:85 00     STA $0000 = #$FB
+ 1D:92F4:85 01     STA $0001 = #$00
+ 1D:92F6:20 CD D9  JSR $D9CD
+ 1D:92F9:A5 11     LDA $0011 = #$40
+ 1D:92FB:29 01     AND #$01
+ 1D:92FD:D0 08     BNE $9307
+ 1D:92FF:BD B7 03  LDA $03B7,X @ $03CC = #$00
+ 1D:9302:29 FE     AND #$FE
+ 1D:9304:9D B7 03  STA $03B7,X @ $03CC = #$00
+ 1D:9307:AD 7A 06  LDA $067A = #$00
+ 1D:930A:18        CLC
+ 1D:930B:7D CB 04  ADC $04CB,X @ $04E0 = #$7B
+ 1D:930E:9D CB 04  STA $04CB,X @ $04E0 = #$7B
+ 
+ 1D:9311:20 85 E4  JSR $E485 -> Check if object has gone off-screen
+ 1D:9314:B0 03     BCS $9319
+ 1D:9316:4C 68 E4  JMP $E468
+ 
+ Object has gone off-screen
+ 1D:9319:4C 56 E4  JMP $E456 -> Despawn
+----------------------------------------------------------------
+Function $931C
+
+ 1D:931E:85 00     STA $0000
+ 1D:9320:20 A4 EC  JSR $ECA4
+ 1D:9323:20 D1 E4  JSR $E4D1
+ 1D:9326:A0 08     LDY #$08
+ 1D:9328:A5 EE     LDA $00EE = #$00
+ 1D:932A:10 02     BPL $932E
+ 1D:932C:A0 0C     LDY #$0C
+ 1D:932E:84 07     STY $0007 = #$00
+ 1D:9330:A0 00     LDY #$00
+ 1D:9332:A5 ED     LDA $00ED = #$01
+ 1D:9334:10 02     BPL $9338
+ 1D:9336:A0 04     LDY #$04
+ 1D:9338:B1 08     LDA ($08),Y @ $9495 = #$B1
+ 1D:933A:85 00     STA $0000 = #$FB
+ 1D:933C:C8        INY
+ 1D:933D:B1 08     LDA ($08),Y @ $9495 = #$B1
+ 1D:933F:85 01     STA $0001 = #$00
+ 1D:9341:A9 00     LDA #$00
+ 1D:9343:85 11     STA $0011 = #$40
+ 1D:9345:20 CD D9  JSR $D9CD
+ 1D:9348:A5 11     LDA $0011 = #$40
+ 1D:934A:29 01     AND #$01
+ 1D:934C:F0 0B     BEQ $9359
+ 1D:934E:A9 00     LDA #$00
+ 1D:9350:9D 24 06  STA $0624,X @ $0639 = #$00
+ 1D:9353:20 4F DB  JSR $DB4F
+ 1D:9356:20 CB E4  JSR $E4CB
+ 1D:9359:A4 07     LDY $0007 = #$00
+ 1D:935B:B1 08     LDA ($08),Y @ $9495 = #$B1
+ 1D:935D:85 00     STA $0000 = #$FB
+ 1D:935F:C8        INY
+ 1D:9360:B1 08     LDA ($08),Y @ $9495 = #$B1
+ 1D:9362:85 01     STA $0001 = #$00
+ 1D:9364:A9 00     LDA #$00
+ 1D:9366:85 11     STA $0011 = #$40
+ 1D:9368:20 CD D9  JSR $D9CD
+ 1D:936B:A5 11     LDA $0011 = #$40
+ 1D:936D:29 01     AND #$01
+ 1D:936F:D0 1A     BNE $938B
+ 1D:9371:A4 07     LDY $0007 = #$00
+ 1D:9373:C8        INY
+ 1D:9374:C8        INY
+ 1D:9375:B1 08     LDA ($08),Y @ $9495 = #$B1
+ 1D:9377:85 00     STA $0000 = #$FB
+ 1D:9379:C8        INY
+ 1D:937A:B1 08     LDA ($08),Y @ $9495 = #$B1
+ 1D:937C:85 01     STA $0001 = #$00
+ 1D:937E:A9 00     LDA #$00
+ 1D:9380:85 11     STA $0011 = #$40
+ 1D:9382:20 CD D9  JSR $D9CD
+ 1D:9385:A5 11     LDA $0011 = #$40
+ 1D:9387:29 01     AND #$01
+ 1D:9389:F0 0B     BEQ $9396
+ 1D:938B:20 6D DB  JSR $DB6D
+ 1D:938E:20 CB E4  JSR $E4CB
+ 1D:9391:A9 00     LDA #$00
+ 1D:9393:9D F6 05  STA $05F6,X @ $060B = #$00
+ 1D:9396:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Function $944B - AI script 0x49 (small energy item)
+ 1D:944B:20 45 92  JSR $9245
+ 1D:944E:A9 97     LDA #$97
+ 1D:9450:85 08     STA $0008
+ 1D:9452:A9 93     LDA #$93
+ 1D:9454:85 09     STA $0009
+ 1D:9456:20 A9 92  JSR $92A9
+ 1D:9459:BD 6C 05  LDA $056C,X
+ 1D:945C:F0 F0     BEQ $944E
+ 1D:945E:20 9C 94  JSR $949C
+ 1D:9461:20 21 ED  JSR $ED21
+ 1D:9464:20 F6 94  JSR $94F6 / Increment weapon energy by 1 if 
+ 1D:9467:20 F6 94  JSR $94F6 / Increment weapon energy by 1
+ 1D:946A:4C 56 E4  JMP $E456
+----------------------------------------------------------------
+Function $949C -> Player picks up Weapon energy
+Args:
+[X] Object slot of energy
+
+ 1D:949C:AD 99 06  LDA $0699   ; Current weapon selection
+ 1D:949F:9D C8 05  STA $05C8,X ; ?
+ 1D:94A2:D0 25     BNE $94C9
+ 
+ If current weapon is not M.Buster
+	 1D:94A4:AD 96 06  LDA $0696
+	 1D:94A7:F0 20     BEQ $94C9
+	 
+	 If player has Energy Balancer
+		 1D:94A9:A9 FF     LDA #$FF
+		 1D:94AB:85 00     STA $0000
+		 
+		 1D:94AD:A0 09     LDY #$09
+		 
+		 Loop through weapons to find one w/ lowest energy
+			1D:94AF:B9 88 06  LDA $0688,Y ; Current weapon
+			1D:94B2:C9 80     CMP #$80
+			1D:94B4:F0 0B     BEQ $94C1
+			
+			If weapon has been collected:
+				 1D:94B6:18        CLC
+				 1D:94B7:69 01     ADC #$01
+				 1D:94B9:C5 00     CMP $0000
+				 1D:94BB:B0 04     BCS $94C1
+					 
+					 
+					 1D:94BD:85 00     STA $0000 ; Lowest energy
+					 1D:94BF:84 01     STY $0001 ; Lowest energy weapon
+				 
+			 1D:94C1:88        DEY
+			 1D:94C2:D0 EB     BNE $94AF
+			 
+		 1D:94C4:A5 01     LDA $0001
+		 1D:94C6:9D C8 05  STA $05C8,X
+	 
+ 1D:94C9:60        RTS -----------------------------------------
+----------------------------------------------------------------
+Function $94F6
+
+ 1D:94F6:A9 00     LDA #$00
+ 1D:94F8:9D 6C 05  STA $056C,X
+ 1D:94FB:A9 01     LDA #$01
+ 1D:94FD:9D B7 03  STA $03B7,X
+ 1D:9500:BC C8 05  LDY $05C8,X / check which weapon to refill
+ 1D:9503:F0 1F     BEQ $9524   / if none
+ 1D:9505:B9 88 06  LDA $0688,Y 
+ 1D:9508:18        CLC
+ 1D:9509:69 01     ADC #$01
+ 1D:950B:C9 1C     CMP #$1C    
+ 1D:950D:B0 15     BCS $9524   / if full
+ 1D:950F:99 88 06  STA $0688,Y / increment energy
+ 1D:9512:A9 31     LDA #$31
+ 1D:9514:85 DC     STA $00DC
+ 1D:9516:20 DD E1  JSR $E1DD
+ 1D:9519:20 4A CF  JSR $CF4A
+ 1D:951C:A9 04     LDA #$04
+ 1D:951E:20 F6 C5  JSR $C5F6
+ 1D:9521:A6 8F     LDX $008F
+ 1D:9523:60        RTS -----------------------------------------
+ 1F:9524:A0 01     LDY #$01
+ 1F:9526:8C 78 06  STY $0678 
+ 1F:9529:A0 41     LDY #$41
+ 1F:952B:84 DC     STY $00DC
+ 1F:952D:AD 73 06  LDA $0673
+ 1F:9530:38        SEC
+ 1F:9531:E9 0A     SBC #$0A
+ 1F:9533:8D 7B 06  STA $067B
+ 1F:9536:20 2B C6  JSR $C62B
+ 1F:9539:4C DA D4  JMP $D4DA
+ 1F:953C:AD CB 04  LDA $04CB = #$A4
+ 1F:953F:C9 E3     CMP #$E3
+ 1F:9541:90 38     BCC $957B
+ 1F:9543:A9 00     LDA #$00
+ 1F:9545:85 F4     STA $00F4 = #$00
+ 1F:9547:8D 7B 06  STA $067B = #$00
+ 1F:954A:A5 73     LDA $0073 = #$00
+ 1F:954C:F0 06     BEQ $9554
+ 1F:954E:8D 4F 06  STA $064F = #$92
+ 1F:9551:20 AA CA  JSR $CAAA
+ 1F:9554:A5 72     LDA $0072 = #$00
+ 1F:9556:F0 08     BEQ $9560
+ 1F:9558:10 06     BPL $9560
+ 1F:955A:8D 9E 06  STA $069E = #$32
+ 1F:955D:20 EF C9  JSR $C9EF
+ 1F:9560:AD 97 06  LDA $0697 = #$08
+ 1F:9563:85 57     STA $0057 = #$09
+ 1F:9565:8D 6F 04  STA $046F = #$09
+ 1F:9568:EE CA 04  INC $04CA = #$00
+ 1F:956B:20 EC D7  JSR $D7EC
+ 1F:956E:A5 72     LDA $0072 = #$00
+ 1F:9570:F0 06     BEQ $9578
+ 1F:9572:8D 9E 06  STA $069E = #$32
+ 1F:9575:20 EF C9  JSR $C9EF
+ 1F:9578:38        SEC
+ 1F:9579:B0 01     BCS $957C
+ 1F:957B:18        CLC
+ 1F:957C:A9 00     LDA #$00
+ 1F:957E:85 72     STA $0072 = #$00
+ 1F:9580:85 73     STA $0073 = #$00
+ 1F:9582:60        RTS -----------------------------------------

@@ -1,0 +1,58 @@
+$0051 Current Level
+$0057 Current Screen
+
+$03ED Current Boss HP
+
+$03A0,X
+$03B7,X
+$03E5,X
+$03FC,X ?
+$0441,X ?
+$046F,X x-pos high (screen)
+$0486,X x-pos mid  (pixel)
+$049D,X x-pos low  (subpixel)
+0x4B4,X y-pos high (screen)
+$04CB,X y-pos mid  (pixel)
+$04E2,X y-pos low  (subpixel)
+$04F9,X
+$0510,X
+$0527,X
+$053E,X
+$0555,X
+$056C,X
+$0583,X
+$059A,X
+$05B1,X y-velocity low  (subpixels/frame)
+$05C8,X y-velocity high (pixels/frame)    OR other RAM
+$05DF,X ?         
+
+$064F Current graphical data (tile set?)
+
+$0650-$0684 ?
+
+$0685 Saved graphical data (for checkpoint)
+After passing a level checkpoint the graphical data gets saved & retrieved when reloading that checkpoint
+
+$0686 ?
+$0687 ?
+
+$0688,X Remaining energy for Weapon X:
+00 = Mega Buster     05 = Plant Barrier
+01 = Yamato Spear    06 = Knight Crush
+02 = Wind Storm      07 = Silver Tomahawk
+03 = Blizzard Attack 08 = Centaur Flash
+04 = Fire Blast      09 = Beat
+
+$0692 ?
+$0693 ?
+
+$0694 Power
+$0695 Jet
+$0696 Energy Balancer
+
+$0697 ?
+$0698 ?
+
+$0699 - Current weapon selected
+
+$069E -> $0686

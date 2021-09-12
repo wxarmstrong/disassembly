@@ -1,0 +1,4 @@
+Object ID
+
+38 = small life energy
+49 = small weapon energy -> 944B
