@@ -1,0 +1,46 @@
+Page E0
+
+E0:A000 - Jump to $E10C
+E0:A003
+E0:A060 - Do nothing
+----------------------------------------------------
+E7:B165 - Save game
+----------------------------------------------------
+Page FE
+----------------------------------------------------
+Page FF
+
+FF:E265 - Transfer <02> bytes from <04> to palette # <00>
+
+FF:EE29 - Sysop <00>:
+00 F500 - Reset
+01 FA2A
+02 FA38
+03 FA6F - Set RAM bank <00> to <02>
+04 FA77 - Return page of RAM bank <00>
+05 FA7F - CHR bank switch @ <00> 
+06 FA8D
+07 FAD6
+08 FB1B - Print graphic?
+09 FB8E 
+0A FBB6 
+0B FBCE 
+0C FBD9 - Update RNG and return value
+0D FC32 
+0E FC59 
+0F FC62 
+10 FC6D 
+11 FC82 
+12 FC87 
+13 FCC0 
+14 FCC1 
+15 FCC2 
+16 FCC3 
+17 FCFF 
+18 FB23 
+19 FD2D 
+1A FD85 
+1B FDFE 
+1C FE04 
+1D FE2E 
+1E FE72 

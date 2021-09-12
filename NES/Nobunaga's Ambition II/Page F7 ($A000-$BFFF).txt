@@ -1,0 +1,119 @@
+PAGE F7
+ROM: 0x02E010 - 0x03000F
+
+A004 Fief data
+
+00 Echigo   66 60 B1 60 60 61 00 00 00 00 00 00 00 00 | 20 20 10 00 00 00 00
+01 Kozuke   4D 60 7F 60 B1 60 00 00 00 00 00 00 00 00 | 80 20 10 00 00 00 00
+02 Musashi  66 60 98 60 CA 60 E3 60 00 00 00 00 00 00 | 80 20 10 10 00 00 00
+03 Awakazu  7F 60 00 00 00 00 00 00 00 00 00 00 00 00 | 80 00 00 00 00 00 00
+04 Shinano  4D 60 66 60 CA 60 2E 61 F6 61 79 61 C4 61 | 80 40 40 20 20 10 10
+
+String ptr table $A478
+
+00 A6A4 "No other fiefs"
+01 B5A4 "Cannot send more"
+02 C6A4 "No food"
+03 CEA4 "Cannot sell more"
+04 DFA4 "No gold"
+05 E7A4 "Cannot buy more"
+06 F7A4 "No debt"
+07 FFA4 "No merchants in this fief"
+08 19A5 "No samurai"
+09 24A5 "Empty fief"
+0A 2FA5 "Cannot recruit more samurai"
+0B 4BA5 "Cannot recruit more samurai"
+0C 67A5 "No samurai will listen"
+0D 7EA5 "No samurai"
+0E 89A5 "No other fiefs"
+0F 98A5 "No one to marry"
+10 A8A5 "No one to ally with"
+11 BCA5 "No one to threaten"
+12 CFA5 "No one to send tribute to"
+13 E9A5 "Cannot reassign"
+14 F9A5 "Cannot hire more men"
+15 0EA6 "No one has\nthe ability"
+16 25A6 "Everyone needs to rest now"
+
+String ptr table $A6F4
+00 0000
+01 96A7 "Abandon\nour fief ?"
+02 A9A7 "Let's not\nspare a\nmoment !"
+03 C4A7 "That fief\nis ours\nfor the\ntaking"
+04 E5A7 "Supplies\nare too\nlow..."
+05 FDA7 "A wise\nmove..."
+06 0CA8 "That won't\nbuy much"
+07 20A8 "You're\nwise to\nprepare\nfor the\nfuture"
+08 46A8 "The\nmerchants\nwill be\ndelighted"
+09 66A8 "A strong\ncastle\nwill\nprotect us"
+0A 86A8 "This will\nenrich\nour fief"
+0B A0A8 "You're a\nshrewd\ntrader"
+0C B7A8 "This deal\nis not in\nour favor"
+0D D5A8 "Are you\nsure ?"
+0E E4A8
+0F F9A8
+10 12A9
+11 2DA9
+12 49A9
+13 62A9
+14 7BA9
+15 8FA9
+16 A7A9
+17 C1A9
+18 D4A9
+19 EAA9
+1A 04AA
+1B 14AA
+1C 2CAA "Wh-What\ndid I do ?"
+1D 3FAA "Please\ndon't\nforsake me"
+1E 57AA "If I ever\nmeet you\nin battle"
+1F 74AA
+20 8DAA
+21 A9AA
+22 C3AA
+23 DEAA
+24 F3AA
+25 09AB
+26 21AB
+27 3CAB
+28 50AB
+29 64AB
+2A 81AB
+2B 91AB
+2C B2AB
+2D CAAB
+2E EAAB
+2F 0BAC
+30 21AC
+31 3CAC
+32 54AC
+33 62AC
+34 77AC
+35 92AC
+36 ACAC
+37 CCAC
+38 DFAC "Luck is\nwith us"
+39 EFAC "Ha! The\nenemy's\npeople\nfell for\nour lies!"
+3A 19AD
+3B 35AD
+3C 4FAD
+3D 62AD
+3E 7EAD
+3F 98AD
+40 AAAD
+41 C6AD
+42 DCAD
+43 F5AD
+44 0DAE
+45 25AE
+46 4AAE
+47 63AE
+48 80AE
+49 93AE
+4A A7AE
+4B C9AE
+4C E9AE
+4D 0AAF
+4E 22AF
+4F 42AF
+50 54AF
