@@ -534,7 +534,7 @@ Function $86B5 (00 00) -> Print msg "No one has\n the ability"
 Function $86C1 (00 00) -> Print msg "Everyone needs to rest now"
 
 86C6 8D 16
-86C8 E9 47 86 02 / Call $8647
+86C8 E9 47 86 02 / Call $8647 -> Print "Everyone needs to rest now"
 86CC CF
 ----------------------------------------------------
      00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
@@ -803,6 +803,27 @@ Function $88BE (D1 FF) -> Print string ID # from table F7:A6F4
 8F10             20 14 E4 00 00 A4 33 60 76 B0 B3 8A
 8F20 E7 03 B4 BC B3 AA 3D 60 6A A4 33 60 74 B0 B3 E9
 8F30 FE F2 06 B3 E9 8F F2 04 CF 
+
+Function $8F14 (00 00)
+
+8F19 A4 33 60
+8F1C 76
+8F1D B0
+8F1E B3
+8F1F 8A E7 03
+8F22 B4
+8F23 BC
+8F24 B3
+8F25 AA 3D 60 .. / $603D
+8F28 6A
+8F29 A4 33 60 .. / $6033
+8F2C 74
+8F2D B0
+8F2E B3
+8F2F E9 FE F2 06 / Call $F2FE
+8F33 B3
+8F34 E9 8F F2 04 / Call $F28F
+8F38 CF
 ----------------------------------------------------
      00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
 8F30                            20 14 E4 00 00 AA 3D
@@ -922,6 +943,33 @@ For each samurai in list:
 92A0                                     20 14 E4 FE
 92B0 FF 40 2B 0C 1B BB 72 D3 8C FF 00 C0 D8 C1 92 40
 92C0 CF 0B D0 2B 0B 53 C2 D7 B3 92 41 CF 
+
+Function $92AC (FE FF)
+
+92B1 40
+92B2 2B
+92B3 0C
+92B4 1B
+92B5 BB
+92B6 72
+92B7 D3
+92B8 8C FF 00
+92BB C0
+92BC D8 C1 92
+
+92BF 40
+92C0 CF
+
+92C1 0B
+92C2 D0
+92C3 2B
+92C4 0B
+92C5 53
+92C6 C2
+92C7 D7 B3 92
+
+92CA 41
+92CB CF
 ----------------------------------------------------
      00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
 92C0                                     20 14 E4 F0
@@ -994,6 +1042,55 @@ For each samurai in list:
 9690 3C 8E 67 A2 8E E0 00 62 E9 D1 DC 0A 6A 3B 3C 8E
 96A0 8F A1 D6 AB 96 65 3B 3C 8E D8 A1 8E E0 00 62 E9
 96B0 D1 DC 0C 8D 64 0D 76 B3 E9 D0 F3 04 A0 0F 00 CF
+
+Function $966C (FE FF)
+
+9671 60
+9672 60
+9673 A0 0F 00
+9676 B3
+9677 60
+9678 62
+9679 3D
+967A 3C
+967B E9 CC 92 0E / Call $92CC
+967F A2 0F 00
+
+9682 A4 33 60    / $6033 (Active fief)
+9685 8F 14
+9687 B0
+9688 2B
+9689 A0 0F 00
+968C D8 A5 96
+
+968F 3B
+9690 3C
+9691 8E 67 A2
+9694 8E E0 00
+9697 62
+9698 E9 D1 DC 0A / Call $DCD1 -> E0:A267
+969C 6A
+969D 3B
+969E 3C
+969F 8E 8F A1    / E0:A18F
+96A2 D6 AB 96
+
+96A5 65
+96A6 3B
+96A7 3C
+96A8 8E D8 A1    / E0:A1D8
+
+96AB 8E E0 00
+96AE 62
+96AF E9 D1 DC 0C / Call $DCD1 
+
+9FB3 8D 64
+9FB5 0D
+9FB6 76
+9FB7 B3
+9FB8 E9 D0 F3 04 / Call $F3D0 
+9FBC A0 0F 00
+9FBF CF
 ----------------------------------------------------
      00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
 96C0 20 14 E4 FC FF 8E 82 00 0D 76 B3 E9 D0 F3 04 A4

@@ -412,6 +412,14 @@ Function $89D8 (00 00)
      00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
 8BB0                            20 14 E4 00 00 8E 21
 8BC0 90 8D 20 60 E9 65 E2 06 CF 
+
+Function $8BB9 -> Set palette for ?
+
+8BBE 8E 21 90
+8BC1 8D 20
+8BC3 60
+8BC4 E9 65 E2 06 / Call $E265 -> Set palette
+8BC8 CF
 ----------------------------------------------------
      00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
 8BC0                            20 14 E4 00 00 A5 43
@@ -474,7 +482,7 @@ Case 05
 	8C1C D6 F3 8B
 
 Case 06
-	8C1F AC B9 8B    / Call $8BB9
+	8C1F AC B9 8B    / Call $8BB9 (Set palette)
 	8C22 D6 F3 8B
 
 Case 07
@@ -544,6 +552,46 @@ Case 04
 8E60 D4 08 A4 AA 7A A8 AC 7A 60 60 6C 6F 6A 62 67 E9
 8E70 29 EE 0E 8D 30 61 E9 2A E2 04 0C 8F 16 B0 B3 8E
 8E80 BE AE 8E E0 00 62 E9 D1 DC 08 CF 
+
+Function $8E4C
+
+8E51 6C
+8E52 6F
+8E53 6A
+8E54 62
+8E55 E9 7E D4 08 / Call $D47E
+
+8E59 66
+8E5A 8D 12
+8E5C 63
+8E5D 62
+8E5E E9 7E D4 08 / Call $D47E
+
+8E62 A4 AA 7A .. / $7AAA
+8E65 A8 AC 7A .. / $7AAC
+
+8E68 60
+8E69 60
+8E6A 6C
+8E6B 6F
+8E6C 6A
+8E6D 62
+8E6E 67
+8E6F E9 29 EE 0E / Call $EE29 -> Sysop 0x07 (Print BG?)
+
+8E73 8D 30
+8E75 61
+8E76 E9 2A E2 04 / Call $E22A -> Clear sprites?
+
+8E7A 0C
+8E7B 8F 16
+8E7D B0
+8E7E B3
+8E7F 8E BE AE
+8E82 8E E0 00
+8E85 62
+8E86 E9 D1 DC 08 / Call $DCD1 -> E0:AEBE
+8E8A CF
 ----------------------------------------------------
      00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
 8E80                                  20 14 E4 00 00
