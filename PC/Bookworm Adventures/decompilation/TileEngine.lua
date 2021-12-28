@@ -132,16 +132,15 @@ function TileEngine:UnregisterTile(t){
 
 
 
-
-function TileEngine:GetPtrFromTable()
+function TileEngine:GetPtrFromTable(t)
 {
 
 
 
+		return ptr
+	}
 
-
-
-
+	return nil
 }
 
 
@@ -152,49 +151,49 @@ function TileEngine:GetPtrFromTable()
 
 
 
-function TileEngine:GetWordValue()
+function TileEngine:GetWordValue(ttTable)
 {
+	lValue = 0;
+
+	for k,v in ttable
+	{
+
+		lTileValue = LETTER_BONUSES[v.mLetter] + 1;
 
 
+		lTileValue = v.ModifyValue(lTileValue);
 
+		if (0 < lTileValue)
+			lValue += lTileValue;
+	}
 
-
-
-
-
-
-
-
-
-
-
-
+	return lValue;
 }
 
-function TileEngine:GetLexWordIndicatorIndex()
+function TileEngine:GetLexWordIndicatorIndex(ttable)
 {
+	lValue = 0;
+
+	for k,v in ttable
+	{
+
+		lTileValue =  LETTER_BONUSES[v.mLetter] + 1;
 
 
+		lTileValue = v.ModifyValue(lTileValue);
+
+		if (0 < lTileValue)
+			lValue += lTileValue; 
+	}
 
 
+	lAdditive = 0;
+	for k,v in ttable
+		lAdditive += v.ApplyBonus(lValue)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	lValue += lAdditive
+	
+	return int(lValue)
 }
 
 
