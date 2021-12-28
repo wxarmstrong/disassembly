@@ -82,19 +82,19 @@ gDamageByWordLength = {
 0.25,
 0.5,
 0.75,
-1.0,
+1.,
 1.5,
-2.0,
+2.,
 2.75,
 3.5,
 4.5,
 5.5,
 6.75,
-8.0,
+8.,
 9.5,
-11.0,
+11.,
 
-13.0}
+13.}
 
 
 
@@ -155,7 +155,7 @@ function TileEngine:GetWordValue(ttTable)
 {
 	lValue = 0;
 
-	for k,v in ttable
+	for k,v in ttTable
 	{
 
 		lTileValue = LETTER_BONUSES[v.mLetter] + 1;
@@ -170,11 +170,11 @@ function TileEngine:GetWordValue(ttTable)
 	return lValue;
 }
 
-function TileEngine:GetLexWordIndicatorIndex(ttable)
+function TileEngine:GetLexWordIndicatorIndex(ttTable)
 {
 	lValue = 0;
 
-	for k,v in ttable
+	for k,v in ttTable
 	{
 
 		lTileValue =  LETTER_BONUSES[v.mLetter] + 1;
@@ -189,11 +189,11 @@ function TileEngine:GetLexWordIndicatorIndex(ttable)
 
 	lAdditive = 0;
 	for k,v in ttable
-		lAdditive += v.ApplyBonus(lValue)
+		lAdditive += v.ApplyBonus(lValue);
 
-	lValue += lAdditive
+	lValue += lAdditive;
 	
-	return int(lValue)
+	return int(lValue);
 }
 
 
@@ -202,41 +202,41 @@ function TileEngine:GetLexWordIndicatorIndex(ttable)
 
 
 
-function TileEngine:GetFullWordValue()
+function TileEngine:GetFullWordValue(ttTable)
 {
+	if (gBattleEngine == nil)
+		return
+	
+	lLength = gBattleEngine.GetWordValue(ttTable)
+
+
+	lLength = (int)math.round(lLength);
+	if (16 < lLength) lLength = 16;
+
+
+	lBaseDamage = nil
+	if (lLength == 0)
+		lBaseDamage = 0.
+	else
+		lBaseDamage = gDamageByWordLength[lLength - 1]
+
+
+	lAdditive = 0
+	for k,v in tt
+	
+		lAdditive += v.ApplyBonus(lBaseDamage)
 
 
 
+	if (lAdditive == 0)
+		lAdditive = common.DecimalCeil(lAdditive, 0.25)
 
 
+	lBaseDamage = gBattleEngine.mPlayerPtr.mOffenseBonusPct * (lBaseDamage + lAdditive);     
 
+	if (lBaseDamage < 0) lBaseDamage = 0;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	return lBaseDamage, lLength
 }
 
 
@@ -245,23 +245,22 @@ function TileEngine:GetFullWordValue()
 
 
 
-
-function TileEngine:ChangeLetter()
+function TileEngine:ChangeLetter(t, c)
 {
+	ttable = gTileTable[t];
 
+	ttable.mLetter = c;
+	ttable.mLetterWidth = ttable.StringWidth(c)
+	ttable.mLetterAscent = ttable.GetAscent(c)
+	
 
-
-
-
-
-
-
-
-
-
-
+	if (LETTER_BONUSES[c] <= 0)
+		ttable.mPipCel = 0
+	elseif (LETTER_BONUSES[c] < 0.75)
+		ttable.mPipCel = 1
+	else
+		ttable.mPipCel = 2
 }
-
 
 
 
@@ -316,9 +315,9 @@ function TileEngine:CanSelect()
 
 
 
-
-function TileEngine:IsBonus()
+function TileEngine:IsBonus(t)
 {
+	return gTileTable[t].IsBonus();
 }
 
 
