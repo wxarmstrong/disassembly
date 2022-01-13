@@ -1,0 +1,557 @@
+Page 00
+
+Function $A217
+ 00:A217: A5 27     LDA $27 XPOS_LARGE
+ 00:A219: 4A        LSR
+ 00:A21A: 4A        LSR
+ 00:A21B: 4A        LSR
+ 00:A21C: 85 A6     STA $A6
+ 00:A21E: A5 29     LDA $29 YPOS_LARGE
+ 00:A220: 29 F8     AND #$F8
+ 00:A222: 0A        ASL
+ 00:A223: 18        CLC
+ 00:A224: 65 A6     ADC $A6
+ 00:A226: A8        TAY
+ 00:A227: B1 4D     LDA ($4D),Y    ptr to map data 
+>00:A229: 85 89     STA $89        tile_type
+ 00:A22B: 84 8A     STY $8A        tile_num
+ 
+ 00:A22D: A5 27     LDA $27 XPOS_LARGE
+ 00:A22F: 29 F8     AND #$F8
+ 00:A231: 85 AC     STA $AC
+ 
+ 00:A233: A5 29     LDA $29 YPOS_LARGE
+ 00:A235: 29 F8     AND #$F8
+ 00:A237: 85 AE     STA $AE = #$FD
+ 
+ 00:A239: A5 89     LDA $89 = #$30
+ 00:A23B: C9 6C     CMP #$6C
+ 00:A23D: D0 17     BNE $A256
+ 
+ 00:A23F: AD E4 06  LDA $06E4 = #$6D
+ 00:A242: 29 F8     AND #$F8
+ 00:A244: C5 AC     CMP $AC = #$01
+ 00:A246: D0 29     BNE $A271
+ 00:A248: AD E5 06  LDA $06E5 = #$1B
+ 00:A24B: 29 F8     AND #$F8
+ 00:A24D: C5 AE     CMP $AE = #$FD
+ 00:A24F: D0 20     BNE $A271
+ 00:A251: A9 65     LDA #$65
+ 00:A253: 4C 73 A2  JMP $A273
+ 
+ 00:A256: C9 6D     CMP #$6D
+ 00:A258: D0 1E     BNE $A278
+ 00:A25A: AD E0 06  LDA $06E0
+ 00:A25D: 29 F8     AND #$F8
+ 00:A25F: C5 AC     CMP $AC = #$0B
+ 00:A261: D0 0E     BNE $A271
+ 00:A263: AD E1 06  LDA $06E1 = #$23
+ 00:A266: 29 F8     AND #$F8
+ 00:A268: C5 AE     CMP $AE = #$00
+ 00:A26A: D0 05     BNE $A271
+ 00:A26C: A9 66     LDA #$66
+ 00:A26E: 4C 73 A2  JMP $A273
+ 00:A271: A9 64     LDA #$64
+ 
+ 00:A273: 85 89     STA $89
+ 00:A275: 4C A2 A2  JMP $A2A2
+ 
+ 00:A278: A5 8A     LDA $8A = #$B9
+ 00:A27A: 4A        LSR
+ 00:A27B: 4A        LSR
+ 00:A27C: 4A        LSR
+ 00:A27D: A8        TAY
+ 00:A27E: A5 8A     LDA $8A = #$B9
+ 00:A280: 29 07     AND #$07
+ 00:A282: AA        TAX
+ 00:A283: BD 2C 90  LDA $902C,X
+ 00:A286: 39 C0 06  AND $06C0,Y
+ 00:A289: F0 17     BEQ $A2A2
+ 
+ 00:A28B: 18        CLC
+ 00:A28C: A5 89     LDA $89 = #$64
+ 00:A28E: 29 10     AND #$10
+ 00:A290: D0 01     BNE $A293
+ 00:A292: 38        SEC
+ 00:A293: A5 89     LDA $89 = #$64
+ 00:A295: 29 F0     AND #$F0
+ 00:A297: 90 05     BCC $A29E
+ 00:A299: 09 04     ORA #$04
+ 00:A29B: 4C A0 A2  JMP $A2A0
+ 
+ 00:A29E: 69 01     ADC #$01
+ 
+ 00:A2A0: 85 89     STA $89 = #$64
+ 00:A2A2: 60        RTS -----------------------------------------
+-----------------------------------------------------------------
+ 00:ADF1: A5 A3     LDA $A3 = #$05
+ 00:ADF3: E5 27     SBC $27 = #$3C
+ 00:ADF5: 85 A3     STA $A3 = #$05
+ 00:ADF7: 68        PLA
+ 00:ADF8: 48        PHA
+ 00:ADF9: A5 A3     LDA $A3 = #$05
+ 00:ADFB: 10 0F     BPL $AE0C
+ 00:ADFD: 48        PHA
+ 00:ADFE: A9 00     LDA #$00
+ 00:AE00: 38        SEC
+ 00:AE01: E5 A2     SBC $A2 = #$00
+ 00:AE03: 85 A2     STA $A2 = #$00
+ 00:AE05: A9 00     LDA #$00
+ 00:AE07: E5 A3     SBC $A3 = #$05
+ 00:AE09: 85 A3     STA $A3 = #$05
+ 00:AE0B: 68        PLA
+ 00:AE0C: 68        PLA
+ 00:AE0D: A5 A3     LDA $A3 = #$05
+ 00:AE0F: CD A0 04  CMP $04A0 = #$00
+ 00:AE12: 90 07     BCC $AE1B
+ 00:AE14: D0 05     BNE $AE1B
+ 00:AE16: A5 A2     LDA $A2 = #$00
+ 00:AE18: CD 9F 04  CMP $049F = #$A0
+ 00:AE1B: 90 03     BCC $AE20
+ 00:AE1D: 0E 81 04  ASL $0481 = #$80
+ 00:AE20: A9 55     LDA #$55
+ 00:AE22: 85 5F     STA $5F = #$AA
+ 00:AE24: BD A5 04  LDA $04A5,X @ $04A5 = #$A4
+ 00:AE27: 18        CLC
+ 00:AE28: 69 40     ADC #$40
+ 00:AE2A: 10 07     BPL $AE33
+ 00:AE2C: 06 5F     ASL $5F = #$AA
+ 00:AE2E: 49 FF     EOR #$FF
+ 00:AE30: 18        CLC
+ 00:AE31: 69 01     ADC #$01
+ 00:AE33: 85 9A     STA $9A = #$00
+ 00:AE35: 48        PHA
+ 00:AE36: 98        TYA
+ 00:AE37: 48        PHA
+ 00:AE38: A5 9A     LDA $9A = #$00
+ 00:AE3A: A8        TAY
+ 00:AE3B: B9 DC E7  LDA $E7DC,Y @ $E7DC = #$00
+ 00:AE3E: 85 A2     STA $A2 = #$00
+ 00:AE40: 48        PHA
+ 00:AE41: A9 00     LDA #$00
+ 00:AE43: 85 A3     STA $A3 = #$05
+ 00:AE45: 68        PLA
+ 00:AE46: 68        PLA
+ 00:AE47: A8        TAY
+ 00:AE48: 68        PLA
+ 00:AE49: A5 A5     LDA $A5 = #$9B
+ 00:AE4B: 10 07     BPL $AE54
+ 00:AE4D: 06 5F     ASL $5F = #$AA
+ 00:AE4F: 49 FF     EOR #$FF
+ 00:AE51: 18        CLC
+ 00:AE52: 69 01     ADC #$01
+ 00:AE54: 85 9A     STA $9A = #$00
+ 00:AE56: 48        PHA
+ 00:AE57: 8A        TXA
+ 00:AE58: 48        PHA
+ 00:AE59: 98        TYA
+ 00:AE5A: 48        PHA
+ 00:AE5B: A4 9A     LDY $9A = #$00
+ 00:AE5D: A9 00     LDA #$00
+ 00:AE5F: 85 9A     STA $9A = #$00
+ 00:AE61: 85 9B     STA $9B = #$00
+ 00:AE63: A2 11     LDX #$11
+ 00:AE65: 18        CLC
+ 00:AE66: 66 9B     ROR $9B = #$00
+ 00:AE68: 66 9A     ROR $9A = #$00
+ 00:AE6A: 66 A3     ROR $A3 = #$05
+ 00:AE6C: 66 A2     ROR $A2 = #$00
+ 00:AE6E: 90 0C     BCC $AE7C
+ 00:AE70: 18        CLC
+ 00:AE71: 98        TYA
+ 00:AE72: 65 9A     ADC $9A = #$00
+ 00:AE74: 85 9A     STA $9A = #$00
+ 00:AE76: A9 00     LDA #$00
+ 00:AE78: 65 9B     ADC $9B = #$00
+ 00:AE7A: 85 9B     STA $9B = #$00
+ 00:AE7C: CA        DEX
+ 00:AE7D: D0 E7     BNE $AE66
+ 00:AE7F: 68        PLA
+ 00:AE80: A8        TAY
+ 00:AE81: 68        PLA
+ 00:AE82: AA        TAX
+ 00:AE83: 68        PLA
+ 00:AE84: A4 6E     LDY $6E = #$00
+ 00:AE86: F0 02     BEQ $AE8A
+ 00:AE88: 46 A3     LSR $A3 = #$05
+ 00:AE8A: BD A5 04  LDA $04A5,X @ $04A5 = #$A4
+ 00:AE8D: 18        CLC
+ 00:AE8E: 69 40     ADC #$40
+ 00:AE90: 85 A4     STA $A4 = #$02
+ 00:AE92: BD A4 04  LDA $04A4,X @ $04A4 = #$0D
+ 00:AE95: 18        CLC
+ 00:AE96: 69 40     ADC #$40
+ 00:AE98: 45 A4     EOR $A4 = #$02
+ 00:AE9A: 30 22     BMI $AEBE
+ 00:AE9C: BD AB 04  LDA $04AB,X @ $04AB = #$57
+ 00:AE9F: 38        SEC
+ 00:AEA0: E5 A3     SBC $A3 = #$05
+ 00:AEA2: 9D AB 04  STA $04AB,X @ $04AB = #$57
+ 00:AEA5: BD AC 04  LDA $04AC,X @ $04AC = #$33
+ 00:AEA8: E9 00     SBC #$00
+ 00:AEAA: 9D AC 04  STA $04AC,X @ $04AC = #$33
+ 00:AEAD: 10 31     BPL $AEE0
+ 00:AEAF: BD A2 04  LDA $04A2,X @ $04A2 = #$21
+ 00:AEB2: 30 05     BMI $AEB9
+ 00:AEB4: A5 92     LDA $92 = #$A0
+ 00:AEB6: 4C 9B B0  JMP $B09B
+ 00:AEB9: A9 00     LDA #$00
+ 00:AEBB: 4C 9B B0  JMP $B09B
+ 00:AEBE: BD AB 04  LDA $04AB,X @ $04AB = #$57
+ 00:AEC1: 18        CLC
+ 00:AEC2: 65 A3     ADC $A3 = #$05
+ 00:AEC4: 9D AB 04  STA $04AB,X @ $04AB = #$57
+ 00:AEC7: BD AC 04  LDA $04AC,X @ $04AC = #$33
+ 00:AECA: 69 00     ADC #$00
+ 00:AECC: 9D AC 04  STA $04AC,X @ $04AC = #$33
+ 00:AECF: 10 0F     BPL $AEE0
+ 00:AED1: BD A2 04  LDA $04A2,X @ $04A2 = #$21
+ 00:AED4: 30 05     BMI $AEDB
+ 00:AED6: A5 92     LDA $92 = #$A0
+ 00:AED8: 4C 9B B0  JMP $B09B
+ 00:AEDB: A9 00     LDA #$00
+ 00:AEDD: 4C 9B B0  JMP $B09B
+ 00:AEE0: BD A2 04  LDA $04A2,X @ $04A2 = #$21
+ 00:AEE3: 10 3F     BPL $AF24
+ 00:AEE5: BD AB 04  LDA $04AB,X @ $04AB = #$57
+ 00:AEE8: 85 A2     STA $A2 = #$00
+ 00:AEEA: BD AC 04  LDA $04AC,X @ $04AC = #$33
+ 00:AEED: 85 A3     STA $A3 = #$05
+ 00:AEEF: 48        PHA
+ 00:AEF0: 38        SEC
+ 00:AEF1: A5 A2     LDA $A2 = #$00
+ 00:AEF3: E5 28     SBC $28 = #$2E
+ 00:AEF5: 85 A2     STA $A2 = #$00
+ 00:AEF7: A5 A3     LDA $A3 = #$05
+ 00:AEF9: E5 29     SBC $29 = #$33
+ 00:AEFB: 85 A3     STA $A3 = #$05
+ 00:AEFD: 68        PLA
+ 00:AEFE: 48        PHA
+ 00:AEFF: A5 A3     LDA $A3 = #$05
+ 00:AF01: 10 0F     BPL $AF12
+ 00:AF03: 48        PHA
+ 00:AF04: A9 00     LDA #$00
+ 00:AF06: 38        SEC
+ 00:AF07: E5 A2     SBC $A2 = #$00
+ 00:AF09: 85 A2     STA $A2 = #$00
+ 00:AF0B: A9 00     LDA #$00
+ 00:AF0D: E5 A3     SBC $A3 = #$05
+ 00:AF0F: 85 A3     STA $A3 = #$05
+ 00:AF11: 68        PLA
+ 00:AF12: 68        PLA
+ 00:AF13: A5 A3     LDA $A3 = #$05
+ 00:AF15: C9 00     CMP #$00
+ 00:AF17: 90 06     BCC $AF1F
+ 00:AF19: D0 04     BNE $AF1F
+ 00:AF1B: A5 A2     LDA $A2 = #$00
+ 00:AF1D: C9 80     CMP #$80
+ 00:AF1F: 90 03     BCC $AF24
+ 00:AF21: 0E 81 04  ASL $0481 = #$80
+ 00:AF24: E0 40     CPX #$40
+ 00:AF26: D0 03     BNE $AF2B
+ 00:AF28: 4C C7 B0  JMP $B0C7
+ 00:AF2B: A5 93     LDA $93 = #$00
+ 00:AF2D: D0 0B     BNE $AF3A
+ 00:AF2F: BD 3B 04  LDA $043B,X @ $043B = #$61
+ 00:AF32: 29 80     AND #$80
+ 00:AF34: D0 04     BNE $AF3A
+ 00:AF36: A5 60     LDA $60 = #$00
+ 00:AF38: 10 03     BPL $AF3D
+ 00:AF3A: 4C 2A B0  JMP $B02A
+ 00:AF3D: BD AD 04  LDA $04AD,X @ $04AD = #$57
+ 00:AF40: F0 03     BEQ $AF45
+ 00:AF42: 4C 2A B0  JMP $B02A
+ 00:AF45: AD 94 04  LDA $0494 = #$BD
+ 00:AF48: 38        SEC
+ 00:AF49: FD A5 04  SBC $04A5,X @ $04A5 = #$A4
+ 00:AF4C: C9 00     CMP #$00
+ 00:AF4E: 10 05     BPL $AF55
+ 00:AF50: 49 FF     EOR #$FF
+ 00:AF52: 18        CLC
+ 00:AF53: 69 01     ADC #$01
+ 00:AF55: C9 10     CMP #$10
+ 00:AF57: 90 03     BCC $AF5C
+ 00:AF59: 4C 2A B0  JMP $B02A
+ 00:AF5C: A9 00     LDA #$00
+ 00:AF5E: 85 A3     STA $A3 = #$05
+ 00:AF60: 8D 85 04  STA $0485 = #$03
+ 00:AF63: A5 68     LDA $68 = #$04
+ 00:AF65: 85 A2     STA $A2 = #$00
+ 00:AF67: BD A2 04  LDA $04A2,X @ $04A2 = #$21
+ 00:AF6A: 10 03     BPL $AF6F
+ 00:AF6C: 4C 2A B0  JMP $B02A
+ 00:AF6F: 4A        LSR
+ 00:AF70: 4A        LSR
+ 00:AF71: 4A        LSR
+ 00:AF72: 4A        LSR
+ 00:AF73: 4A        LSR
+ 00:AF74: A8        TAY
+ 00:AF75: B9 C7 E9  LDA $E9C7,Y @ $E9C7 = #$60
+ 00:AF78: 85 9A     STA $9A = #$00
+ 00:AF7A: 48        PHA
+ 00:AF7B: 8A        TXA
+ 00:AF7C: 48        PHA
+ 00:AF7D: 98        TYA
+ 00:AF7E: 48        PHA
+ 00:AF7F: A4 9A     LDY $9A = #$00
+ 00:AF81: A9 00     LDA #$00
+ 00:AF83: 85 9A     STA $9A = #$00
+ 00:AF85: 85 9B     STA $9B = #$00
+ 00:AF87: A2 11     LDX #$11
+ 00:AF89: 18        CLC
+ 00:AF8A: 66 9B     ROR $9B = #$00
+ 00:AF8C: 66 9A     ROR $9A = #$00
+ 00:AF8E: 66 A3     ROR $A3 = #$00
+ 00:AF90: 66 A2     ROR $A2 = #$03
+ 00:AF92: 90 0C     BCC $AFA0
+ 00:AF94: 18        CLC
+ 00:AF95: 98        TYA
+ 00:AF96: 65 9A     ADC $9A = #$00
+ 00:AF98: 85 9A     STA $9A = #$00
+ 00:AF9A: A9 00     LDA #$00
+ 00:AF9C: 65 9B     ADC $9B = #$00
+ 00:AF9E: 85 9B     STA $9B = #$00
+ 00:AFA0: CA        DEX
+ 00:AFA1: D0 E7     BNE $AF8A
+ 00:AFA3: 68        PLA
+ 00:AFA4: A8        TAY
+ 00:AFA5: 68        PLA
+ 00:AFA6: AA        TAX
+ 00:AFA7: 68        PLA
+ 00:AFA8: 46 A3     LSR $A3 = #$00
+ 00:AFAA: 66 A2     ROR $A2 = #$03
+ 00:AFAC: 46 A3     LSR $A3 = #$00
+ 00:AFAE: 66 A2     ROR $A2 = #$03
+ 00:AFB0: 46 A3     LSR $A3 = #$00
+ 00:AFB2: 66 A2     ROR $A2 = #$03
+ 00:AFB4: 38        SEC
+ 00:AFB5: E5 A2     SBC $A2 = #$03
+ 00:AFB7: 8D 84 04  STA $0484 = #$80
+ 00:AFBA: 0E 84 04  ASL $0484 = #$80
+ 00:AFBD: 2E 85 04  ROL $0485 = #$03
+ 00:AFC0: 0E 84 04  ASL $0484 = #$80
+ 00:AFC3: 2E 85 04  ROL $0485 = #$03
+ 00:AFC6: 0E 84 04  ASL $0484 = #$80
+ 00:AFC9: 2E 85 04  ROL $0485 = #$03
+ 00:AFCC: 0E 84 04  ASL $0484 = #$80
+ 00:AFCF: 2E 85 04  ROL $0485 = #$03
+ 00:AFD2: AD 93 04  LDA $0493 = #$00
+ 00:AFD5: CD 85 04  CMP $0485 = #$03
+ 00:AFD8: 90 08     BCC $AFE2
+ 00:AFDA: D0 06     BNE $AFE2
+ 00:AFDC: AD 92 04  LDA $0492 = #$EF
+ 00:AFDF: CD 84 04  CMP $0484 = #$80
+ 00:AFE2: B0 46     BCS $B02A
+ 00:AFE4: AD 93 04  LDA $0493 = #$00
+ 00:AFE7: C9 01     CMP #$01
+ 00:AFE9: 90 07     BCC $AFF2
+ 00:AFEB: D0 05     BNE $AFF2
+ 00:AFED: AD 92 04  LDA $0492 = #$EF
+ 00:AFF0: C9 00     CMP #$00
+ 00:AFF2: B0 1D     BCS $B011
+ 00:AFF4: A0 36     LDY #$36
+ 00:AFF6: 20 51 C8  JSR $C851
+ 00:AFF9: A5 56     LDA $56 = #$00
+ 00:AFFB: 0A        ASL
+ 00:AFFC: 0A        ASL
+ 00:AFFD: 18        CLC
+ 00:AFFE: 65 6F     ADC $6F = #$18
+ 00:B000: 85 6F     STA $6F = #$18
+ 00:B002: 20 55 A8  JSR $A855
+ 00:B005: A6 5B     LDX $5B = #$20
+ 00:B007: 9D AD 04  STA $04AD,X @ $04CD = #$82
+ 00:B00A: A9 01     LDA #$01
+ 00:B00C: 85 45     STA $45 = #$02
+ 00:B00E: 4C 2A B0  JMP $B02A
+ 00:B011: AD 93 04  LDA $0493 = #$00
+ 00:B014: C9 02     CMP #$02
+ 00:B016: 90 07     BCC $B01F
+ 00:B018: D0 05     BNE $B01F
+ 00:B01A: AD 92 04  LDA $0492 = #$EF
+ 00:B01D: C9 00     CMP #$00
+ 00:B01F: 90 09     BCC $B02A
+ 
+ 00:B021: 18        CLC
+ 00:B022: 20 F9 A6  JSR $A6F9
+ 00:B025: A6 5B     LDX $5B
+ 00:B027: 9D AD 04  STA $04AD,X
+ 
+ 00:B02A: BD A2 04  LDA $04A2,X
+ 00:B02D: 29 20     AND #$20
+ 00:B02F: F0 09     BEQ $B03A
+ 
+ 00:B031: A0 04     LDY #$04
+ 00:B033: A5 77     LDA $77 = #$00
+ 00:B035: F0 0E     BEQ $B045
+ 00:B037: 4C 40 B0  JMP $B040
+ 00:B03A: A0 06     LDY #$06
+ 00:B03C: A5 78     LDA $78 = #$00
+ 00:B03E: F0 05     BEQ $B045
+ 00:B040: A9 00     LDA #$00
+ 00:B042: 8D 81 04  STA $0481 = #$80
+ 00:B045: AD 81 04  LDA $0481 = #$80
+ 00:B048: 3D A2 04  AND $04A2,X @ $04C2 = #$C1
+ 00:B04B: 30 03     BMI $B050
+ 00:B04D: 4C C7 B0  JMP $B0C7
+ 
+ 00:B050: A9 02     LDA #$02
+ 00:B052: 85 45     STA $45 = #$02
+ 00:B054: AD 18 01  LDA $0118 DIFFICULTY
+ 00:B057: D0 03     BNE $B05C
+ 
+ 00:B059: 98        TYA
+ 00:B05A: 4A        LSR
+ 00:B05B: A8        TAY
+ 
+ 00:B05C: E6 6F     INC $6F   ; dmg
+ 00:B05E: 88        DEY
+ 00:B05F: D0 FB     BNE $B05C
+ 
+ 00:B061: AD 18 01  LDA $0118 DIFFICULTY = #$03
+ 00:B064: C9 03     CMP #$03
+ 00:B066: D0 01     BNE $B069
+ 
+ 00:B068: 0A        ASL
+ 
+ 00:B069: 0A        ASL
+ 00:B06A: 18        CLC
+ 00:B06B: 65 68     ADC $68 = #$04
+ 00:B06D: 18        CLC
+ 00:B06E: 65 68     ADC $68 = #$04
+ 00:B070: 18        CLC
+ 00:B071: 7D B0 04  ADC $04B0,X @ $04D0 = #$00
+ 00:B074: 18        CLC
+ 00:B075: 65 6F     ADC $6F = #$18
+ 00:B077: 85 6F     STA $6F ; dmg
+ 
+ 00:B079: A0 18     LDY #$18
+ 00:B07B: 20 51 C8  JSR $C851
+ 00:B07E: A5 5B     LDA $5B = #$20
+ 00:B080: 4A        LSR
+ 00:B081: 4A        LSR
+ 00:B082: AA        TAX
+ 00:B083: A9 1F     LDA #$1F
+ 00:B085: 9D C1 02  STA $02C1,X @ $02E1 = #$0D
+ 00:B088: A9 02     LDA #$02
+ 00:B08A: 9D C2 02  STA $02C2,X @ $02E2 = #$00
+ 00:B08D: A9 7C     LDA #$7C
+ 00:B08F: 9D C3 02  STA $02C3,X @ $02E3 = #$D7
+ 00:B092: A9 BE     LDA #$BE
+ 00:B094: 9D C0 02  STA $02C0,X @ $02E0 = #$F8
+ 00:B097: A6 5B     LDX $5B = #$20
+ 00:B099: A9 00     LDA #$00
+ 00:B09B: 9D AD 04  STA $04AD,X @ $04CD = #$82
+ 00:B09E: BD A2 04  LDA $04A2,X @ $04C2 = #$C1
+ 00:B0A1: 29 FE     AND #$FE
+ 00:B0A3: 9D A2 04  STA $04A2,X @ $04C2 = #$C1
+ 00:B0A6: 10 1F     BPL $B0C7
+ 00:B0A8: 29 20     AND #$20
+ 00:B0AA: F0 0D     BEQ $B0B9
+ 00:B0AC: CE 82 04  DEC $0482 = #$00
+ 00:B0AF: AD 82 04  LDA $0482 = #$00
+ 00:B0B2: D0 13     BNE $B0C7
+ 00:B0B4: A9 FD     LDA #$FD
+ 00:B0B6: 4C C3 B0  JMP $B0C3
+ 00:B0B9: CE 83 04  DEC $0483 = #$01
+ 00:B0BC: AD 83 04  LDA $0483 = #$01
+ 00:B0BF: D0 06     BNE $B0C7
+ 00:B0C1: A9 FE     LDA #$FE
+ 00:B0C3: 25 33     AND $33 = #$01
+ 00:B0C5: 85 33     STA $33 = #$01
+ 00:B0C7: 60        RTS -----------------------------------------
+-----------------------------------------------------------------
+Function $B0C8
+
+-----------------------------------------------------------------
+
+ 00:BB81: A8        TAY
+ 00:BB82: 68        PLA
+ 00:BB83: AA        TAX
+ 00:BB84: 68        PLA
+ 00:BB85: 48        PHA
+ 00:BB86: A5 A5     LDA $A5 = #$00
+ 00:BB88: 85 A4     STA $A4 = #$1B
+ 00:BB8A: 68        PLA
+ 00:BB8B: 48        PHA
+ 00:BB8C: A9 00     LDA #$00
+ 00:BB8E: 85 A5     STA $A5 = #$00
+ 00:BB90: 68        PLA
+ 00:BB91: A5 6E     LDA $6E = #$00
+ 00:BB93: F0 0C     BEQ $BBA1
+ 00:BB95: 46 A4     LSR $A4 = #$1B
+ 00:BB97: A5 4F     LDA $4F = #$01
+ 00:BB99: 49 01     EOR #$01
+ 00:BB9B: 05 93     ORA $93 = #$00
+ 00:BB9D: F0 02     BEQ $BBA1
+ 00:BB9F: 46 A4     LSR $A4 = #$1B
+ 00:BBA1: A5 24     LDA $24 = #$00
+ 00:BBA3: 18        CLC
+ 00:BBA4: 69 40     ADC #$40
+ 00:BBA6: 45 21     EOR $21 = #$21
+ 00:BBA8: 30 56     BMI $BC00
+ 00:BBAA: A5 26     LDA $26 = #$60
+ 00:BBAC: 18        CLC
+ 00:BBAD: 65 A4     ADC $A4 = #$1B
+ 00:BBAF: 85 26     STA $26 = #$60
+ 00:BBB1: 08        PHP
+ 00:BBB2: A5 27     LDA $27 = #$5F
+ 00:BBB4: 65 A5     ADC $A5 = #$00
+ 00:BBB6: 85 27     STA $27 = #$5F
+ 00:BBB8: 28        PLP
+ 00:BBB9: A5 31     LDA $31 = #$17
+ 00:BBBB: 65 A5     ADC $A5 = #$00
+ 00:BBBD: 85 31     STA $31 = #$17
+ 00:BBBF: 20 17 A2  JSR $A217 ; get tile ID
+ 
+ 00:BBC2: A5 60     LDA $60 = #$00
+ 00:BBC4: 30 37     BMI $BBFD
+ 
+ 00:BBC6: A5 89     LDA $89 = #$44
+ 00:BBC8: 10 18     BPL $BBE2
+ 
+ 00:BBCA: A5 21     LDA $21 = #$21
+ 00:BBCC: 38        SEC
+ 00:BBCD: E9 10     SBC #$10
+ 00:BBCF: C9 60     CMP #$60
+ 00:BBD1: 90 07     BCC $BBDA
+ 00:BBD3: C6 31     DEC $31 = #$17
+ 00:BBD5: C6 27     DEC $27 = #$5F
+ 00:BBD7: 4C FD BB  JMP $BBFD
+ 00:BBDA: A0 C0     LDY #$C0
+ 00:BBDC: 20 AD BD  JSR $BDAD
+ 00:BBDF: 4C FD BB  JMP $BBFD
+ 
+ 00:BBE2: A9 1D     LDA #$1D
+ 00:BBE4: C5 31     CMP $31 = #$17
+ 00:BBE6: B0 15     BCS $BBFD
+ 00:BBE8: A5 30     LDA $30 = #$09
+ 00:BBEA: 29 0F     AND #$0F
+ 00:BBEC: C9 0A     CMP #$0A
+ 00:BBEE: B0 0D     BCS $BBFD
+ 00:BBF0: E6 30     INC $30 = #$09
+ 00:BBF2: A5 31     LDA $31 = #$17
+ 00:BBF4: 38        SEC
+ 00:BBF5: E9 08     SBC #$08
+ 00:BBF7: 85 31     STA $31 = #$17
+ 00:BBF9: A9 02     LDA #$02
+ 00:BBFB: 85 83     STA $83 = #$00
+ 00:BBFD: 4C 53 BC  JMP $BC53
+ 00:BC00: A5 26     LDA $26 = #$60
+ 00:BC02: 38        SEC
+ 00:BC03: E5 A4     SBC $A4 = #$1B
+ 00:BC05: 85 26     STA $26 = #$60
+ 00:BC07: 08        PHP
+ 00:BC08: A5 27     LDA $27 = #$5F
+ 00:BC0A: E5 A5     SBC $A5 = #$00
+ 00:BC0C: 85 27     STA $27 = #$5F
+ 00:BC0E: 28        PLP
+ 00:BC0F: A5 31     LDA $31 = #$17
+ 00:BC11: E5 A5     SBC $A5 = #$00
+ 00:BC13: 85 31     STA $31 = #$17
+ 00:BC15: 20 17 A2  JSR $A217
+ 00:BC18: A5 60     LDA $60 = #$00
+ 00:BC1A: 30 37     BMI $BC53
+ 00:BC1C: A5 89     LDA $89 = #$44
+ 00:BC1E: 10 18     BPL $BC38
+ 00:BC20: A5 21     LDA $21 = #$21
+

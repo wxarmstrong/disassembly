@@ -1,0 +1,332 @@
+Function $B881 : Update radar?
+ 01:B881: A9 00     LDA #$00
+ 01:B883: 85 AA     STA $AA
+ 01:B885: A9 21     LDA #$21
+ 01:B887: 85 A6     STA $A6
+ 01:B889: A9 04     LDA #$04
+ 01:B88B: 85 A7     STA $A7
+ 01:B88D: 20 BB BA  JSR $BABB // Check if (x) is in range?
+ 01:B890: 90 1B     BCC $B8AD
+ 
+ 01:B892: 20 66 D3  JSR $D366 // Base is in range, check if landing
+ 01:B895: 90 08     BCC $B89F
+
+ 01:B897: A9 01     LDA #$01
+ 01:B899: 85 AA     STA $AA
+ 01:B89B: 20 0E B9  JSR $B90E
+ 01:B89E: 60        RTS -----------------------------------------
+ 
+ 01:B89F: A5 4F     LDA $4F = #$01
+ 01:B8A1: F0 06     BEQ $B8A9
+ 01:B8A3: A5 15     LDA $15 = #$FF
+ 01:B8A5: C9 01     CMP #$01
+ 01:B8A7: D0 04     BNE $B8AD
+ 01:B8A9: 20 0E B9  JSR $B90E
+ 01:B8AC: 60        RTS -----------------------------------------
+ 
+ 01:B8AD: A9 00     LDA #$00
+ 01:B8AF: 85 93     STA $93 = #$01
+ 01:B8B1: A5 4F     LDA $4F = #$01
+ 01:B8B3: F0 06     BEQ $B8BB
+ 01:B8B5: A5 15     LDA $15 = #$FF
+ 01:B8B7: C9 01     CMP #$01
+ 01:B8B9: F0 22     BEQ $B8DD
+ 
+ 01:B8BB: A9 31     LDA #$31
+ 01:B8BD: 85 A6     STA $A6 = #$21
+ 01:B8BF: A9 04     LDA #$04
+ 01:B8C1: 85 A7     STA $A7 = #$04
+ 01:B8C3: 20 BB BA  JSR $BABB 
+ 01:B8C6: 90 04     BCC $B8CC
+ 01:B8C8: 20 0E B9  JSR $B90E
+ 01:B8CB: 60        RTS -----------------------------------------
+ 
+ 01:B8CC: A9 41     LDA #$41
+ 01:B8CE: 85 A6     STA $A6 = #$21
+ 01:B8D0: A9 04     LDA #$04
+ 01:B8D2: 85 A7     STA $A7 = #$04
+ 01:B8D4: 20 BB BA  JSR $BABB
+ 
+ 01:B8D7: 90 04     BCC $B8DD
+ 01:B8D9: 20 0E B9  JSR $B90E
+ 01:B8DC: 60        RTS -----------------------------------------
+
+ 01:B8DD: A9 00     LDA #$00
+ 01:B8DF: 85 66     STA $66 = #$00
+ 01:B8E1: A9 F8     LDA #$F8
+ 01:B8E3: 8D 08 02  STA $0208 = #$F8
+ 01:B8E6: 8D 0C 02  STA $020C = #$F8
+ 01:B8E9: 8D 10 02  STA $0210 = #$F8
+ 01:B8EC: 8D 14 02  STA $0214 = #$F8
+ 01:B8EF: A9 66     LDA #$66
+ 01:B8F1: 85 0C     STA $0C = #$66
+ 01:B8F3: A9 24     LDA #$24
+ 01:B8F5: 85 0D     STA $0D = #$24
+ 01:B8F7: 20 41 B1  JSR $B141
+ 01:B8FA: A5 60     LDA $60 = #$00
+ 01:B8FC: F0 0B     BEQ $B909
+ 01:B8FE: A5 6A     LDA $6A = #$20
+ 01:B900: C9 88     CMP #$88
+ 01:B902: F0 05     BEQ $B909
+ 01:B904: A9 88     LDA #$88
+ 01:B906: 85 6A     STA $6A = #$20
+ 01:B908: 60        RTS -----------------------------------------
+ 01:B909: A9 20     LDA #$20
+ 01:B90B: 85 6A     STA $6A = #$20
+ 01:B90D: 60        RTS -----------------------------------------
+-----------------------------------------------------------------
+Function $B90E
+
+ 01:B90E: A9 F8     LDA #$F8
+ 01:B910: 8D AC 02  STA $02AC = #$B0
+ 01:B913: 8D B0 02  STA $02B0 = #$A9
+ 01:B916: A5 AE     LDA $AE = #$00
+ 01:B918: 0A        ASL
+ 01:B919: 18        CLC
+ 01:B91A: 69 2B     ADC #$2B
+ 01:B91C: 85 AE     STA $AE = #$00
+ 01:B91E: A5 AC     LDA $AC = #$FB
+ 01:B920: 0A        ASL
+ 01:B921: 18        CLC
+ 01:B922: 69 80     ADC #$80
+ 01:B924: 85 AC     STA $AC = #$FB
+ 01:B926: A6 15     LDX $15 = #$FF
+ 01:B928: E8        INX
+ 01:B929: A0 0D     LDY #$0D
+ 01:B92B: B1 A6     LDA ($A6),Y
+ 01:B92D: DD 77 B9  CMP $B977,X
+ 01:B930: 90 0A     BCC $B93C
+ 
+ 01:B932: A9 00     LDA #$00
+ 01:B934: 85 66     STA $66 = #$00
+ 01:B936: 20 6C BA  JSR $BA6C
+ 01:B939: 4C 50 B9  JMP $B950
+ 
+ 01:B93C: A5 66     LDA $66 = #$00
+ 01:B93E: D0 05     BNE $B945
+ 01:B940: A0 28     LDY #$28
+ 01:B942: 20 51 C8  JSR $C851
+ 01:B945: A5 A6     LDA $A6 = #$21
+ 01:B947: 85 65     STA $65 = #$31
+ 01:B949: A5 A7     LDA $A7 = #$04
+ 01:B94B: 85 66     STA $66 = #$00
+ 01:B94D: 20 7A B9  JSR $B97A
+ 01:B950: A0 0A     LDY #$0A
+ 01:B952: B1 A6     LDA ($A6),Y @ $0429 = #$00
+ 01:B954: 29 0F     AND #$0F
+ 01:B956: AA        TAX
+ 01:B957: B1 A6     LDA ($A6),Y @ $0429 = #$00
+ 01:B959: 29 40     AND #$40
+ 01:B95B: D0 05     BNE $B962
+ 01:B95D: 8A        TXA
+ 01:B95E: 18        CLC
+ 01:B95F: 69 04     ADC #$04
+ 01:B961: AA        TAX
+ 01:B962: BD 11 BB  LDA $BB11,X @ $BB29 = #$F0
+ 01:B965: 85 0C     STA $0C = #$66
+ 01:B967: 48        PHA
+ 01:B968: 8A        TXA
+ 01:B969: 0A        ASL
+ 01:B96A: 0A        ASL
+ 01:B96B: 0A        ASL
+ 01:B96C: 85 6A     STA $6A = #$20
+ 01:B96E: 68        PLA
+ 01:B96F: C9 66     CMP #$66
+ 01:B971: D0 03     BNE $B976
+ 01:B973: 20 41 B1  JSR $B141
+ 01:B976: 60        RTS -----------------------------------------
+-----------------------------------------------------------------
+Table $B977
+
+-----------------------------------------------------------------
+Function $BA6C
+
+-----------------------------------------------------------------
+Function $BABB: Check if (x) is in range
+$A6 = ptr to ? data for object to be checked
+$421 = BASE?
+$431 = ?
+$441 = ?
+
+00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+80 3D 80 1B 71 B2 F3 FF 03 00 3B FF FF 06 00 00
+                   |  |  |  |  |  |  |  |  |  |_ ?
+				   |  |  |	|  |  |  |  |  |____ ?  
+                   |  |  |  |  |  |  |  |_______ ?
+				   |  |	 |  |  |  |  |__________ ?
+				   |  |	 |	|  |  |_____________ ?
+				   |  |	 |  |  |________________ Flag data? (0x10 = ?)
+				   |  |	 |	|                               (0x80 = ?)
+				   |  |	 |	|___________________ ?
+				   |  |	 |______________________ ? (transplanted to $AE) 
+				   |  |_________________________ ?
+				   |____________________________ ? (transplanted to $AC) (0x80 = ?)
++5 y pos				   
+				   
+				   
+$A2/$A3 = relative position of object?
+							 
+ 01:BABB: A0 0A     LDY #$0A
+ 01:BABD: B1 A6     LDA ($A6),Y
+ 01:BABF: 29 10     AND #$10
+ 01:BAC1: F0 4C     BEQ $BB0F
+ 
+ 01:BAC3: B1 A6     LDA ($A6),Y @ $04BD = #$43
+ 01:BAC5: 29 80     AND #$80
+ 01:BAC7: D0 46     BNE $BB0F
+ 
+ 01:BAC9: A0 06     LDY #$06
+ 01:BACB: B1 A6     LDA ($A6),Y @ $04BD = #$43
+ 01:BACD: 85 AC     STA $AC = #$04
+ 01:BACF: 10 10     BPL $BAE1
+ 01:BAD1: C9 00     CMP #$00
+ 01:BAD3: 10 05     BPL $BADA
+ 01:BAD5: 49 FF     EOR #$FF
+ 01:BAD7: 18        CLC
+ 01:BAD8: 69 01     ADC #$01
+ 01:BADA: C9 14     CMP #$14
+ 01:BADC: B0 31     BCS $BB0F
+ 01:BADE: 4C E5 BA  JMP $BAE5
+ 
+ 01:BAE1: C9 10     CMP #$10
+ 01:BAE3: B0 2A     BCS $BB0F
+ 01:BAE5: 85 A2     STA $A2 = #$02
+ 
+ 01:BAE7: C8        INY
+ 01:BAE8: C8        INY
+ 01:BAE9: B1 A6     LDA ($A6),Y @ $04BD = #$43
+ 01:BAEB: 85 AE     STA $AE = #$01
+ 01:BAED: 38        SEC
+ 01:BAEE: E9 0C     SBC #$0C
+ 01:BAF0: C9 00     CMP #$00
+ 01:BAF2: 10 05     BPL $BAF9
+ 01:BAF4: 49 FF     EOR #$FF
+ 01:BAF6: 18        CLC
+ 01:BAF7: 69 01     ADC #$01
+ 01:BAF9: 85 A3     STA $A3 = #$00
+ 01:BAFB: C9 10     CMP #$10
+ 01:BAFD: B0 10     BCS $BB0F
+ 
+ 01:BAFF: A5 A2     LDA $A2 = #$02
+ 01:BB01: C5 A3     CMP $A3 = #$00
+ 01:BB03: B0 02     BCS $BB07
+ 01:BB05: A5 A3     LDA $A3 = #$00
+ 01:BB07: 4A        LSR
+ 01:BB08: 18        CLC
+ 01:BB09: 69 08     ADC #$08
+ 01:BB0B: 85 A2     STA $A2 = #$02
+ 01:BB0D: 38        SEC
+ 01:BB0E: 60        RTS -----------------------------------------
+ 01:BB0F: 18        CLC
+ 01:BB10: 60        RTS -----------------------------------------
+
+-----------------------------------------------------------------
+Table $BB11
+
+-----------------------------------------------------------------
+Function $BD30
+
+ 01:BD30: AD 2B 04  LDA $042B
+ 01:BD33: 29 20     AND #$20
+ 01:BD35: F0 02     BEQ $BD39
+ 01:BD37: 38        SEC
+ 01:BD38: 60        RTS -----------------------------------------
+ 01:BD39: A5 89     LDA $89 = #$30
+ 01:BD3B: 29 60     AND #$60
+ 01:BD3D: 18        CLC
+ 01:BD3E: 2A        ROL
+ 01:BD3F: 2A        ROL
+ 01:BD40: 2A        ROL
+ 01:BD41: 2A        ROL
+ 01:BD42: C5 40     CMP $40 = #$01
+ 01:BD44: F0 04     BEQ $BD4A
+ 01:BD46: 09 80     ORA #$80
+ 01:BD48: 85 40     STA $40 = #$01
+ 01:BD4A: A5 89     LDA $89 = #$30
+ 01:BD4C: 29 1F     AND #$1F
+ 01:BD4E: AA        TAX
+ 01:BD4F: BD 8E BF  LDA $BF8E,X @ $BF9E = #$01
+ 01:BD52: 85 0B     STA $0B = #$01
+ 01:BD54: BD 66 BF  LDA $BF66,X @ $BF76 = #$28
+ 01:BD57: D0 0A     BNE $BD63
+ 01:BD59: A9 00     LDA #$00
+ 01:BD5B: 8D 2B 04  STA $042B = #$0A
+ 01:BD5E: 8D F2 04  STA $04F2 = #$80
+ 01:BD61: 18        CLC
+ 01:BD62: 60        RTS -----------------------------------------
+ 01:BD63: 8D DD 02  STA $02DD = #$28
+ 01:BD66: BD 7A BF  LDA $BF7A,X @ $BF8A = #$21
+ 01:BD69: 8D DE 02  STA $02DE = #$21
+ 01:BD6C: BD A2 BF  LDA $BFA2,X @ $BFB2 = #$0A
+>01:BD6F: 8D 2B 04  STA $042B = #$0A
+ 01:BD72: A5 27     LDA $27 = #$43
+ 01:BD74: 29 F8     AND #$F8
+ 01:BD76: 09 05     ORA #$05
+ 01:BD78: AA        TAX
+ 01:BD79: 8E 22 04  STX $0422 = #$45
+ 01:BD7C: A5 29     LDA $29 = #$39
+ 01:BD7E: 29 F8     AND #$F8
+ 01:BD80: 09 03     ORA #$03
+ 01:BD82: A8        TAY
+ 01:BD83: 8C 24 04  STY $0424 = #$3B
+ 01:BD86: A9 80     LDA #$80
+ 01:BD88: 8D 21 04  STA $0421 = #$80
+ 01:BD8B: 8D 23 04  STA $0423 = #$80
+ 01:BD8E: EC E0 06  CPX $06E0 = #$6D
+ 01:BD91: D0 0D     BNE $BDA0
+ 01:BD93: CC E1 06  CPY $06E1 = #$33
+ 01:BD96: D0 08     BNE $BDA0
+ 01:BD98: A9 08     LDA #$08
+ 01:BD9A: 8D F2 04  STA $04F2 = #$01
+ 01:BD9D: 4C DB BD  JMP $BDDB
+ 01:BDA0: EC E2 06  CPX $06E2 = #$5D
+ 01:BDA3: D0 0D     BNE $BDB2
+ 01:BDA5: CC E3 06  CPY $06E3 = #$33
+ 01:BDA8: D0 08     BNE $BDB2
+ 01:BDAA: A9 02     LDA #$02
+ 01:BDAC: 8D F2 04  STA $04F2 = #$01
+ 01:BDAF: 4C DB BD  JMP $BDDB
+ 01:BDB2: EC E4 06  CPX $06E4 = #$35
+ 01:BDB5: D0 0D     BNE $BDC4
+ 01:BDB7: CC E5 06  CPY $06E5 = #$3B
+ 01:BDBA: D0 08     BNE $BDC4
+ 01:BDBC: A9 01     LDA #$01
+ 01:BDBE: 8D F2 04  STA $04F2 = #$01
+ 01:BDC1: 4C DB BD  JMP $BDDB
+ 01:BDC4: EC E6 06  CPX $06E6 = #$2D
+ 01:BDC7: D0 0D     BNE $BDD6
+ 01:BDC9: CC E7 06  CPY $06E7 = #$63
+ 01:BDCC: D0 08     BNE $BDD6
+ 01:BDCE: A9 80     LDA #$80
+ 01:BDD0: 8D F2 04  STA $04F2 = #$01
+ 01:BDD3: 4C DB BD  JMP $BDDB
+ 01:BDD6: A9 00     LDA #$00
+ 01:BDD8: 8D F2 04  STA $04F2 = #$01
+ 01:BDDB: A9 00     LDA #$00
+ 01:BDDD: 8D 2F 04  STA $042F = #$00
+ 01:BDE0: 8D 30 04  STA $0430 = #$00
+ 01:BDE3: 38        SEC
+ 01:BDE4: 60        RTS -----------------------------------------
+-----------------------------------------------------------------
+
+Table $BF66
+00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+10 06 20 23 BB 4C 05 BF 20 A6 B1 4C 05 BF 60 24
+
+10 11 12 13 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F
+26 27 28 00 19 25 23 0E 1C 00 00 00 00 00 28 28
+
+Table $BF7A
+00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+23 23 23 21 00 23 23 23 23 23 00 00 00 00 00 21
+
+Table $BF8E
+00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+02 02 00 02 02 02 00 00 02 00 00 00 00 00 00 02
+
+10 11 12 13 14 15 16 17 18 19 1A 1B 1C 1D 1E 1F
+01 01 01 01 01 02 03 04 00 05 06 07 08 09 00 00
+
+Table $BFA2
+00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+01 02 03 04 00 05 06 07 08 09 00 00 00 00 00 04
