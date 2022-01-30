@@ -1,0 +1,1 @@
+ROM location: 0x010010-0x01400F

@@ -1,0 +1,125 @@
+     0000 = register (multiple uses)
+0001-0013 = ???
+     0014 = Current area * 8
+     0015 = ??? (bit flags)
+
+0016-0043 = ???
+     0044 = ???
+     0045 = ???
+0046-0053 = Data for current entity
+
+0054-0055 = ???
+	 0056 = Entity table offset ($57 * 0x0E)
+	 0057 = Current entity
+0058-0077 = Palettes
+0078-0079 = ???
+007A/007B = Pointer 
+007C/0091 = ???
+     0092 = Hover gauge (32 per bar; 255 max)
+0093-0098 = ???
+
+     0099 = Special items
+	        11111111
+			|||||||\
+			||||||\ Hover
+			|||||\ Dive
+			||||\ Wall.1
+			|||\ Wall.2
+			||\ Crusher
+			|\ (n/a)
+			\ Hyper
+			 Key
+			 
+009A-00B5 = ???
+     00B6 = ???
+00B7-00C2 = ???
+     00C3 = GUN gauge (32 per bar, 255 max)
+00C4-00DA = ???
+     00DB = Bank to be switched to
+	 00DC = ???
+     00DD = Lives remaining
+00DE-00F4 = ???
+ 
+     00F5 = New input for PAD1
+	 00F6 = New input for PAD2
+	 00F7 = Input for PAD1
+	 00F8 = Input for PAD2
+
+00F9-00FB = ???
+00FC/00FD = PPU_SCROLL queue
+	 00FE = PPU_MASK queue
+     00FF = PPU_CTRL queue
+0100-03F2 = ???
+
+     03F3 = #$01 indicates that the game should undergo a hard reset.
+	        (Overrides $03F4)
+     03F4 = #$23 indicates that the game has previously booted up.
+	        (Retains the range of $000-$7FF on soft reset)
+			
+03F5-03FA = ???
+	 
+	 03FB = Bosses defeated
+	        11111111
+			|||||||\
+			||||||\ Stage 1 boss defeated
+			|||||\ Stage 2 boss defeated
+			||||\ Stage 3 boss defeated
+			|||\ Stage 4 boss defeated
+			||\ Stage 5 boss defeated
+			|\ Stage 6 boss defeated
+			\ Stage 7 boss defeated
+			 Stage 8 boss defeated
+			
+	 03FC = Items collected
+	        11111111
+			|||||||\
+			||||||\ Stage 1 item collected
+			|||||\ Stage 2 item collected
+			||||\ Stage 3 item collected
+			|||\ Stage 4 item collected
+			||\ Stage 5 item collected
+			|\ Stage 6 item collected
+			\ Stage 7 item collected
+			 Stage 8 item collected
+			 
+03FD-03F8 = ???
+     03F9 = Mirror of Area?
+03FA-03FE = ???
+
+     03FF = Saved tank health (while outside tank)
+	 
+0400-???? = ENTITY STATS
+
+(Entity #)*0x0E+0x0400+0x00 = Entity type (see data page)
+                      +0x01 = Orientation?
+					  +0x02 = X-position (low byte)
+					  +0x03 = X-position (high byte)
+					  +0x04 = Y-position (low byte)
+					  +0x05 = Y-position (high byte)
+					  +0x06 = X-velocity (signed?)
+					  +0x07 = Y-velocity (signed?)
+					  +0x08 = 
+					  +0x09 = 
+					  +0x0A = 
+					  +0x0B = 
+					  +0x0C = 
+                      +0x0D = Health
+040E-04FF = ???
+0500-05FF = Level data (square tiles)
+0600-06EF = ???
+     06F0 = Homing Missiles (99 max)
+	 06F1 = Lightning Blast (99 max)
+	 06F2 = 3-Way Missile   (99 max)
+	 
+06F3-07FF = ???
+
+POSSIBLY NOT INITIALIZED:
+0800-1FFF 
+2004-2005
+2008-400F
+4011-4014
+     4016
+4018-7FFF
+
+LOADED BEFORE INITIALIZATION:
+2002 (PPU_STATUS)

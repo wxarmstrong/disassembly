@@ -1,0 +1,5 @@
+ENTITY TYPES:
+------------
+03 = Tank 
+1B = Jason 
+1D = Jason jumping into tank
