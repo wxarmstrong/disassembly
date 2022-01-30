@@ -1,0 +1,2 @@
+Prg_0: ROM location: 0x000010-0x00200F
+Prg_1: ROM location: 0x002010-0x00400F
