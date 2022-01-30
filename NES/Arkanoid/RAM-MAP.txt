@@ -1,0 +1,13 @@
+0x008C = Power-up on screen
+
+0x012D = Power-up currently equipped
+
+00 = nil (no power-up on screen)
+01 = Orange (Slow)
+02 = Green  (Sticky)
+03 = D.Blue (Elongate)
+04 = L.Blue (Multi-Ball)
+05 = Red    (Shooter)
+06 = Pink   (Warp)
+07 = Grey   (1-Up)
+
