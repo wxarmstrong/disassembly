@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Disassembly Page</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="mermaid.min.js"></script>
+		<script src="gamedata.js"></script>
+		<style>
+		body {
+		text-align: center;
+		font-family: arial;
+		background-color: powderblue;
+		}
+		
+		section {
+		border: 1px solid black;
+		margin-bottom: 20px;
+		background-color:white;
+		padding: 5px;
+		}
+		
+		table, td, th {
+		border: 1px solid black;
+		padding: 3px;
+		}
+		
+		table {
+		border-collapse: collapse;
+		margin: 1%;
+		width: 98%;
+		margin-top: 1%;
+		margin-bottom: 1%;
+		}
+		
+		td{
+		font-family: consolas;
+		}
+		
+		.left{
+		text-align: left;
+		vertical-align: top;
+		}
+		
+		.jp{
+		vertical-align: middle;
+		}
+		
+		</style>
+	</head>
+	<body>
+		<h1>Super Mario Bros.</h1>
+		<h2>Visual Disassembly</h2>
+		<hr>
+		
+		<div id="prgStructures"></div>
+	</body>
+	<script>
+	
+	var opNames = [
+	"adc","and","asl","bcc","bcs", "beq","bit","bmi","bne","bpl", //0,5
+	"brk","bvc","bvs","clc","cld", "cli","clv","cmp","cpx","cpy", //10,15
+	"dec","dex","dey","inx","iny", "eor","inc","jmp","jsr","lda", //20,25
+	"nop","ldx","ldy","lsr","ora", "pha","php","pla","plp","rol", //30,35
+	"ror","rti","rts","sbc","sta", "stx","sty","sec","sed","sei", //40,45
+	"tax","tay","txa","tya","tsx", "txs"       
+	]
+	
+	var Ac=0,Il=0,Im=1,Ab=2,Zp=1,Zx=1,Zy=1,Ax=2,Ay=2,Rl=1,Ix=1,Iy=1,In=2,Iw=2,No=0;
+	
+	var opData = [
+10,Il, 34,Ix, No,No, No,No, No,No, 34,Zp,  2,Zp, No,No, //00
+36,Il, 34,Im,  2,Ac, No,No, No,No, 34,Ab,  2,Ab, No,No,
+ 9,Rl, 34,Iy, No,No, No,No, No,No, 34,Zx,  2,Zx, No,No, //10
+13,Il, 34,Ay, No,No, No,No, No,No, 34,Ax,  2,Ax, No,No,
+28,Iw,  1,Ix, No,No, No,No,  6,Zp,  1,Zp, 39,Zp, No,No, //20
+38,Il,  1,Im, 39,Ac, No,No,  6,Ab,  1,Ab, 39,Ab, No,No,
+ 7,Rl,  1,Iy, No,No, No,No, No,No,  1,Zx, 39,Zx, No,No, //30
+47,Il,  1,Ay, No,No, No,No, No,No,  1,Ax, 39,Ax, No,No,
+41,Il, 25,Ix, No,No, No,No, No,No, 25,Zp, 33,Zp, No,No, //40
+35,Il, 25,Im, 33,Ac, No,No, 27,Iw, 25,Ab, 33,Ab, No,No,
+11,Rl, 25,Iy, No,No, No,No, No,No, 25,Zx, 33,Zx, No,No, //50
+15,Il, 25,Ay, No,No, No,No, No,No, 25,Ax, 33,Ax, No,No,
+42,Il,  0,Ix, No,No, No,No, No,No,  0,Zp, 40,Zp, No,No, //60
+37,Il,  0,Im, 40,Ac, No,No, 27,In,  0,Ab, 40,Ab, No,No,
+12,Rl,  0,Iy, No,No, No,No, No,No,  0,Zx, 40,Zx, No,No, //70
+49,Il,  0,Ay, No,No, No,No, No,No,  0,Ax, 40,Ax, No,No,
+No,No, 44,Ix, No,No, No,No, 46,Zp, 44,Zp, 45,Zp, No,No, //80
+22,Il, No,No, 52,Il, No,No, 46,Ab, 44,Ab, 45,Ab, No,No,
+ 3,Rl, 44,Iy, No,No, No,No, 46,Zx, 44,Zx, 45,Zy, No,No, //90
+53,Il, 44,Ay, 55,Il, No,No, No,No, 44,Ax, No,No, No,No,
+32,Im, 29,Ix, 31,Im, No,No, 32,Zp, 29,Zp, 31,Zp, No,No, //A0
+51,Il, 29,Im, 50,Il, No,No, 32,Ab, 29,Ab, 31,Ab, No,No,
+ 4,Rl, 29,Iy, No,No, No,No, 32,Zx, 29,Zx, 31,Zy, No,No, //B0
+16,Il, 29,Ay, 54,Il, No,No, 32,Ax, 29,Ax, 31,Ay, No,No,
+19,Im, 17,Ix, No,No, No,No, 19,Zp, 17,Zp, 20,Zp, No,No, //C0
+24,Il, 17,Im, 21,Il, No,No, 19,Ab, 17,Ab, 20,Ab, No,No,
+ 8,Rl, 17,Iy, No,No, No,No, No,No, 17,Zx, 20,Zx, No,No, //D0
+14,Il, 17,Ay, No,No, No,No, No,No, 17,Ax, 20,Ax, No,No,
+18,Im, 43,Ix, No,No, No,No, 18,Zp, 43,Zp, 26,Zp, No,No, //E0
+23,Il, 43,Im, 30,Il, No,No, 18,Ab, 43,Ab, 26,Ab, No,No,
+ 5,Rl, 43,Iy, No,No, No,No, No,No, 43,Zx, 26,Zx, No,No, //F0
+48,Il, 43,Ay, No,No, No,No, No,No, 43,Ax, 26,Ax, No,No
+]
+	var PRG = [];
+	
+	for (var h=0x10;h<ROM.length;h++){
+	PRG[h-0x10]=parseInt("0x"+ROM.charAt(2*h)+ROM.charAt(2*h+1));
+	}
+	
+	var labels = [
+		[00,0x8000,0x8057,"Function"],
+		[00,0x8220,0x8230,"Function"],
+		[00,0x8E19,0x8E59,"Function"],
+		[00,0x8EED,0x8EF3,"Function"],
+		[00,0x90CC,0x90E6,"Function"],
+		[00,0xE236,0xE240,"Function"],
+		[00,0xE686,0xE6BD,"Function"],
+		[00,0xF148,0xF14F,"Function"],
+		[00,0xF19B,0xF1A2,"Function"]
+	]
+	
+	var prgStructureDiv = document.getElementById("prgStructures");
+	
+	for (var i=0;i<labels.length;i++){
+		var newSection = document.createElement('section');
+		newSection.className = "mermaid";
+		
+		var labelPage = labels[i][0];
+		var labelStart = labels[i][1];
+		var labelEnd = labels[i][2];
+		var labelType = labels[i][3];
+		
+		var offset = 0x8000;
+		
+		var curAddress = 0x4000*labelPage + labelStart - offset;
+
+		var newHeader = document.createElement('h3');
+		newHeader.innerHTML = labelType+" $"+(labelStart.toString(16)).toUpperCase();
+		prgStructureDiv.appendChild(newHeader);
+		
+		var curString = "graph TD;\n";
+		
+			for (var j=0;j<((labelEnd-labelStart+1));j++){
+			var curByte = PRG[curAddress+j];
+			curString += (offset+curAddress+j).toString(16).toUpperCase()+"["+(offset+curAddress+j).toString(16).toUpperCase()+": ";
+			curString += (opNames[opData[2*curByte]].toUpperCase());
+			
+			if ((curByte-0x10)%0x20==0){
+			var distance = 2+PRG[curAddress+j+1];
+			if (distance>0x80){
+			distance = distance - 0x100;
+			}
+			curString += " $"+(offset+curAddress+j+distance).toString(16).toUpperCase();
+			}
+			
+			else if (opData[2*curByte+1]==1){
+			var num = PRG[curAddress+j+1];
+			var numStr = "";
+			if (num < 0x10){
+				numStr = "0"+num.toString(16);
+			}
+			else{
+				numStr=num.toString(16);
+			}
+			curString += " ";
+			
+			if (curByte==0x69||curByte==0x29||curByte==0xC9||curByte==0xE0||curByte==0xC0||curByte==0x49||curByte==0xA9||curByte==0xA2||curByte==0xA0||curByte==0x09||curByte==0xE9){
+				curString += "#";
+			}
+			
+			curString += "$"+numStr.toUpperCase();
+			
+			}
+			
+			if (opData[2*curByte+1]==2){
+			var num = PRG[curAddress+j+1]+256*PRG[curAddress+j+2];
+			if (num < 0x1000){
+				curString += " $0"+(PRG[curAddress+j+1]+256*PRG[curAddress+j+2]).toString(16).toUpperCase();
+			}
+				else{
+				curString += " $"+(PRG[curAddress+j+1]+256*PRG[curAddress+j+2]).toString(16).toUpperCase();
+				}
+			}
+			
+			
+			curString += "]";
+			if (curByte != 0x60 && curByte != 0x4C){
+			curString += ("-->"+(offset+curAddress+j+opData[2*curByte+1]+1).toString(16).toUpperCase());
+			}
+			
+			
+			
+
+			
+			curString += "\n";
+			
+			if ((curByte-0x10)%0x20==0){
+			var distance = 2+PRG[curAddress+j+1];
+			if (distance>0x80){
+			distance = distance - 0x100;
+			}
+			curString += (offset+curAddress+j).toString(16).toUpperCase()+"-->|True|" + (offset+curAddress+j+distance).toString(16).toUpperCase();
+			curString += "\n";
+			}
+			
+			if (curByte==0x4C){
+			curString += (offset+curAddress+j).toString(16).toUpperCase()+"-->"+(PRG[curAddress+j+1]+256*PRG[curAddress+j+2]).toString(16).toUpperCase();
+			curString += "\n";
+			}
+			j+=opData[2*curByte+1];
+		}
+
+		newSection.innerHTML = curString;
+		prgStructureDiv.appendChild(newSection);
+	}
+	
+	</script>
+</html>
