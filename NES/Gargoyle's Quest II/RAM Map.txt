@@ -1,0 +1,27 @@
+003C   - 
+
+0300,X - Entity type
+       * 0x00 = Blank
+	   * 0x01 = Firebrand
+	   * 0x14 = Robed enemy
+0314,X - 
+0328,X - x-position (mid byte)
+033C,X - 
+0350,X - 
+0364,X - y-position (mid byte)
+0378,X - 
+038C,X -  
+03A0,X - 
+03B4,X - 
+03C8,X - 
+03DC,X -
+03F0,X - 
+
+042C,X - 
+
+0530,X - 
+
+0440 - x-position of Firebrand on overhead view
+       X0 = low, 0X = high
+0454 - y-position of Firebrand on overhead view
+       X0 = low, 0X = high
