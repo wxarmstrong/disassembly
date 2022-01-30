@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"  crossorigin="anonymous">
+		<link rel="stylesheet" href="../style.css">
+		<title>L'Empereur / Functions</title>
+	</head>
+	
+	<body>
+	
+	<div class="tab2" id="tabList">
+	
+	</div>	
+
+	<div id="tabContentList">
+	</div>
+	
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		
+		<script src="../js/functionButtons.js" crossorigin="anonymous"></script>
+		
+<script language="JavaScript">
+  // Create a connection to the file.
+  var Connect = new XMLHttpRequest();
+  // Define which file to open and
+  // send the request.
+  Connect.open("GET", "gamedata.xml", false);
+  Connect.setRequestHeader("Content-Type", "text/xml");
+  Connect.send(null);
+  // Place the response in an XML document.
+  var TheDocument = Connect.responseXML;
+  console.log(TheDocument);
+  // Place the root node in an element.
+  var DocData = TheDocument.childNodes[0];
+  console.log(DocData);
+  var Functions = DocData.getElementsByTagName("code")[0];
+  console.log(Functions);
+  console.log(Functions.children);
+  console.log(Functions.children.length);
+
+  // Retrieve each customer in turn.
+  for (var i = 0; i < Functions.children.length; i++)
+  {
+
+   
+   var Function = Functions.children[i];
+   console.log(Function);
+   // Access each of the data values.
+   var Type = Function.getAttribute("type");
+   var Address = Function.getAttribute("address");
+   var Body = Function.getAttribute(
+     "body");
+   var Name = Function.getAttribute(
+     "name");
+   var Description = Function.getAttribute(
+     "description");
+
+   var newButton = document.createElement("button");
+   newButton.setAttribute("class", "tablinks");
+   if (i==0){
+	newButton.setAttribute("class", "tablinks active");
+   }
+   newButton.setAttribute("onclick", "openFunc(event, '" + Name + "')")
+   newButton.innerHTML = Name;
+   
+   var buttonList = document.getElementById("tabList");
+   buttonList.appendChild(newButton);   
+	 
+   var newTabContent = document.createElement("div");
+   newTabContent.setAttribute("id", Name);
+   newTabContent.setAttribute("class", "tabcontent");
+   if (i==0){
+	newTabContent.setAttribute("class", "tabcontent tabcontent-main");
+   }
+   
+   var newH3 = document.createElement("h3");
+   newH3.innerHTML = Name;
+   newTabContent.appendChild(newH3);
+   
+   var newH4 = document.createElement("h4");
+   newH4.innerHTML = Name;
+   newTabContent.appendChild(newH4);
+   
+   var newHR = document.createElement("hr");
+   newTabContent.appendChild(newHR);
+   
+   var newP = document.createElement("p");
+   newP.innerHTML = Description;
+   newTabContent.appendChild(newP);
+   
+   var newHR = document.createElement("hr");
+   newTabContent.appendChild(newHR);
+   
+   var newP = document.createElement("p");
+   newP.innerHTML = Body;
+   newTabContent.appendChild(newP);   
+   
+   var list = document.getElementById("tabContentList");
+   list.appendChild(newTabContent);
+   
+   console.log(newTabContent);
+   
+   // Write the data to the page.
+  }
+</script>
+		
+	</body>
+
+</html>
