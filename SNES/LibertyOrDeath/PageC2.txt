@@ -1,0 +1,22 @@
+$C2/01D4 A3 18       LDA $18,s  [$00:08A7]   A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01D6 F0 0C       BEQ $0C    [$01E4]      A:C300 X:174E Y:BEDF P:eNvmxdizc
+
+$C2/01D8 A9 FC F5    LDA #$F5FC              A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01DB 85 00       STA $00    [$00:0000]   A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01DD A9 C2 00    LDA #$00C2              A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01E0 85 02       STA $02    [$00:0002]   A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01E2 80 0A       BRA $0A    [$01EE]      A:C300 X:174E Y:BEDF P:eNvmxdizc
+
+$C2/01E4 A9 FF F5    LDA #$F5FF              A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01E7 85 00       STA $00    [$00:0000]   A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01E9 A9 C2 00    LDA #$00C2              A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01EC 85 02       STA $02    [$00:0002]   A:C300 X:174E Y:BEDF P:eNvmxdizc
+
+$C2/01EE A5 02       LDA $02    [$00:0002]   A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01F0 48          PHA                     A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01F1 D4 00	PEI ($00)        [$5555]      A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01F3 A3 1A       LDA $1A,s  [$00:08A9]   A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01F5 48          PHA                     A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01F6 A3 1A       LDA $1A,s  [$00:08A9]   A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01F8 48          PHA                     A:C300 X:174E Y:BEDF P:eNvmxdizc
+$C2/01F9 22 14 0E C1 JSL $C10E14[$C1:0E14]   A:C300 X:174E Y:BEDF P:eNvmxdizc

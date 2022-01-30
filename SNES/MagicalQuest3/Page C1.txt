@@ -1,0 +1,51 @@
+FUNCTION $C1/0000
+$C1/0000 20 04 00    JSR $0004  [$C1:0004]   A:0102 X:0000 Y:0C00 P:envMxdizc
+$C1/0003 6B          RTL                     A:0102 X:0000 Y:0C00 P:envMxdizc
+=============================================================================
+FUNCTION $C1/0004
+$C1/0004 C2 21       REP #$21               
+
+$C1/0006 8A          TXA                    
+$C1/0007 65 05       ADC $05    [$00:0405]   ; Add screen offset to x-position?
+$C1/0009 85 38       STA $38    [$00:0438]   ; Relative x-position
+$C1/000B 98          TYA                     
+$C1/000C 18          CLC                     
+$C1/000D 65 08       ADC $08    [$00:0408]   ; Add screen offset to y-position?
+$C1/000F 85 3A       STA $3A    [$00:043A]   ; Relative y-position 
+
+$C1/0011 29 00 FF    AND #$FF00              A:0102 X:0000 Y:0C00 P:envmxdizc
+$C1/0014 4A          LSR A                   A:0102 X:0000 Y:0C00 P:envmxdizc
+$C1/0015 4A          LSR A                   A:0102 X:0000 Y:0C00 P:envmxdizc
+$C1/0016 4A          LSR A                   A:0102 X:0000 Y:0C00 P:envmxdizc
+$C1/0017 85 3C       STA $3C    [$00:043C]   A:0102 X:0000 Y:0C00 P:envmxdizc
+$C1/0019 A5 39       LDA $39    [$00:0439]   A:0102 X:0000 Y:0C00 P:envmxdizc
+$C1/001B 29 1F 00    AND #$001F              A:0102 X:0000 Y:0C00 P:envmxdizc
+$C1/001E 05 3C       ORA $3C    [$00:043C]   A:0102 X:0000 Y:0C00 P:envmxdizc
+$C1/0020 AA          TAX                     A:0102 X:0000 Y:0C00 P:envmxdizc
+$C1/0021 BF 00 3B 7E LDA $7E3B00,x[$7E:3B00] A:0102 X:0000 Y:0C00 P:envmxdizc
+$C1/0025 29 FF 00    AND #$00FF              A:0102 X:0000 Y:0C00 P:envmxdizc
+
+
+$C1/0C1E C6 6F       DEC $6F    [$00:046F]   Tick down health
+$C1/0C20 C2 20       REP #$20                
+$C1/0C22 A4 46       LDY $46    [$00:0446]   
+$C1/0C24 A5 05       LDA $05    [$00:0405]   
+$C1/0C26 D9 05 00    CMP $0005,y[$89:0C05]   
+$C1/0C29 E2 20       SEP #$20                A:0140 X:0000 Y:0C00 P:eNvmxdizc
+$C1/0C2B F0 14       BEQ $14    [$0C41]      A:0140 X:0000 Y:0C00 P:eNvMxdizc
+$C1/0C2D 90 09       BCC $09    [$0C38]      A:0140 X:0000 Y:0C00 P:eNvMxdizc
+$C1/0C2F 64 52       STZ $52    [$00:0452]   A:0140 X:0000 Y:0C00 P:eNvMxdizc
+$C1/0C31 A9 02       LDA #$02                A:0140 X:0000 Y:0C00 P:eNvMxdizc
+$C1/0C33 85 18       STA $18    [$00:0418]   A:0140 X:0000 Y:0C00 P:eNvMxdizc
+$C1/0C35 4C 0E 15    JMP $150E  [$C1:150E]   A:0140 X:0000 Y:0C00 P:eNvMxdizc
+
+$C1/0C38 A9 02       LDA #$02                A:0140 X:0000 Y:0C00 P:eNvMxdizc
+$C1/0C3A 85 52       STA $52    [$00:0452]   A:0102 X:0000 Y:0C00 P:envMxdizc
+$C1/0C3C 64 18       STZ $18    [$00:0418]   A:0102 X:0000 Y:0C00 P:envMxdizc
+$C1/0C3E 4C 0E 15    JMP $150E  [$C1:150E]   A:0102 X:0000 Y:0C00 P:envMxdizc
+
+$C1/0C41 A5 52       LDA $52    [$00:0452]   A:0102 X:0000 Y:0C00 P:envMxdizc
+$C1/0C43 85 18       STA $18    [$00:0418]   A:0102 X:0000 Y:0C00 P:envMxdizc
+$C1/0C45 64 20       STZ $20    [$00:0420]   A:0102 X:0000 Y:0C00 P:envMxdizc
+$C1/0C47 64 21       STZ $21    [$00:0421]   A:0102 X:0000 Y:0C00 P:envMxdizc
+$C1/0C49 4C 46 15    JMP $1546  [$C1:1546]

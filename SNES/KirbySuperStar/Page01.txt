@@ -1,0 +1,57 @@
+FUNCTION $CCE0
+
+$01/CCE0 A7 64       LDA [$64]
+$01/CCE2 29 FF 03    AND #$03FF
+$01/CCE5 AA          TAX
+$01/CCE6 BF A0 62 7F LDA $7F62A0,x
+$01/CCEA 29 FF 00    AND #$00FF
+$01/CCED 85 6E       STA $6E
+$01/CCEF A4 64       LDY $64
+$01/CCF1 A5 66       LDA $66
+$01/CCF3 85 6A       STA $6A
+$01/CCF5 30 0A       BMI $0A    [$CD01]
+$01/CCF7 29 00 01    AND #$0100
+$01/CCFA D0 05       BNE $05    [$CD01]
+$01/CCFC 98          TYA
+$01/CCFD 38          SEC
+$01/CCFE E5 53       SBC $53
+$01/CD00 A8          TAY
+$01/CD01 84 68       STY $68
+$01/CD03 A7 68       LDA [$68]
+$01/CD05 29 FF 03    AND #$03FF
+$01/CD08 AA          TAX
+$01/CD09 BF A0 62 7F LDA $7F62A0,x
+$01/CD0D 29 FF 00    AND #$00FF
+$01/CD10 85 6C       STA $6C
+$01/CD12 A4 64       LDY $64
+$01/CD14 A5 66       LDA $66
+$01/CD16 30 0A       BMI $0A
+$01/CD18 29 00 02    AND #$0200
+$01/CD1B D0 05       BNE $05    [$CD22]
+$01/CD1D 98          TYA
+$01/CD1E 18          CLC
+$01/CD1F 65 53       ADC $53
+$01/CD21 A8          TAY
+$01/CD22 84 68       STY $68
+$01/CD24 A7 68       LDA [$68]
+$01/CD26 29 FF 03    AND #$03FF
+$01/CD29 AA          TAX
+$01/CD2A BF A0 62 7F LDA $7F62A0,x[$7F:62F4]
+$01/CD2E 29 FF 00    AND #$00FF
+$01/CD31 85 70       STA $70
+$01/CD33 6B          RTL
+===========================================
+FUNCTION $CDA3
+
+
+===========================================
+FUNCTION $CE36
+
+$01/CE36 A7 64       LDA [$64]
+$01/CE38 29 FF 03    AND #$03FF
+$01/CE3B AA          TAX 
+$01/CE3C BF A0 62 7F LDA $7F62A0,x[$7F:62F5]
+$01/CE40 29 FF 00    AND #$00FF
+$01/CE43 85 72       STA $72
+$01/CE45 6B          RTL
+===========================================
