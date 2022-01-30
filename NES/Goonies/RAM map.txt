@@ -1,0 +1,2 @@
+     0005 - PAD1     new input
+     0007 - PAD1 current input
