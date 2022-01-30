@@ -1,0 +1,348 @@
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8000 4C DF 81
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8000          20 2A E4 00 00 A4 DA 77 D7 43 80 A5 FA
+8010 71 54 C1 D8 43 80 AC F2 D6 A5 41 7A D8 38 80 40
+8020 A9 41 7A AA 42 7A 8E 9B A7 8E F0 00 62 E9 18 C1
+8030 08 61 60 61 E9 3F EE 06 8E 05 AD 8E F0 00 62 E9
+8040 18 C1 06 CF
+
+FUNCTION $8003 (00 00) $8008-$8043
+
+8008 A4 DA 77    / Store $77DA/$77DB to M8
+800B D7 43 80    / Jump to $8043 if positive
+
+800E A5 FA 71    / Store $71FA to $0008 
+8011 54          / Store #$04 to MC
+8012 C1          / Check if M8 is different than MC
+8013 D8 43 80    / Jump to $8043 if not
+
+8016 AC F2 D6    / Run function $D6F2
+8019 A5 41 7A    / Store $7A41 to $0008 
+801C D8 38 80    / Jump to $8038 if zero
+
+801F 40          / Store #$00 to M8
+8020 A9 41 7A    / Store $0008 to $7A41
+8023 AA 42 7A    / Push $7A42/$7A43 to metastack     / (+2)
+8026 8E 9B A7    / Push #$A79B to metastack          / (+2)
+8029 8E F0 00    / Push #$F0 to metastack            / (+2)
+802C 62          / Push #$02 to metastack            / (+2)
+802D E9 18 C1 08 / Run function $C118                / (-8)
+
+8031 61          / Push #$01 to metastack            / (+2)
+8032 60          / Push #$00 to metastack            / (+2)
+8033 61          / Push #$01 to metastack            / (+2)
+8034 E9 3F EE 06 / Run function $EE3F                / (-6)
+
+8038 8E 05 AD    / Push #$AD05 to metastack          / (+2)
+803B 8E F0 00    / Push #$F0 to metastack            / (+2)
+803E 62          / Push #$02 to metastack            / (+2)
+803F E9 18 C1 06 / Run function $C118                / (-6)
+
+8043 CF          / Exit    
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8040             20 2A E4 FA FF 0C 74 D3 8B 18 B5 8C
+8050 3A 73 BB 29 8E EA D2 8E 64 7A 39 E9 5B D4 06 A9
+8060 AC 7A 8E 64 7A E9 37 93 02 CD A5 AC 7A BC A9 AC
+8070 7A 8A 64 7A 2B 40 A8 AE 7A 40 D6 8F 80 0B B0 8F
+8080 10 D3 CD A4 AE 7A BB A8 AE 7A 0B 72 2B 0A D0 2A
+8090 A5 AC 7A B3 0A B4 C6 D7 7D 80 3C 39 E9 B7 97 04
+80A0 D7 AF 80 3C 39 E9 7E 96 04 D7 AF 80 AC 90 98 40
+80B0 A8 08 7A CF 
+
+FUNCTION $8044 (FA FF) $8049-$80B3
+
+8049 0C          / Store preloaded 01/02 to M8
+804A 74          / Add #$04 to M8
+804B D3          / Replace M8 with 1-byte value
+804C 8B 18       / Store #$18 to MC
+804E B5          / Multiply M8 by MC
+804F 8C 3A 73    / Store #$733A to MC
+8052 BB          / Add MC to M8
+8053 29          / Store M8 to meta 05/06
+
+8054 8E EA D2    / Push #$D2EA to metastack          / (+2)
+8057 8E 64 7A    / Push #$7A64 to metastack          / (+2)
+805A 39          / Push meta 05/06 to metastack      / (+2)
+805B E9 5B D4 06 / Run function $D45B                / (-6)
+805F A9 AC 7A    / Store $0008 to $7AAC
+
+8062 8E 64 7A    / Push #$7A64 to metastack          / (+2)
+8065 E9 37 93 02 / Run function $9337                / (-2)
+8069 CD          / Swap M8 and MC
+806A A5 AC 7A    / Store $7AAC to $0008
+806D BC          / Subtract MC from M8
+806E A9 AC 7A    / Store $0008 to $7AAC
+
+8071 8A 64 7A    / Store #$7A64 to M8 
+8074 2B          / Store M8 to meta 01/02
+
+8075 40          / Store #$00 to M8
+8076 A8 AE 7A    / Store M8 to $7AAE/$7AAF
+
+8079 40          / Store #$00 to M8
+807A D6 8F 80    / Jump to $808F
+----------------------------------------------------
+Loop
+
+807D 0B          / Store meta 01/02 to M8
+807E B0          / Replace M8 with 2-byte value
+807F 8F 10       / Add #$10 to M8
+8081 D3          / Replace M8 with 1-byte value
+8082 CD          / Swap M8 and MC
+8083 A4 AE 7A    / Store $7AAE/$7AAF to M8
+8086 BB          / Add MC to M8
+8087 A8 AE 7A    / Store M8 to $7AAE/$7AAF
+
+808A 0B          / Store meta 01/02 to M8
+808B 72          / Add #$02 to M8
+808C 2B          / Store M8 to meta 01/02
+
+808D 0A          / Store meta 03/04 to M8
+808E D0          / Increment M8
+----------------------------------------------------
+808F 2A          / Store M8 to meta 03/04
+8090 A5 AC 7A    / Store $7AAC to $0008
+8093 B3          / Push M8 to metastack              / (+2)
+8094 0A          / Store meta 03/04 to M8
+8095 B4          / Pull 2 meta to MC                 / (-2)
+8096 C6          / Check if M8 < MC 
+8097 D7 7D 80    / Jump to $807D if so
+
+809A 3C          / Push preloaded 01/02 to metastack / (+2)
+809B 39          / Push meta 05/06 to metastack      / (+2)
+809C E9 B7 97 04 / Run function $97B7                / (-4)
+80A0 D7 AF 80    / Jump to $80AF if nonzero
+
+80A3 3C          / Push preloaded 01/02 to metastack / (+2)
+80A4 39          / Push meta 05/06 to metastack      / (+2)
+80A5 E9 7E 96 04 / Run function $967E                / (-4)
+80A9 D7 AF 80    / Jump to $80AF to nonzero
+
+80AC AC 90 98    / Run function $9890
+80AF 40          / Store #$00 to M8
+80B0 A8 08 7A    / Store M8 to $7A08/$7A09
+
+80B3 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+80B0             20 2A E4 FA FF 8A 43 72 2B 40 29 4B
+80C0 2A 0B 72 2B 8F FE B0 D8 CD 80 09 D0 29 0A D1 2A
+80D0 0A D7 C1 80 09 CF 
+
+FUNCTION $80B4 (FA FF) $80B9-$80D5
+
+80B9 8A 43 72    / Store #$7243 to metastack
+80BC 2B          / Store M8 to meta 01/02
+80BD 40          / Store #$00 to M8
+80BE 29          / Store M8 to meta 05/06
+80BF 4B          / Store #$0B to M8
+80C0 2A          / Store M8 to meta 03/04
+
+80C1 0B          / Store meta 01/02 to M8
+80C2 72          / Add #$02 to M8
+80C3 2B          / Store M8 to meta 01/02
+80C4 8F FE       / Add #$FE to M8
+80C6 B0          / Replace M8 with 2-byte value
+80C7 D8 CD 80    / Jump to $80CD if zero
+
+80CA 09          / Store meta 05/06 to M8
+80CB D0          / Increment M8
+80CC 29          / Store M8 to meta 05/06
+
+80CD 0A          / Store meta 03/04 to M8
+80CE D1          / Decrement M8
+80CF 2A          / Store M8 to meta 03/04
+
+80D0 0A          / Store meta 03/04 to M8
+80D1 D7 C1 80    / Jump to $80C1 if nonzero
+
+80D4 09          / Store meta 05/06 to M8
+80D5 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+80D0                   20 2A E4 F8 FF 0C 28 8A 43 72
+80E0 2B 40 2A 40 A8 B0 7A 0B B0 D8 57 81 0A 8C 38 72
+80F0 BB D3 8B 12 B5 8C 05 60 BB 29 09 A8 08 7A 09 74
+8100 D3 8B 18 B5 8C 3A 73 BB A8 B2 7A 39 E9 B8 D1 02
+8110 B3 8E A8 9B E9 87 C6 04 08 D8 23 81 AC 29 D6 A4
+8120 FD 71 28 39 E9 7F D2 02 D8 33 81 39 E9 C5 94 02
+8130 D6 38 81 39 E9 44 80 02 A5 FA 71 D8 4C 81 63 E9
+8140 3B E0 02 A5 FA 71 D7 4C 81 AC A5 DC A5 FA 71 55
+8150 C0 D7 63 81 AC 03 80 0B 72 2B 0A D0 2A 0A 5B C6
+8160 D7 E3 80 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8160             20 2A E4 00 00 0C 8F 16 B0 D7 82 81
+8170 0C 8F 13 B3 40 D4 0C 8F 14 B3 40 D4 0C 8F 12 B3
+8180 40 D4 CF 
+
+FUNCTION $8164 (00 00) $8169-$8182
+
+8169 0C          / Store preloaded 01/02 to M8
+816A 8F 16       / Add #$16 to M8
+816C B0          / Replace M8 with 2-byte value
+816D D7 82 81    / Jump to $8182 if nonzero
+
+8170 0C          / Store preloaded 01/02 to M8
+8171 8F 13       / Add #$13 to M8
+8173 B3          / Push M8 to metastack              / (+2)
+8174 40          / Store #$00 to M8
+8175 D4          / Pull 2 meta, store $0008 to it    / (-2)
+
+8176 0C          / Store preloaded 01/02 to M8
+8177 8F 14       / Add #$14 to M8
+8179 B3          / Push M8 to metastack              / (+2)
+817A 40          / Store #$00 to M8
+817B D4          / Pull 2 meta, store $0008 to it    / (-2)
+
+817C 0C          / Store preloaded 01/02 to M8
+817D 8F 12       / Add #$12 to M8
+817F B3          / Push M8 to metastack              / (+2)
+8180 40          / Store #$00 to M8
+8181 D4          / Pull 2 meta, store $0008 to it    / (-2)
+
+8182 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8180          20 2A E4 00 00 0C 8F 11 D3 8B 3F DA 53
+8190 C0 D7 B0 81 0C 8F 11 D3 8B 3F DA 56 C0 D7 B0 81
+81A0 0C 8F 11 D3 8B 3F DA 57 C0 D7 B0 81 40 D6 B1 81
+81B0 41 CF 
+
+FUNCTION $8183 (00 00) $8188-$81B1
+
+8188 0C          / Store preloaded 01/02 to M8
+8189 8F 11       / Add #$11 to M8
+818B D3          / Replace M8 with 1-byte value
+818C 8B 3F       / Store #$3F to MC
+818E DA          / M8 AND MC
+818F 53          / Store #$03 to MC
+8190 C0          / Check if M8 = MC
+8191 D7 B0 81    / Jump to $81B0 if so
+
+8194 0C          / Store preloaded 01/02 to M8
+8195 8F 11       / Add #$11 to M8
+8197 D3          / Replace M8 with 1-byte value
+8198 8B 3F       / Store #$3F to MC
+819A DA          / M8 AND MC
+819B 56          / Store #$06 to MC
+819C C0          / Check if M8 = MC
+819D D7 B0 81    / Jump to $81B0 if so
+
+81A0 0C          / Store preloaded 01/02 to M8
+81A1 8F 11       / Add #$11 to M8
+81A3 D3          / Replace M8 with 1-byte value
+81A4 8B 3F       / Store #$3F to MC
+81A6 DA          / M8 AND MC
+81A7 57          / Store #$07 to MC
+81A8 C0          / Check if M8 = MC
+81A9 D7 B0 81    / Jump to $81B0 if so
+
+81AC 40          / Store #$00 to M8
+81AD D6 B1 81    / Jump to $81B1
+
+81B0 41          / Store #$01 to M8
+81B1 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+81B0       20 2A E4 FC FF 40 2B 0B 57 B5 8C E2 77 BB
+81C0 B0 2A 3A E9 7F D2 02 D8 D4 81 3A E9 83 81 02 D8
+81D0 D4 81 41 CF 0B D0 2B 0B 52 C6 D7 B9 81 40 CF 
+
+FUNCTION $81B2 (FC FF) $81B7-$81DE
+
+81B7 40          / Store #$00 to M8
+81B8 2B          / Store M8 to meta 01/02
+
+81B9 0B          / Store meta 01/02 to M8
+81BA 57          / Store #$07 to MC
+81BB B5          / Multiply M8 by MC
+81BC 8C E2 77    / Store #$77E2 to MC
+81BF BB          / Add MC to M8
+81C0 B0          / Replace M8 with 2-byte value
+81C1 2A          / Store M8 to meta 03/04
+
+81C2 3A          / Push meta 03/04 to metastack      / (+2)
+81C3 E9 7F D2 02 / Run function $D27F                / (-2)
+81C7 D8 D4 81    / Jump to $81D4 if zero
+
+81CA 3A          / Push meta 03/04 to metastack      / (+2)
+81CB E9 83 81 02 / Run function $8183                / (-2)
+81CF D8 D4 81    / Jump to $81D4 if zero
+
+81D2 41          / Store #$01 to M8
+81D3 CF          / Exit
+
+81D4 0B          / Store meta 01/02 to M8
+81D5 D0          / Increment M8
+81D6 2B          / Store M8 to meta 01/02
+
+81D7 0B          / Store meta 01/02 to M8
+81D8 52          / Store #$02 to MC
+81D9 C6          / Check if M8 < MC
+81DA D7 B9 81    / Jump to $81B9 if nonzero
+
+81DD 40          / Store #$00 to M8
+81DE CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+81D0                                              20
+81E0 2A E4 FB FF 40 A9 41 7A A4 FD 71 2A A4 FD 71 D7
+81F0 F9 81 40 A9 FF 71 D6 FD 81 40 A8 FD 71 AC 15 CF
+8200 D6 D1 82 40 A8 B0 7A A5 FF 71 8C 00 72 BB D3 8B
+8210 18 B5 8C 3A 73 BB 2B A8 B2 7A A5 FF 71 D0 B3 8E
+8220 C3 9B E9 82 CB 04 0A D8 31 82 AC 29 D6 A4 FD 71
+8230 2A 40 A8 08 7A 0B 8F 16 B0 8F 11 D3 8B 3F DA A2
+8240 FB FF 3B E9 81 D0 02 D8 6D 82 A0 FB FF 53 C0 D7
+8250 62 82 A0 FB FF 56 C0 D7 62 82 A0 FB FF 57 C0 D8
+8260 6D 82 3B E9 8C 95 02 AC D5 CE D6 73 82 8D 17 E9
+8270 8F 93 02 A5 FA 71 51 C0 D8 A5 82 8D 15 E9 8F 93
+8280 02 D8 9C 82 AC B2 81 D8 90 82 AC 03 DD D6 9F 82
+8290 AC 82 E0 D8 8A 82 8D 16 E9 8F 93 02 AC F6 DC 8A
+82A0 FF 00 A9 B4 7A A5 FA 71 D8 B9 82 63 E9 3B E0 02
+82B0 A5 FA 71 D7 B9 82 AC A5 DC A5 FA 71 55 C0 D8 C2
+82C0 82 CF AC 03 80 3B E9 64 81 02 A5 FF 71 D0 A9 FF
+82D0 71 A5 FF 71 8B 31 C6 D7 03 82 AC D5 CE AC B4 80
+82E0 D8 E8 82 3A E9 D6 80 02 CF 20 2A E4 FE FF A4 CC
+82F0 79 2B 40 A8 CC 79 3D 3C E9 3A C4 04 8E DD 9B E9
+8300 23 C2 02 AC 90 C1 D8 03 83 0B A8 CC 79 CF 20 2A
+8310 E4 FC FF 0C 8F 11 D3 8B 3F DA A2 FF FF 0C 74 D3
+8320 8B 18 B5 8C 3A 73 BB 2A A0 FF FF 8B 21 C0 D8 50
+8330 83 0A 8F 16 B0 D8 4C 83 0A 8F 16 B0 73 D3 8B 12
+8340 B5 8C 16 60 BB D3 8B 3F DA D8 50 83 8A D4 9B CF
+8350 A0 FF FF 8B 10 DA D8 76 83 89 16 A2 FE FF 8A CF
+8360 00 D6 6B 83 48 A2 FE FF 8A DF 00 CD A0 FF FF DA
+8370 A2 FF FF D6 83 83 A0 FF FF 8B 20 DA D7 64 83 40
+8380 A2 FE FF A0 FE FF B3 A0 FF FF B4 BB D2 8C 5C F3
+8390 BB B0 CF 20 2A E4 FA FF 0C D1 D2 8C B6 7A BB B0
+83A0 29 0C D1 5D BA 2C 0C 75 B3 64 E9 3A C4 04 09 D8
+83B0 B8 83 8E ED 9B D6 BB 83 8E F3 9B E9 23 C2 02 CF
+83C0 20 2A E4 FA FF AC B9 CF 8E F5 9B E9 23 C2 02 40
+83D0 2B 45 2A D6 1A 84 0C B0 29 0B 51 DA D8 E3 83 42
+83E0 D6 E4 83 40 B3 E9 A7 C6 02 3A 65 E9 3A C4 04 09
+83F0 75 D3 B3 09 8F 10 D3 B3 39 E9 B8 D1 02 B3 8E 05
+8400 9C E9 87 C6 08 0C 72 2C 0D D0 2D 0E D1 2E 0E D8
+
+
+
+
+
+
+
+
+
+
+
+
+
+

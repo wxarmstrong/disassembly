@@ -1,0 +1,132 @@
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+82B0                         20 2A E4 FC FF AC 27 8C
+82C0 2A 0A D8 C9 82 40 D6 CA 82 41 2B 0B A8 FD 71 0B
+82D0 D7 E3 82 0A D1 D2 8C CD 93 BB B0 B3 E9 23 C2 02
+82E0 D6 03 83 A5 F9 71 B3 8E 5E 94 E9 87 C6 04 A5 F6
+82F0 71 D1 D2 8C D1 93 BB B0 B3 AA F4 71 8E 79 94 E9
+8300 87 C6 06 0B CF
+
+FUNCTION $82B8 (FC FF) $82BD-$8304
+
+82BD AC 27 8C    / Run function $8C27
+82C0 2A          / Store M8 to meta 03/04
+
+82C1 0A          / Store meta 03/04 to M8
+82C2 D8 C9 82    / Jump to $82C9 if zero
+
+82C5 40          / Store #$00 to M8
+82C6 D6 CA 82    / Jump to $82CA
+
+82C9 41          / Store #$01 to M8
+82CA 2B          / M8 to meta 01/02
+
+82CB 0B          / Store meta 01/02 to M8
+82CC A8 FD 71    / Store M8 to $71FD/$71FE
+
+82CF 0B          / Store meta 01/02 to M8
+82D0 D7 E3 82    / Jump to $82E3 if nonzero
+
+82D3 0A          / Store meta 03/04 to M8
+82D4 D1          / Decrement M8
+82D5 D2          / Double M8
+82D6 8C CD 93    / Store #$93CD to MC
+82D9 BB          / Add MC to M8
+82DA B0          / Replace M8 with 2-byte value
+82DB B3          / Push M8 to metastack              / (+2)
+82DC E9 23 C2 02 / Run function $C223                / (-2)
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+82D0 D7 E3 82 0A D1 D2 8C CD 93 BB B0 B3 E9 23 C2 02
+82E0 D6 03 83 A5 F9 71 B3 8E 5E 94 E9 87 C6 04 A5 F6
+82F0 71 D1 D2 8C D1 93 BB B0 B3 AA F4 71 8E 79 94 E9
+8300 87 C6 06 0B CF
+====================================================
+FUNCTION $8C27
+
+ 00:8C27:A9 04     LDA #$04
+ 00:8C29:85 0C     STA $000C
+ 00:8C2B:85 0E     STA $000E
+ 00:8C2D:A9 60     LDA #$60
+ 00:8C2F:85 0D     STA $000D
+ 00:8C31:18        CLC
+ 00:8C32:69 40     ADC #$40
+ 00:8C34:85 0F     STA $000F
+ 00:8C36:38        SEC
+ 00:8C37:A9 D2     LDA #$D2
+ 00:8C39:E9 04     SBC #$04
+ 00:8C3B:85 12     STA $0012
+ 00:8C3D:A9 77     LDA #$77
+ 00:8C3F:E9 60     SBC #$60
+ 00:8C41:85 13     STA $0013
+ 00:8C43:E6 12     INC $0012
+ 00:8C45:D0 02     BNE $8C49
+ 00:8C47:E6 13     INC $0013
+ 00:8C49:A9 00     LDA #$00
+ 00:8C4B:85 08     STA $0008
+ 00:8C4D:85 09     STA $0009
+ 00:8C4F:85 0A     STA $000A
+ 00:8C51:85 0B     STA $000B
+ 00:8C53:85 10     STA $0010
+ 00:8C55:85 11     STA $0011
+ 00:8C57:AD 0E 07  LDA $070E
+ 00:8C5A:48        PHA
+ 00:8C5B:A9 01     LDA #$01
+ 00:8C5D:A2 00     LDX #$00
+ 00:8C5F:20 D1 8C  JSR $8CD1
+ 00:8C62:A9 05     LDA #$05
+ 00:8C64:A2 02     LDX #$02
+ 00:8C66:20 D1 8C  JSR $8CD1
+ 00:8C69:A2 00     LDX #$00
+ 00:8C6B:BD D5 77  LDA $77D5,X
+ 00:8C6E:DD CD 8C  CMP $8CCD,X
+ 00:8C71:D0 40     BNE $8CB3
+ 00:8C73:E8        INX
+ 00:8C74:E0 04     CPX #$04
+ 00:8C76:D0 F3     BNE $8C6B
+ 00:8C78:A0 00     LDY #$00
+ 00:8C7A:A6 12     LDX $0012
+ 00:8C7C:F0 19     BEQ $8C97
+ 00:8C7E:B1 0C     LDA ($0C),Y
+ 00:8C80:91 0E     STA ($0E),Y
+ 00:8C82:18        CLC
+ 00:8C83:65 10     ADC $0010
+ 00:8C85:85 10     STA $0010
+ 00:8C87:A5 11     LDA $0011
+ 00:8C89:69 00     ADC #$00
+ 00:8C8B:85 11     STA $0011
+ 00:8C8D:C8        INY
+ 00:8C8E:D0 04     BNE $8C94
+ 00:8C90:E6 0D     INC $000D
+ 00:8C92:E6 0F     INC $000F
+ 00:8C94:CA        DEX
+ 00:8C95:D0 E7     BNE $8C7E
+ 00:8C97:A5 13     LDA $0013
+ 00:8C99:F0 05     BEQ $8CA0
+ 00:8C9B:C6 13     DEC $0013
+ 00:8C9D:4C 7E 8C  JMP $8C7E
+ 00:8CA0:AD D3 77  LDA $77D3
+ 00:8CA3:C5 10     CMP $0010
+ 00:8CA5:D0 11     BNE $8CB8
+ 00:8CA7:AD D4 77  LDA $77D4
+ 00:8CAA:C5 11     CMP $0011
+ 00:8CAC:D0 0A     BNE $8CB8
+ 00:8CAE:A9 00     LDA #$00
+ 00:8CB0:4C BD 8C  JMP $8CBD
+ 00:8CB3:A9 01     LDA #$01
+ 00:8CB5:4C BD 8C  JMP $8CBD
+ 00:8CB8:A9 02     LDA #$02
+ 00:8CBA:4C BD 8C  JMP $8CBD
+ 00:8CBD:85 08     STA $0008
+ 00:8CBF:68        PLA
+ 00:8CC0:A2 02     LDX #$02
+ 00:8CC2:20 D1 8C  JSR $8CD1
+ 00:8CC5:A9 05     LDA #$05
+ 00:8CC7:A2 00     LDX #$00
+ 00:8CC9:20 D1 8C  JSR $8CD1
+ 00:8CCC:60        RTS -----------------------------------------
+====================================================
+ 8CCD 4B
+ 8CCE 4F
+ 8CCF 45
+ 8CD0 49
