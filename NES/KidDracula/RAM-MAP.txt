@@ -1,0 +1,4 @@
+      00FA - PAD1 input
+	  00FB - PAD2 input
+	  
+	  

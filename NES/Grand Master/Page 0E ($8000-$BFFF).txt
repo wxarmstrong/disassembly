@@ -1,0 +1,224 @@
+ROM Address: 0x038010-0x03C00F
+================================================================
+FUNCTION $8000
+Title screen
+
+ 0E:8000:A9 00     LDA #$00
+ 0E:8002:85 AD     STA $00AD ; Set intro reset counter to zero
+ 
+ 0E:8004:20 B9 C4  JSR $C4B9 ; Queue #$00,#$00 to PPU_Scroll
+                             ; Nametable address #$00
+							 
+ 0E:8007:20 A2 C4  JSR $C4A2 ; Disable NMI
+                             ; Turn off PPU_Mask
+ 
+ 0E:800A:20 5B C5  JSR $C55B ; Store #$EF to all graphic tile values???
+ 
+ 0E:800D:A9 1A     LDA #$1A
+ 0E:800F:20 AD C3  JSR $C3AD ; Set IRQ latch to #$1A
+ 
+ 0E:8012:A9 0C     LDA #$0C
+ 0E:8014:85 04     STA $0004
+ 0E:8016:20 00 C6  JSR $C600 ; Duplicate PPU data from $0C00 to $0C20
+ 
+ 0E:8019:A9 82     LDA #$82
+ 0E:801B:85 04     STA $0004
+ 0E:801D:A9 80     LDA #$80
+ 0E:801F:85 05     STA $0005
+ 0E:8021:20 86 C7  JSR $C786 ; Copy #$1F values from $8082 to $73-$91
+ 0E:8024:20 9B C4  JSR $C49B ; Enable NMI
+                             ; Set PPU_Mask to #$1E (Show all sprites/background)
+							 
+ 0E:8027:A9 11     LDA #$11
+ 0E:8029:85 25     STA $0025
+ 0E:802B:A9 1E     LDA #$1E
+ 0E:802D:85 24     STA $0024
+ 0E:802F:A9 03     LDA #$03
+ 0E:8031:85 72     STA $0072
+ 0E:8033:20 C9 C4  JSR $C4C9 ; Wait until frame interrupt
+ 
+ 0E:8036:A5 00     LDA $0000
+ 0E:8038:D0 F9     BNE $8033 ; Wait until Controller 1 input is released
+ 
+ 0E:803A:A9 00     LDA #$00
+ 0E:803C:85 AC     STA $00AC ; Set to "Start"
+ 0E:803E:AD 00 04  LDA $0400 ; Check if game was previously started
+ 0E:8041:F0 04     BEQ $8047
+ 0E:8043:A9 01     LDA #$01  ; 
+ 0E:8045:85 AC     STA $00AC ; Set to "Continue" if game was previously started
+ 0E:8047:A9 FF     LDA #$FF
+ 0E:8049:85 AE     STA $00AE ; Set timer to 255
+ 
+ 0E:804B:20 C9 C4  JSR $C4C9 ; Wait until frame interrupt
+ 0E:804E:20 C9 C4  JSR $C4C9 ; Wait until frame interrupt
+ 
+ 0E:8051:C6 AE     DEC $00AE ; Tick down timer every 2 frames
+ 0E:8053:F0 7C     BEQ $80D1 ; Reset intro when timer reaches zero?
+ 
+ 0E:8055:20 A2 80  JSR $80A2 ; Print the title screen sword graphics
+ 
+ 0E:8058:A5 00     LDA $0000
+ 0E:805A:29 20     AND #$20  ; Check if Select is pressed
+ 0E:805C:D0 09     BNE $8067
+ 
+ 0E:805E:A5 00     LDA $0000
+ 0E:8060:29 10     AND #$10  ; Check if Start is pressed
+ 0E:8062:D0 13     BNE $8077
+ 
+ 0E:8064:4C 4B 80  JMP $804B ; Continue loop
+ 
+ Select pressed:
+ 0E:8067:A5 AC     LDA $00AC
+ 0E:8069:49 01     EOR #$01
+ 0E:806B:85 AC     STA $00AC ; Switch menu state
+ 0E:806D:20 C9 C4  JSR $C4C9
+ 0E:8070:A5 00     LDA $0000
+ 0E:8072:D0 F9     BNE $806D ; Wait until input is released
+ 0E:8074:4C 47 80  JMP $8047 ; Reset timer, continue loop
+ 
+ Start pressed:
+ 
+ 0E:8077:20 16 C3  JSR $C316 ; Fade to black 
+ 0E:807A:AD 00 04  LDA $0400 ; Check if game was previously Started
+ 0E:807D:F0 02     BEQ $8081
+ 0E:807F:A5 AC     LDA $00AC ; Returns 1 if continuing previously-started game
+ 0E:8081:60        RTS -----------------------------------------
+================================================================
+DATA TABLE $8082 
+
+02 16 30 30
+02 27 38 30
+02 01 0F 30
+02 18 21 30
+
+================================================================
+FUNCTION $80A2
+Prints the two sword graphics on the title screen
+
+ 0E:80A2:A9 7C     LDA #$7C
+ 0E:80A4:85 04     STA $0004
+ 0E:80A6:A9 86     LDA #$86
+ 0E:80A8:85 05     STA $0005
+ 0E:80AA:A9 30     LDA #$30
+ 0E:80AC:85 06     STA $0006
+ 0E:80AE:A9 A7     LDA #$A7
+ 0E:80B0:85 07     STA $0007 ; Print sword "T" graphic
+ 0E:80B2:20 46 CA  JSR $CA46 ;  to 0xA7,0x30
+ 
+ 0E:80B5:A9 09     LDA #$09
+ 0E:80B7:85 04     STA $0004
+ 0E:80B9:A9 87     LDA #$87
+ 0E:80BB:85 05     STA $0005
+ 0E:80BD:A9 97     LDA #$97
+ 0E:80BF:85 06     STA $0006
+ 0E:80C1:A5 AC     LDA $00AC ; Load menu position
+ 0E:80C3:F0 04     BEQ $80C9
+ 0E:80C5:A9 A7     LDA #$A7
+ 0E:80C7:85 06     STA $0006
+ 0E:80C9:A9 50     LDA #$50
+ 0E:80CB:85 07     STA $0007 ; Print sword menu icon
+ 0E:80CD:20 46 CA  JSR $CA46 ;  to 0x50,(0x97/0xA7)
+ 0E:80D0:60        RTS -----------------------------------------
+================================================================
+FUNCTION $80D1
+Replays intro
+
+ 0E:80D1:A5 AD     LDA $00AD
+ 0E:80D3:29 01     AND #$01
+ 0E:80D5:D0 0F     BNE $80E6
+ 
+ 0E:80D7:A9 02     LDA #$02
+ 0E:80D9:20 05 C4  JSR $C405 ; Set $FE/$FF to 0F 82
+ 0E:80DC:A9 01     LDA #$01
+ 0E:80DE:20 43 D3  JSR $D343 ; RAM bank switch + ???
+ 0E:80E1:E6 AD     INC $00AD
+ 0E:80E3:4C 04 80  JMP $8004 ; 
+ 
+ 0E:80E6:A9 02     LDA #$02
+ 0E:80E8:20 05 C4  JSR $C405 ; Set $FE/$FF to 0F 82
+ 0E:80EB:A9 01     LDA #$01
+ 0E:80ED:20 43 D3  JSR $D343 ; RAM bank switch + ???
+ 0E:80F0:E6 AD     INC $00AD
+ 0E:80F2:4C 04 80  JMP $8004 ; 
+ 
+================================================================
+FUNCTION $80F5
+
+ 0E:80F5:AD 0B 04  LDA $040B
+ 0E:80F8:C9 05     CMP #$05
+ 0E:80FA:90 0D     BCC $8109
+ 0E:80FC:60        RTS -----------------------------------------
+================================================================
+FUNCTION $80FD
+================================================================
+FUNCTION $8109
+================================================================
+FUNCTION $8266
+Displays graphics for level select screen
+
+ 0E:8266:A5 98     LDA $0098   ; Global timer (low byte)
+ 0E:8268:29 08     AND #$08
+ 0E:826A:F0 1A     BEQ $8286   ; Run following section every other
+                                 8-frame interval
+ -------------------------------
+ Every other 8-frame interval, display the stage border (flashing animation):
+ 
+ 0E:826C:AD 01 04  LDA $0401   ; Selected level
+ 0E:826F:0A        ASL
+ 0E:8270:AA        TAX
+ 0E:8271:BD C0 82  LDA $82C0,X ; Retrieve x/y coordinates 
+ 0E:8274:85 07     STA $0007   ; for selected level from table
+ 0E:8276:BD C1 82  LDA $82C1,X ; 
+ 0E:8279:85 06     STA $0006
+ 0E:827B:A9 12     LDA #$12    ; Tile list $8712
+ 0E:827D:85 04     STA $0004   ;  on ROM page 09
+ 0E:827F:A9 87     LDA #$87    ; 
+ 0E:8281:85 05     STA $0005   ; 
+ 0E:8283:20 46 CA  JSR $CA46   ; Print border graphic
+ -------------------------------
+ 
+ 0E:8286:A9 43     LDA #$43    ; Tile list $8743
+ 0E:8288:85 04     STA $0004   ;  on ROM page 09
+ 0E:828A:A9 87     LDA #$87    ; (Stage 2: Snowy Mountain)
+ 0E:828C:85 05     STA $0005   ;
+ 0E:828E:A9 A0     LDA #$A0
+ 0E:8290:85 07     STA $0007
+ 0E:8292:A9 30     LDA #$30
+ 0E:8294:85 06     STA $0006   ; $A0/30
+ 0E:8296:20 46 CA  JSR $CA46
+ 
+ 0E:8299:A9 84     LDA #$84    ; Tile list $8784
+ 0E:829B:85 04     STA $0004   ;  on ROM page 09
+ 0E:829D:A9 87     LDA #$87    ; (Stage 1: Castle Town)
+ 0E:829F:85 05     STA $0005   ;
+ 0E:82A1:A9 70     LDA #$70
+ 0E:82A3:85 07     STA $0007
+ 0E:82A5:A9 60     LDA #$60 
+ 0E:82A7:85 06     STA $0006   ; $70/$60
+ 0E:82A9:20 46 CA  JSR $CA46
+ 
+ 0E:82AC:A9 C5     LDA #$C5    ; Tile list $87C5
+ 0E:82AE:85 04     STA $0004   ;  on ROM page 09
+ 0E:82B0:A9 87     LDA #$87    ; (Stage 4: Pyramid)
+ 0E:82B2:85 05     STA $0005   ; 
+ 0E:82B4:A9 40     LDA #$40
+ 0E:82B6:85 07     STA $0007
+ 0E:82B8:A9 90     LDA #$90
+ 0E:82BA:85 06     STA $0006   ; $40/$90
+ 0E:82BC:20 46 CA  JSR $CA46
+ 0E:82BF:60        RTS -----------------------------------------
+================================================================
+DATA TABLE $82C0
+
+x-y coordinates for stage icons on level select screen
+    
+	x  y
+00: 70 60 (Stage 1: Castle Town)
+01: A0 30 (Stage 2: Snowy Mountain)
+02: B0 80 (Stage 3: Grotto)
+03: 40 90 (Stage 4: Pyramid)
+04: 30 40 (Stage 5: Tower)
+================================================================
+
+
+

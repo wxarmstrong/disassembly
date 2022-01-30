@@ -1,0 +1,6 @@
+07:E3E5 - Turn on NMI
+07:E4AF - Turn off sprites
+07:E4B9 - Turn on sprites
+07:E4C3 - Erase all sprite tile data
+07:E4D7 - Clear Nametables 0/3 and set PPU_ADDRESS to Pattern table 0.
+07:E5E6 - Turn on background?

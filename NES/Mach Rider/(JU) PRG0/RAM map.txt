@@ -1,0 +1,82 @@
+     0000 - Hundred-thousands place of score
+     0001 - Ten-thousands place of score
+     0002 - Thousands place of score
+     0003 - Hundreds place of score
+     0004 - Tens place of score
+	 
+0005-0007 - ???
+
+     0008 - x-position (low; subpixel) (signed)
+     0009 - x-position (high; pixel)   (signed)
+	 
+000A-0016 - ???
+
+     0017 - Stage #
+	 
+0018-003E - ???
+
+     003F - Global timer (runs during level while game is unpaused)
+	 
+0040-005B - ???
+
+005C-005D - Energy
+
+     005E - ???
+	 
+	 005F - Shot
+	 
+	 0060 - To Go (low digit)  Decimal
+	 0061 - To Go (high digit) Decimal
+     0062 - To Go (lowest)     Hex
+
+     0063 - Lives
+	 
+0064-006D - ???
+
+	 BIT FLAGS:
+	 006E -
+	 006F -
+	 0070 - 1 = Game Over?
+	 0071 - 1 = Power-up activated
+	 0072 -
+	 0073 - 
+	 
+	 0780 - Pink cars destroyed (shot)
+	 0781 - 
+	 0782 - 
+	 0783 - 
+	 0784 - 
+	 0785 - 
+	 0786 - Pink cars blocked
+	 0787 - 
+	 0788 - 
+	 0789 - 
+	 078A - 
+	 078B - 
+	 
+	 078C -
+	 078D -
+	 078E - Blue barrels destroyed
+	 
+	 FIGHTING COURSE - TOP SCORE
+     0794 - Hundred-thousands place of score
+     0795 - Ten-thousands place of score
+	 0796 - Thousands place of score
+	 0797 - Hundreds place of score
+	 0798 - Tens place of score
+	 
+	 ENDURANCE COURSE - TOP SCORE
+	 0799 - Hundred-thousands place of score
+	 079A - Ten-thousands place of score
+	 079B - Thousands place of score
+	 079C - Hundreds place of score
+	 079D - Tens place of score
+	 
+	 SOLO COURSE - TOP SCORE
+	 079E - Hundred-thousands place of score
+	 079F - Ten-thousands place of score
+	 07A0 - Thousands place of score
+	 07A1 - Hundreds place of score
+	 07A2 - Tens place of score
+	 
+07A3-7FFF - ???

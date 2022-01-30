@@ -1,0 +1,90 @@
+=============================================================================
+DATA TABLE $D9AA
+
+=============================================================================
+
+FUNCTION $DE9B
+
+ 05:DE9B:A9 82     LDA #$82
+ 05:DE9D:20 B4 F6  JSR $F6B4 ; Load nametable #$82 (difficulty select screen)
+ 
+ 05:DEA0:20 F0 E5  JSR $E5F0
+ 
+ 05:DEA3:A9 01     LDA #$01
+ 05:DEA5:8D D9 04  STA $04D9
+ 05:DEA8:A9 94     LDA #$94
+ 05:DEAA:8D DA 04  STA $04DA
+ 05:DEAD:A9 00     LDA #$00
+ 05:DEAF:8D DB 04  STA $04DB 
+ 05:DEB2:A9 20     LDA #$20
+ 05:DEB4:8D DC 04  STA $04DC
+ 05:DEB7:A9 00     LDA #$00
+ 05:DEB9:8D DD 04  STA $04DD
+ 05:DEBC:20 C5 F6  JSR $F6C5
+ 
+ 05:DEBF:A9 02     LDA #$02
+ 05:DEC1:8D DE 04  STA $04DE
+ 05:DEC4:BD FE 04  LDA $04FE,X
+ 05:DEC7:29 7F     AND #$7F
+ 05:DEC9:9D FE 04  STA $04FE,X
+ 05:DECC:BD E6 04  LDA $04E6,X
+ 05:DECF:09 01     ORA #$01
+ 05:DED1:9D E6 04  STA $04E6,X
+ 05:DED4:A9 00     LDA #$00
+ 05:DED6:20 F3 F6  JSR $F6F3
+ 05:DED9:20 B9 E4  JSR $E4B9 ; Turn on sprites
+ 
+ 05:DEDC:A9 00     LDA #$00
+ 05:DEDE:8D 1A 02  STA $021A
+ 05:DEE1:A9 20     LDA #$20
+ 05:DEE3:8D FE 02  STA $02FE
+ 05:DEE6:20 E6 E5  JSR $E5E6 ; Turn on background?
+ 05:DEE9:20 E5 E3  JSR $E3E5 ; Turn on NMI
+ 05:DEEC:20 DE E5  JSR $E5DE ; Delay for $3C frames
+ 05:DEEF:20 01 E4  JSR $E401 ; Delay an additional time
+ 
+ 05:DEF2:A5 3D     LDA $003D ; Controller input
+ 05:DEF4:F0 00     BEQ $DEF6
+ 05:DEF6:20 D9 F6  JSR $F6D9
+ 05:DEF9:20 5C DF  JSR $DF5C
+ 05:DEFC:AD FE 02  LDA $02FE
+ 05:DEFF:CD 4E 05  CMP $054E
+ 05:DF02:D0 EB     BNE $DEEF
+ 05:DF04:A5 3D     LDA $003D ; Controller input
+ 05:DF06:29 90     AND #$90  ; Check for Start or A
+ 05:DF08:D0 34     BNE $DF3E
+ 05:DF0A:A5 3D     LDA $003D ; Controller input
+ 05:DF0C:29 08     AND #$08  ; Check for Up
+ 05:DF0E:D0 09     BNE $DF19
+ 05:DF10:A5 3D     LDA $003D ; Controller input
+ 05:DF12:29 04     AND #$04  ; Check for Down
+ 05:DF14:D0 10     BNE $DF26
+ 05:DF16:4C EF DE  JMP $DEEF ; Loop until something happens
+ 
+ 05:DF19:CE 1A 02  DEC $021A
+ 05:DF1C:AE 1A 02  LDX $021A
+ 05:DF1F:10 11     BPL $DF32
+ 05:DF21:A2 00     LDX #$00
+ 05:DF23:4C 32 DF  JMP $DF32
+ 05:DF26:EE 1A 02  INC $021A = #$00
+ 05:DF29:AE 1A 02  LDX $021A = #$00
+ 05:DF2C:E0 03     CPX #$03
+ 05:DF2E:D0 02     BNE $DF32
+ 05:DF30:A2 02     LDX #$02
+ 05:DF32:8E 1A 02  STX $021A
+ 05:DF35:BD AF DF  LDA $DFAF,X
+ 05:DF38:8D FE 02  STA $02FE
+ 05:DF3B:4C EF DE  JMP $DEEF
+ 05:DF3E:20 81 DF  JSR $DF81
+ 05:DF41:A2 10     LDX #$10
+ 05:DF43:20 FA E3  JSR $E3FA
+ 05:DF46:A9 00     LDA #$00
+ 05:DF48:8D 7A 06  STA $067A
+ 05:DF4B:A9 00     LDA #$00
+ 05:DF4D:8D 79 06  STA $0679
+ 05:DF50:20 01 E4  JSR $E401 ; Delay?
+ 05:DF53:20 18 F7  JSR $F718
+ 05:DF56:20 CC E5  JSR $E5CC
+ 05:DF59:A9 03     LDA #$03  ; Advance to map screen
+ 05:DF5B:60        RTS -----------------------------------------
+================================================================

@@ -1,0 +1,181 @@
+      $0000 - PAD1 input
+	  $0001 - PAD2 input
+      $0002 - Stage #
+	  
+      $0003 - ???
+
+$0004/$0005 - Jump pointer
+      $0006 - Screen scroll (y-displacement)
+	  $0007 - Screen scroll (x-displacement)
+$0008/$0009 - Jump pointer 
+
+$000A-$000B - ???
+
+$000C/$000D - ???
+
+$000E-$000F - ???
+
+$0010-$0011 - Data table pointer
+
+      $0012 - ???
+
+      $0013 - Adjusted room number???
+	  
+$0014-$0015 - ???
+
+      $0016 - Screen scroll timer
+
+      $0022 - Mirror of RAM bank setting
+      $0023 - Saved RAM bank setting
+
+$0024-$0025 - ???	  
+
+	  $0026 - ???
+      $0027 - ???
+	  
+$0028-$0029 - ???
+
+$002A-$0069 - Mirror of PPU data
+
+$006A-$0071 - ???
+
+      $0072 - ???
+	  
+$0073-$0092 - Palettes
+
+      $0093 - Mirror of PPU_CTRL
+	  
+$0094-$0095 - Queued values to PPU_SCROLL 
+
+      $0096 - # of tiles on screen (max 0x40 = 64)	  
+	  $0097 - Flag for end of interrupt
+$0098/$0099 - Global timer
+$009A/$009B - RNG value 
+
+$009C-$00A1
+
+$00A2/$00A3 - Pointer address
+
+$00A4/$00A5 - Pointer address
+
+$00A6-$00A9 - ???
+
+$00AA/$00AB - Jump pointer
+
+      $00AC - Menu selection
+      $00AD - # of times the intro has replayed
+      $00AE - ???
+
+$00AF-$00BF - ???	  
+	  
+      $00C0 - ???
+	  
+$00C1-$00C7 - ???
+
+$00C8/$00C9 - ???
+$00CA/$00CB - ???
+
+$00CC-$00D0 - ???
+
+$00D1/$00D2 - Jump pointer
+
+$00D3-$00E1 - ???
+
+$00E2/$00E3 - Pointer to text string
+$00E4/$00E5 - PPU_Address of string
+
+$00E6/$00FD - ???
+
+$00FE/$00FF - ???
+
+      $0100 - ???
+	  
+$0101-$01FF - ???
+
+$0200-$02FF - Graphic tiles
+            * +0x00 = y-position			
+	        * +0x01 = tile ID			
+			* +0x02 = color palette & orientation
+			  * 0x0F = palette
+		      * 0x10 = ???
+		      * 0x20 = place in background
+		      * 0x40 = flip horizontally
+			  * 0x80 = flip vertically			  
+			* +0x03 = x-position
+
+$0300-$03FF - ???
+  
+      $0400 - Flagged when game starts
+
+      $0401 - Stage
+	  $0402 - ???
+	  $0403 - Room #
+      
+$0404-$040A - ???
+ 
+      $040B - ???
+	  
+$040C-$0414 - ???
+
+      $0415 - Player x-position
+	  
+	  $0416 - ???
+	  
+	  $0417 - Player y-position
+	  
+$0418-$042C - ???
+
+      $042D - ???
+	  
+$042E-$0450 - ???
+			
+$0451/$0452 - Experience
+
+      $0453 - ???
+
+$0454/$0455 - Experience to next level
+
+      $0456 - Level
+ 
+      $0457 - Attack power?
+	  
+$0458-$04FF - ???
+
+      $0500 - Current entity 
+
+$0501-$0502 - ???	
+	
+	ENTITY STATS
+	$0503,X - Enemy ID
+	$050A,X - Orientation? (0x80 = flag?)
+    $0511,X - X-position (low byte)
+	$0518,X - Orientation? (0x80 = flag?)
+	$051F,X - Y-position (low byte)
+	$0526,X - Orientation? (0x80 = flag?)
+	$052D,X - 
+	$0534,X - Tile #?
+	$053B,X - Tile #?
+	$0542,X - Enemy ID
+	$0549,X - 
+	$0550,X - HP
+	$0557,X - Max HP
+    $055E,X - Exp value
+	$0565,X - 
+	$056C,X - 
+	$0573,X - 
+	$057A,X - 
+	$0581,X - 
+    $0588,X - Counter
+	$058F,X - 
+	
+	??? STATS
+	
+	$05C5,X -
+	
+	  $0784 - RAM bank $8000-$BFFF current page setting 
+	
+	  $079B - ???
+	  
+$079C-$079D - ???
+
+$079E-$089D - ???

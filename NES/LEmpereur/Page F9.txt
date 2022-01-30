@@ -1,0 +1,92 @@
+DATA PAGE
+
+A001 - Scenario 4 stats 
+                                                     ROM Address: 032010
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+B070                   F8 B0 0C B1 24 B1 38 B1 4C B1
+B080 70 B1 82 B1 A3 B1 C1 B1 D9 B1 EA B1 00 B2 19 B2
+B090 31 B2 44 B2 52 B2 68 B2 7E B2 94 B2 95 B2 A3 B2
+B0A0 B5 B2 CE B2 DF B2 F2 B2 0D B3 25 B3 48 B3 69 B3
+B0B0 86 B3 A5 B3 C8 B3 E3 B3 2B B4 2C B4 3C B4 6F B4
+B0C0 A1 B4 CA B4 0D B5 3C B5 63 B5 9A B5 E1 B5 02 B6
+B0D0 08 B6 0D B6 17 B6 25 B6 2E B6 38 B6 41 B6 77 B6
+B0E0 A9 B6 DE B6 10 B7 55 B7 8C B7 C7 B7 FC B7 21 B8
+B0F0 41 B8 63 B8 8A B8 B7 B8
+
+00 B076 B0F8 | Move to which city?
+01 B078 B10C | Send how many reserves?
+02 B07A B124 | Take how much gold?
+03 B07C B138 | Take how much food?
+04 B07E B14C | %d ships have arrived in the harbor.
+05 B080 B170 | Send how much %s?
+06 B082 B182 | Transport squad was raided by %s.
+07 B084 B1A3 | %s supplies are now %s Adjust
+08 B086 B1C1 | %s supplies are now %s 
+09 B088 B1D9 | %s is not enough
+0A B08A B1EA | Distribute how much?
+0B B08C B200 | %s sufficiency is now %d
+0C B08E B219 | Population is too small.
+0D B090 B231 | How many recruits
+0E B092 B244 | Buy how many
+0F B094 B252 | End  Quit  Continue
+10 B096 B268 | Which?
+11 B098 B27E | Army morale is now %d
+12 B09A B294 | (Blank)
+13 B09C B295 | How much gold
+14 B09E B2A3 | Loyalty is now %d
+15 B0A0 B2B5 | Training level is now %d
+16 B0A2 B2CE | Invest how much
+17 B0A4 B2DF | %s level is now %d
+18 B0A6 B2F2 | How much for construction
+19 B0A8 B30D | Hospital improved to %d
+1A B0AA B325 | Gold:%d Food:%d has been collected
+1B B0AC B348 | The guests are dancing with joy
+1C B0AE B369 | How much gold to make peace
+1D B0B0
+1E B0B2
+1F B0B4
+20 B0B6
+21 B0B8
+22 B0BA
+23 B0BC
+24 B0BE
+25 B0C0
+26 B0C2
+27 B0C4
+28 B0C6
+29 B0C8
+2A B0CA
+2B B0CC
+2C B0CE
+2D B0D0
+2E B0D2
+2F B0D4
+30 B0D6
+31 B0D8
+32 B0DA
+
+SPEECH / REWARD QUOTES - Pointer table
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+B0D0                                     41 B6 77 B6
+B0E0 A9 B6 DE B6 10 B7 55 B7 8C B7 C7 B7 FC B7 21 B8
+B0F0 41 B8 63 B8 8A B8 B7 B8
+
+NAPOLEON SPEECH QUOTES
+33 B0DC B641 | Reward quote  0 "We must fight for brotherhood, freedom, and equality!"
+34 B0DE B677 | Reward quote  1 "I'll lead you to the world's most fertile plains"
+35 B0E0 B6A9 | Reward quote  2 "Soldiers, the burden of victory is on your shoulders"
+36 B0E2 B6DE | Reward quote  3 "We shall rise to victory from the smoke of guns!"
+
+OTHER SPEECH QUOTES
+37 B0E4 B710 | Reward quote  4 "Our country is in a crisis- We must fight for a return to prosperity"
+38 B0E6 B755 | Reward quote  5 "I know no such word as impossible... We will succeed!"
+39 B0E8 B78C | Reward quote  6 "Our country has brave soldiers, so we should fear nothing!"
+3A B0EA B7C7 | Reward quote  7 "Brave men, follow me and show your fighting spirit!"
+
+REWARD QUOTES
+3B B0EC B7FC | Reward quote  8 "There is no greater honor than this"
+3C B0EE B821 | Reward quote  9 "I'll take whatever you give me"
+3D B0F0 B841 | Reward quote 10 "You've finally noticed my value!"
+3E B0F2 B863 | Reward quote 11 "Your excellence and our glory are one"
+3F B0F4 B88A | Reward quote 12 "There's no need for gold to pass between us"
+40 B0F6 B8B7 | Reward quote 13 "Your Majesty and our glory are one"

@@ -1,0 +1,163 @@
+E0:A2CC - Checks whether city (01/02) can sail to city (03/04) (05=does sea control matter)
+E0:A327 - Checks whether city (01/02) is able to send ships without risk of getting attacked
+E0:A425 - Checks whether city (01/02) is adjacent to city (03/04) (by land or sea)
+E0:A443 - Tallies & makes a list (@ 03/04) of nations meeting specific criteria (05)
+     0C - Living              $A805 (value entered into (01/02) is irrelevant?)
+	 0D - Allied with (01/02) $A80F
+E0:A857 - Checks if city (01/02) is adjacent to (03/04) by land
+E0:A99D - Blanks (3) icons starting with icon # (1)
+E0:B4E6 - Tallies nation (01)'s:
+       03=00 Number of cities
+	      01 Avg food sufficiency?
+		  02 Avg material sufficiency?
+		  03 ''
+		  04 Number of cities with nation ?????
+		  05 ''
+		  06 ''
+		  07 ''
+		  08 Number of cities set as supply bases
+	      09 
+		  0A 
+		  0B Number of centers of power (major/capital cities)
+---------------------------------------------------------------------
+E1:8A1A - Prints "More will have no effect"
+E1:827E - City Phase main loop                                                       Phase loop                                   
+E1:83EE - Season graphics advance + City Phase prep                              Main page loop
+E1:8A2C - Prints "No [x]", where [x] is entry #(01/02) in page F8 section 3
+E1:8BA5 - Load map location of city (01/02)
+E1:8BB8 - Center map on (1/2), change banner to (3/4)
+E1:8BEE - Loads text string (03/04) from table on page (01/02)
+          Table locations: F4    $A006
+		                   F7-F9 $B076
+E1:8C4A - Load text string (01/02) from page F7, section 1
+E1:8C5B - Load text string (01/02) from page F8
+E1:8C6C - Load text string (01/02) from page F9
+E1:8C7D - Load text string (01/02) from page F4
+E1:8C8E - Load text string (01/02) from page F7, section 2
+E1:8CA8 - Load text  (01/02) from page F7, section 3 
+---------------------------------------------------------------------
+E2:A01F - Checks unit type of officer
+          00 = Men, 01 = Horses, 02 = Cannons
+---------------------------------------------------------------------
+E7:A013 - Officer (01/02) becomes POW of nation (03/04)
+E7:A095 - Calculates strength of officer list (01/02) (Adjust = (03/04))
+E7:A5B5 - Checks if Army 1+2 are player controlled (M8=#$00) or not (M8=#$FF)
+E7:B153 - Calculates losses of officers in list (01/02)
+---------------------------------------------------------------------
+E8:A003 - Page initialization (redirects to $A8DF)
+E8:A8DF - AI City Phase Loop
+---------------------------------------------------------------------
+E9:A003 - Page initialization (redirects to $AC1C)
+E9:A013 - Checks if Nations (1/2) and (3/4) are in good standing
+          (Friendly/allied or neutral w/ aggression 4 or less)
+E9:A068 - Checks if Nations (1/2) and (3/4) are in bad standing
+          (Not friendly w/ aggression 76 or more)
+E9:A09F - Checks if Nations (1/2) and (3/4) are in friendship
+E9:A0C2 - Checks if Nations (1/2) and (3/4) are hostile?
+E9:A0F6 - Checks if Nations (1/2) and (3/4) are hostile?		  
+---------------------------------------------------------------------
+F0:8019 - Waits (1) frames for Controller 1 to press ONLY Start
+          Exits and returns 01 if it does, 00 if it doesn't
+---------------------------------------------------------------------
+F1:80A9 - Start-of-Month Phase main loop                                            Phase loop
+F1:81D7 - Month advance + Start-of-Month prep                                   Main page loop
+F1:8370 - Load event icon (01/02)
+          Table of images: https://pbs.twimg.com/media/DhynpsmUwAAm6A3.jpg:large
+F1:94DA - Nation (01/02) becomes a satellite of Nation (03/04)
+F1:9918 - Print death text of officer (01/02)
+F1:9952 - Officer (01/02) dies of old age
+F1:9A37 - Start-of-Month Phase - Age Up/Death
+F1:9E3E - Check if two nations are adjacent by land
+F1:9ED4 - Nation (01/02) asks France (human player) for protection
+---------------------------------------------------------------------
+
+F2:A07E - Start-of-Month Phase - Protection request
+F2:B463 - Start-of-Month Phase - Tick down alliance timers
+---------------------------------------------------------------------
+FE:C003 - Main loop of game (?)
+FE:C045 - Wait for (01/02) frames
+FE:C052 - Wait for 6*(01/02) frames
+FE:C062 - Wait for a message to advance automatically in (01/02) time units, or until player input
+          Time unit = 5*(message speed) frames
+FE:C26E - Retrieve city of officer (01/02)
+FE:C2D2 - Retrieve nation of city (01/02)
+FE:C2F1 - Set bottom flags of officer (01/02)'s status to 0XXX (03)
+FE:C30B - Retrieve officer list (01/02) (0-2)
+FE:C3BC - Store 01/02 to $7B5B/$7B5C if not negative
+        - Store 03/04 to $7B5D/$7B5E if not negative
+		- Restrict to max of #$1F (31) and #$1D (29)
+FE:C3D9 - Set $7B63 to (01) if (01) is   than or equal to 3
+FE:C3E9 - Print (01/02)
+FE:C627 - Print (01/02), replacing %s with (03/04) (and %d with (05/06))
+FE:C65F - Advances simple RNG then checks for controller input
+          1/2 = Controller 1/2, 0 = Both controllers (1 then 2)
+FE:CD9F - Checks if BGM is on, and plays music track (01/02) if so (?)
+FE:CD85 - Reduce value at address (01/02) by (03)%
+          Returns difference
+FE:CF41 - Wait 1 frame, then adjust graphics, setting nametable mapping to (01)
+FE:D00B - Sets $9F-$AD to default values 
+FE:D019 - Retrieve name of nation (01/02)
+FE:D085 - Retrieve name of officer (01/02)
+FE:D0E6 - Retrieve list of cities adjacent by land to (01/02)
+FE:D10B - Retrieve hidden stat (03/04) for city (01/02)
+          If stat 1/2, (05/06)=Item # in list
+FE:D17A - Retrieve hidden stat (03/04) for officer (01/02)
+FE:D25C - Checks how many addresses in the region $7D14-$7D23 are equal to #$01 (???)
+FE:D27F - Adjusts screen template to setting value (01)
+FE:D3B6 - Reduce value at address (01/02) by (03/04)%
+FE:D402 - Tally # of men assigned to officers in (01/02)
+FE:D43B - Tallies the # of officers in (01/02)
+FE:D460 - Isolate flags (03) in (01)
+FE:D69D - Generate random number from #$0000-#$7FFF
+FE:D7B0 - Update RNG seed (done after FE:D69D)
+FE:D7D1 - Generate random number from #$00-#$(01/02)
+
+FE:DCD6 - Find smaller of two values
+FE:DCF6 - Find larger of two values
+
+FE:DDCA - Multiply (01) by (03) and divide by (05)
+
+FE:DE0F - Find (03)% of (01)
+
+FE:DE2C - Add (3) to 2-byte value at (1/2) up to a max of (5)
+FE:DE3B - Add (3) to 1-byte value at (1/2) up to a max of (5)
+
+FE:DE6E - Reduce 2-byte value at (1/2) by (3) to a minimum of zero
+FE:DE77 - Reduce 1-byte value at (1/2) by (3) to a minimum of zero 
+
+---------------------------------------------------------------------
+FF:E003 - Switch PRG bank 0 to (1) and 1 to (3), then runs $8000 from the start 
+FF:E155 - Initializes PRG bank switches on power-on
+FF:E17D - Main loop of game (?)                                                 Main game loop
+FF:EF1E - Runs a subroutine based on operation code (01)
+     00 - 
+	 01 - Sets nametable mapping to (03), Extended RAM to (05) and PPU Master/Slave to (07)
+	 02 - Run page (05) on bank (03) from the beginning
+	 03 - Store (05) to $5113,(03)
+	 04 - Store $5113,(03) to $0066 (+ $0008?)
+	 05 - Store 8 values from given address to $5120-$5127 (CHR Bank Switching)
+	 06 - Set (7) palette values from address (3) to $0701,(5), then store #$FF to $0700
+	 07 - (If all parameters are 0) Reset $9F-$AD to default values 
+	 08
+	 09
+	 0A
+	 0B
+	 0C - Store #$F8 to every 4 values (05) times starting at $0600,(4*(03))               ???
+	 0D - Transfer (07) 4-byte segments from (03),0-(03),3 to region (05) ($0600+(4*X))   ???
+	 0E
+	 0F
+	 10 - Store controller (3) input to $66 (00=C1, 01=C2)
+	 11 - Wait for (3/4) frames
+	 12
+	 13
+	 14
+	 15
+	 16
+	 17
+     18 - Check current music track (???)
+     19 - Play music track (03)  (???)
+FF:EFCB - Multiply M8 by MC
+FF:F027 - Divide M8 by MC (0=clear prev result?)
+FF:F218 - Blank $000A/$000B
+FF:F3A3 - Transfer (9) values from table (5/6) on PRG Bank (1) Page (3) to (7/8)
+FF:F423 - Store (3) copies of (5) starting at address (1/2)

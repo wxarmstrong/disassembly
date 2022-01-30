@@ -1,0 +1,150 @@
+FUNCTION $CF9F
+
+ 01:CF9F:98        TYA
+ 01:CFA0:48        PHA
+ 01:CFA1:8A        TXA
+ 01:CFA2:48        PHA
+ 01:CFA3:A5 D9     LDA $00D9 = #$F0
+ 01:CFA5:C5 D8     CMP $00D8 = #$F0
+ 01:CFA7:F0 03     BEQ $CFAC
+ 01:CFA9:20 B1 CF  JSR $CFB1
+ 01:CFAC:68        PLA
+ 01:CFAD:AA        TAX
+ 01:CFAE:68        PLA
+ 01:CFAF:A8        TAY
+ 01:CFB0:60        RTS -----------------------------------------
+================================================================
+FUNCTION $CFB1
+
+ 01:CFB1:A6 D9     LDX $00D9 = #$F0
+ 01:CFB3:BD 00 03  LDA $0300,X @ $0380 = #$21
+ 01:CFB6:E8        INX
+ 01:CFB7:85 DA     STA $00DA = #$20
+ 01:CFB9:8D 06 20  STA PPU_ADDRESS = #$1F
+ 01:CFBC:BD 00 03  LDA $0300,X @ $0380 = #$21
+ 01:CFBF:E8        INX
+ 01:CFC0:8D 06 20  STA PPU_ADDRESS = #$1F
+ 01:CFC3:BC 00 03  LDY $0300,X @ $0380 = #$21
+ 01:CFC6:E8        INX
+ 01:CFC7:BD 00 03  LDA $0300,X @ $0380 = #$21
+ 01:CFCA:E8        INX
+ 01:CFCB:8D 07 20  STA PPU_DATA = #$CA
+ 01:CFCE:88        DEY
+ 01:CFCF:D0 F6     BNE $CFC7
+ 01:CFD1:A5 DA     LDA $00DA = #$20
+ 01:CFD3:C9 3F     CMP #$3F
+ 01:CFD5:D0 10     BNE $CFE7
+ 01:CFD7:A9 3F     LDA #$3F
+ 01:CFD9:8D 06 20  STA PPU_ADDRESS = #$1F
+ 01:CFDC:A9 00     LDA #$00
+ 01:CFDE:8D 06 20  STA PPU_ADDRESS = #$1F
+ 01:CFE1:8D 06 20  STA PPU_ADDRESS = #$1F
+ 01:CFE4:8D 06 20  STA PPU_ADDRESS = #$1F
+ 01:CFE7:86 D9     STX $00D9 = #$F0
+ 01:CFE9:E4 D8     CPX $00D8 = #$F0
+ 01:CFEB:D0 C4     BNE $CFB1
+ 01:CFED:60        RTS -----------------------------------------
+================================================================
+FUNCTION $CFEE
+
+ 01:CFEE:85 09     STA $0009 = #$C1
+ 01:CFF0:84 08     STY $0008 = #$7E
+ 01:CFF2:A0 00     LDY #$00
+ 01:CFF4:B1 08     LDA ($08),Y @ $C17F = #$1E
+ 01:CFF6:8D 06 20  STA PPU_ADDRESS = #$1F
+ 01:CFF9:C8        INY
+ 01:CFFA:B1 08     LDA ($08),Y @ $C17F = #$1E
+ 01:CFFC:8D 06 20  STA PPU_ADDRESS = #$1F
+ 01:CFFF:C8        INY
+ 01:D000:B1 08     LDA ($08),Y @ $C17F = #$1E
+ 01:D002:F0 05     BEQ $D009
+ 01:D004:8D 07 20  STA PPU_DATA = #$CA
+ 01:D007:D0 F6     BNE $CFFF
+ 01:D009:60        RTS -----------------------------------------
+================================================================
+FUNCTION $D00A
+Print graphic data from (A)(Y)
+Bytes 1/2 = PPU_ADDRESS
+Byte  3   = # of tiles to transfer
+Bytes 4+  = PPU_DATA
+
+ 01:D00A:85 09     STA $0009
+ 01:D00C:84 08     STY $0008
+ 01:D00E:A0 00     LDY #$00
+ 01:D010:B1 08     LDA ($08),Y
+ 01:D012:8D 06 20  STA PPU_ADDRESS
+ 01:D015:C8        INY
+ 01:D016:B1 08     LDA ($08),Y
+ 01:D018:8D 06 20  STA PPU_ADDRESS
+ 01:D01B:C8        INY
+ 01:D01C:B1 08     LDA ($08),Y
+ 01:D01E:85 0A     STA $000A
+ 01:D020:C8        INY
+ 01:D021:B1 08     LDA ($08),Y
+ 01:D023:8D 07 20  STA PPU_DATA
+ 01:D026:C6 0A     DEC $000A
+ 01:D028:D0 F6     BNE $D020
+ 01:D02A:60        RTS -----------------------------------------
+================================================================
+FUNCTION $D10B
+ 01:D10B:8A        TXA
+ 01:D10C:48        PHA
+ 01:D10D:20 AA 8C  JSR $8CAA
+ 01:D110:20 EC EB  JSR $EBEC
+ 01:D113:68        PLA
+ 01:D114:AA        TAX
+ 01:D115:CA        DEX
+ 01:D116:D0 F3     BNE $D10B
+ 01:D118:60        RTS -----------------------------------------
+================================================================
+
+
+
+FUNCTION $D1C0
+ 01:D1C0:8D 06 20  STA PPU_ADDRESS
+ 01:D1C3:8C 06 20  STY PPU_ADDRESS
+ 01:D1C6:60        RTS -----------------------------------------
+================================================================
+DATA TABLE $D2E0
+Indicates whether a bonus life is granted for a given stage
+
+00 - Stage  1 - 00
+01 - Stage  2 - 00
+02 - Stage  3 - 00
+03 - Stage  4 - 01
+04 - Stage  5 - 00
+05 - Stage  6 - 00
+06 - Stage  7 - 01
+07 - Stage  8 - 00
+08 - Stage  9 - 00
+09 - Stage 10 - 01
+0A - Stage 11 - 00
+0B - Stage 12 - 00
+0C - Stage 13 - 01
+0D - Stage 14 - 00
+0E - Stage 15 - 00
+0F - Stage 16 - 01
+10 - Stage 17 - 00
+11 - Stage 18 - 00
+12 - Stage 19 - 01
+13 - Stage 20 - 00
+================================================================
+DATA TABLE $D30C
+# of lives granted (based on ???)
+
+00: 03
+================================================================
+FUNCTION $DADC
+
+ 01:DADC:85 09     STA $0009
+ 01:DADE:A0 30     LDY #$30
+ 01:DAE0:A5 08     LDA $0008
+ 01:DAE2:C5 09     CMP $0009
+ 01:DAE4:90 07     BCC $DAED
+ 01:DAE6:E5 09     SBC $0009
+ 01:DAE8:85 08     STA $0008
+ 01:DAEA:C8        INY
+ 01:DAEB:D0 F3     BNE $DAE0
+ 01:DAED:8C 07 20  STY PPU_DATA
+ 01:DAF0:60        RTS -----------------------------------------
+================================================================

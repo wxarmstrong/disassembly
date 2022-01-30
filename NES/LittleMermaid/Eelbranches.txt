@@ -1,0 +1,207 @@
+==============================================================
+2517: 49 35 A7 CC
+==============================================================
+BRANCH 1  Ariel between left/middle spawn         Frames spent
+6858      Left    64, Right  128          N
+6859      Right  128, Middle  64          N
+6860      Middle  64, Middle 128          N
+6861      Left   128, Middle 128          N
+6862      Right   64, Middle  64          N
+6863      Middle  64, Middle 128          N
+6864      Left   128, Middle 128          N
+6865      Right   64, Middle 128          N
+6866      Right   64, Middle 128          N     
+6867      Middle  64, Left    64          Y
+
+6868      Middle 128, Left   128          N
+6869      Middle 128, Left    64          Y
+
+6870      Middle  64, Left   128          N
+--------------------------------------------------------------
+BRANCH 2  Ariel between left/middle spawn         Frames spent
+6858      Right  128, Middle  64          N
+6859      Right  128, Middle  64          N
+6860      Middle 128, Left    64          Y
+
+6861      Middle  64, Middle 128          N
+6862      Middle  64, Middle 128          N
+6863      Left    64, Right  128          N
+6864      Right  128, Left    64          N
+6865      Right  128, Middle 128          N
+6866      Right  128, Middle  64          N
+6867      Middle 128, Left    64          Y
+
+6868      Left   128, Right   64          N      
+6869      Right   64, Middle 128          N
+
+6870      Right  128, Middle  64          N
+==============================================================
+2517: B3 CA AD 38
+==============================================================
+BRANCH 1  Ariel between left/middle spawn         Frames spent
+6858      Right  128, Middle  64          N
+6859      Left    64, Middle  64          N
+6860      Right   64, Middle  64          N
+6861      Middle  64, Middle 128          N
+6862      Left   128, Middle 128          N
+6863      Right  128, Left   128          N
+6864      Right   64, Left    64          N
+6865      Right   64, Left   128          N
+6866      Middle 128, Middle  64          N
+6867      Left    64, Middle  64          N
+6868      Right   64, Left   128          N
+6869      Middle  64, Left    64          Y
+
+6870      Middle  64, Middle  64          N
+--------------------------------------------------------------
+BRANCH 2  Ariel between left/middle spawn         Frames spent
+6858      Right   64, Middle 128          N
+6859      Right   64, Middle 128          N
+6860      Right   64, Middle 128          N
+6861      Right   64, Middle  64          N
+6862      Left    64, Middle  64          N
+6863      Right  128, Left    64          N
+6864      Middle  64, Right   64          N
+6865      Left   128, Middle 128          N
+6866      Right   64, Middle 128          N
+6867      Left    64, Middle  64          N
+6868      Right   64, Middle  64          N
+6869      Middle 128, Right  128          N
+6870      Left   128, Middle 128          N
+--------------------------------------------------------------
+BRANCH 3  Ariel between left/middle spawn         Frames spent
+6858      Middle  64, Left   128          N
+6859      Middle  64, Left    64          Y            1 (1)
+     7267 
+6860      Middle 128, Left   128          N
+6861      Left    64, Right   64          N
+6862      Right  128, Middle 128          N
+6863      Right   64, Middle 128          N
+6864      Right  128, Middle 128          N
+6865      Right   64, Middle 128          N
+6866      Right   64, Middle 128          N
+6867      Right   64, Left    64          N
+6868      Right   64, Middle  64          N
+6869      Middle  64, Left    64          Y
+
+6870      Middle  64, Left    64          Y
+
+==============================================================
+2518: 59 E5 56 9C (+1)
+==============================================================
+BRANCH 2  Ariel between left/middle spawn         Frames spent
+6860      Right   64, Middle 128          N
+6861      Right   64, Middle  64          N
+6862      Left    64, Middle  64          N
+6863      Right  128, Left    64          N
+6864      Middle  64, Right   64          N
+6865      Left   128, Middle 128          N
+6866      Right   64, Middle 128          N
+6867      Left    64, Middle  64          N
+6868      Right   64, Middle  64          N
+6869      Middle 128, Right  128          N
+6870      Left   128, Middle 128          N
+--------------------------------------------------------------
+BRANCH 4  Ariel between left/middle spawn         Frames spent
+6860      Left    64, Middle  64          N
+6861      Right   64, Left   128          N
+6862      Right  128, Middle  64          N
+6863      Middle  64, Left    64          Y
+
+6864      Middle 128, Left    64          Y
+
+6865      Left    64, Middle 128          N      
+6866      Right   64, Left    64          N
+6867      Right   64, Middle 128          N
+6868      Right  128, Middle  64          N
+6869      Right   64, Middle 128          N
+6870      Middle 128, Right  128          N
+6871      Middle 128, Middle  64          N
+6872      Left   128, Middle 128          N
+6873      Right   64, Middle 128          N
+6874      Right   64, Middle 128          N
+6875      Left    64, Middle 128          N
+==============================================================
+2518: 24 9A D3 E6 (+1)
+==============================================================
+BRANCH 4  Ariel between left/middle spawn         Frames spent
+6860      Middle  64, Left   128
+6861      Left   128, Middle 128
+6862      Right  128, Middle  64
+6863      Right  128, Left    64
+6864      Right  128, Middle  64
+6865      Middle 128, Left    64
+
+6866      Left   128, Right  128
+6867      Right  128, Middle 128
+6868      Right  128, Middle 128
+6869      Right  128, Middle  64
+6870      Left    64, Right   64
+6871      Right   64, Middle  64
+6872      Right   64, Middle 128
+6873      Middle  64, Right   64
+6874      Middle  64, Left    64
+
+--------------------------------------------------------------
+BRANCH 5  Ariel between left/middle spawn         Frames spent
+6860      Left   128, Middle  64
+6861      Right   64, Middle  64
+6862      Right  128, Left    64
+6863      Right   64, Middle  64
+6864      Left   128, Middle  64
+6865      Right  128, Middle  64
+6866      Right   64, Middle 128
+6867      Left    64, Middle 128
+6868      Right  128, Middle 128
+6869      Right  128, Left   128
+6870      Middle  64, Left    64
+     7278
+	 7279
+	 7280 
+6871
+6872
+6873
+6874
+6875
+--------------------------------------------------------------
+BRANCH 6  Ariel between left/middle spawn         Frames spent
+6860      Middle 128, Right  128
+6861      Left    64, Middle 128
+6862      Right   64, Right   64
+6863      Middle 128, Middle  64
+6864      Middle 128, Right   64
+6865      Left    64, Middle  64
+6866      Right  128, Left   128
+6867      Middle 128, Middle 128
+6868      Left    64, Middle 128
+6869      Right   64, Middle 128
+6870      Right  128, Middle 128
+6871      Left   128, Middle 128
+6872      Right   64, Middle 128
+6873      Middle 128, Middle 128
+6874      Left   128, Middle 128
+6875      Right   64, Middle  64
+==============================================================
+2520: C9 26 B4 F9 (+1)
+==============================================================
+BRANCH 2  Ariel between left/middle spawn         Frames spent
+6862      Middle  64, Middle 128 
+6863      Middle  64, Right   64
+6864      Left    64, Right   64
+6865      Right  128, Middle  64
+6866      Right  128, Middle  64
+6867      Right   64, Middle  64
+6868      Middle  64, Middle 128
+6869      Left   128, Right   64
+6870      Right  128, Middle 128
+6871      Right  128, Middle  64
+6872      Left    64, Middle 128
+6873      Right  128, Middle  64
+6874      Middle 128, Left   128
+6875      Middle 128, Left   128
+
+
+
+
+
+

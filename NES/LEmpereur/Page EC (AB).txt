@@ -1,0 +1,87 @@
+     01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A000
+
+
+
+
+
+
+
+
+
+
+
+
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A4D0             20 09 E5 FE FF AC 5F CF 8D 27 8E E4          
+A4E0 77 8E 06 BF E9 1F DD 06 40 2B 0B D2 8C 1C 79 BB
+A4F0 B3 40 B1 0B D0 2B 0B 5B C6 D7 EA A4 40 2B 0B D2
+A500 8C 12 78 BB B3 40 B1 0B D0 2B 0B 8B 10 C6 D7 FE
+A510 A4 60 66 8E 32 78 E9 23 F4 06 60 8D 16 8E 14 7B
+A520 E9 23 F4 06 89 FF A8 70 78 A8 72 78 A8 6C 78 A8
+A530 6E 78 CF
+
+FUNCTION $A4D4 (FE FF) $A4D9-$A532
+Transplants 27 bytes from $BF06 to $77E4, then
+blanks all of the rest of the data string fields
+
+A4D9 AC 5F CF    / Run function $CF5F
+A4DC 8D 27       / Push #$0027 to metastack      (+2)
+A4DE 8E E4 77    / Push #$77E4 to metastack      (+2)
+A4E1 8E 06 BF    / Push #$BF06 to metastack      (+2)
+A4E4 E9 1F DD 06 / Run function $DD1F            (-6) Transplant string to $77E4
+A4E8 40          / Store #$00 to M8
+A4E9 2B          / Store M8 to meta 01/02
+A4EA 0B          / Store meta 01/02 to M8
+A4EB D2          / Double M8
+A4EC 8C 1C 79    / Store #$791C to MC
+A4EF BB          / Add MC to M8
+A4F0 B3          / Push M8 to metastack             (+2)
+A4F1 40          / Store #$00 to M8
+A4F2 B1          / Store M8 (2-byte) to pulled meta (-2)
+A4F3 0B          / Store meta 01/02 to M8
+A4F4 D0          / Increment M8
+A4F5 2B          / Store M8 to meta 01/02
+A4F6 0B          / Store meta 01/02 to M8
+A4F7 5B          / Store #$0B to MC
+A4F8 C6          / Check if M8 < MC
+A4F9 D7 EA A4    / Jump to $A4EA if it is           / Blank $791C-$7931
+A4FC 40          / Store #$00 to M8
+A4FD 2B          / Store M8 to meta 01/02
+A4FE 0B          / Store meta 01/02 to M8
+A4FF D2          / Double M8
+A500 8C 12 78    / Store #$7812 to MC
+A503 BB          / Add MC to M8
+A504 B3          / Push M8 to metastack             (+2)
+A505 40          / Store #$00 to M8
+A506 B1          / Store M8 (2-byte) to pulled meta (-2)
+A507 0B          / Store meta 01/02 to M8
+A508 D0          / Increment M8
+A509 2B          / Store M8 to meta 01/02
+A50A 0B          / Store meta 01/02 to M8
+A50B 8B 16       / Store #$16 to MC
+A50D C6          / Check if M8 < MC
+A50E D7 FE A4    / Jump to $A4FE if it is          / Blank $7812-$783D
+A511 60          / Push #$0000 to metastack         (+2)
+A512 66          / Push #$0006 to metastack         (+2)
+A513 8E 32 78    / Push #$7832 to metastack         (+2)
+A516 E9 23 F4 06 / Run function $F423               (-6)
+A51A 60          / Push #$0000 to metastack         (+2)
+A51B 8D 16       / Push #$0016 to metastack         (+2)
+A51D 8E 14 7B    / Push #$7B14 to metastack         (+2)
+A520 E9 23 F4 06 / Run function $F423               (-6)
+A524 89 FF       / Store #$FF to M8
+A526 A8 70 78    / Store M8 to $7870/$7871
+A529 A8 72 78    / Store M8 to $7872/$7873
+A52C A8 6C 78    / Store M8 to $786C/$786D
+A52F A8 6E 78    / Store M8 to $786E/$786F
+A532 CF          / Exit
+====================================================
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+BF00                   FF 07 06 05 04 05 04 06 08 0A
+BF10 05 FF 05 FF 06 05 04 03 06 04 07 08 FF 04 FF 05
+BF20 FF 08 07 06 05 07 06 08 FF FF 06 FF 06
+

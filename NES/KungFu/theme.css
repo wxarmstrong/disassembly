@@ -1,0 +1,77 @@
+body {
+  background-color: black;
+  color: white;
+  text-align: center;
+  font-family:helvetica;
+}
+
+h1{
+  font-size: 60px;
+  background-color: white;
+  color: black;
+}
+
+h2{
+  font-size: 50px;
+}
+
+h3{
+  font-size: 40px;
+  border: 2px white solid;
+  padding: 4px;  
+}
+
+li>a{
+  color:AliceBlue;
+}
+
+li>a:visited{
+	color: pink;
+}
+
+p{
+  font-size: 24px;
+  background-color:white;
+  color:black;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: 24px;
+}
+
+#lightBG {
+  color: black;
+}
+
+.Function{
+	font-family: consolas;
+	text-align: left;
+	color: #98FB98;
+}
+
+.MirrorFunction{
+	font-family: consolas;
+	text-align: left;
+	color: #EEE8AA
+}
+
+.split {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.left {
+  left: 0;
+}
+
+.right {
+  right: 0;
+}

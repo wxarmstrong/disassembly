@@ -1,0 +1,28 @@
+0000-0005 - "Mickey" 
+     0006 - PPU_CTRL Mirror
+     0007 - PPU_MASK Mirror
+
+     003C - Frame delay timer
+     003D - Pad 1 input
+
+	 0202 - Game state
+	        00: Copyright screen
+			01: Title screen 
+			02: Difficulty screen
+			
+020A-020C - Hidden word for current level
+	 
+	 021A - Difficulty level
+	 
+023F-0246 - Letter set 1 (Yukon: 5)
+0247-024E - Letter set 2 (Swamp: 4)
+024F-0256 - Letter set 3 (Forest: 4)
+0257-025E - Letter set 4 (Pyramid: 5)
+025F-0266 - Letter set 5 (Jungle: 5)
+0267-026E - Letter set 6 (Caribbean: 4)
+	 
+029C-02BC - Palette sets
+
+0800-0FFF - Mirror
+1000-17FF - Mirror
+1800-1FFF - Mirror

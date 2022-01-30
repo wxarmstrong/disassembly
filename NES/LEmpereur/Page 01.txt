@@ -1,0 +1,3 @@
+Location in ROM: N/A
+
+$8004-$9685 Saved Data 

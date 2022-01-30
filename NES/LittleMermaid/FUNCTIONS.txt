@@ -1,0 +1,46 @@
+$FAF2 - Checks if object X is colliding with Ariel
+        Carry clear = success, carry set = failure
+		
+$FBA0 - Checks if object X is colliding with a bubble (@ Y)
+        Carry clear = success, carry set = failure
+		
+$FC45 - Spawn an object with action loop A to slot X
+
+$FE44 - Identifies the next unoccupied object slot (@ X)
+        Carry clear = success, carry set = failure (all slots full)
+		
+$FE54 - Identifies the next unoccupied object slot (@ Y)
+        Carry clear = success, carry set = failure (all slots full)		
+
+OCCURRENCES OF THESE FUNCTIONS:
+
+$FBA0
+0x018110 - Page 06, $8100
+0x018AAC
+0x019779
+0x0197F7
+0x019906
+
+$FE44/$FE54
+0x013772
+0x018844
+0x018B6F
+0x018C49
+0x018D4C
+0x018E1E
+0x018F25
+0x018FE3
+0x019307
+0x0193B9
+0x0194C9
+0x01970F
+0x019C56
+0x019E0E
+0x01A14A
+0x01A27C
+0x01A2F1
+0x01A4B6
+0x01A7E2
+0x01CFA9
+0x01D213
+0x01D681

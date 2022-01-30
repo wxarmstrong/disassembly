@@ -1,0 +1,3149 @@
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A000 4C 03 A0                                        ROM Address: 012010
+A000 JMP $A003                                       Default $98: E1
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A000          20 09 E5 00 00 A5 A0 76 D2 8C C6 BE BB
+A010 B0 DD CF
+
+FUNCTION $A003 (00 00) $A008-$A012
+A008 A5 A0 76    / Store value of $76A0 to $0008
+A00B D2          / Double M8
+A00C 8C C6 BE    / Store #$BEC6 to MC
+A00F BB          / Add MC to M8
+A010 B0          / Replace M8 with 2-byte value
+A011 DD          / Run function in M8
+A012 CF          / Exit
+
+00 BEC6 -> $AC1C (Only possible redirect)
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A010          20 09 E5 00 00 0D 8C 68 70 BC 8B 12 B8
+A020 B3 0C 8C 68 70 BC 8B 12 B8 5F B5 B4 BB 8C F6 6E
+A030 BB D3 8B 20 DA D7 62 A0 0D 8C 68 70 BC 8B 12 B8
+A040 B3 0C 8C 68 70 BC 8B 12 B8 5F B5 B4 BB 8C F6 6E
+A050 BB D3 5F DA D7 62 A0 3D 3C E9 F1 8D 04 55 C6 D7
+A060 66 A0 40 D6 67 A0 41 CF
+
+FUNCTION $A013 (00 00) $A018-$A067
+Checks if two nations are in good standing
+Returns #$00 if hostile         or neutral w/ difference in aggression 5 or more
+Returns #$01 if friendly/allied or neutral w/ difference in aggression 4 or less 
+
+A018 0D          / Store preloaded 03/04 to M8                 Nation base address 1 
+A019 8C 68 70    / 
+A01C BC          / 
+A01D 8B 12       / 
+A01F B8          /                                             Nation code 1
+A020 B3          / Push M8 to metastack               (+2)\     
+A021 0C          / Store preloaded 01/02 to M8            |    Nation base address 2
+A022 8C 68 70    /                                        |
+A025 BC          /                                        |
+A026 8B 12       /                                        |
+A028 B8          /                                        |    Nation code 2
+A029 5F          / Store #$0F to MC                       |
+A02A B5          / Multiply M8 by MC                      |
+A02B B4          / Pull 2 values from metastack to MC (-2)/
+A02C BB          / Add MC to M8
+A02D 8C F6 6E    / Store #$6EF6 to MC
+A030 BB          / Add MC to M8                   
+A031 D3          / Replace M8 with 1-byte value                Nation 1/2 diplomacy
+A032 8B 20       / Store #$20 to MC
+A034 DA          / MC AND M8                                   Check if hostile
+A035 D7 62 A0    / Jump to $A062 if positive   
+A038 0D          / Store preloaded 03/04 to M8                 Nation base address 1
+A039 8C 68 70    / 
+A03C BC          /
+A03D 8B 12       /
+A03F B8          /                                             Nation code 1
+A040 B3          / Push M8 to metastack               (+2)\
+A041 0C          / Store preloaded 01/02 to M8            |    Nation base address 2
+A042 8C 68 70    /                                        |
+A045 BC          /                                        |
+A046 8B 12       /                                        |
+A048 B8          /                                        |    Nation code 2
+A049 5F          / Store #$0F to MC                       |
+A04A B5          / Multiply M8 t0 MC                      |
+A04B B4          / Pull 2 values from metastack to MC (-2)/
+A04C BB          / Add MC to M8
+A04D 8C F6 6E    / Store #$6EF6 to MC
+A050 BB          / Add MC to M8 
+A051 D3          / Replace M8 with 1-byte value                Nation 1/2 diplomacy
+A052 5F          / Store #$0F to MC
+A053 DA          / MC AND M8                                   Check if non-neutral
+A054 D7 62 A0    / Jump to $A062 if positive             
+A057 3D          / Push preloaded 03/04 to metastack  (+2)\    Nation base address 1
+A058 3C          / Push preloaded 01/02 to metastack  (+2)\)   Nation base address 2
+A059 E9 F1 8D 04 / Run function $8DF1                 (-4)/    Check aggression diff
+A05D 55          / Store #$05 to MC
+A05E C6          / Check if M8 < MC
+A05F D7 66 A0    / Jump to $A066 if positive
+A062 40          / Store #$00 to M8
+A063 D6 67 A0    / Jump to $A067
+A066 41          / Store #$01 to M8
+A067 CF          / Exit
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A060                         20 09 E5 00 00 0D 8C 68
+A070 70 BC 8B 12 B8 B3 0C 8C 68 70 BC 8B 12 B8 5F B5
+A080 B4 BB 8C F6 6E BB D3 8B 10 C0 D8 99 A0 3D 3C E9
+A090 F1 8D 04 8B 4B C8 D7 9D A0 40 D6 9E A0 41 CF
+
+FUNCTION $A068 (00 00) $A06D-$A09E
+Checks if two nations are in bad standing
+Returns #$00 if     friendly or difference in aggression 75 or less
+Returns #$01 if not friendly  & difference in aggression 76 or more 
+
+A06D 0D          / Store preloaded 03/04 to M8      
+A06E 8C 68 70    / Store #$7068 to MC
+A071 BC          / Subtract MC from M8
+A072 8B 12       / Store #$12 to MC
+A074 B8          / Divide M8 by MC
+A075 B3          / Push M8 to metastack               (+2)\    Nation code 2
+A076 0C          / Store preloaded 01/02 to M8            |
+A077 8C 68 70    /                                        |
+A07A BC          /                                        |
+A07B 8B 12       /                                        |
+A07D B8          /                                        |    Nation code 1
+A07E 5F          / Store #$0F to MC                       |
+A07F B5          / Multiply M8 by MC                      |
+A080 B4          / Pull 2 values from metastack to MC (-2)/
+A081 BB          / Add MC to M8
+A082 8C F6 6E    / Store #$6EF6 to MC
+A085 BB          / Add MC to M8
+A086 D3          / Replace M8 with 1-byte value                Nation 1/2 diplomacy
+A087 8B 10       / Store #$10 to MC
+A089 C0          / Check for friendship
+A08A D8 99 A0    / Jump to $A099 if no friendship
+A08D 3D          / Push preloaded 03/04 to M8         (+2)\    Nation code 2
+A08E 3C          / Push preloaded 01/02 to M8         (+2)\)   Nation code 1
+A08F E9 F1 8D 04 / Run function $8DF1                 (-4)/    Aggression difference
+A093 8B 4B       / Store #$4B to MC                            
+A095 C8          / Check if M8 > MC                            > 75
+A096 D7 9D A0    / Jump to $A09D if positive
+A099 40          / Store #$00 to M8
+A09A D6 9E A0    / Jump to $A09E
+A09D 41          / Store #$01 to M8
+A09E CF          / Exit 
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A090                                              20
+A0A0 09 E5 00 00 0D 8C 68 70 BC 8B 12 B8 B3 0C 8C 68
+A0B0 70 BC 8B 12 B8 5F B5 B4 BB 8C F6 6E BB D3 8B 10
+A0C0 C0 CF
+
+FUNCTION $A09F (00 00) $A0A4-$A0C1
+Checks if two nations are in friendship
+
+A0A4 0D          / Store preloaded 03/04 to M8
+A0A5 8C 68 70    / Store #$7068 to MC
+A0A8 BC          / Subtract MC from M8
+A0A9 8B 12       / Store #$12 to MC
+A0AB B8          / Divide M8 by MC
+A0AC B3          / Push M8 to metastack               (+2)\
+A0AD 0C          / Store preloaded 01/02 to M8            |
+A0AE 8C 68 70    / Store #$7068 to MC                     |
+A0B1 BC          / Subtract MC from M8                    |
+A0B2 8B 12       / Store #$12 to MC                       |
+A0B4 B8          / Divide M8 by MC                        |
+A0B5 5F          / Store #$0F to MC                       |
+A0B6 B5          / Multiply M8 by MC                      |
+A0B7 B4          / Pull 2 values from metastack to MC (-2)/
+A0B8 BB          / Add MC to M8
+A0B9 8C F6 6E    / Store #$6EF6 to MC
+A0BC BB          / Add MC to M8
+A0BD D3          / Replace M8 with 2-byte value             Nation 1/2 diplomacy
+A0BE 8B 10       / Store #$10 to MC
+A0C0 C0          / Check if M8 = MC
+A0C1 CF          / Exit
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A0C0       20 09 E5 00 00 0D 8C 68 70 BC 8B 12 B8 B3
+A0D0 0C 8C 68 70 BC 8B 12 B8 5F B5 B4 BB 8C F6 6E BB
+A0E0 D3 8B 20 DA D8 F0 A0 3D 3C E9 85 97 04 D8 F4 A0
+A0F0 40 D6 F5 A0 41 CF
+
+FUNCTION $A0C2 (00 00) $A0C7-$A0F5
+
+A0C7 0D          / Store preloaded 03/04 to M8
+A0C8 8C 68 70    / 
+A0CB BC          /
+A0CC 8B 12       /
+A0CE B8          /                                         Nation Code 1
+A0CF B3          / Push M8 to metastack
+A0D0 0C          / Store preloaded 01/02 to M8
+A0D1 8C 68 70    /
+A0D4 BC          /
+A0D5 8B 12       /
+A0D7 B8          /
+A0D8 5F          / Store #$0F to MC
+A0D9 B5          / Multiply M8 by MC
+A0DA B4          / Pull 2 values from metastack to MC
+A0DB BB          / Add MC to M8
+A0DC 8C F6 6E    / Store #$6EF6 to MC
+A0DF BB          / Add MC to M8
+A0E0 D3          / Replace M8 with 2-byte value            Nation 1/2 Diplomacy
+A0E1 8B 20       / Store #$20 to MC
+A0E3 DA          / MC AND M8                               Check for hostility
+A0E4 D8 F0 A0    / Jump to $A0F0 if zero (not hostile)
+A0E7 3D          / Push preloaded 03/04 to metastack
+A0E8 3C          / Push preloaded 01/02 to metastack
+A0E9 E9 85 97 04 / Run function $9785
+A0ED D8 F4 A0    / Jump to $A0F4 if zero
+A0F0 40          / Store #$00 to M8
+A0F1 D6 F5 A0    / Jump to $A0F5
+A0F4 41          / Store #$01 to M8
+A0F5 CF          / Exit
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A0F0                   20 09 E5 00 00 0D 8C 68 70 BC
+A100 8B 12 B8 B3 0C 8C 68 70 BC 8B 12 B8 5F B5 B4 BB
+A110 8C F6 6E BB D3 8B 20 DA CF
+
+FUNCTION $A0F6 (00 00) $A0FB-$A118
+Checks for hostility
+#$20 positive, #$00 negative
+
+A0FB 0D          / Store preloaded 03/04 to M8
+A0FC 8C 68 70    / Store #$7068 to MC
+A0FF BC          / Subtract MC from M8
+A100 8B 12       / Store #$12 to MC
+A102 B8          / Divide M8 by MC
+A103 B3          / Push M8 to metastack
+A104 0C          / Store preloaded 01/02 to M8
+A105 8C 68 70    / Store #$7068 to MC
+A108 BC          / Subtract MC from M8
+A109 8B 12       / Store #$12 to MC
+A10B B8          / Divide M8 by MC
+A10C 5F          / Store #$0F to MC
+A10D B5          / Multiply M8 by MC
+A10E B4          / Pull 2 values from metastack to MC
+A10F BB          / Add MC to M8
+A110 8C F6 6E    / Store #$6EF6 to MC
+A113 BB          / Add MC to M8
+A114 D3          / Replace M8 with 1-byte value
+A115 8B 20       / Store #$20
+A117 DA          / MC AND M8
+A118 CF          / Exit
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A110                            20 09 E5 00 00 3D 3C
+A120 E9 F1 8D 04 55 C6 D8 52 A1 0D 8C 68 70 BC 8B 12
+A130 B8 B3 0C 8C 68 70 BC 8B 12 B8 5F B5 B4 BB 8C F6
+A140 6E BB D3 8B 10 C0 D8 52 A1 3D 3C E9 85 97 04 D8
+A150 56 A1 40 D6 57 A1 41 CF
+
+FUNCTION $A119 (00 00) $A11E-$A157
+Checks if two nations are on good terms and if so, attempts friendship.
+Returns #$01 if successful and #$00 if unsuccessful.
+(??????????????????????????????????????????????????)
+
+A11E 3D           / Push preloaded 03/04 to metastack
+A11F 3C           / Push preloaded 01/02 to metastack
+A120 E9 F1 8D 04  / Run function $8DF1                Aggression between nations
+A124 55           / Store #$05 to MC
+A125 C6           / Check if M8 < MC
+A126 D8 52 A1     / Jump to $A152 if #$00
+A129 0D           / Store preloaded 03/04 to M8
+A12A 8C 68 70     /
+A12D BC
+A12E 8B 12
+A130 B8 
+A131 B3           / Push M8 to metastack
+A132 0C           / Store preloaded 01/02 to M8
+A133 8C 68 70     / Store #$7068 to MC
+A136 BC
+A137 8B 12
+A139 B8
+A13A 5F           / Store #$0F to MC
+A13B B5 
+A13C B4
+A13D BB
+A13E 8C F6 6E 
+A141 BB
+A142 D3           / Replace M8 with 1-byte value      Diplomacy
+A143 8B 10        / Store #$10 to MC
+A145 C0           / Check if MC=M8                    Check if friendship
+A146 D8 52 A1     / Jump to $A152 if #$00
+A149 3D           / Push preloaded 03/04 to metastack
+A14A 3C           / Push preloaded 01/02 to metastack
+A14B E9 85 97 04  / Run function $9785
+A14F D8 56 A1     / Jump to $A156 if negative
+A152 40           / Store #$00 to M8
+A153 D6 57 A1     / Jump to $A157
+A156 41           / Store #$01 to M8
+A157 CF           / Exit 
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A150                         20 09 E5 00 00 3D 3C E9
+A160 F1 8D 04 5A C6 D8 8E A1 0D 8C 68 70 BC 8B 12 B8
+A170 B3 0C 8C 68 70 BC 8B 12 B8 5F B5 B4 BB 8C F6 6E
+A180 BB D3 D7 8E A1 3D 3C E9 85 97 04 D8 92 A1 40 D6
+A190 93 A1 41 CF
+ 
+FUNCTION $A158 (00 00) $A15D-$A193
+01/02 = Nation 1
+03/04 = Nation 2
+
+A15D 3D          / Push preloaded 03/04 to metastack / (+2)
+A15E 3C          / Push preloaded 01/02 to metastack / (+2)
+A15F E9 F1 8D 04 / Run function $8DF1                / (-4) Check aggression
+A163 5A          / Store #$0A to MC
+A164 C6          / Check if M8 < MC                  /      Check if aggression < 10
+A165 D8 8E A1    / Jump to $A18E if not
+
+AGGRESSION LESS THAN 10:
+A168 0D          / Store preloaded 03/04 to M8
+A169 8C 68 70    / Store #$7068 to MC
+A16C BC          / Subtract MC from M8
+A16D 8B 12       / Store #$12 to MC
+A16F B8          / Divide M8 by MC
+A170 B3          / Push M8 to metastack              / (+2)
+A171 0C          / Store preloaded 01/02 to M8
+A172 8C 68 70    / Store #$7068 to MC
+A175 BC          / Subtract MC from M8
+A176 8B 12       / Store #$12 to MC
+A178 B8          / Divide M8 by MC
+A179 5F          / Store #$0F to MC
+A17A B5          / Multiply M8 by MC
+A17B B4          / Pull 2 meta to MC                 / (-2)
+A17C BB          / Add MC to M8
+A17D 8C F6 6E    / Store #$6EF6 to MC
+A180 BB          / Add MC to M8
+A181 D3          / Replace M8 with 1-byte value      /      Diplomacy
+A182 D7 8E A1    / Jump to $A18E if not blank        /      Alliance/Friendship/Hostile
+
+IF DIPLOMACY IS BLANK:
+A185 3D          / Push preloaded 03/04 to metastack / (+2)
+A186 3C          / Push preloaded 01/02 to metastack / (+2)
+A187 E9 85 97 04 / Run function $9785                / (-4)
+A18B D8 92 A1    / Jump to $A192 if zero
+
+
+A18E 40          / Store #$00 to M8
+A18F D6 93 A1    / Jump to $A193
+
+A192 41          / Store #$01 to M8
+A193 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A190             20 09 E5 00 00 3D 3C E9 F1 8D 04 8B
+A1A0 19 C8 D8 CE A1 0D 8C 68 70 BC 8B 12 B8 B3 0C 8C
+A1B0 68 70 BC 8B 12 B8 5F B5 B4 BB 8C F6 6E BB D3 8B
+A1C0 10 C0 D8 CE A1 3D 3C E9 85 97 04 D7 D2 A1 40 D6
+A1D0 D3 A1 41 CF
+
+FUNCTION $A194 (00 00) $A199-$A1D3
+Compares 2 nations (base addresses)
+     returns #$01 if 
+                     Difference between French aggression is less than #$19 (25)
+					 No friendship
+					(Result of function $9785 = positive)
+else returns #$00
+
+Returns #$00 if ($8DF1 !> MC) / (No friendship) / ($9785 = 0)
+Returns #$01 if ($8DF1 > MC) AND (Friendship) AND ($9785 != 0)
+
+A199 3D          / Push preloaded values 03/04 to metastack / Nation 1 address
+A19A 3C          / Push preloaded values 01/02 to metastack / Nation 2 address
+A19B E9 F1 8D 04 / Run function $8DF1
+A19F 8B 19       / Store #$19 to MC
+A1A1 C8          / Check if M8 > MC
+A1A2 D8 CE A1    / Jump to $A1CE if false
+A1A5 0D          / Store preloaded values 03/04 to M8
+A1A6 8C 68 70    / Store #$7068 to MC                       Start of nations stats
+A1A9 BC          / Subtract MC from M8
+A1AA 8B 12       / Store #$12 to MC
+A1AC B8          / Divide M8 by MC                          Isolate nation code
+A1AD B3          / Push M8 to metastack               (+2)\
+A1AE 0C          / Store preloaded values 01/02 to M8     |
+A1AF 8C 68 70    / Store #$7068 to MC                     |
+A1B2 BC          / Subtract MC from M8                    |
+A1B3 8B 12       / Store #$12 to MC                       |
+A1B5 B8          / Divide M8 by MC                        | Isolate nation code
+A1B6 5F          / Store #$0F to MC                       |
+A1B7 B5          / Multiply M8 by MC                      | Nation 2 hex times #$0F
+A1B8 B4          / Pull 2 values from metastack to MC (-2)/ Nation 1 hex code
+A1B9 BB          / Add MC to M8
+A1BA 8C F6 6E    / Store #$6EF6 to MC                       Start of diplomatic stats
+A1BD BB          / Add M8 to MC
+A1BE D3          / Replace M8 with 1-byte value             Diplomatic status
+A1BF 8B 10       / Store #$10 to MC
+A1C1 C0          / Check if M8 = MC                         Friendship (no alliance)
+A1C2 D8 CE A1    / Jump to $A1CE if false
+A1C5 3D          / Push preloaded values 03/04 to metastack (+2) Nation 1 address
+A1C6 3C          / Push preloaded values 01/02 to metastack (+2) Nation 2 address
+A1C7 E9 85 97 04 / Run function $9785                       (-4)
+                 / End up at $D0EB
+A1CB D7 D2 A1    / Jump to $A1D2 if positive
+A1CE 40          / Store #$00 to M8
+A1CF D6 D3 A1    / Jump to $A1D3
+A1D2 41          / Store #$01 to M8
+A1D3 CF          / Exit
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A1D0             20 09 E5 00 00 0D 8C 68 70 BC 8B 12
+A1E0 B8 B3 0C 8C 68 70 BC 8B 12 B8 5F B5 B4 BB 8C F6
+A1F0 6E BB D3 8B 20 DA D8 1B A2 A4 A4 78 8C 68 70 BC
+A200 8B 12 B8 B3 0D 8C 68 70 BC 8B 12 B8 5F B5 B4 BB
+A210 8C F6 6E BB D3 8B 10 C0 D7 1F A2 40 D6 20 A2 41
+A220 CF 
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A220    20 09 E5 00 00 0D 8C 68 70 BC 8B 12 B8 B3 0C
+A230 8C 68 70 BC 8B 12 B8 5F B5 B4 BB 8C F6 6E BB D3
+A240 D7 58 A2 3D 3C E9 F1 8D 04 8B 19 C8 D8 58 A2 3D
+A250 3C E9 85 97 04 D7 5C A2 40 D6 5D A2 41 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A250                                           20 09
+A260 E5 FE FF 0D 74 D6 7A A2 0B 72 D3 8B 12 B5 8C 68
+A270 70 BB 1C C0 D8 79 A2 41 CF 0B B0 2B 0B D7 68 A2
+A280 40 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A280       20 09 E5 FE FF 3C E9 EC 8F 02 2B D8 9B A2
+A290 0B 8C F4 01 B8 B3 89 64 B4 BC CF 8A FF 00 CF
+
+FUNCTION $A282 (FE FF) $A287-$A29E
+
+A287 3C          / Push preloaded 01/02 to metastack / (+2)
+A288 E9 EC 8F 02 / Run function $8FEC                / (-2) Run food calc on city?
+A28C 2B          / Store M8 to meta 01/02
+A28D D8 9B A2    / Jump to $A29B if zero
+
+A290 0B          / Store meta 01/02 to M8
+A291 8C F4 01    / Store #$01F4 to MC                /      500
+A294 B8          / Divide M8 by MC
+A295 B3          / Push M8 to metastack              / (+2)
+A296 89 64       / Store #$64 to M8                  /      100
+A298 B4          / Pull 2 meta to MC                 / (-2)
+A299 BC          / Subtract MC from M8               /      100 - (Meta 01/02)/500
+A29A CF          / Exit
+
+A29B 8A FF 00    / Store #$FF to M8
+A29E CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A290                                              20
+A2A0 09 E5 FE FF 3C E9 66 90 02 2B D8 B8 A2 0B 8C F4
+A2B0 01 B8 B3 89 64 B4 BC CF 8A FF 00 CF
+
+FUNCTION $A29F (FE FF) $A2A4-$A2BB
+
+A2A4 3C          / Push preloaded 01/02 to metastack / (+2)
+A2A5 E9 66 90 02 / Run function $9066                / (-2)
+A2A9 2B          / Store M8 to meta 01/02
+A2AA D8 B8 A2    / Jump to $A2B8 if zero
+
+A2AD 0B          / Store meta 01/02 to M8
+A2AE 8C F4 01    / Store #$01F4 to MC
+A2B1 B8          / Divide M8 by MC
+A2B2 B3          / Push M8 to metastack              / (+2)
+A2B3 89 64       / Store #$64 to M8
+A2B5 B4          / Pull 2 meta to MC                 / (-2)
+A2B6 BC          / Subtract MC from M8
+A2B7 CF          / Exit
+
+A2B8 8A FF 00    / Store #$FF to M8
+A2BB CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A2B0                                     20 09 E5 FE	 
+A2C0 FF A4 A2 76 78 B0 8C 30 75 C8 D8 D3 A2 8A 88 13
+A2D0 D6 D6 A2 8A F4 01 2B 0C 7E B0 B3 DE FE FF B3 E9
+A2E0 6E DE 04 0B D8 EE A2 0B 8B 14 B8 D6 F1 A2 8A FF
+A2F0 00 CF
+
+FUNCTION $A2BC (FE FF) $A2C1-$A2F1
+
+A2C1 A4 A2 76    / Store $76A2/$76A3 to M8           / Active Nation
+A2C4 78          / Add #$08 to M8
+A2C5 B0          / Replace M8 with 2-byte value      /
+A2C6 8C 30 75    / Store #$7530 to MC                / 
+A2C9 C8          / Check if M8 > MC                  / Check if more than 30000 gold
+A2CA D8 D3 A2    / Jump to $A2D3 if not
+
+A2CD 8A 88 13    / Store #$1388 to M8                / 5000
+A2D0 D6 D6 A2    / Jump to $A2D6
+
+A2D3 8A F4 01    / Store #$01F4 to M8                / 500
+A2D6 2B          / Store M8 to meta 01/02
+
+A2D7 0C          / Store preloaded 01/02 to M8
+A2D8 7E          / Add #$0E to M8
+A2D9 B0          / Replace M8 with 2-byte value
+A2DA B3          / Push M8 to metastack              / (+2)
+A2DB DE FE FF    / Store address of meta 01/02 to M8
+A2DE B3          / Push M8 to metastack              / (+2)
+A2DF E9 6E DE 04 / Run function $DE6E                / (-4) Reduce by number
+
+A2E3 0B          / Store meta 01/02 to M8
+A2E4 D8 EE A2    / Jump to $A2EE if zero
+
+A2E7 0B          / Store meta 01/02 to M8
+A2E8 8B 14       / Store #$14 to MC                  / 20
+A2EA B8          / Divide M8 by MC
+A2EB D6 F1 A2    / Jump to $A2F1
+
+A2EE 8A FF 00    / Store #$FF to M8
+
+A2F1 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A2F0       20 09 E5 FF FF 0C 8F 1B D3 A2 FF FF 8A DF
+A300 00 CD A0 FF FF DA A2 FF FF 0C 75 B0 8B 64 B8 B3
+A310 0C 79 D3 B4 C8 D8 22 A3 89 20 CD A0 FF FF DB A2
+A320 FF FF 8A FE 00 CD A0 FF FF DA A2 FF FF 0C 75 B0
+A330 8C C8 00 B8 B3 0C 78 D3 B4 C8 D8 46 A3 41 CD A0
+A340 FF FF DB A2 FF FF 0C 8F 1B D3 B3 A0 FF FF B4 C1
+A350 D8 55 A3 41 CF 8A FF 00 CF
+
+FUNCTION $A2F2 (FF FF) $A2F7-$A358
+Checks if City (1/2) needs to change its material supply or supply base status.
+Returns #$01 if yes, returns #$FF if no.
+
+A2F7 0C          / Store preloaded 01/02 to M8       / City
+A2F8 8F 1B       / Add #$1B to M8
+A2FA D3          / Replace M8 with 1-byte value      / City - Status
+A2FB A2 FF FF    / Store $0008 to meta 01
+A2FE 8A DF 00    / Store #$DF to M8
+A301 CD          / Swamp M8 and MC
+A302 A0 FF FF    / Store meta 01 to $0008
+A305 DA          / M8 AND MC                         / Ensure that material supply
+A306 A2 FF FF    / Store $0008 to meta 01            /  is set to "high".
+
+A309 0C          / Store preloaded 01/02 to M8
+A30A 75          / Add #$05 to M8
+A30B B0          / Replace M8 with 2-byte value      / City - Population
+A30C 8B 64       / Store #$64 to MC
+A30E B8          / Divide M8 by MC
+A30F B3          / Push M8 to metastack              / (+2) Population / 100
+A310 0C          / Store preloaded 01/02 to M8
+A311 79          / Add #$09 to M8
+A312 D3          / Replace M8 with 1-byte value      / City - Trade
+A313 B4          / Pull 2 meta to MC                 / (-2)
+A314 C8          / Check if M8 > MC                  / Check if Trade > (Population/100)
+A315 D8 22 A3    / Jump to $A322 if not
+
+A318 89 20       / Store #$20 to M8
+A31A CD          / Swap MC and M8
+A31B A0 FF FF    / Store meta 01 to $0008
+A31E DB          / M8 ORA MC                         / Set material supply to "low".
+A31F A2 FF FF    / Store $0008 to meta 01           
+
+A322 8A FE 00    / Store #$FE to M8
+A325 CD          / Swap M8 and MC
+A326 A0 FF FF    / Store meta 01 to $0008
+A329 DA          / M8 AND MC                         / Ensure that supply base is set to "off"
+A32A A2 FF FF    / Store $0008 to meta 01
+
+A32D 0C          / Store preloaded 01/02 to M8
+A32E 75          / Add #$05 to M8
+A32F B0          / Replace M8 with 2-byte value      / City - Population
+A330 8C C8 00    / Store #$C8 to MC                  / 200
+A333 B8          / Divide M8 by MC
+A334 B3          / Push M8 to metastack              / (+2)
+A335 0C          / Store preloaded 01/02 to M8
+A336 78          / Add #$08 to M8
+A337 D3          / Replace M8 with 1-byte value      / City - Industry
+A338 B4          / Pull 2 meta to MC                 / (-2)
+A339 C8          / Check if M8 > MC                  / Check if Industry > (Population / 200)
+A33A D8 46 A3    / Jump to $A346 if not
+
+A33D 41          / Store #$01 to M8
+A33E CD          / Swap M8 and MC
+A33F A0 FF FF    / Store meta 01 to $0008
+A342 DB          / M8 ORA MC                         / Set city as supply base
+A343 A2 FF FF    / Store $0008 to meta 01
+
+A346 0C          / Store preloaded 01/02 to M8
+A347 8F 1B       / Add #$1B to M8
+A349 D3          / Replace M8 with 1-byte value
+A34A B3          / Push M8 to metastack              / (+2)
+A34B A0 FF FF    / Store meta 01 to $0008
+A34E B4          / Pull 2 meta to MC                 / (-2)
+A34F C1          / Check if M8 is different than MC
+A350 D8 55 A3    / Jump to $A355 if not
+
+A353 41          / Store #$01 to M8
+A354 CF          / Exit
+
+A355 8A FF 00    / Store #$FF to M8
+A358 CF          / Exit 
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A350                            20 09 E5 00 00 8E FF
+A360 00 63 3C E9 0B D1 06 51 DA D8 84 A3 0C 8F 1A D3
+A370 B3 89 64 B4 BC B3 0C 78 D3 B3 E9 6B DC 02 B3 E9
+A380 D6 DC 04 CF 8A FF 00 CF
+
+FUNCTION $A359 (00 00) $A35E-$A387
+Checks how many ships can be built in (1/2) this turn.
+Returns #$FF if city has no port.
+
+A35E 8E FF 00    / Push #$FF to metastack            / (+2)
+A361 63          / Push #$03 to metastack            / (+2)
+A362 3C          / Push preloaded 01/02 to metastack / (+2)
+A363 E9 0B D1 06 / Run function $D10B                / (-6) Hidden Stat 3/FF
+A367 51          / Store #$01 to MC
+A368 DA          / M8 AND MC                         /      Check if city has port
+A369 D8 84 A3    / Jump to $A384 if zero
+
+A36C 0C          / Store preloaded 01/02 to M8
+A36D 8F 1A       / Add #$1A to M8
+A36F D3          / Replace M8 with 1-byte value      /      Fleet
+A370 B3          / Push M8 to metastack              / (+2)
+A371 89 64       / Store #$64 to M8
+A373 B4          / Pull 2 meta to MC                 / (-2)
+A374 BC          / Subtract MC from M8
+A375 B3          / Push M8 to metastack              / (+2) 100-Fleet
+A376 0C          / Store preloaded 01/02 to M8
+A377 78          / Add #$08 to M8
+A378 D3          / Replace M8 with 1-byte value
+A379 B3          / Push M8 to metastack              / (+2) Industry
+A37A E9 6B DC 02 / Run function $DC6B                / (-2) Take square root
+A37E B3          / Push M8 to metastack              / (+2)
+A37F E9 D6 DC 04 / Run function $DCD6                / (-2) Find smaller of two values
+                                                            (Max number of ships that can be built)
+															
+A383 CF          / Exit
+A384 8A FF 00    / Store #$FF to M8
+A387 CF          / Exit 
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A380                         20 09 E5 00 00 40 A8 BA
+A390 78 40 A8 BC 78 40 A8 BE 78 CF
+
+FUNCTION $A388 (00 00) $A38D-$A399
+Blank temp city address values ($78BA-$78BF)
+
+A38D 40          / Store #$00 to M8
+A38E A8 BA 78    / Store M8 to $78BA/$78BB
+A391 40          / Store #$00 to M8
+A392 A8 BC 78    / Store M8 to $78BC/$78BD
+A395 40          / Store #$00 to M8
+A396 A8 BE 78    / Store M8 to $78BE/$78BF
+A399 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A390                               20 09 E5 00 00 A4
+A3A0 A2 76 8C 68 70 C0 D8 AD A3 45 D6 AE A3 41 B3 A4
+A3B0 A2 76 8C 68 70 BC 8B 12 B8 B3 E9 6F 91 02 B4 C8
+A3C0 D8 E1 A3 60 E9 D3 BA 02 A8 A4 78 D8 E1 A3 A4 A2
+A3D0 76 78 B0 51 BE A8 BA 78 8C F4 01 C8 D8 E1 A3 41
+A3E0 CF 40 CF
+
+FUNCTION $A39A (00 00) $A39F-$A3E2
+
+A39F A4 A2 76    / Store $76A2/$76A3 to M8           / Active nation
+A3A2 8C 68 70    / Store #$7068 to MC
+A3A5 C0          / Check if M8 = MC                  / Check if France
+A3A6 D8 AD A3    / Jump to $A3AD if not
+
+A3A9 45          / Store #$05 to M8
+A3AA D6 AE A3    / Jump to $A3AE
+
+A3AD 41          / Store #$01 to M8
+
+A3AE B3          / Push M8 to metastack              / (+2)
+
+A3AF A4 A2 76    / Store $76A2/$76A3 to M8
+A3B2 8C 68 70    / Store #$7068 to MC
+A3B5 BC          / Subtract MC from M8
+A3B6 8B 12       / Store #$12 to MC
+A3B8 B8          / Divide M8 by MC
+A3B9 B3          / Push M8 to metastack              / (+2)
+A3BA E9 6F 91 02 / Run function $916F                / (-2) Tally # of hostile nations
+A3BE B4          / Pull 2 meta to MC
+A3BF C8          / Check if M8 > MC                  /      Check if nation is at war with more than 1 nation,
+                                                            Or if France, if at war with more than 5 nations.
+A3C0 D8 E1 A3    / Jump to $A3E1 if not
+
+A3C3 60          / Push #$00 to metastack            / (+2)
+A3C4 E9 D3 BA 02 / Run function $BAD3                / (-2)
+A3C8 A8 A4 78    / Store M8 to $78A4/$78A5           /      Set target nation
+A3CB D8 E1 A3    / Jump to $A3E1 if zero             /      If no nation was found
+
+A3CE A4 A2 76    / Store $76A2/$76A3 to M8
+A3D1 78          / Add #$08 to M8
+A3D2 B0          / Replace M8 with 2-byte value      /      Active Nation - Gold
+A3D3 51          
+A3D4 BE          / Divide M8 by 2
+A3D5 A8 BA 78    / Store M8 to $78BA/$78BB
+A3D8 8C F4 01    / Store #$01F4 to MC                /      500
+A3DB C8          / Check if M8 > MC                  /      Check if Gold > 1001
+A3DC D8 E1 A3    / Jump to $A3E1 if not
+
+A3DF 41          / Store #$01 to M8 
+A3E0 CF          / Exit
+
+A3E1 40          / Store #$00 to M8
+A3E2 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A3E0          20 09 E5 00 00 61 E9 D3 BA 02 A8 A4 78
+A3F0 D8 00 A4 A5 EA 6F B3 8D 64 E9 D1 D7 02 B4 C6 CF
+A400 40 CF
+
+FUNCTION $A3E3 (00 00) $A3E8-$A401
+
+A3E8 61          / Push #$01 to metastack            / (+2)
+A3E9 E9 D3 BA 02 / Run function $BAD3                / (-2) Find nation meeting criteria
+A3ED A8 A4 78    / Store M8 to $78A4/$78A5           /      Set as target nation
+A3F0 D8 00 A4    / Jump to $A400 if zero
+
+A3F3 A5 EA 6F    / Store $6FEA to $0008              /      Scenario
+A3F6 B3          / Push M8 to metastack              / (+2)
+A3F7 8D 64       / Push #$64 to metastack            / (+2)
+A3F9 E9 D1 D7 02 / Run function $D7D1                / (-2) RNG #$00-#$63
+A3FD B4          / Pull 2 meta to MC                 / (-2)
+A3FE C6          / Check if M8 < MC
+A3FF CF          / Exit
+
+A400 40          / Store #$00 to M8
+A401 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A400       20 09 E5 00 00 62 E9 D3 BA 02 A8 A4 78 D8
+A410 14 A4 41 CF 40 CF
+
+FUNCTION $A402 (00 00) $A407-$A415
+Set target nation meeting criteria #$02
+
+Return #$01 if one is located, else return #$00
+
+A407 62          / Push #$02 to metastack            / (+2)
+A408 E9 D3 BA 02 / Run function $BAD3                / (-2) Find nation meeting criteria #$02
+A40C A8 A4 78    / Store M8 to $78A4/$78A5           /      Set target nation
+A40F D8 14 A4    / Jump to $A414 if blank
+
+A412 41          / Store #$01 to M8
+A413 CF          / Exit
+
+A414 40          / Store #$00 to M8
+A415 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A410                   20 09 E5 FF FF 40 A2 FF FF A4
+A420 A2 76 8C 68 70 BC 8B 12 B8 B3 E9 6F 91 02 D9 02
+A430 00 00 00 3B A4 01 00 5E A4 3F A4 41 A2 FF FF A0
+A440 FF FF D8 69 A4 63 E9 D3 BA 02 A8 A4 78 D8 69 A4
+A450 A4 A2 76 76 B0 B0 A8 C0 78 D8 69 A4 41 CF 8D 64
+A460 E9 D1 D7 02 5A C6 D6 3C A4 40 CF
+
+FUNCTION $A416 (FF FF) $A41B-$A46A
+
+A41B 40          / Store #$00 to M8
+A41C A2 FF FF    / Store $0008 to meta 01
+
+A41F A4 A2 76    / Store $76A2/$76A3 to M8           /      Active Nation
+A422 8C 68 70    / Store #$7068 to MC
+A425 BC          / Subtract MC from M8
+A426 8B 12       / Store #$12 to MC
+A428 B8          / Divide M8 by MC
+A429 B3          / Push M8 to metastack              / (+2)
+A42A E9 6F 91 02 / Run function $916F                / (-2) Tally # of hostile nations
+A42E D9 02 00    /
+     00 00 3B A4 / Jump to $A43B if zero
+	 01 00 5E A4 / Jump to $A45E if one
+	       3F A4 / Else jump to $A43F
+
+A43B 41          / Store #$01 to M8
+A43C A2 FF FF    / Store $0008 to meta 01
+
+A43F A0 FF FF    / Store meta 01 to $0008
+A442 D8 69 A4    / Jump to $A469 if zero
+
+A445 63          / Push #$03 to metastack            / (+2)
+A446 E9 D3 BA 02 / Run function $BAD3                / (-2) Find nation meeting criteria #$03
+A44A A8 A4 78    / Store M8 to $78A4/$78A5           /      Set target nation
+A44D D8 69 A4    / Jump to $A469 if blank
+
+A450 A4 A2 76    / Store $76A2/$76A3 to M8           /      Active nation
+A453 76          / Add #$06 to M8
+A454 B0          / Replace M8 with 2-byte value      /      First city
+A455 B0          / Replace M8 with 2-byte value      /      Commander
+A456 A8 C0 78    / Store M8 to $78C0                 /      Acting Officer
+A459 D8 69 A4    / Jump to $A469 if blank
+
+A45C 41          / Store #$01 to M8
+A45D CF          / Exit
+
+A45E 8D 64       / Push #$64 to metastack            / (+2)
+A460 E9 D1 D7 02 / Run function $D7D1                / (-2)
+A464 5A          / Store #$0A to MC
+A465 C6          / Check if M8 < MC
+A466 D6 3C A4    / Jump to $A43C
+
+A469 40          / Store #$00 to M8
+A46A CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A460                                  20 09 E5 00 00
+A470 66 E9 D3 BA 02 A8 A4 78 D8 83 A4 A4 A2 76 8C 68
+A480 70 C1 CF 40 CF
+
+FUNCTION $A46B (00 00) $A470-$A484
+A470 66          / Push #$06 to metastack            / (+2)
+A471 E9 D3 BA 02 / Run function $BAD3                / (-2) Find nation criteria #$06
+A475 A8 A4 78    / Store M8 to $78A4/$78A5           /      Set target nation
+A478 D8 83 A4    / Jump to $A483 if blank
+
+A47B A4 A2 76    / Store $76A2/$76A3 to M8           /      Active nation
+A47E 8C 68 70    / Store #$7068 to MC
+A481 C1          / Check if M8 is different than MC
+A482 CF          / Exit
+
+A483 40          / Store #$00 to M8
+A484 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A480                20 09 E5 00 00 64 E9 D3 BA 02 A8
+A490 A4 78 D8 AC A4 65 E9 D3 BA 02 A8 A6 78 A4 A6 78
+A4A0 D8 AC A4 8D 64 E9 D1 D7 02 5A C6 CF 40 CF
+
+FUNCTION $A485 (00 00) $A48A-$A4AD
+
+A48A 64          / Push #$04 to metastack            / (+2)
+A48B E9 D3 BA 02 / Run function $BAD3                / (-2) Find nation criteria #$04
+A48F A8 A4 78    / Store M8 to $78A4/$78A5           /      Set target nation
+A492 D8 AC A4    / Jump to $A4AC if blank
+
+A495 65          / Push #$05 to metastack            / (+2)
+A496 E9 D3 BA 02 / Run function $BAD3                / (-2) Find nation criteria #$05
+A49A A8 A6 78    / Store M8 to $78A6/$78A7           /      Set secondary target nation?
+
+A49D A4 A6 78    / Store $78A6/$78A7 to M8
+A4A0 D8 AC A4    / Jump to $A4AC if blank
+
+A4A3 8D 64       / Push #$64 to metastack            / (+2)
+A4A5 E9 D1 D7 02 / Run function $D1D7                / (-2)
+A4A9 5A          / Push #$0A to MC
+A4AA C6          / Check if M8 < MC
+A4AB CF          / Exit
+
+A4AC 40          / Store #$00 to M8
+A4AD CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A4A0                                           20 09
+A4B0 E5 00 00 67 E9 D3 BA 02 A8 A4 78 D8 CB A4 A4 A2
+A4C0 76 72 B0 B3 E9 3B D4 02 5F C6 CF 40 CF
+
+FUNCTION $A4AE (00 00) $A4B3-$A4CC
+
+A4B3 67          / Push #$07 to metastack            / (+2)
+A4B4 E9 D3 BA 02 / Run function $BAD3                / (-2) Find nation criteria #$07
+A4B8 A8 A4 78    / Store M8 to $78A4/$78A5           /      Set target nation
+A4BB D8 CB A4    / Jump to $A4CB if blank
+
+A4BE A4 A2 76    / Store $76A2/$76A3 to M8           /      Active nation
+A4C1 72          / Add #$02 to M8
+A4C2 B0          / Replace M8 with 2-byte value      /      Active nation - Reserves
+A4C3 B3          / Push M8 to metastack              / (+2)
+A4C4 E9 3B D4 02 / Run function $D43B                / (-2) Get size of list
+A4C8 5F          / Store #$0F to MC
+A4C9 C6          / Check if M8 < MC
+A4CA CF          / Exit
+
+A4CB 40          / Store #$00 to M8
+A4CC CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A4C0                                        20 09 E5
+A4D0 00 00 63 AA A2 76 E9 B0 BC 04 D7 F5 A4 A4 A2 76
+A4E0 7E B0 8B 78 C8 D8 F5 A4 40 A8 BA 78 A4 A2 76 8F
+A4F0 10 B0 50 C1 CF 8E E8 03 69 AA A2 76 8E E6 B4 8E
+A500 E0 00 62 E9 79 DD 0A 8C C8 00 B5 B3 E9 D6 DC 04
+A510 A8 BA 78 A4 A2 76 8F 10 B0 A6 BA 78 C1 CF
+
+FUNCTION $A4CD (00 00) $A4D2-$A51D
+
+A4D2 63          / Push #$03 to metastack            / (+2)
+A4D3 AA A2 76    / Push $76A2/$76A3 to metastack     / (+2) Active nation
+A4D6 E9 B0 BC 04 / Run function $BCB0                / (-4) Get active city
+A4DA D7 F5 A4    / Jump to $A4F5 if found
+
+A4DD A4 A2 76    / Store $76A2/$76A3 to M8           /      Active nation
+A4E0 7E          / Add #$0E to M8
+A4E1 B0          / Replace M8 with 2-byte value      /      Active nation - Cannons
+A4E2 8B 78       / Store #$78 to MC                  /      120
+A4E4 C8          / Check if M8 > MC
+A4E5 D8 F5 A4    / Jump to $A4F5 if not
+
+A4E8 40          / Store #$00 to M8
+A4E9 A8 BA 78    / Store M8 to $78BA/$78BB           /      Gold to transfer
+A4EC A4 A2 76    / Store $76A2/$76A3                 /      Active nation
+A4EF 8F 10       / Add #$10 to M8
+A4F1 B0          / Replace M8 with 2-byte value      /      Active nation - Factories
+A4F2 50          / Store #$00 to MC
+A4F3 C1          / Check if M8 is different than MC
+A4F4 CF          / Exit
+
+A4F5 8E E8 03    / Push #$03E8 to metastack          / (+2)
+A4F8 69          / Push #$09 to metastack            / (+2)
+A4F9 AA A2 76    / Push $76A2/$76A3 to metastack     / (+2)
+A4FC 8E E6 B4    / Push #$B4E6 to metastack          / (+2)
+A4FF 8E E0 00    / Push #$E0 to metastack            / (+2)
+A502 62          / Push #$02 to metastack            / (+2)
+A503 E9 79 DD 0A / Run function $DD79                / (-A)
+A507 8C C8 00    / Store #$C8 to MC
+A50A B5          / Multiply M8 by MC
+A50B B3          / Push M8 to metastack              / (+2)
+A50C E9 D6 DC 04 / Run function $DCD6                / (-4) Find smaller of two
+A510 A8 BA 78    / Store M8 to $78BA/$78BB           /      Gold to transfer
+
+A513 A4 A2 76    / Store $76A2/$76A3 to M8           /      Active nation
+A516 8F 10       / Add #$10 to M8                    /      Factories
+A518 B0          / Replace M8 with 2-byte value 
+A519 A6 BA 78    / Store $78BA/$78BB to MC           /      Gold to transfer
+A51C C1          / Check if M8 is different than MC
+A51D CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A510                                           20 09
+A520 E5 00 00 A4 A2 76 72 B0 B3 E9 3B D4 02 5F C6 D8
+A530 72 A5 66 AA A2 76 E9 B0 BC 04 A8 D1 7C D8 72 A5
+A540 A4 D1 7C 72 B0 B3 E9 3B D4 02 5E C8 D8 72 A5 A4
+A550 D1 7C 72 B0 8C 05 60 C1 D8 72 A5 60 AA D1 7C 8E
+A560 21 B4 8E E2 00 62 E9 79 DD 0A A8 C0 78 D8 72 A5
+A570 41 CF 40 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A570             20 09 E5 FF FF A4 A2 76 72 B0 A8 C0
+A580 78 A4 C0 78 D8 98 A5 A4 A2 76 8C 68 70 C0 D8 9A
+A590 A5 A4 C0 78 B0 D7 9A A5 40 CF A4 A2 76 72 B0 B3
+A5A0 E9 3B D4 02 55 C6 D8 AD A5 43 D6 AE A5 4E A2 FF
+A5B0 FF AA A2 76 8E 6A B7 8E E2 00 62 E9 79 DD 08 A8
+A5C0 D1 7C D7 C7 A5 40 CF A4 D1 7C 8C 76 71 BC 8B 1C
+A5D0 B8 8B 1B C0 D8 DB A5 46 A2 FF FF A0 FF FF B3 A4
+A5E0 D1 7C 72 B0 B3 E9 3B D4 02 B4 C6 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A5E0                                     20 09 E5 00
+A5F0 00 63 AA A2 76 E9 B0 BC 04 A8 D1 7C D8 1B A6 AA
+A600 D1 7C E9 EC 99 02 A8 BA 78 A4 BA 78 8F 28 B3 A4
+A610 A2 76 7E B0 B4 C9 D8 1B A6 41 CF 40 CF
+
+FUNCTION $A5EC (00 00) $A5F1-$A61C
+
+A5F1 63          / Push #$03 to metastack            / (+2)
+A5F2 AA A2 76    / Push $76A2/$76A3 to metastack     / (+2) Active nation 
+A5F5 E9 B0 BC 04 / Run function $BCB0                / (-4) Get active city (#$03)
+A5F9 A8 D1 7C    / Store M8 to $7CD1/$7CD2
+A5FC D8 1B A6    / Jump to $A61B if blank
+
+A5FF AA D1 7C    / Push $7CD1/$7CD2 to metastack     / (+2)
+A602 E9 EC 99 02 / Run function $99EC                / (-2) Tallies officers w skill?
+A606 A8 BA 78    / Store M8 to $78BA/$78BB
+
+A609 A4 BA 78    / Store $78BA/$78BB to M8 
+A60C 8F 28       / Add #$28 to M8
+A60E B3          / Push M8 to metastack              / (+2)
+A60F A4 A2 76    / Store $76A2/$76A3 to M8           /      Active nation
+A612 7E          / Add #$0E to M8
+A613 B0          / Replace M8 with 2-byte value      /      Cannons
+A614 B4          / Pull 2 meta to MC                 / (-2)
+A615 C9          / Check if M8 ≥ MC            
+A616 D8 1B A6    / Jump to $A61B if not
+
+A619 41          / Store #$01 to M8
+A61A CF          / Exit
+
+A61B 40          / Store #$00 to M8
+A61C CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A610                                        20 09 E5
+A620 00 00 60 AA A2 76 E9 B0 BC 04 A8 D1 7C D8 4E A6
+A630 AC 88 A3 A4 A2 76 7A B0 B3 AA D1 7C E9 EC 8F 02
+A640 B3 E9 D6 DC 04 A8 BC 78 A4 BC 78 50 C1 CF 40 CF
+
+FUNCTION $A61D (00 00) $A622-$A64F
+
+A622 60          / Push #$00 to metastack            / (+2)
+A623 AA A2 76    / Push $76A2/$76A3 to metastack     / (+2) Active Nation
+A626 E9 B0 BC 04 / Run function $BCB0                / (-4) Determine Active City (#$00)
+A62A A8 D1 7C    / Store M8 to $7CD1/$7CD2           /      Set Active City
+A62D D8 4E A6    / Jump to $A64E if zero
+
+A630 AC 88 A3    / Run function $A388                /      Blank temp city addresses
+A633 A4 A2 76    / Store $76A2/$76A3 to M8
+A636 7A          / Add #$0A to M8
+A637 B0          / Replace M8 with 2-byte value      /      Active Nation - Factories
+A638 B3          / Push M8 to metastack              / (+2)
+A639 AA D1 7C    / Push $7CD1/$7CD2 to metastack     / (+2)
+A63C E9 EC 8F 02 / Run function $8FEC                / (-2) Run food calc on city?
+A640 B3          / Push M8 to metastack              / (+2)
+A641 E9 D6 DC 04 / Run function $DCD6                / (-4) Find smaller of two values
+A645 A8 BC 78    / Store M8 to $78BC/$78BD 
+
+A648 A4 BC 78    / Store $78BC/$78BD to M8
+A64B 50          / Store #$00 to MC
+A64C C1          / Check if M8 is different than MC
+A64D CF          / Exit
+
+A64E 40          / Store #$00 to M8
+A64F CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A650 20 09 E5 00 00 61 AA A2 76 E9 B0 BC 04 A8 D1 7C
+A660 D8 81 A6 AC 88 A3 A4 A2 76 7C B0 B3 AA D1 7C E9
+A670 66 90 02 B3 E9 D6 DC 04 A8 BE 78 A4 BE 78 50 C1
+A680 CF 40 CF
+
+FUNCTION $A650 (00 00) $A655-$A682
+
+A655 61          / Push #$01 to metastack            / (+2)
+A656 AA A2 76    / Push $76A2/$76A3 to metastack     / (+2) Active nation
+A659 E9 B0 BC 04 / Run function $BCB0                / (-4) Active city (#$01)
+A65D A8 D1 7C    / Store M8 to $7CD1/$7CD2
+A660 D8 81 A6    / Jump to $A681 if not found
+
+A663 AC 88 A3    / Run function $A388                /      Blank temp addresses
+A666 A4 A2 76    / Store $76A2/$76A3 to M8           /      Active nation
+A669 7C          / Add #$0C to M8                    /      Action nation - Materials
+A66A B0          / Replace M8 with 2-byte value
+A66B B3          / Push M8 to metastack              / (+2)
+A66C AA D1 7C    / Push $7CD1/$7CD2 to metastack     / (+2)
+A66F E9 66 90 02 / Run function $9066                / (-2)
+A673 B3          / Push M8 to metastack              / (+2)
+A674 E9 D6 DC 04 / Run function $DCD6                / (-4) Find smaller value
+A678 A8 BE 78    / Store M8 to $78BE/$78BF
+
+A67B A4 BE 78    / Store $78BE/$78BF to M8 
+A67E 50          / Store #$00 to M8
+A67F C1          / Check if M8 is different than MC
+A680 CF          / Exit
+
+A681 40          / Store #$00 to M8
+A682 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A680          20 09 E5 FF FF 60 AA A2 76 8E E6 B4 8E
+A690 E0 00 62 E9 79 DD 0A A2 FF FF A0 FF FF 74 8C E8
+A6A0 03 B5 B3 A4 A2 76 78 B0 B4 C8 D8 F2 A6 62 AA A2
+A6B0 76 E9 B0 BC 04 A8 D1 7C D8 F2 A6 AC 88 A3 A0 FF
+A6C0 FF D0 B3 8A 20 4E B4 B8 B3 A4 A2 76 78 B0 B3 E9
+A6D0 D6 DC 04 A8 BA 78 A4 D1 7C 7E B0 B3 8A 0F 27 B4
+A6E0 BC B3 AA BA 78 E9 D6 DC 04 A8 BA 78 A4 BA 78 50
+A6F0 C1 CF 40 CF
+
+FUNCTION $A683 (FF FF) $A688-$A6F3
+For current active nation, find a target city & determine 
+how much gold to transfer to it.
+
+Returns 1 if a city + amount was determined.
+Returns 0 if not.
+
+A688 60          / Push #$00 to metastack            / (+2)
+A689 AA A2 76    / Push $76A2/$76A3 to metastack     / (+2)
+A68C 8E E6 B4    / Push #$B4E6 to metastack          / (+2)
+A68F 8E E0 00    / Push #$E0 to metastack            / (+2)
+A692 62          / Push #$02 to metastack            / (+2)
+A693 E9 79 DD 0A / Run function $DD79                / (-A) Check active nation's # of cities
+A697 A2 FF FF    / Store $0008 to meta 01
+
+A69A A0 FF FF    / Store meta 01 to $0008
+A69D 74          / Add #$04 to M8
+A69E 8C E8 03    / Store #$03E8 to MC                /      1000
+A6A1 B5          / Multiply M8 by MC
+A6A2 B3          / Push M8 to metastack              / (+2)
+A6A3 A4 A2 76    / Store $76A2/$76A3 to M8
+A6A6 78          / Add #$08 to M8
+A6A7 B0          / Replace M8 with 2-byte value      /      Active Nation - Gold 
+A6A8 B4          / Pull 2 meta to MC                 / (-2)
+A6A9 C8          / Check if M8 > MC
+A6AA D8 F2 A6    / Jump to $A6F2 if not
+
+A6AD 62          / Push #$02 to metastack            / (+2)
+A6AE AA A2 76    / Push $76A2/$76A3 to metastack     / (+2)
+A6B1 E9 B0 BC 04 / Run function $BCB0                / (-4) Determine Active City (#$02)
+A6B5 A8 D1 7C    / Store M8 to $7CD1/$7CD2
+A6B8 D8 F2 A6    / Jump to $A6F2 if zero
+
+A6BB AC 88 A3    / Run function $A388                /      Blank temp city addresses
+
+A6BE A0 FF FF    / Store meta 01 to $0008
+A6C1 D0          / Increment M8
+A6C2 B3          / Push M8 to metastack              / (+2)
+A6C3 8A 20 4E    / Store #$4E20 to MC                /      20000
+A6C6 B4          / Pull 2 meta to MC                 / (-2)
+A6C7 B8          / Divide M8 by MC
+A6C8 B3          / Push M8 to metastack              / (+2)
+A6C9 A4 A2 76    / Store $76A2/$76A3 to M8           /      Active Nation
+A6CC 78          / Add #$08 to M8
+A6CD B0          / Replace M8 with 2-byte value      /      Active Nation - Gold
+A6CE B3          / Push M8 to metastack              / (+2)
+A6CF E9 D6 DC 04 / Run function $DCD6                / (-4) Find smaller value
+A6D3 A8 BA 78    / Store M8 to $78BA/$78BB           /      Gold to transfer
+
+A6D6 A4 D1 7C    / Store $7CD1/$7CD2 to M8
+A6D9 7E          / Add #$0E to M8
+A6DA B0          / Replace M8 with 2-byte value      /      Active City - Gold
+A6DB B3          / Push M8 to metastack              / (+2)
+A6DC 8A 0F 27    / Store #$270F to M8
+A6DF B4          / Pull 2 meta to MC                 / (-2)
+A6E0 BC          / Subtract MC from M8
+A6E1 B3          / Push M8 to metastack              / (+2)
+A6E2 AA BA 78    / Push $78BA/$78BB to metastack     / (+2) Gold to transfer
+A6E5 E9 D6 DC 04 / Run function $DCD6                / (-4) Find smaller value
+A6E9 A8 BA 78    / Store M8 to $78BA/$78BB
+
+A6EC A4 BA 78    / Store $78BA/$78BB to M8 
+A6EF 50          / Store #$00 to MC
+A6F0 C1          / Check if M8 is different than MC
+A6F1 CF          / Exit
+
+A6F2 40          / Store #$00 to M8
+A6F3 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A6F0             20 09 E5 00 00 65 AA A2 76 E9 B0 BC
+A700 04 A8 D1 7C D8 2F A7 A4 A2 76 78 B0 8B 64 B8 B3
+A710 AA D1 7C 8E 97 A8 8E E2 00 62 E9 79 DD 08 B3 E9
+A720 D6 DC 04 8B 64 B5 A8 BA 78 A4 BA 78 50 C1 CF 40
+A730 CF 
+
+FUNCTION $A6F4 (00 00) $A6F9-$A730
+Locates a city within nation to buy ships for, then allocates the max amount of gold.
+Returns #$01 if successful or #$00 if not.
+
+A6F9 65          / Push #$05 to metastack            / (+2)
+A6FA AA A2 76    / Push $76A2/$76A3 to metastack     / (+2) Active nation
+A6FD E9 B0 BC 04 / Run function $BCB0                / (-4) Active city (#$05)
+A701 A8 D1 7C    / Store M8 to $7CD1/$7CD2
+A704 D8 2F A7    / Jump to $A72F if blank
+
+A707 A4 A2 76    / Store $76A2/$76A3 to M8
+A70A 78          / Add #$08 to M8
+A70B B0          / Replace M8 with 2-byte value      /      Gold
+A70C 8B 64       / Store #$64 to MC
+A70E B8          / Divide M8 by MC
+A70F B3          / Push M8 to metastack              / (+2)
+A710 AA D1 7C    / Push $7CD1/$7CD2 to metastack     / (+2)
+A713 8E 97 A8    / Push #$A897 to metastack          / (+2)
+A716 8E E2 00    / Push #$E2 to metastack            / (+2)
+A719 62          / Push #$02 to metastack            / (+2)
+A71A E9 79 DD 08 / Run function $DD79                / (-8) Check out max allowance of ships for industry value
+A71E B3          / Push M8 to metastack              / (+2)
+A71F E9 D6 DC 04 / Run function $DCD6                / (-4) Find greatest amount of ships that can be built
+A723 8B 64       / Store #$64 to MC
+A725 B5          / Multiply M8 by MC
+A726 A8 BA 78    / Store M8 to $78BA/$78BB           /      Gold to spend
+
+A729 A4 BA 78    / Store $78BA/$78BB to M8
+A72C 50          / Store #$00 to MC
+A72D C1          / Check if M8 is different than MC
+A72E CF          / Exit 
+
+A72F 40          / Store #$00 to M8
+A730 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A730    20 09 E5 00 00 64 AA A2 76 E9 B0 BC 04 A8 D1
+A740 7C A4 D1 7C 50 C1 CF
+
+FUNCTION $A731 (00 00) $A736-$A746
+
+A736 64          / Push #$04 to metastack            / (+2)
+A737 AA A2 76    / Push $76A2/$76A3 to metastack     / (+2) Active nation
+A73A E9 B0 BC 04 / Run function $BCB0                / (-4)
+A73E A8 D1 7C    / Store M8 to $7CD1/$7CD2
+
+A741 A4 D1 7C    / Store $7CD1/$7CD2 to M8
+A744 50          / Store #$00 to MC
+A745 C1          / Check if M8 is different than MC
+A746 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A740                      20 09 E5 FF FF A5 63 70 B3
+A750 8D 64 E9 D1 D7 02 B4 C6 D8 5F A7 40 D6 60 A7 41
+A760 A2 FF FF A0 FF FF D7 BD A7 8E 05 60 E9 6E C2 02
+A770 A8 D1 7C AC 88 A3 A5 64 70 D5 FF FF 07 00 BD A7
+A780 8E A7 E1 A7 18 A8 4A A8 5A A8 6B A8 9D A8 A4 D1
+A790 7C 7E B0 B3 8A 0F 27 B4 BC B3 A4 A2 76 78 B0 B3
+A7A0 E9 D6 DC 04 A8 BA 78 8E E8 03 AA BA 78 E9 D6 DC
+A7B0 04 A8 BA 78 A4 BA 78 D8 11 A8 AC 6E BA A0 FF FF
+A7C0 D7 CB A7 6A 8E 63 70 E9 77 DE 04 A0 FF FF B3 8E
+A7D0 C4 A8 8E E2 00 62 E9 79 DD 08 8A FF 00 A9 64 70
+A7E0 CF A4 D1 7C 8F 10 B0 B3 8A 0F 27 B4 BC B3 A4 A2
+A7F0 76 7A B0 B3 E9 D6 DC 04 A8 BC 78 A4 D1 7C 75 B0
+A800 B3 AA BC 78 E9 D6 DC 04 A8 BC 78 A4 BC 78 D7 BA
+A810 A7 42 A2 FF FF D6 BD A7 A4 D1 7C 8F 12 B0 B3 8A
+A820 0F 27 B4 BC B3 A4 A2 76 7C B0 B3 E9 D6 DC 04 A8
+A830 BE 78 A4 D1 7C 75 B0 51 BE B3 AA BE 78 E9 D6 DC
+A840 04 A8 BE 78 A4 BE 78 D6 0E A8 8E DE 00 A4 D1 7C
+A850 8F 1B B4 B3 D3 DA D4 D6 BD A7 A4 A2 76 72 B0 A8
+A860 C0 78 D8 11 A8 AC 34 BA D6 BD A7 8D 28 A4 A2 76
+A870 7E B0 B3 E9 D6 DC 04 A8 BA 78 A4 D1 7C 8F 18 B0
+A880 B3 8A E7 03 B4 BC B3 AA BA 78 E9 D6 DC 04 A8 BA
+A890 78 A4 BA 78 D8 11 A8 AC 73 B9 D6 BD A7 A4 D1 7C
+A8A0 78 D3 B3 E9 6B DC 02 A8 BA 78 A4 D1 7C 8F 1A D3
+A8B0 B3 89 64 B4 BC B3 AA BA 78 E9 D6 DC 04 A8 BA 78
+A8C0 A4 A2 76 78 B0 8B 64 B8 B3 AA BA 78 E9 D6 DC 04
+A8D0 8B 64 B5 A8 BA 78 8E FF 00 63 AA D1 7C E9 0B D1
+A8E0 06 51 DA D8 11 A8 A4 BA 78 D8 11 A8 AC 98 B9 D6
+A8F0 BD A7
+
+FUNCTION $A747 (FF FF) $A74C-$A8F1
+
+A74C A5 63 70    / Store $7063 to $0008
+A74F B3          / Push M8 to metastack              / (+2)
+A750 8D 64       / Push #$64 to metastack            / (+2)
+A752 E9 D1 D7 02 / Run function $D7D1                / (-2)
+A756 B4          / Pull 2 meta to MC                 / (-2)
+A757 C6          / Check if M8 < MC                         ($7063)% RNG check
+A758 D8 5F A7    / Jump to $A75F if not
+
+A75B 40          / Store #$00 to M8
+A75C D6 60 A7    / Jump to $A760
+
+A75F 41          / Store #$01 to M8
+
+A760 A2 FF FF    / Store $0008 to meta 01
+
+A763 A0 FF FF    / Store meta 01 to $0008
+A766 D7 BD A7    / Jump to $A7BD if nonzero          /      If RNG check failed
+
+A769 8E 05 60    / Push #$6005 to metastack          / (+2)
+A76C E9 6E C2 02 / Run function $C26E                / (-2)
+A770 A8 D1 7C    / Store M8 to $7CD1/$7CD2           /      Set Napoleon's city as active city
+A773 AC 88 A3    / Run function $A388                /      Blank temp city address values ($78BA-$78BF)
+
+A776 A5 64 70    / Store $7064 to $0008              /      ???
+A779 D5 FF FF    / Subtract 1 from it 
+        07 00    / (7 redirects follow)
+		
+		BD A7    / Jump to $A7BD if $7064 = 0 or > 7
+		
+		8E A7    / Jump to $A78E if $7064 = 1
+		E1 A7    / Jump to $A7E1 if $7064 = 2
+		18 A8    / Jump to $A818 if $7064 = 3
+		4A A8    / Jump to $A84A if $7064 = 4
+		5A A8    / Jump to $A85A if $7064 = 5
+		6B A8    / Jump to $A86B if $7064 = 6
+		9D A8    / Jump to $A89D if $7064 = 7 
+		
+A78E A4 D1 7C    / Store $7CD1/$7CD2 to M8           /       Active City
+A791 7E          / Add #$0E to M8
+A792 B0          / Replace M8 with 2-byte value      /       Active City - Gold
+A793 B3          / Push M8 to metastack              / (+2)
+A794 8A 0F 27    / Store #$270F to M8
+A797 B4          / Pull 2 meta to MC                 / (-2)
+A798 BC          / Subtract MC from M8               /       9999 - Gold
+A799 B3          / Push M8 to metastack              / (+2)
+A79A A4 A2 76    / Store $76A2/$76A3 to M8           /       Active Nation 
+A79D 78          / Add #$08 to M8
+A79E B0          / Replace M8 with 2-byte value      /       Active Nation - Gold
+A79F B3          / Push M8 to metastack              / (+2)
+A7A0 E9 D6 DC 04 / Run function $DCD6                / (-4)  Find smaller value
+A7A4 A8 BA 78    / Store M8 to $78BA/$78BB           /       Temp storage
+
+A7A7 8E E8 03    / Push #$03E8 to metastack          / (+2) 1000
+A7AA AA BA 78    / Push $78BA/$78BB to metastack     / (+2)
+A7AD E9 D6 DC 04 / Run function $DCD6                / (-4) Find smaller value
+A7B1 A8 BA 78    / Store M8 to $78BA/$78BB           /      Temp storage
+
+A7B4 A4 BA 78    / Store $78BA/$78BB to M8
+A7B7 D8 11 A8    / Jump to $A811 if zero
+
+A7BA AC 6E BA    / Run function $BA6E                /      Active city takes its turn
+                                                            receiving gold/food/mats
+															from the active nation.
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A7B0 04 A8 BA 78 A4 BA 78 D8 11 A8 AC 6E BA A0 FF FF
+A7C0 D7 CB A7 6A 8E 63 70 E9 77 DE 04 A0 FF FF B3 8E
+A7D0 C4 A8 8E E2 00 62 E9 79 DD 08 8A FF 00 A9 64 70
+A7E0 CF A4 D1 7C 8F 10 B0 B3 8A 0F 27 B4 BC B3 A4 A2
+A7F0 76 7A B0 B3 E9 D6 DC 04 A8 BC 78 A4 D1 7C 75 B0
+A800 B3 AA BC 78 E9 D6 DC 04 A8 BC 78 A4 BC 78 D7 BA
+A810 A7 42 A2 FF FF D6 BD A7 A4 D1 7C 8F 12 B0 B3 8A
+A820 0F 27 B4 BC B3 A4 A2 76 7C B0 B3 E9 D6 DC 04 A8
+A830 BE 78 A4 D1 7C 75 B0 51 BE B3 AA BE 78 E9 D6 DC
+A840 04 A8 BE 78 A4 BE 78 D6 0E A8 8E DE 00 A4 D1 7C
+A850 8F 1B B4 B3 D3 DA D4 D6 BD A7 A4 A2 76 72 B0 A8
+A860 C0 78 D8 11 A8 AC 34 BA D6 BD A7 8D 28 A4 A2 76
+A870 7E B0 B3 E9 D6 DC 04 A8 BA 78 A4 D1 7C 8F 18 B0
+A880 B3 8A E7 03 B4 BC B3 AA BA 78 E9 D6 DC 04 A8 BA
+A890 78 A4 BA 78 D8 11 A8 AC 73 B9 D6 BD A7 A4 D1 7C
+A8A0 78 D3 B3 E9 6B DC 02 A8 BA 78 A4 D1 7C 8F 1A D3
+A8B0 B3 89 64 B4 BC B3 AA BA 78 E9 D6 DC 04 A8 BA 78
+A8C0 A4 A2 76 78 B0 8B 64 B8 B3 AA BA 78 E9 D6 DC 04
+A8D0 8B 64 B5 A8 BA 78 8E FF 00 63 AA D1 7C E9 0B D1
+A8E0 06 51 DA D8 11 A8 A4 BA 78 D8 11 A8 AC 98 B9 D6
+A8F0 BD A7
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A8F0       20 09 E5 FC FF A4 A2 76 8C 68 70 BC 8B 12
+A900 B8 8C D7 6F BB D3 A2 FF FF A4 A2 76 8C 68 70 BC
+A910 8B 12 B8 5F B5 8C F6 6E BB D3 A2 FE FF 60 AA A2
+A920 76 8E E6 B4 8E E0 00 62 E9 79 DD 0A 53 C2 A2 FC
+A930 FF 8A 68 70 A8 A4 78 60 8E D9 A0 8E E2 00 62 E9
+A940 79 DD 08 A0 FE FF 8B 20 DA D8 B0 A9 A0 FC FF D8
+A950 57 A9 89 4B D6 59 A9 89 32 B3 A0 FF FF B4 C6 D8
+A960 96 A9 A0 FF FF 53 B5 52 BE B3 89 64 B4 BC A2 FD
+A970 FF A4 A2 76 78 B0 51 BE A8 BA 78 A4 BA 78 D8 91
+A980 AA A0 FD FF B3 8D 64 E9 D1 D7 02 B4 C6 D8 91 AA
+A990 AC 02 B2 D6 91 AA A0 FF FF 8B 64 C0 D8 91 AA 68
+A9A0 E9 D3 BA 02 A8 A4 78 D8 91 AA AC 24 B3 D6 91 AA
+A9B0 A0 FE FF 5F DA D8 CF A9 A0 FF FF D7 91 AA 69 E9
+A9C0 D3 BA 02 A8 A4 78 D8 91 AA AC 6C B5 D6 91 AA A0
+A9D0 FE FF 8B 10 DA D8 0E AA A0 FC FF D8 E3 A9 89 19
+A9E0 D6 E4 A9 45 B3 A0 FF FF B4 C6 D7 AA A9 A0 FF FF
+A9F0 8B 32 C8 D8 91 AA A0 FF FF 8F CE D2 B3 8D 64 E9
+AA00 D1 D7 02 B4 C6 D8 91 AA AC 6C B5 D6 91 AA A0 FC
+AA10 FF D8 19 AA 89 4B D6 1B AA 89 32 B3 A0 FF FF B4
+AA20 C6 D8 36 AA 8D 64 E9 D1 D7 02 8B 32 C6 D8 91 AA
+AA30 AC A0 B4 D6 91 AA A0 FC FF D8 41 AA 89 55 D6 43
+AA40 AA 89 4B B3 A0 FF FF B4 C8 D8 91 AA 6A E9 D3 BA
+AA50 02 A8 A4 78 D8 67 AA A4 A2 76 78 B0 51 BE A8 BA
+AA60 78 A4 BA 78 D6 8D A9 8A 68 70 A8 A4 78 62 8E D9
+AA70 A0 8E E2 00 62 E9 79 DD 08 A4 C0 78 D8 91 AA A0
+AA80 FF FF B3 8D 64 E9 D1 D7 02 B4 C6 D8 91 AA AC 1E 
+AA90 B4 CF
+
+FUNCTION $A8F2 (FC FF) $A8F7-$AA91
+
+Meta    01 = Aggression vs. France
+        02 = Diplomacy with France
+		03
+		04 = More than 3 cities? (0/1)
+
+A8F7 A4 A2 76    / Store $76A2/$76A3 to M8           / Active nation
+A8FA 8C 68 70
+A8FD BC
+A8FE 8B 12
+A900 B8 
+A901 8C D7 6F 
+A904 BB          
+A905 D3          /                                   / Find aggression vs France
+A906 A2 FF FF    / Store $0008 to meta 01
+
+A909 A4 A2 76    / Store $76A2/$76A3 to M8           / Active nation
+A90C 8C 68 70
+A90F BC
+A910 8B 12
+A912 B8
+A913 5F
+A914 B5
+A915 8C F6 6E
+A918 BB
+A919 D3          /                                   / Find diplomacy w/ France
+A91A A2 FE FF    / Store $0008 to meta 02
+
+A91D 60          / Push #$00 to metastack            / (+2)
+A91E AA A2 76    / Push $76A2/$76A3 to metastack     / (+2)
+A921 8E E6 B4    / Push #$B4E6 to metastack          / (+2)
+A924 8E E0 00    / Push #$00E0 to metastack          / (+2)
+A927 62          / Push #$0002 to metastack          / (+2)
+A928 E9 79 DD 0A / Run function $DD79                / (-A) Tally cities owned by nation
+A92C 53          / Store #$03 to MC 
+A92D C2          / Check if M8 < MC                  /      Check if fewer than 3 cities
+A92E A2 FC FF    / Store $0008 to meta 04
+
+A931 8A 68 70    / Store #$7068 to M8 
+A934 A8 A4 78    / Store M8 to $78A4/$78A5           /      Set France as target nation
+
+A937 60          / Push #$00 to metastack            / (+2)
+A938 8E D9 A0    / Push #$A0D9 to metastack          / (+2)
+A93B 8E E2 00    / Push #$00E2 to metastack          / (+2)
+A93E 62          / Push #$02 to metastack            / (+2)
+A93F E9 79 DD 08 / Run function $DD79                / (-8) Assign acting officer
+
+A943 A0 FE FF    / Store meta 02 to $0008
+A946 8B 20       / Store #$20 to MC
+A948 DA          / MC AND M8                         /      Check if hostile with France
+A949 D8 B0 A9    / Jump to $A9B0 if not
+
+A94C A0 FC FF    / Store meta 04 to $0008            /      Fewer than 3 cities?
+A94F D8 57 A9    / Jump to $A957 if zero
+
+A952 89 4B       / Store #$4B to M8                  /      75
+A954 D6 59 A9    / Jump to $A959
+
+A957 89 32       / Store #$32 to M8                  /      50
+A959 B3          / Push M8 to metastack              / (+2)
+A95A A0 FF FF    / Store meta 01 to $0008            /      Aggression w/ France
+A95D B4          / Pull 2 meta to MC
+A95E C6          / Check if M8 > MC                  /      < 50 if 3 or more cities, < 75 if fewer than 3 cities
+A95F D8 96 A9    / Jump to $A996 if zero             /      Wants peace more if low on cities?
+
+A962 A0 FF FF    / Store meta 01 to $0008
+A965 53
+A966 B5          / Multiply M8 by 3
+A967 52
+A968 BE          / Divide M8 by 4
+A969 B3          / Push M8 to metastack              / (+2)
+A96A 89 64       / Store #$64 to M8
+A96C B4          / Pull 2 meta to MC                 / (-2)
+A96D BC          / Subtract MC from M8               /      100 - (3/4)*(Aggression w/ France) 
+A96E A2 FD FF    / Store $0008 to meta 03            /      % chance of cease-fire request
+A971 A4 A2 76    / Store $76A2/$76A3 to M8
+A974 78          / Add #$08 to M8
+A975 B0          / Replace M8 with 2-byte value      /      Active Nation - Gold 
+A976 51
+A977 BE          / Divide M8 by 2
+A978 A8 BA 78    / Store M8 to $78BA/$78BB
+
+A97B A4 BA 78    / Store $78BA/$78BB to M8
+A97E D8 91 AA    / Jump to $AA91 if zero             /      If no gold
+
+A981 A0 FD FF    / Store meta 03 to $0008
+A984 B3          / Push M8 to metastack              / (+2)
+A985 8D 64       / Push #$64 to metastack            / (+2)
+A987 E9 D1 D7 02 / Run function $D7D1                / (-2) RNG #$00-#$63
+A98B B4          / Pull 2 meta to MC                 / (-2)
+A98C C6          / Check if M8 < MC
+A98D D8 91 AA    / Jump to $AA91 if not
+
+A990 AC 02 B2    / Run function $B202 
+
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A990 AC 02 B2 D6 91 AA A0 FF FF 8B 64 C0 D8 91 AA 68
+A9A0 E9 D3 BA 02 A8 A4 78 D8 91 AA AC 24 B3 D6 91 AA
+A9B0 A0 FE FF 5F DA D8 CF A9 A0 FF FF D7 91 AA 69 E9
+A9C0 D3 BA 02 A8 A4 78 D8 91 AA AC 6C B5 D6 91 AA A0
+A9D0 FE FF 8B 10 DA D8 0E AA A0 FC FF D8 E3 A9 89 19
+A9E0 D6 E4 A9 45 B3 A0 FF FF B4 C6 D7 AA A9 A0 FF FF
+A9F0 8B 32 C8 D8 91 AA A0 FF FF 8F CE D2 B3 8D 64 E9
+AA00 D1 D7 02 B4 C6 D8 91 AA AC 6C B5 D6 91 AA A0 FC
+AA10 FF D8 19 AA 89 4B D6 1B AA 89 32 B3 A0 FF FF B4
+AA20 C6 D8 36 AA 8D 64 E9 D1 D7 02 8B 32 C6 D8 91 AA
+AA30 AC A0 B4 D6 91 AA A0 FC FF D8 41 AA 89 55 D6 43
+AA40 AA 89 4B B3 A0 FF FF B4 C8 D8 91 AA 6A E9 D3 BA
+AA50 02 A8 A4 78 D8 67 AA A4 A2 76 78 B0 51 BE A8 BA
+AA60 78 A4 BA 78 D6 8D A9 8A 68 70 A8 A4 78 62 8E D9
+AA70 A0 8E E2 00 62 E9 79 DD 08 A4 C0 78 D8 91 AA A0
+AA80 FF FF B3 8D 64 E9 D1 D7 02 B4 C6 D8 91 AA AC 1E 
+AA90 B4 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AA90       20 09 E5 00 00 A5 5F 70 D8 B8 AA AC 9A A3
+AAA0 D8 B8 AA 62 8E D9 A0 8E E2 00 62 E9 79 DD 08 A4
+AAB0 C0 78 D8 B8 AA AC 02 B2 A5 5F 70 D8 1B AB 61 8E
+AAC0 D9 A0 8E E2 00 62 E9 79 DD 08 60 8E 4E AB 8E E2
+AAD0 00 62 E9 79 DD 08 D8 E5 AA 60 D6 DE AA 61 E9 00
+AAE0 B8 02 D6 1B AB 61 8E 4E AB 8E E2 00 62 E9 79 DD
+AAF0 08 D7 DD AA 61 8E 15 AA 8E E2 00 62 E9 79 DD 08
+AB00 D8 07 AB 61 D6 17 AB 60 8E 15 AA 8E E2 00 62 E9
+AB10 79 DD 08 D8 1B AB 60 E9 45 B7 02 A5 5F 70 D8 4E
+AB20 AB 60 8E D9 A0 8E E2 00 62 E9 79 DD 08 AC AE A4
+AB30 D8 39 AB AC DF B6 D6 4E AB AC 16 A4 D8 45 AB AC
+AB40 1E B4 D6 4E AB AC CD A4 D8 4E AB AC 45 B9 A5 5F
+AB50 70 D8 A1 AB 61 8E D9 A0 8E E2 00 62 E9 79 DD 08
+AB60 AC 85 A4 D8 6C AB AC F1 B5 D6 A1 AB AC E3 A3 D8
+AB70 78 AB AC 24 B3 D6 A1 AB AC 6B A4 D8 84 AB AC 6C
+AB80 B5 D6 A1 AB AC 02 A4 D8 90 AB AC A0 B4 D6 A1 AB
+AB90 8E 7B B8 8E E2 00 62 E9 79 DD 06 D8 A1 AB AC BB
+ABA0 B8 40 A9 5F 70 CF
+
+FUNCTION $AA92 (00 00) $AA97-$ABA5
+
+AA97 A5 5F 70    / Store $705F to $0008              / # of national actions
+AA9A D8 B8 AA    / Jump to $AAB8 if zero
+
+AA9D AC 9A A3    / Run function $A39A
+AAA0 D8 B8 AA    / Jump to $AAB8 if zero
+
+AAA3 62          / Push #$02 to metastack            / (+2)
+AAA4 8E D9 A0    / Push #$A0D9 to metastack          / (+2)
+AAA7 8E E2 00    / Push #$E2 to metastack            / (+2)
+AAAA 62          / Push #$02 to metastack            / (+2)
+AAAB E9 79 DD 08 / Run function $DD79                / (-2) Assign acting officer (Criteria: #$02)
+
+AAAF A4 C0 78    / Store $78C0/$78C1 to M8                 /      Acting officer
+AAB2 D8 B8 AA    / Jump to $AAB8 if blank
+
+AAB5 AC 02 B2    / Run function $B202
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AAB0 C0 78 D8 B8 AA AC 02 B2 A5 5F 70 D8 1B AB 61 8E
+AAC0 D9 A0 8E E2 00 62 E9 79 DD 08 60 8E 4E AB 8E E2
+AAD0 00 62 E9 79 DD 08 D8 E5 AA 60 D6 DE AA 61 E9 00
+AAE0 B8 02 D6 1B AB 61 8E 4E AB 8E E2 00 62 E9 79 DD
+AAF0 08 D7 DD AA 61 8E 15 AA 8E E2 00 62 E9 79 DD 08
+AB00 D8 07 AB 61 D6 17 AB 60 8E 15 AA 8E E2 00 62 E9
+AB10 79 DD 08 D8 1B AB 60 E9 45 B7 02 A5 5F 70 D8 4E
+AB20 AB 60 8E D9 A0 8E E2 00 62 E9 79 DD 08 AC AE A4
+AB30 D8 39 AB AC DF B6 D6 4E AB AC 16 A4 D8 45 AB AC
+AB40 1E B4 D6 4E AB AC CD A4 D8 4E AB AC 45 B9 A5 5F
+AB50 70 D8 A1 AB 61 8E D9 A0 8E E2 00 62 E9 79 DD 08
+AB60 AC 85 A4 D8 6C AB AC F1 B5 D6 A1 AB AC E3 A3 D8
+AB70 78 AB AC 24 B3 D6 A1 AB AC 6B A4 D8 84 AB AC 6C
+AB80 B5 D6 A1 AB AC 02 A4 D8 90 AB AC A0 B4 D6 A1 AB
+AB90 8E 7B B8 8E E2 00 62 E9 79 DD 06 D8 A1 AB AC BB
+ABA0 B8 40 A9 5F 70 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+ABA0                   20 09 E5 00 00 AC 1D A6 D8 B7
+ABB0 AB AC 6E BA D6 AB AB AC 50 A6 D8 C3 AB AC 6E BA
+ABC0 D6 B7 AB AC 1E A5 D8 CF AB AC FA B9 D6 C3 AB AC
+ABD0 74 A5 D8 DB AB AC 34 BA D6 CF AB AC 31 A7 D8 F7
+ABE0 AB AA D1 7C 8E 23 A8 8E E2 00 62 E9 79 DD 08 B3
+ABF0 E9 C0 B9 02 D6 DB AB AC EC A5 D8 03 AC AC 73 B9
+AC00 D6 F7 AB AC 83 A6 D8 0F AC AC 6E BA D6 03 AC AC
+AC10 F4 A6 D8 1B AC AC 98 B9 D6 0F AC CF
+
+FUNCTION $ABA6 (00 00) $ABAB-$AC1B
+
+ABAB AC 1D A6    / Run function $A61D
+ABAE D8 B7 AB    / Jump to $ABB7 if zero
+
+ABB1 AC 6E BA    / Run function $BA6E
+ABB4 D6 AB AB    / Jump to $ABAB
+
+ABB7 AC 50 A6    / Run function $A650
+ABBA D8 C3 AB    / Jump to $ABC3 if zero
+
+ABBD AC 6E BA    / Run function $BA6E
+ABC0 D6 B7 AB    / Jump to $ABB7
+
+ABC3 AC 1E A5    / Run function $A51E
+ABC6 D8 CF AB    / Jump to $ABCF if zero
+
+ABC9 AC FA B9    / Run function $B9FA
+ABCC D6 C3 AB    / Jump to ABC3
+
+ABCF AC 74 A5    / Run function $A574
+ABD2 D8 DB AB    / Jump to $ABDB if zero
+
+ABD5 AC 34 BA    / Run function $BA34
+ABD8 D6 CF AB    / Jump to $ABCF
+
+ABDB AC 31 A7    / Run function $A731
+ABDE D8 F7 AB    / Jump to $ABF7 if zero
+
+ABE1 AA D1 7C    / Push $7CD1/$7CD2 to metastack     / (+2) Active city
+ABE4 8E 23 A8    / Push #$A823 to metastack          / (+2)
+ABE7 8E E2 00    / Push #$E2 to metastack            / (+2)
+ABEA 62          / Push #$02 to metastack            / (+2)
+ABEB E9 79 DD 08 / Run function $DD79                / (-8) Check if the tax or supply base status of city (1/2)
+                                                            needs to be changed. If so, flag "material supply low"
+															as well & return the new status. Else, return #$FF.
+ABEF B3          / Push M8 to metastack              / (+2)
+ABF0 E9 C0 B9 02 / Run function $B9C0                / (-2) Active city takes turn setting new status flags.
+ABF4 D6 DB AB    / Jump to $ABDB
+
+ABF7 AC EC A5    / Run function $A5EC
+ABFA D8 03 AC    / Jump to $AC03 if zero
+
+ABFD AC 73 B9    / Run function $B973
+AC00 D6 F7 AB    / Jump to $ABF7
+
+AC03 AC 83 A6    / Run function $A683                /      Find an active city & determine
+AC06 D8 0F AC    / Jump to $AC0F if zero                    how much gold to transfer to it.         
+
+AC09 AC 6E BA    / Run function $BA6E                /      Active city takes its turn
+AC0C D6 03 AC    / Jump to $AC03                            receiving gold/food/mats
+                                                            from the active nation.
+															
+AC0F AC F4 A6    / Run function $A6F4                /      Find a city to buy ships for
+AC12 D8 1B AC    / Jump to $AC1B if zero
+
+AC15 AC 98 B9    / Run function $B998               /       Active city takes its turn
+AC18 D6 0F AC    / Jump to $AC0F                            buying ships
+
+AC1B CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AC10                                     20 09 E5 00
+AC20 00 42 A9 5F 70 A4 A2 76 8C 68 70 C0 D8 3F AC A5
+AC30 64 70 8C FF 00 C1 D8 42 AC AC 47 A7 D6 42 AC AC
+AC40 F2 A8 AC 92 AA AC A6 AB 41 CF
+
+FUNCTION $AC1C (00 00) $AC21-$AC49
+
+Main function for AI National Phase
+
+AC21 42          / Store #$02 to M8
+AC22 A9 5F 70    / Store $0008 to $705F              / Set national actions to 2
+AC25 A4 A2 76    / Store $76A2/$76A3 to M8           / Active Nation
+AC28 8C 68 70    / Store #$7068 to MC
+AC2B C0          / Check if M8 = MC                  / Check if France
+AC2C D8 3F AC    / Jump to $AC3F if not
+
+AC2F A5 64 70    / Store $7064 to $0008              / ???
+AC32 8C FF 00    / Store #$FF to MC
+AC35 C1          / Check if M8 is different than MC
+AC36 D8 42 AC    / Jump to $AC42 if not
+
+AC39 AC 47 A7    / Run function $A747
+AC3C D6 42 AC    / Jump to $AC42
+
+AC3F AC F2 A8    / Run function $A8F2
+
+AC42 AC 92 AA    / Run function $AA92
+AC45 AC A6 AB    / Run function $ABA6
+
+AC48 41          / Store #$01 to M8
+AC49 CF          / Exit                              / Return 1
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AC40                               20 09 E5 00 00 8E
+AC50 C8 BE E9 E9 C3 02 CF
+
+FUNCTION $AC4A (00 00) $AC4F-$AC56
+Prints text "Press any button"
+
+AC4F 8E C8 BE    / Push #$BEC8 to metastack          / (+2)
+AC52 E9 E9 C3 02 / Run function $C3E9                / (-2)
+AC56 CF          / Exit 
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AC50                      20 09 E5 00 00 AC 0B D0 65
+AC60 63 E9 BC C3 04 AA A2 76 E9 19 D0 02 B3 8E DA BE
+AC70 E9 27 C6 04 67 63 E9 BC C3 04 AA C0 78 E9 85 D0
+AC80 02 B3 E9 E9 C3 02 AA C0 78 E9 8D C2 02 B3 8E 03
+AC90 A0 8E E0 00 62 E9 79 DD 08 CF
+
+FUNCTION $AC57 (00 00) $AC5C-$AC99
+Display acting officer as active nation's envoy
+ 
+AC5C AC 0B D0    / Run function $D00B                /      Set $9F-$AD to default values?
+AC5F 65          / Push #$05 to metastack            / (+2)
+AC60 63          / Push #$03 to metastack            / (+2)
+AC61 E9 BC C3 04 / Run function $C3BC                / (-4) Set text x,y coords to 3,5
+AC65 AA A2 76    / Push $76A2/$76A3 to metastack     / (+2) Active Nation
+AC68 E9 19 D0 02 / Run function $D019                / (-2) Retrieve name of nation
+AC6C B3          / Push M8 to metastack              / (+2)
+AC6D 8E DA BE    / Push #$BEDA to metastack          / (+2) 
+AC70 E9 27 C6 04 / Run function $C627                / (-4) Print "[Nation]'s envoy"
+AC74 67          / Push #$07 to metastack            / (+2)
+AC75 63          / Push #$03 to metastack            / (+2)
+AC76 E9 BC C3 04 / Run function $C3BC                / (-4) Set text x,y coords to 3,7
+AC7A AA C0 78    / Push $78C0/$78C1 to metastack     / (+2) Officer in charge of action (envoy)
+AC7D E9 85 D0 02 / Run function $D085                / (-2) Retrieve name of officer
+AC81 B3          / Push M8 to metastack              / (+2)
+AC82 E9 E9 C3 02 / Run function $C3E9                / (-2) Print "[Officer]"
+AC86 AA C0 78    / Push $78C0/$78C1 to metastack     / (+2)
+AC89 E9 8D C2 02 / Run function $C28D                / (-2) Find officer's portrait code 
+AC8D B3          / Push M8 to metastack              / (+2)
+AC8E 8E 03 A0    / Push #$A003 to metastack          / (+2)
+AC91 8E E0 00    / Push #$00E0 to metastack          / (+2)
+AC94 62          / Push #$0002 to metastack          / (+2)
+AC95 E9 79 DD 08 / Run function $DD79                / (-8) Print officer portrait
+AC99 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AC90                               20 09 E5 00 00 60
+ACA0 E9 7F D2 02 AA A2 76 E9 19 D0 02 B3 8E E5 BE E9
+ACB0 38 C6 04 AA A4 78 E9 19 D0 02 B3 3C E9 38 C6 04
+ACC0 63 E9 62 C0 02 CF
+
+FUNCTION $AC9A (00 00) $AC9F-$ACC5
+Print "[Active nation]" + (text string + target nation)
+
+AC9F 60          / Push #$00 to metastack            / (+2)
+ACA0 E9 7F D2 02 / Run function $D27F                / (-2) Text pos #$00 ?
+ACA4 AA A2 76    / Push $76A2/$76A3 to metastack     / (+2) Active nation
+ACA7 E9 19 D0 02 / Run function $D019                / (-2) Retrieve name of nation
+ACAB B3          / Push M8 to metastack              / (+2)
+ACAC 8E E5 BE    / Push #$BEE5 to metastack          / (+2)
+ACAF E9 38 C6 04 / Run function $C638                / (-4) 
+ACB3 AA A4 78    / Push $78A4/$78A5 to metastack     / (+2) Target nation
+ACB6 E9 19 D0 02 / Run function $D019                / (-2) Retrieve name of nation
+ACBA B3          / Push M8 to metastack              / (+2)
+ACBB 3C          / Push preloaded 01/02 to metastack / (+2)
+ACBC E9 38 C6 04 / Run function $C638                / (-4) text string+target nation
+ACC0 63          / Push #$03 to metastack            / (+2)
+ACC1 E9 62 C0 02 / Run function $C062                / (-2) Wait 3 time units for input
+ACC5 CF          / Exit 
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+ACC0                   20 09 E5 00 00 A0 0D 00 D8 D5
+ACD0 AC 48 D6 D6 AC 49 B3 E9 7F D2 02 AA A2 76 E9 19
+ACE0 D0 02 B3 3C E9 27 C6 04 CF
+
+FUNCTION $ACC6 (00 00) $ACCB-$ACE8
+
+ACCB A0 0D 00    / Store preloaded 03 to $0008
+ACCE D8 D5 AC    / Jump to $ACD5 if zero
+
+ACD1 48          / Store #$08 to M8
+ACD2 D6 D6 AC    / Jump to $ACD6
+
+ACD5 49          / Store #$09 to M8
+
+ACD6 B3          / Push M8 to metastack              / (+2)
+ACD7 E9 7F D2 02 / Run function $D27F                / (-2) Text Box setting?
+ACDB AA A2 76    / Push $76A2/$76A3 to metastack     / (+2) Active Nation
+ACDE E9 19 D0 02 / Run function $D019                / (-2) Retrieve nation name
+ACE2 B3          / Push M8 to metastack              / (+2)
+ACE3 3C          / Push preloaded 01/02 to metastack / (+2)
+ACE4 E9 27 C6 04 / Run function $C627                / (-4) Print text+active nation
+ACE8 CF          / Exit
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+ACE0                            20 09 E5 00 00 0C 8C
+ACF0 68 70 BC 8B 12 B8 8C D7 6F BB CF
+
+FUNCTION $ACE9 (00 00) $ACEE-$ACFA
+Find nation (1/2)'s address for Aggression vs France 
+
+ACEE 0C          / Store preloaded 01/02 to M8
+ACEF 8C 68 70    / Store #$7068 to MC
+ACF2 BC          / Subtract MC from M8
+ACF3 8B 12       / Store #$12 to MC
+ACF5 B8          / Divide M8 by MC
+ACF6 8C D7 6F    / Store #$6FD7 to MC
+ACF9 BB          / Add MC to M8
+ACFA CF          / Exit 
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+ACF0                                  20 09 E5 FC FF
+AD00 A0 0B 00 8C E9 BE BB D3 A2 FE FF AA A4 78 AA A2
+AD10 76 E9 F1 8D 04 A2 FD FF 63 A4 C0 78 74 D3 B3 E9
+AD20 60 D4 04 8B 14 B5 B3 68 60 AA C0 78 E9 7A D1 04
+AD30 B3 E9 60 D4 04 D8 3D AD 89 28 D6 3E AD 4F B4 BB
+AD40 A2 FC FF A0 0B 00 51 C0 D8 78 AD A4 A4 78 8C 68
+AD50 70 BC 8B 12 B8 B3 A4 A2 76 8C 68 70 BC 8B 12 B8
+AD60 5F B5 B4 BB 8C F6 6E BB D3 8B 10 C0 D8 78 AD 42
+AD70 CD A0 FE FF B8 A2 FE FF A0 FE FF B3 A0 FC FF B3
+AD80 A0 FD FF B3 89 69 B4 BC B3 E9 CA DD 06 A2 FF FF
+AD90 A0 0B 00 D7 C8 AD A4 BA 78 8C E8 03 B8 CD A0 FF
+ADA0 FF BB A2 FF FF A4 A2 76 8C 68 70 C0 D8 C8 AD AA
+ADB0 A4 78 E9 BB D0 02 8C 80 00 DA 50 C1 D8 C8 AD 43
+ADC0 CD A0 FF FF B8 A2 FF FF A0 FF FF B3 8D 64 E9 D1 
+ADD0 D7 02 B4 C6 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+ADD0                20 09 E5 FE FF A4 A2 76 8C 68 70
+ADE0 BC 8B 12 B8 A2 FF FF A4 A4 78 8C 68 70 BC 8B 12
+ADF0 B8 A2 FE FF A0 FE FF B3 A0 FF FF 5F B5 B4 BB 8C
+AE00 F6 6E BB B3 A0 FF FF B3 A0 FE FF 5F B5 B4 BB 8C
+AE10 F6 6E BB B3 A0 0B 00 D4 D4 CF
+
+FUNCTION $ADD5 (FE FF) $ADDA-$AE19
+Sets given value as diplomatic status between active and target nations
+(Mirrored to set same address to active->target and target->active)
+
+ADDA A4 A2 76    / Store $76A2/$76A3 to M8           / Active nation
+ADDD 8C 68 70    
+ADE0 BC
+ADE1 8B 12
+ADE3 B8          /                                   / Isolate hex code
+ADE4 A2 FF FF    / Store $0008 to meta 01
+
+ADE7 A4 A4 78    / Store $78A4/$78A5 to M8           / Target nation
+ADEA 8C 68 70
+ADED BC
+ADEE 8B 12
+ADF0 B8          /                                   / Isolate hex code
+ADF1 A2 FE FF    / Store $0008 to meta 02
+
+ADF4 A0 FE FF    / Store meta 02 to $0008
+ADF7 B3          / Push M8 to metastack              / (+2)
+ADF8 A0 FF FF    / Store meta 01 to $0008
+ADFB 5F          
+ADFC B5          / Multiply M8 by #$0F
+ADFD B4          / Pull 2 meta to MC
+ADFE BB          / Add M8 to MC
+ADFF 8C F6 6E    / Store #$6EF6 to MC
+AE02 BB          / Add MC to M8
+AE03 B3          / Push M8 to metastack              / (+2) Diplomacy address (1-2)
+
+AE04 A0 FF FF
+AE07 B3
+AE08 A0 FE FF
+AE0B 5F
+AE0C B5
+AE0D B4
+AE0E BB
+AE0F 8C F6 6E
+AE12 BB 
+AE13 B3                                              / (+2) Diplomacy address (2-1)
+
+AE14 A0 0B 00    / Store preloaded 01 to $0008
+AE17 D4          / Pull 2 meta, store $0008 to it
+AE18 D4          / Pull 2 meta, store $0008 to it
+AE19 CF          / Exit 
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AE10                               20 09 E5 FE FF 3C
+AE20 E9 E9 AC 02 2B 8D 64 0B B4 B3 D3 BB D4 A0 0D 00
+AE30 B3 3B E9 77 DE 04 0B D3 8B 64 C8 D8 42 AE 3B 89
+AE40 64 D4 CF
+
+FUNCTION $AE1A (FE FF) $AE1F-$AE42
+Increase Nation (1/2)'s aggression vs France by 100-(3) (to max of 100)
+
+AE1F 3C          / Push preloaded 01/02 to metastack / (+2)
+AE20 E9 E9 AC 02 / Run function $ACE9                / (-2) Find nation's aggression vs France address
+AE24 2B          / Store M8 to meta 01/02
+
+AE25 8D 64       / Push #$64 to metastack            / (+2)
+AE27 0B          / Store meta 01/02 to M8 
+AE28 B4          / Pull 2 meta to MC                 / (-2)
+AE29 B3          / Push M8 to metastack              / (+2)
+AE2A D3          / Replace M8 with 1-byte value      /      Agggression value
+AE2B BB          / Add M8 to MC
+AE2C D4          / Pull 2 meta, store M8 to address  / (-2) Increase aggression by 100
+
+AE2D A0 0D 00    / Store preloaded 03 to $0008
+AE30 B3          / Push M8 to metastack              / (+2)
+AE31 3B          / Push preloaded 01/02 to metastack / (+2)
+AE32 E9 77 DE 04 / Run function $DE77                / (-4) Reduce aggression by (3)
+
+AE36 0B          / Store preloaded 01/02 to M8
+AE37 D3          / Replace M8 with 1-byte value
+AE38 8B 64       / Store #$64 to MC
+AE3A C8          / Check if M8 > MC
+AE3B D8 42 AE    / Jump to $AE42 if not
+
+AE3E 3B          / Push preloaded 01/02 to metastack / (+2)
+AE3F 89 64       / Store #$64 to M8
+AE41 D4          / Pull 2 meta, store $0008 to it    / (-2)
+
+AE42 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AE40          20 09 E5 F7 FF 6C A4 C0 78 74 D3 B3 E9
+AE50 60 D4 04 A2 FD FF A4 A2 76 78 B0 B3 A0 FD FF 8B
+AE60 1E B5 B3 8A C8 00 B4 BC B3 AA BA 78 E9 0F DE 04
+AE70 B3 E9 D6 DC 04 85 FB 42 CD A4 BA 78 B8 A8 BA 78
+AE80 AC 57 AC 40 A2 FF FF A0 0B 00 D7 93 AE A4 BC 78
+AE90 D6 96 AE A4 BE 78 85 F7 40 D6 23 AF 81 FB A6 BA
+AEA0 78 BC 85 F9 D8 32 AF 81 F9 51 BE B3 E9 D1 D7 02
+AEB0 D0 CD A4 BA 78 BB A8 BA 78 8E ED BE E9 4B 8D 02
+AEC0 8D 1C 69 E9 C9 CF 04 AA BA 78 A0 0B 00 D7 D6 AE
+AED0 8A EE BE D6 D9 AE 8A F3 BE B3 87 F7 A0 FE FF D7
+AEE0 E7 AE 8D 28 D6 E9 AE 8D 2A E9 4A 8C 02 B3 E9 38
+AEF0 C6 08 61 8D 1E E9 4A 8C 02 B3 E9 C6 AC 04 60 8E
+AF00 6A A7 8E E2 00 62 E9 79 DD 08 A2 FF FF A0 FF FF
+AF10 D7 32 AF 8D 64 E9 D1 D7 02 8B 19 C6 D7 32 AF A0
+AF20 FE FF D0 A2 FE FF A0 FD FF B3 A0 FE FF B4 C1 D7
+AF30 9C AE A4 A4 78 8C 68 70 C0 D8 51 AF A0 FF FF D8
+AF40 47 AF 89 73 D6 49 AF 89 50 B3 AA A2 76 E9 1A AE
+AF50 04 A0 FF FF CF
+
+FUNCTION $AE43 (F7 FF) $AE48-$AF54
+Meta 03 = Acting Officer's Finance Stat
+
+AE48 6C          / Push #$0C to metastack            / (+2)
+AE49 A4 C0 78    / Store $78C0/$78C1 to M8           /      Active Officer
+AE4C 74          / Add #$04 to M8
+AE4D D3          / Replace M8 with 1-byte value      /      Active Officer - Civil Stats
+AE4E B3          / Push M8 to metastack              / (+2)
+AE4F E9 60 D4 04 / Run function $D460                / (-2) Active Officer - Finance Stat
+AE53 A2 FD FF    / Store $0008 to meta 03
+
+AE56 A4 A2 76    / Store $76A2/$76A3 to M8           /      Active Nation
+AE59 78          / Add #$08 to M8
+AE5A B0          / Replace M8 with 2-byte value      /      Active Nation - Gold
+AE5B B3          / Push M8 to metastack              / (+2)
+AE5C A0 FD FF    / Store meta 03 to $0008
+AE5F 8B 1E       / Store #$1E to MC                  /      30
+AE61 B5          / Multiply M8 by MC
+AE62 B3          / Push M8 to metastack              / (+2)
+AE63 8A C8 00    / Store #$C8 to M8                  /      200
+AE66 B4          / Pull 2 meta to MC                 / (-2)
+AE67 BC          / Subtract MC from M8               /      200 - 30*(Finance Stat)
+AE68 B3          / Push M8 to metastack              / (+2)
+AE69 AA BA 78    / Push $78BA/$78BB to metastack     / (+2) Gold to transfer
+AE6C E9 0F DE 04 / Run function $DE0F                / (-4) Get percentage of gold
+AE70 B3          / Push M8 to metastack              / (+2)
+AE71 E9 D6 DC 04 / Run function $DCD6                / (-4) Find smaller value 
+AE75 85 FB       / Store M8 to meta 04/05
+AE77 42          / Store #$02 to M8
+AE78 CD          / Swap M8 and MC
+AE79 A4 BA 78    / Store $78BA/$78BB to M8
+AE7C B8          / Divide M8 by MC
+AE7D A8 BA 78    / Store M8 to $78BA/$78BB
+AE80 AC 57 AC    / Run function $AC57                /      Display acting officer as envoy
+
+AE83 40          / Store #$00 to M8
+AE84 A2 FF FF    / Store meta 01 to $0008
+AE87 A0 0B 00    / Store preloaded 01 to $0008
+AE8A D7 93 AE    / Jump to $AE93 if not zero
+
+AE8D A4 BC 78    / Store $78BC/$78BD to M8           /      Food to transfer
+AE90 D6 96 AE    / Jump to $AE96
+
+AE93 A4 BE 78    / Store $78BE/$78BF to M8           /      Materials to transfer
+
+AE96 85 F7       / Store M8 to meta 08/09
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AE90 D6 96 AE A4 BE 78 85 F7 40 D6 23 AF 81 FB A6 BA
+AEA0 78 BC 85 F9 D8 32 AF 81 F9 51 BE B3 E9 D1 D7 02
+AEB0 D0 CD A4 BA 78 BB A8 BA 78 8E ED BE E9 4B 8D 02
+AEC0 8D 1C 69 E9 C9 CF 04 AA BA 78 A0 0B 00 D7 D6 AE
+AED0 8A EE BE D6 D9 AE 8A F3 BE B3 87 F7 A0 FE FF D7
+AEE0 E7 AE 8D 28 D6 E9 AE 8D 2A E9 4A 8C 02 B3 E9 38
+AEF0 C6 08 61 8D 1E E9 4A 8C 02 B3 E9 C6 AC 04 60 8E
+AF00 6A A7 8E E2 00 62 E9 79 DD 08 A2 FF FF A0 FF FF
+AF10 D7 32 AF 8D 64 E9 D1 D7 02 8B 19 C6 D7 32 AF A0
+AF20 FE FF D0 A2 FE FF A0 FD FF B3 A0 FE FF B4 C1 D7
+AF30 9C AE A4 A4 78 8C 68 70 C0 D8 51 AF A0 FF FF D8
+AF40 47 AF 89 73 D6 49 AF 89 50 B3 AA A2 76 E9 1A AE
+AF50 04 A0 FF FF CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+AF50                20 09 E5 F7 FF 6C A4 C0 78 74 D3
+AF60 B3 E9 60 D4 04 A2 FD FF A0 FD FF 5A B5 8F 3C B3
+AF70 AA BA 78 E9 0F DE 04 85 FB A4 BA 78 53 B5 51 BE
+AF80 B3 A4 A4 78 78 B0 B3 E9 D6 DC 04 A8 BA 78 AC 57
+AF90 AC 40 A2 FF FF A0 0B 00 D7 A1 AF A4 BC 78 D6 A4
+AFA0 AF A4 BE 78 85 F7 40 D6 31 B0 A4 BA 78 83 FB BC
+AFB0 85 F9 D8 40 B0 81 F9 51 BE B3 E9 D1 D7 02 D0 CD
+AFC0 A4 BA 78 BC A8 BA 78 8E FD BE E9 4B 8D 02 8D 1C
+AFD0 69 E9 C9 CF 04 AA BA 78 A0 0B 00 D7 E4 AF 8A FE
+AFE0 BE D6 E7 AF 8A 03 BF B3 87 F7 A0 FE FF D7 F5 AF
+AFF0 8D 29 D6 F7 AF 8D 28 E9 4A 8C 02 B3 E9 38 C6 08
+B000 61 8D 1E E9 4A 8C 02 B3 E9 C6 AC 04 60 8E 6A A7
+B010 8E E2 00 62 E9 79 DD 08 A2 FF FF A0 FF FF D7 40
+B020 B0 8D 64 E9 D1 D7 02 8B 19 C6 D7 40 B0 A0 FE FF
+B030 D0 A2 FE FF A0 FD FF B3 A0 FE FF B4 C1 D7 AA AF
+B040 A4 A4 78 8C 68 70 C0 D8 5F B0 A0 FF FF D8 55 B0
+B050 89 6E D6 57 B0 89 55 B3 AA A2 76 E9 1A AE 04 A0
+B060 FF FF CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B060          20 09 E5 FC FF 41 D6 EF B0 A0 FD FF 8B
+B070 12 B5 8C 68 70 BB 2B 0B B0 50 C1 D8 E2 B0 0B A6
+B080 A4 78 C0 D8 8C B0 A0 0B 00 D6 DF B0 A4 A4 78 8C
+B090 68 70 BC 8B 12 B8 B3 0B 8C 68 70 BC 8B 12 B8 5F
+B0A0 B5 B4 BB 8C F6 6E BB D3 8B 10 DA D8 B4 B0 A0 0D
+B0B0 00 D6 DF B0 A4 A4 78 8C 68 70 BC 8B 12 B8 B3 0B
+B0C0 8C 68 70 BC 8B 12 B8 5F B5 B4 BB 8C F6 6E BB D3 
+B0D0 8B 20 DA D8 DC B0 A0 0F 00 D6 DF B0 A0 11 00 A2
+B0E0 FC FF A0 FC FF B3 3B E9 1A AE 04 A0 FD FF D0 A2
+B0F0 FD FF A0 FD FF 5F C6 D7 6C B0 CF
+
+FUNCTION $B063 (FC FF) $B068-$B0FA
+Meta 01/02 = Current Nation
+Meta 03    = Nation Counter
+
+B068 41          / Store #$01 to M8
+B069 D6 EF B0    / Jump to $B0EF
+------------------
+LOOP
+
+B06C A0 FD FF    / Store meta 03 to $0008
+B06F 8B 12       / Store #$12 to MC
+B071 B5          / Multiply M8 by MC
+B072 8C 68 70    / Store #$7068 to MC
+B075 BB          / Add MC to M8
+B076 2B          / Store M8 to meta 01/02
+
+B077 0B          / Store meta 01/02 to M8
+B078 B0          / Replace M8 with 2-byte value      / First city
+B079 50          / Store #$00 to MC 
+B07A C1          / Check if M8 is different than MC
+B07B D8 E2 B0    / Jump to $B0E2 if not
+
+B07E 0B          / Store meta 01/02 to M8
+B07F A6 A4 78    / Store $78A4/$78A5 to MC           / Target nation
+B082 C0          / Check if M8 = MC
+B083 D8 8C B0    / Jump to $B08C if not
+
+B086 A0 0B 00    / Store preloaded 01 to $0008
+B089 D6 DF B0    / Jump to $B0DF
+
+B08C A4 A4 78    / Store $78A4/$78A5 to M8           / Target nation
+B08F 8C 68 70    / Store #$7068 to MC
+B092 BC          / Subtract MC from M8
+B093 8B 12       / Store #$12 to MC
+B095 B8          / Divide M8 by MC
+B096 B3          / Push M8 to metastack              / (+2)
+B097 0B          / Store meta 01/02 to M8
+B098 8C 68 70    / Store #$7068 to MC
+B09B BC          / Subtract MC from M8
+B09C 8B 12       / Store #$12 to MC
+B09E B8          / Divide M8 by MC
+B09F 5F          / Store #$0F to MC
+B0A0 B5          / Multiply M8 by MC
+B0A1 B4          / Pull 2 meta to MC                 / (-2)
+B0A2 BB          / Add MC to M8
+B0A3 8C F6 6E    / Store #$6EF6 to MC
+B0A6 BB          / Add MC to M8 
+B0A7 D3          / Replace M8 with 1-byte value      /      Diplomacy value
+B0A8 8B 10       / Store #$10 to MC
+B0AA DA          / M8 AND MC                         /      Check for friendship
+B0AB D8 B4 B0    / Jump to $B0B4 if not
+
+B0AE A0 0D 00    / Store meta 03 to $0008
+B0B1 D6 DF B0    / Jump to $B0DF
+
+B0B4 A4 A4 78    / Store $78A4/$78A5 to M8           /      Target Nation
+B0B7 8C 68 70    / Store #$7068 to MC
+B0BA BC          / Subtract MC from M8
+B0BB 8B 12       / Store #$12 to MC
+B0BD B8          / Divide M8 by MC
+B0BE B3          / Push M8 to metastack              / (+2)
+B0BF 0B          / Store meta 01/02 to M8
+B0C0 8C 68 70    / Store #$7068 to MC
+B0C3 BC          / Subtract MC from M8
+B0C4 8B 12       / Store #$12 to MC
+B0C6 B8          / Divide M8 by MC
+B0C7 5F          / Store #$0F to MC
+B0C8 B5          / Multiply M8 by MC
+B0C9 B4          / Pull 2 meta to MC                 / (-2)
+B0CA BB          / Add MC to M8
+B0CB 8C F6 6E    / Store #$6EF6 to MC
+B0CE BB          / Add MC to M8
+B0CF D3          / Replace M8 with 1-byte value      /      Diplomacy
+B0D0 8B 20       / Store #$20 to MC
+B0D2 DA          / M8 AND MC                         /      Check for hostility
+B0D3 D8 DC B0    / Jump to $B0DC if not
+
+B0D6 A0 0F 00    / Store preloaded 05 to $0008
+B0D9 D6 DF B0    / Jump to $B0DF
+
+B0DC A0 11 00    / Store preloaded 07 to $0008
+
+B0DF A2 FC FF    / Store $0008 to meta 04
+
+B0E2 A0 FC FF    / Store meta 04 to $0008
+B0E5 B3          / Push M8 to metastack              / (+2)
+B0E6 3B          / Push meta 01/02 to metastack      / (+2)
+B0E7 E9 1A AE 04 / Run function $AE1A                / (-4)
+
+B0EB A0 FD FF    / Store meta 03 to $0008
+B0EE D0          / Increment M8
+B0EF A2 FD FF    / Store $0008 to meta 03
+
+B0F2 A0 FD FF    / Store meta 03 to $0008
+B0F5 5F          / Store #$0F to MC
+B0F6 C6          / Check if M8 < MC
+B0F7 D7 6C B0    / Jump to $B06C if so 
+
+B0FA CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B0F0                                  20 09 E5 00 00	 
+B100 8D 69 8D 5A 8D 6E 8D 78 E9 63 B0 08 CF
+
+FUNCTION $B0FB (00 00) $B100-$B10C
+
+B100 8D 69       / Push #$69 to metastack            / (+2) 105
+B102 8D 5A       / Push #$5A to metastack            / (+2)  90
+B104 8D 6E       / Push #$6E to metastack            / (+2) 110
+B106 8D 78       / Push #$78 to metastack            / (+2) 120
+B108 E9 63 B0 08 / Run function $B063                / (-8)
+B10C CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B100                                        20 09 E5
+B110 00 00 8D 64 8D 5F 8D 69 8D 6E E9 63 B0 08 CF
+
+FUNCTION $B10D (00 00) $B112-$B11E
+
+B112 8D 64       / Push #$64 to metastack            / (+2) 100
+B114 8D 5F       / Push #$5F to metastack            / (+2)  95
+B116 8D 69       / Push #$69 to metastack            / (+2) 105
+B118 8D 6E       / Push #$6E to metastack            / (+2) 110 
+B11A E9 63 B0 08 / Run function $B063                / (-8)
+B11E CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B110                                              20
+B120 09 E5 00 00 8D 64 8D 78 8D 50 8D 46 E9 63 B0 08
+B130 CF	 
+
+FUNCTION $B11F (00 00) $B124-$B130
+
+B124 8D 64       / Push #$64 to metastack            / (+2) 100
+B126 8D 78       / Push #$78 to metastack            / (+2) 120
+B128 8D 50       / Push #$50 to metastack            / (+2)  80
+B12A 8D 46       / Push #$46 to metastack            / (+2)  70
+B12C E9 63 B0 08 / Run function $B063                / (-8)
+B130 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B130 	20 09 E5 F9 FF 40 D6 85 B1 A0 F9 FF D7 46 B1
+B140 A4 A2 76 D6 49 B1 A4 A4 78 2B 0B D6 7B B1 0A 72
+B150 D6 74 B1 8D 64 09 77 D3 8B 14 B8 B3 09 77 B3 E9
+B160 3B DE 06 8D 64 09 7D D3 8B 14 B8 B3 09 7D B3 E9
+B170 3B DE 06 09 B0 29 09 D7 53 B1 0A B0 2A 0A D7 4E
+B180 B1 A0 F9 FF D0 A2 F9 FF A0 F9 FF 52 C6 D7 3A B1
+B190 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B190    20 09 E5 FA FF A4 A2 76 8C 68 70 BC 8B 12 B8
+B1A0 B3 E9 6F 91 02 51 C8 A2 FA FF A0 FA FF D8 B5 B1
+B1B0 89 19 D6 B6 B1 45 A2 FB FF A4 A2 76 D6 FB B1 0B
+B1C0 72 D6 F4 B1 A0 FA FF D8 D6 B1 0A 77 D3 B3 89 69
+B1D0 B4 BC 55 D6 DF B1 0A 77 D3 B3 89 64 B4 BC 5A B8
+B1E0 B3 0A 77 B4 B3 D3 BC D4 A0 FB FF B3 0A 7D B3 E9
+B1F0 B6 D3 04 0A B0 2A 0A D7 C4 B1 0B B0 2B 0B D7 BF
+B200 B1 CF
+
+FUNCTION $B191 (FA FF) $B196-$B201
+
+B196 A4 A2 76    / Store $76A2/$76A3 to M8           /      Active nation
+B199 8C 68 70
+B19C BC
+B19D 8B 12
+B19F B8          /                                   /      Isolate hex code
+B1A0 B3          / Push M8 to metastack              / (+2)
+B1A1 E9 6F 91 02 / Run function $916F                / (-2) Tally # of hostile nations?
+B1A5 51          / Store #$01 to MC
+B1A6 C8          / Check if M8 > MC
+B1A7 A2 FA FF    / Store $0008 to meta 06
+
+B1AA A0 FA FF    / Store meta 06 to $0008
+B1AD D8 B5 B1    / Jump to $B1B5 to zero
+
+B1B0 89 19       / Store #$19 to M8
+B1B2 D6 B6 B1    / Jump to $B1B6
+
+B1B5 45          / Store #$05 to M8
+B1B6 A2 FB FF    / Store $0008 to meta 05
+
+B1B9 A4 A2 76    / Store $76A2/$76A3 to M8           /      Active nation
+B1BC D6 FB B1    / Jump to $B1FB
+
+B1BF 0B          / Store meta 01/02 to M8
+B1C0 72          / Add #$02 to M8
+B1C1 D6 F4 B1    / Jump to $B1F4
+
+B1C4 A0 FA FF    / Store meta 06 to $0008
+B1C7 D8 D6 B1    / Jump to $B1D6 if zero
+B1CA 0A          / Store meta 03/04 to M8
+B1CB 77          / Add #$07 to M8
+B1CC D3          / Replace M8 with 1-byte value 
+B1CD B3          / Push M8 to metastack              / (+2)
+B1CE 89 69       / Store #$69 to $0008
+B1D0 B4          / Pull 2 meta to MC                 / (-2)
+B1D1 BC          / Subtract MC from M8
+B1D2 55          / Store #$05 to MC
+B1D3 D6 DF B1    / Jump to $B1DF
+
+B1D6 0A          / Store meta 03/04 to M8
+B1D7 77          / Add #$07 to M8
+B1D8 D3          / Replace M8 with 1-byte value
+B1D9 B3          / Push M8 to metastack              / (+2)
+B1DA 89 64       / Store #$64 to $0008
+B1DC B4          / Pull 2 meta to MC                 / (-2)
+B1DD BC          / Subtract MC from M8
+B1DE 5A          / Store #$10 to MC
+
+B1DF B8          / Divide M8 by MC
+B1E0 B3          / Push M8 to metastack              / (+2)
+B1E1 0A          / Store meta 03/04 to M8
+B1E2 77          / Add #$07 to M8
+B1E3 B4          / Pull 2 meta to MC                 / (-2)
+B1E4 B3          / Push M8 to metastack              / (+2)
+B1E5 D3          / Replace M8 with 1-byte value
+B1E6 BC          / Subtract MC from M8
+B1E7 D4          / Pull 2 meta, store $0008 to it    / (-2)
+B1E8 A0 FB FF    / Store meta 05 to $0008
+B1EB B3          / Push M8 to metastack              / (+2)
+B1EC 0A          / Store meta 03/04 to M8
+B1ED 7D          / Add #$0D to M8
+B1EE B3          / Push M8 to metastack              / (+2)
+B1EF E9 B6 D3 04 / Run function $D3B6                / (-2) Reduce by %
+
+B1F3 0A          / Store meta 03/04 to M8
+B1F4 B0          / Replace M8 with 2-byte value
+B1F5 2A          / Store M8 to meta 03/04
+
+B1F6 0A          / Store meta 03/04 to M8
+B1F7 D7 C4 B1    / Jump to $B1C4 if not blank
+
+B1FA 0B          / Store meta 01/02 to M8
+B1FB B0          / Replace M8 with 2-byte value
+B1FC 2B          / Store M8 to meta 01/02
+
+B1FD 0B          / Store meta 01/02 to M8
+B1FE D7 BF B1    / Jump to $B1BF if not blank
+
+B201 CF          / Exit 
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B200       20 09 E5 FC FF A5 5F 70 D1 A9 5F 70 A4 A2
+B210 76 8C 68 70 BC 8B 12 B8 8C D7 6F BB 2A A4 A4 78
+B220 76 B0 B3 8E 9C A3 8E E0 00 62 E9 79 DD 08 D8 84
+B230 B2 61 E9 C4 D1 02 AC 57 AC 6F E9 4A 8C 02 B3 E9
+B240 4B 8D 02 68 E9 7F D2 02 AA BA 78 AA A2 76 E9 19
+B250 D0 02 B3 8D 17 E9 4A 8C 02 B3 E9 27 C6 06 60 8E
+B260 6A A7 8E E2 00 62 E9 79 DD 08 A2 FE FF A0 FE FF
+B270 B3 8E 03 A0 8E E2 00 62 E9 79 DD 08 60 E9 C4 D1
+B280 02 D6 A9 B2 60 E9 FB AC 02 A2 FE FF A0 FE FF D8
+B290 A9 B2 61 8E 03 A0 8E E2 00 62 E9 79 DD 08 8D 1F
+B2A0 E9 4A 8C 02 B3 E9 9A AC 02 A0 FE FF D8 D3 B2 AA
+B2B0 BA 78 A4 A2 76 78 B4 B3 B0 BC B1 8E 50 C3 AA BA
+B2C0 78 A4 A4 78 78 B3 E9 2C DE 06 8D 11 E9 D5 AD 02
+B2D0 AC 31 B1 A4 A2 76 8C 68 70 C0 D8 F1 B2 A0 FE FF
+B2E0 D8 E9 B2 AC FB B0 D6 10 B3 8D 69 AA A4 78 D6 0C
+B2F0 B3 A4 A4 78 8C 68 70 C0 D8 10 B3 A0 FE FF D8 06
+B300 B3 89 46 D6 08 B3 89 5A B3 AA A2 76 E9 1A AE 04
+B310 A0 FE FF D8 1A B3 45 D6 1B B3 41 B3 AA C0 78 E9
+B320 50 C2 04 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B320             20 09 E5 FD FF A5 5F 70 D1 A9 5F 70
+B330 A4 A2 76 8C 68 70 BC 8B 12 B8 8C D7 6F BB 85 FD
+B340 A4 A4 78 76 B0 B3 8E 9C A3 8E E0 00 62 E9 79 DD
+B350 08 D8 99 B3 61 E9 C4 D1 02 AC 57 AC 8D 10 E9 4A
+B360 8C 02 B3 E9 4B 8D 02 61 8D 18 E9 4A 8C 02 B3 E9
+B370 C6 AC 04 60 8E 6A A7 8E E2 00 62 E9 79 DD 08 A2
+B380 FF FF A0 FF FF B3 8E 03 A0 8E E2 00 62 E9 79 DD
+B390 08 60 E9 C4 D1 02 D6 BE B3 61 E9 FB AC 02 A2 FF
+B3A0 FF A0 FF FF D8 BE B3 61 8E 03 A0 8E E2 00 62 E9
+B3B0 79 DD 08 8D 1F E9 4A 8C 02 B3 E9 9A AC 02 A0 FF
+B3C0 FF D8 CD B3 8D 13 E9 D5 AD 02 AC 31 B1 A4 A2 76
+B3D0 8C 68 70 C0 D8 EB B3 A0 FF FF D8 E3 B3 AC FB B0
+B3E0 D6 0A B4 8D 69 AA A4 78 D6 06 B4 A4 A4 78 8C 68
+B3F0 70 C0 D8 0A B4 A0 FF FF D8 00 B4 89 6E D6 02 B4
+B400 89 5A B3 AA A2 76 E9 1A AE 04 A0 FF FF D8 14 B4
+B410 45 D6 15 B4 41 B3 AA C0 78 E9 50 C2 04 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B410                                           20 09
+B420 E5 00 00 A5 5F 70 D1 A9 5F 70 60 8E 03 A0 8E E2
+B430 00 62 E9 79 DD 08 A4 A4 78 76 B0 B3 8E 9C A3 8E
+B440 E0 00 62 E9 79 DD 08 D8 77 B4 61 E9 C4 D1 02 AC
+B450 57 AC 8D 14 E9 4A 8C 02 B3 E9 4B 8D 02 60 8D 1C
+B460 E9 4A 8C 02 B3 E9 C6 AC 04 AC 4A AC AC 49 C6 60
+B470 E9 C4 D1 02 D6 82 B4 8D 23 E9 4A 8C 02 B3 E9 9A
+B480 AC 92 8D 20 E9 D5 AD 02 AC 91 B1 A4 A2 76 8C 68
+B490 70 C0 D8 98 B4 AC 1F B1 AA C0 78 E9 32 C2 02 CF
+
+FUNCTION $B41E (00 00) $B423-$B49F
+Active Nation declares war on Target Nation
+
+B423 A5 5F 70    / Store $705F to $0008              /      # of national actions left
+B426 D1          / Decrement M8
+B427 A9 5F 70    / Store $0008 to $705F              /      Minus 1
+B42A 60          / Push #$00 to metastack            / (+2)
+B42B 8E 03 A0    / Push #$A003 to metastack          / (+2)
+B42E 8E E2 00    / Push #$00E2 to metastack          / (+2)
+B431 62          / Push #$0002 to metastack          / (+2)
+B432 E9 79 DD 08 / Run function $DD79                / (-8) Play SFX #$1B
+B436 A4 A4 78    / Store $78A4/$78A5 to M8                  Nation
+B439 76          / Add #$06 to M8
+B43A B0          / Replace M8 with 2-byte value             Nation leader
+B43B B3          / Push M8 to metastack              / (+2)
+B43C 8E 9C A3    / Push #$A39C to metastack          / (+2) 
+B43F 8E E0 00    / Push #$00E0 to metastack          / (+2)
+B442 62          / Push M8 to metastack              / (+2)
+B443 E9 79 DD 08 / Run function $DD79                / (-8) Check if officer is player-controlled
+B447 D8 77 B4    / Jump to $B477 if not
+
+B44A 61          / Push #$01 to metastack            / (+2)
+B44B E9 C4 D1 02 / Run function $D1C4                / (-2) Wipe screen, set palette to 1
+B44F AC 57 AC    / Run function $AC57                /      Display acting officer as envoy
+B452 8D 14       / Push #$14 to metastack            / (+2)
+B454 E9 4A 8C 02 / Run function $8C4A                / (-2) 
+B458 B3          / Push M8 to metastack              / (+2)
+B459 E9 4B 8D 02 / Run function $8D4B                / (-2) Print quote "We stand at odds... I'm declaring war!"
+B45D 60          / Push #$00 to metastack            / (+2)
+B45E 8D 1C       / Push #$1C to metastack            / (+2)
+B460 E9 4A 8C 02 / Run function $8C4A                / (-2)
+B464 B3          / Push M8 to metastack              / (+2)
+B465 E9 C6 AC 04 / Run function $ACC6                / (-4) Print "[Nation] declared war on our country"
+B469 AC 4A AC    / Run function $AC4A                /      Print "Press any button"
+B46C AC 49 C6    / Run function $C649                /      Wait for input 
+B46F 60          / Push #$00 to metastack            / (+2)
+B470 E9 C4 D1 02 / Run function $D1C4                / (-2) Black out screen
+B474 D6 82 B4    / Jump to $B482 
+
+B477 8D 23       / Push #$23 to metastack            / (+2)
+B479 E9 4A 8C 02 / Run function $8C4A                / (-2)
+B47D B3          / Push M8 to metastack              / (+2)
+B47E E9 9A AC 02 / Run function $AC9A                / (-2) Print "[Active] declared war on [target]"
+
+B482 8D 20       / Push #$20 to metastack            / (+2)
+B484 E9 D5 AD 02 / Run function $ADD5                / (-2) Set nations as hostile
+
+B488 AC 91 B1    / Run function $B191                /      Adjust aggression values???
+B48B A4 A2 76    / Store $76A2/$76A3 to M8
+B48E 8C 68 70    / Store #$7068 to MC
+B491 C0          / Check if M8 = MC                  /      Check if active nation is France
+B492 D8 98 B4    / Jump to $B498 if not
+
+B495 AC 1F B1    / Run function $B11F                /      Aggression values ?????????
+
+B498 AA C0 78    / Push $78C0/$78C1 to metastack     / (+2)
+B49B E9 32 C2 02 / Run function $C232                / (-2) Acting officer gains 1 EXP 
+B49F CF          / Exit 
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B4A0 20 09 E5 FF FF A5 5F 70 D1 A9 5F 70 A4 A4 78 76
+B4B0 B0 B3 8E 9C A3 8E E0 00 62 E9 79 DD 08 D8 F6 B4
+B4C0 61 E9 C4 D1 02 AC 57 AC 8D 11 E9 4A 8C 02 B3 E9
+B4D0 4B 8D 02 61 8D 19 E9 4A 8C 02 B3 E9 C6 AC 04 60
+B4E0 8E 6A A7 8E E2 00 62 E9 79 DD 08 A2 FF FF 60 E9
+B4F0 C4 D1 02 D6 0F B5 62 E9 FB AC 02 A2 FF FF A0 FF
+B500 FF D8 0F B5 8D 20 E9 4A 8C 02 B3 E9 9A AC 02 A0
+B510 FF FF D8 1B B5 8D 10 E9 D5 AD 02 A4 A2 76 8C 68
+B520 70 C0 D8 39 B5 A0 FF FF D8 31 B5 AC 0D B1 D6 58
+B530 B5 8D 69 AA A4 78 D6 54 B5 A4 A4 78 8C 68 70 C0 
+B540 D8 58 B5 A0 FF FF D8 4E B5 89 6E D6 50 B5 89 5A
+B550 B3 AA A2 76 E9 1A AE 04 A0 FF FF D8 62 B5 42 D6
+B560 63 B5 41 B3 AA C0 78 E9 50 C2 04 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B560                                     20 09 E5 00
+B570 00 A5 5F 70 D1 A9 5F 70 A4 A4 78 76 B0 B3 8E 9C
+B580 A3 8E E0 00 62 E9 79 DD 08 D8 B9 B5 61 E9 C4 D1
+B590 02 AC 57 AC 8D 12 E9 4A 8C 02 B3 E9 4B 8D 02 60
+B5A0 8D 1A E9 4A 8C 02 B3 E9 C6 AC 04 AC 4A AC AC 49
+B5B0 C6 60 E9 C4 D1 02 D6 C4 B5 8D 21 E9 4A 8C 02 B3
+B5C0 E9 9A AC 02 60 E9 D5 AD 02 A4 A2 76 8C 68 70 C0
+B5D0 D8 E8 B5 60 8E 03 A0 8E E2 00 62 E9 79 DD 08 8D
+B5E0 55 AA A4 78 E9 1A AE 04 62 AA C0 78 E9 50 C2 04
+B5F0 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B5F0    20 09 E5 FD FF A5 5F 70 D1 A9 5F 70 A4 A4 78
+B600 76 B0 B3 8E 9C A3 8E E0 00 62 E9 79 DD 08 D8 18
+B610 B6 40 A2 FD FF D6 4B B6 63 E9 FB AC 02 A2 FD FF
+B620 A0 FD FF D8 4B B6 A4 A2 76 2B A4 A4 78 A8 A2 76
+B630 A4 A6 78 A8 A4 78 8D 22 E9 4A 8C 02 B3 E9 9A AC
+B640 02 A4 A2 76 A8 A4 78 0B A8 A2 76 A0 FD FF D8 64
+B650 B6 A4 A2 76 2B A4 A6 78 A8 A2 76 60 E9 D5 AD 02
+B660 0B A8 A2 76 A4 A2 76 8C 68 70 C0 D8 97 B6 A0 FD
+B670 FF D8 79 B6 89 5A D6 7B B6 89 62 B3 AA A4 78 E9
+B680 1A AE 04 A0 FD FF D8 8E B6 89 55 D6 90 B6 89 5F
+B690 B3 AA A4 78 D6 C7 B6 A4 A4 78 8C 68 70 C0 D8 CB
+B6A0 B6 A0 FD FF D8 AC B6 89 6E D6 AE B6 89 5F B3 AA
+B6B0 A2 76 E9 1A AE 04 A0 FD FF D8 C1 B6 89 5F D6 C3
+B6C0 B6 89 6E B3 AA A6 78 E9 1A AE 04 A0 FD FF D8 D5
+B6D0 B6 42 D6 D6 B6 41 B3 AA C0 78 E9 50 C2 04 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B6D0                                              20
+B6E0 09 E5 00 00 8E E0 BB 8E E5 00 62 E9 79 DD 06 D8
+B6F0 44 B7 A5 5F 70 D1 A9 5F 70 A4 A4 78 76 B0 B3 8E
+B700 9C A3 8E E0 00 62 E9 79 DD 08 D8 43 B7 61 E9 C4
+B710 D1 02 AC 57 AC 8D 15 E9 4A 8C 02 B3 E9 4B 8D 02
+B720 60 8D 1D E9 4A 8C 02 B3 E9 C6 AC 04 61 8E 03 A0
+B730 8E E2 00 62 E9 79 DD 08 AC 4A AC AC 49 C6 60 E9
+B740 C4 D1 02 CF CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B740                20 09 E5 00 00 A5 5F 70 D1 A9 5F
+B750 70 A4 A4 78 76 B0 B3 8E 9C A3 8E E0 00 62 E9 79
+B760 DD 08 D8 93 B7 61 E9 C4 D1 02 A0 0B 00 B3 E9 55
+B770 AF 02 D7 8B B7 8D 16 E9 4A 8C 02 B3 E9 4B 8D 02
+B780 63 E9 62 C0 02 60 E9 C4 D1 02 CF 60 E9 C4 D1 02
+B790 D6 A2 B7 A0 0B 00 8F 24 B3 E9 4A 8C 02 B3 E9 9A
+B7A0 AC 02 A0 0B 00 D7 C1 B7 AA BC 78 A4 A2 76 7A B3
+B7B0 E9 6E DE 04 8E 50 C3 AA BC 78 A4 A4 78 7A D6 D7
+B7C0 B7 AA BE 78 A4 A2 76 7C B3 E9 6E DE 04 8E 50 C3
+B7D0 AA BE 78 A4 A4 78 7C B3 E9 2C DE 06 AA BA 78 A4
+B7E0 A4 78 78 B3 E9 6E DE 04 8E 50 C3 AA BA 78 A4 A2
+B7F0 76 78 B3 E9 2C DE 06 63 AA C0 78 E9 50 C2 04 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B800 20 09 E5 00 00 A5 5F 70 D1 A9 5F 70 A4 A4 78 76
+B810 B0 B3 8E 9C A3 8E E0 00 62 E9 79 DD 08 D8 4E B8
+B820 61 E9 C4 D1 02 A0 0B 00 B3 E9 43 AE 02 D7 46 B8
+B830 8D 16 E9 4A 8C 02 B3 E9 4B 8D 02 63 E9 62 C0 02
+B840 60 E9 C4 D1 02 CF 60 E9 C4 D1 02 D6 5D B8 A0 0B
+B850 00 8F 26 B3 E9 4A 8C 02 B3 E9 9A AC 02 A0 0B 00
+B860 D7 7C B8 AA BC 78 A4 A4 78 7A B3 E9 6E DE 04 8E
+B870 50 C3 AA BC 78 A4 A2 76 7A D6 92 B8 AA BE 78 A4
+B880 A4 78 7C B3 E9 6E DE 04 8E 50 C3 AA BE 78 A4 A2
+B890 76 7C B3 E9 2C DE 06 AA BA 78 A4 A2 76 78 B3 E9
+B8A0 6E DE 04 8E 50 C3 AA BA 78 A4 A4 78 78 B3 E9 2C
+B8B0 DE 06 63 AA C0 78 E9 50 C2 04 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B8B0                                  20 09 E5 FE FF
+B8C0 A5 5F 70 D1 A9 5F 70 63 60 AA C0 78 E9 7A D1 04
+B8D0 B3 E9 60 D4 04 8B 23 B5 75 A2 FE FF 8D 4B A4 C0
+B8E0 78 77 D3 B3 A0 FE FF B3 E9 CA DD 06 B3 89 64 B4
+B8F0 BC A2 FF FF A0 FF FF B3 8D 64 E9 D1 D7 02 B4 C6
+B900 D8 34 B9 AA A2 76 AA C0 78 E9 68 C3 04 AA A2 76
+B910 AA C0 78 8E B3 A5 8E E0 00 62 E9 79 DD 0A A4 C0
+B920 78 77 B3 A0 FE FF B3 89 6A B4 BC B3 E9 D1 D7 02 
+B930 D4 D6 44 B9 6B E9 D1 D7 02 7A B3 A4 C0 78 77 B3
+B940 E9 77 DE 04 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B940                20 09 E5 00 00 A5 5F 70 D1 A9 5F
+B950 70 A4 A2 76 8F 10 B3 A4 BA 78 B1 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B950                                     20 09 E5 00
+B960 00 A4 D1 7C 8C 76 71 BC 8B 1C B8 8C 31 70 BB B3
+B970 41 D4 CF
+
+FUNCTION $B95C (00 00) $B961-$B972
+Flag Active City for "taken turn"
+
+B961 A4 D1 7C    / Store $7CD1/$7CD2 to M8           / Active City
+B964 8C 76 71    / Store #$7176 to MC
+B967 BC          / Subtract MC from M8
+B968 8B 1C       / Store #$1C to MC
+B96A B8          / Divide M8 by MC
+B96B 8C 31 70    / Store #$7031 to MC
+B96E BB          / Add MC to M8
+B96F B3          / Push M8 to metastack
+B970 41          / Store #$01 to M8
+B971 D4          / Pull 2 meta, store 1-byte value
+B972 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B970          20 09 E5 00 00 AA BA 78 A4 A2 76 7E B3
+B980 E9 6E DE 04 8E E7 03 AA BA 78 A4 D1 7C 8F 18 B3
+B990 E9 2C DE 06 AC 5C B9 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B990                         20 09 E5 00 00 AA BA 78
+B9A0 A4 A2 76 78 B3 E9 6E DE 04 8D 64 A4 BA 78 8B 64
+B9B0 B8 B3 A4 D1 7C 8F 1A B3 E9 3B DE 06 AC 5C B9 CF
+
+FUNCTION $B998 (00 00) $B99D-$B9BF
+
+B99D AA BA 78    / Push $78BA/$78BB to metastack     / (+2) Gold allocated for ship purchase
+B9A0 A4 A2 76    / Store $76A2/$76A3 to M8           /      Active nation
+B9A3 78          / Add #$08 to M8
+B9A4 B3          / Push M8 to metastack              / (+2)
+B9A5 E9 6E DE 04 / Run function $DE6E                / (-4) Take gold from treasury
+
+B9A9 8D 64       / Push #$64 to metastack            / (+2)
+B9AB A4 BA 78    / Store $78BA/$78BB to M8
+B9AE 8B 64       / Store #$64 to MC
+B9B0 B8          / Divide M8 by MC
+B9B1 B3          / Push M8 to metastack              / (+2)
+B9B2 A4 D1 7C    / Store $7CD1/$7CD2 to M8
+B9B5 8F 1A       / Add #$1A to M8
+B9B7 B3          / Push M8 to metastack              / (+2) Active City - Fleet
+B9B8 E9 3B DE 06 / Run function $DE3B                / (-6) Increase fleet up to max of 100
+
+B9BC AC 5C B9    / Run function $B95C                /      Flag active city for "taken turn"
+
+B9BF CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B9C0 20 09 E5 FD FF AC 5C B9 A4 D1 7C 72 B0 B3 8E 9C
+B9D0 A3 8E E0 00 62 E9 79 DD 08 D8 DD B9 CF A4 D1 7C
+B9E0 8F 1B 2B 8E DE 00 0B B4 B3 D3 DA D4 A0 0B 00 8B
+B9F0 21 DA B3 0B B4 B3 D3 DB D4 CF
+
+FUNCTION $B9C0 (FD FF) $B9C5-$B9F9
+
+Flag active city for "taken turn"
+If city has AI commander, set (01) to new tax/supply base flags
+
+B9C5 AC 5C B9    / Run function $B95C                /      Flag active city for "taken turn"
+
+B9C8 A4 D1 7C    / Store $7CD1/$7CD2 to M8           /      Active City
+B9CB 72          / Add #$02 to M8
+B9CC B0          / Replace M8 with 2-byte value      /      Active City - Commander
+B9CD B3          / Push M8 to metastack              / (+2)
+B9CE 8E 9C A3    / Push #$A39C to metastack          / (+2)
+B9D1 8E E0 00    / Push #$E0 to metastack            / (+2)
+B9D4 62          / Push #$02 to metastack            / (+2)
+B9D5 E9 79 DD 08 / Run function $DD79                / (-8) Check if offier is player controlled
+B9D9 D8 DD B9    / Jump to $B9DD if zero
+
+B9DC CF          / Exit
+
+B9DD A4 D1 7C    / Store $7CD1/$7CD2 to M8
+B9E0 8F 1B       / Add #$1B to M8                     /     Active City - Status
+B9E2 2B          / Store M8 to meta 01/02
+B9E3 8E DE 00    / Push #$DE to metastack             / (+2)
+B9E6 0B          / Store meta 01/02 to M8
+B9E7 B4          / Pull 2 meta to MC                  / (-2) #$DE 
+B9E8 B3          / Push M8 to metastack               / (+2)
+B9E9 D3          / Replace M8 with 1-byte value       /      Active City - Status
+B9EA DA          / M8 AND MC
+B9EB D4          / Pull 2 meta, store $0008 to it     / (-2) Turn off Tax/Supply status flags
+
+B9EC A0 0B 00    / Store preloaded 01 to $0008
+B9EF 8B 21       / Store #$21 to MC
+B9F1 DA          / M8 AND MC
+B9F2 B3          / Push M8 to metastack               / (+2)
+B9F3 0B          / Store meta 01/02 to M8
+B9F4 B4          / Pull 2 meta to MC                  / (-2)
+B9F5 B3          / Push M8 to metastack               / (+2)
+B9F6 D3          / Replace M8 with 1-byte value      
+B9F7 DB          / M8 ORA MC
+B9F8 D4          / Pull 2 meta, store $0008 to it     / (-2) 
+B9F9 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+B9F0                               20 09 E5 00 00 AA
+BA00 D1 7C AA C0 78 E9 4C C3 04 AA A2 76 AA C0 78 8E
+BA10 B3 A5 8E E0 00 62 E9 79 DD 0A 63 AA C0 78 E9 F1
+BA20 C2 04 AA D1 7C 8E 5A B7 8E E0 00 62 E9 79 DD 08
+BA30 AC 5C B9 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+BA30             20 09 E5 00 00 AA A2 76 AA C0 78 E9
+BA40 5A C3 04 AA D1 7C AA C0 78 8E 78 A5 8E E0 00 62
+BA50 E9 79 DD 0A 64 AA C0 78 E9 F1 C2 04 AA D1 7C 8E
+BA60 5A B7 8E E0 00 62 E9 79 DD 08 AC 5C B9 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+BA60                                           20 09
+BA70 E5 00 00 AA BA 78 A4 A2 76 78 B3 E9 6E DE 04 8E
+BA80 0F 27 AA BA 78 A4 D1 7C 7E B3 E9 2C DE 06 AA BC
+BA90 78 A4 A2 76 7A B3 E9 6E DE 04 8E 0F 27 AA BC 78
+BAA0 A4 D1 7C 8F 10 B3 E9 2C DE 06 AA BE 78 A4 A2 76
+BAB0 7C B3 E9 6E DE 04 8E 0F 27 AA BE 78 A4 D1 7C 8F
+BAC0 12 B3 E9 2C DE 06 AC 5C B9 CF
+
+FUNCTION $BA6E (00 00) $BA73-$BAC9 
+
+Transfers previously determined amount of gold ($78BA/$78BB) from active nation to active city.
+Transfers previously determined amount of food ($78BC/$78BD) from active nation to active city.
+
+
+BA73 AA BA 78    / Push $78BA/$78BB to metastack     / (+2) Prev temp storage
+BA76 A4 A2 76    / Store $76A2/$76A3 to M8           /      Active Nation
+BA79 78          / Add #$08 to M8                    /      Active Nation - Gold
+BA7A B3          / Push M8 to metastack              / (+2)
+BA7B E9 6E DE 04 / Run function $DE6E                / (-2) Reduce gold by calculated amount
+
+BA7F 8E 0F 27    / Push #$270F to metastack          / (+2) 9999
+BA82 AA BA 78    / Push $78BA/$78BB to metastack     / (+2)
+BA85 A4 D1 7C    / Store $7CD1/$7CD2 to M8           /      Active City
+BA88 7E          / Add #$0E to M8
+BA89 B3          / Push M8 to metastack              / (+2)
+BA8A E9 2C DE 06 / Run function $DE2C                / (-6) Add gold to city
+
+BA8E AA BC 78    / Push $78BC/$78BD to metastack     / (+2)
+BA91 A4 A2 76    / Store $76A2/$76A3 to M8           /      Active Nation
+BA94 7A          / Add #$0A to M8                    /      Active Nation - Food
+BA95 B3          / Push M8 to metastack              / (+2)
+BA96 E9 6E DE 04 / Run function $DE6E                / (-4) Reduce food by calculated amount
+
+BA9A 8E 0F 27    / Push #$270F to metastack          / (+2)
+BA9D AA BC 78    / Push $78BC/$78BD to metastack     / (+2)
+BAA0 A4 D1 7C    / Store $7CD1/$7CD2 to M8           /      Active City
+BAA3 8F 10       / Add #$10 to M8                    /      Active City - Food
+BAA5 B3          / Push M8 to metastack              / (+2)
+BAA6 E9 2C DE 06 / Run function $DE2C                / (-6) Add food to city
+
+BAAA AA BE 78    / Push $78BE/$78BF to metastack     / (+2)
+BAAD A4 A2 76    / Store $76A2/$76A3 to M8           /      Active Nation
+BAB0 7C          / Add #$0C to M8                    /      Active Nation - Materials
+BAB1 B3          / Push M8 to metastack              / (+2)
+BAB2 E9 6E DE 04 / Run function $DE6E                / (-4) Reduce materials by calculated amount
+
+BAB6 8E 0F 27    / Push #$270F to metastack          / (+2)
+BAB9 AA BE 78    / Push $78BE/$78BF to metastack     / (+2)
+BABC A4 D1 7C    / Store $7CD1/$7CD2 to M8           /      Active City
+BABF 8F 12       / Add #$12 to M8                    /      Active City - Materials
+BAC1 B3          / Push M8 to metastack              / (+2)
+BAC2 E9 2C DE 06 / Run function $DE2C                / (-6) Add materials to city
+
+BAC6 AC 5C B9    / Run function $B95C                /      Flag active city for "taken turn"
+
+BAC9 CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+BAC0                               20 09 E5 00 00 AC
+BAD0 5C B9 CF
+
+FUNCTION $BACA (00 00) $BACF-$BAD2
+
+BACF AC 5C B9    / Run function $B95C
+BAD2 CF          / Exit
+====================================================
+FUNCTION $BAD3
+
+20 E3 E2 00 F8 FF
+
+ 04:BAD9:A0 FC     LDY #$FC
+ 04:BADB:91 06     STA ($06),Y
+ 04:BADD:C8        INY
+ 04:BADE:91 06     STA ($06),Y
+ 
+ 04:BAE0:A0 0B     LDY #$0B
+ 04:BAE2:B1 04     LDA ($04),Y
+ 04:BAE4:C8        INY
+ 04:BAE5:11 04     ORA ($04),Y
+ 04:BAE7:D0 03     BNE $BAEC
+ 04:BAE9:4C FD BA  JMP $BAFD
+ 
+ 04:BAEC:88        DEY
+ 04:BAED:B1 04     LDA ($04),Y @ $059F = #$A6
+ 04:BAEF:C9 01     CMP #$01
+ 04:BAF1:D0 05     BNE $BAF8
+ 04:BAF3:C8        INY
+ 04:BAF4:B1 04     LDA ($04),Y @ $059F = #$A6
+ 04:BAF6:C9 00     CMP #$00
+ 04:BAF8:F0 03     BEQ $BAFD
+ 04:BAFA:4C 06 BB  JMP $BB06
+ 04:BAFD:A9 01     LDA #$01
+ 04:BAFF:85 18     STA $0018 = #$00
+ 04:BB01:86 19     STX $0019 = #$00
+ 04:BB03:4C 0A BB  JMP $BB0A
+ 04:BB06:86 18     STX $0018 = #$00
+ 04:BB08:86 19     STX $0019 = #$00
+ 04:BB0A:A5 18     LDA $0018 = #$00
+ 04:BB0C:A0 F8     LDY #$F8
+ 04:BB0E:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BB10:A0 0B     LDY #$0B
+ 04:BB12:B1 04     LDA ($04),Y @ $059F = #$A6
+ 04:BB14:C9 07     CMP #$07
+ 04:BB16:D0 05     BNE $BB1D
+ 04:BB18:C8        INY
+ 04:BB19:B1 04     LDA ($04),Y @ $059F = #$A6
+ 04:BB1B:C9 00     CMP #$00
+ 04:BB1D:F0 03     BEQ $BB22
+ 04:BB1F:4C 29 BB  JMP $BB29
+ 04:BB22:86 18     STX $0018 = #$00
+ 04:BB24:86 19     STX $0019 = #$00
+ 04:BB26:4C 2F BB  JMP $BB2F
+ 04:BB29:A9 01     LDA #$01
+ 04:BB2B:85 18     STA $0018 = #$00
+ 04:BB2D:86 19     STX $0019 = #$00
+ 04:BB2F:A5 18     LDA $0018 = #$00
+ 04:BB31:A0 FB     LDY #$FB
+ 04:BB33:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BB35:A9 64     LDA #$64
+ 04:BB37:A0 F9     LDY #$F9
+ 04:BB39:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BB3B:4C 4A BB  JMP $BB4A
+ 04:BB3E:18        CLC
+ 04:BB3F:A9 01     LDA #$01
+ 04:BB41:A0 FB     LDY #$FB
+ 04:BB43:71 06     ADC ($06),Y @ $8033 = #$FD
+ 04:BB45:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BB47:8A        TXA
+ 04:BB48:69 00     ADC #$00
+ 04:BB4A:A0 FB     LDY #$FB
+ 04:BB4C:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BB4E:85 18     STA $0018 = #$00
+ 04:BB50:86 19     STX $0019 = #$00
+ 04:BB52:A5 18     LDA $0018 = #$00
+ 04:BB54:C9 0F     CMP #$0F
+ 04:BB56:A5 19     LDA $0019 = #$00
+ 04:BB58:E9 00     SBC #$00
+ 04:BB5A:90 03     BCC $BB5F
+ 04:BB5C:4C A4 BC  JMP $BCA4
+ 04:BB5F:A9 12     LDA #$12
+ 04:BB61:85 18     STA $0018 = #$00
+ 04:BB63:86 19     STX $0019 = #$00
+ 04:BB65:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BB67:85 14     STA $0014 = #$00
+ 04:BB69:86 15     STX $0015 = #$02
+ 04:BB6B:A0 14     LDY #$14
+ 04:BB6D:A2 18     LDX #$18
+ 04:BB6F:A9 10     LDA #$10
+ 04:BB71:20 C1 E1  JSR $E1C1
+ 04:BB74:18        CLC
+ 04:BB75:A5 10     LDA $0010 = #$96
+ 04:BB77:69 68     ADC #$68
+ 04:BB79:A0 FE     LDY #$FE
+ 04:BB7B:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BB7D:A5 11     LDA $0011 = #$04
+ 04:BB7F:69 70     ADC #$70
+ 04:BB81:C8        INY
+ 04:BB82:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BB84:88        DEY
+ 04:BB85:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BB87:85 18     STA $0018 = #$00
+ 04:BB89:C8        INY
+ 04:BB8A:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BB8C:85 19     STA $0019 = #$00
+ 04:BB8E:A1 18     LDA ($18,X) @ $3000 = #$B0
+ 04:BB90:A0 01     LDY #$01
+ 04:BB92:11 18     ORA ($18),Y @ $0002 = #$9D
+ 04:BB94:D0 03     BNE $BB99
+ 04:BB96:4C A0 BB  JMP $BBA0
+ 04:BB99:84 18     STY $0018 = #$00
+ 04:BB9B:86 19     STX $0019 = #$00
+ 04:BB9D:4C A4 BB  JMP $BBA4
+ 04:BBA0:86 18     STX $0018 = #$00
+ 04:BBA2:86 19     STX $0019 = #$00
+ 04:BBA4:A5 18     LDA $0018 = #$00
+ 04:BBA6:D0 03     BNE $BBAB
+ 04:BBA8:4C A1 BC  JMP $BCA1
+ 04:BBAB:A0 FE     LDY #$FE
+ 04:BBAD:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BBAF:CD A2 76  CMP $76A2 = #$9E
+ 04:BBB2:D0 06     BNE $BBBA
+ 04:BBB4:C8        INY
+ 04:BBB5:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BBB7:CD A3 76  CMP $76A3 = #$70
+ 04:BBBA:D0 03     BNE $BBBF
+ 04:BBBC:4C A1 BC  JMP $BCA1
+ 04:BBBF:A0 FF     LDY #$FF
+ 04:BBC1:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BBC3:48        PHA
+ 04:BBC4:88        DEY
+ 04:BBC5:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BBC7:48        PHA
+ 04:BBC8:AD A3 76  LDA $76A3 = #$70
+ 04:BBCB:48        PHA
+ 04:BBCC:AD A2 76  LDA $76A2 = #$9E
+ 04:BBCF:48        PHA
+ 04:BBD0:A9 01     LDA #$01
+ 04:BBD2:85 18     STA $0018 = #$00
+ 04:BBD4:86 19     STX $0019 = #$00
+ 04:BBD6:A0 0B     LDY #$0B
+ 04:BBD8:B1 04     LDA ($04),Y @ $059F = #$A6
+ 04:BBDA:85 14     STA $0014 = #$00
+ 04:BBDC:C8        INY
+ 04:BBDD:B1 04     LDA ($04),Y @ $059F = #$A6
+ 04:BBDF:85 15     STA $0015 = #$02
+ 04:BBE1:A0 14     LDY #$14
+ 04:BBE3:A2 18     LDX #$18
+ 04:BBE5:A9 10     LDA #$10
+ 04:BBE7:20 3A E4  JSR $E43A
+ 04:BBEA:18        CLC
+ 04:BBEB:A5 10     LDA $0010 = #$96
+ 04:BBED:69 0E     ADC #$0E
+ 04:BBEF:85 18     STA $0018 = #$00
+ 04:BBF1:A5 11     LDA $0011 = #$04
+ 04:BBF3:69 BF     ADC #$BF
+ 04:BBF5:85 19     STA $0019 = #$00
+ 04:BBF7:A1 18     LDA ($18,X) @ $3000 = #$B0
+ 04:BBF9:85 08     STA $0008 = #$05
+ 04:BBFB:B1 18     LDA ($18),Y @ $0002 = #$9D
+ 04:BBFD:85 09     STA $0009 = #$A0
+ 04:BBFF:20 8F E4  JSR $E48F
+
+ 06 A5 08
+ 
+ 04:BC05:D0 03     BNE $BC0A
+ 04:BC07:4C A1 BC  JMP $BCA1
+ 04:BC0A:A0 F8     LDY #$F8
+ 04:BC0C:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BC0E:D0 03     BNE $BC13
+ 04:BC10:4C 65 BC  JMP $BC65
+ 04:BC13:A0 FF     LDY #$FF
+ 04:BC15:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BC17:48        PHA
+ 04:BC18:88        DEY
+ 04:BC19:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BC1B:48        PHA
+ 04:BC1C:AD A3 76  LDA $76A3 = #$70
+ 04:BC1F:48        PHA
+ 04:BC20:AD A2 76  LDA $76A2 = #$9E
+ 04:BC23:48        PHA
+ 04:BC24:20 82 E3  JSR $E382
+ 
+ F1 8D 06
+ 
+ 04:BC2A:A5 08     LDA $0008
+ 04:BC2C:A0 FA     LDY #$FA
+ 04:BC2E:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BC30:88        DEY
+ 04:BC31:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BC33:85 18     STA $0018 = #$00
+ 04:BC35:86 19     STX $0019 = #$00
+ 04:BC37:C8        INY
+ 04:BC38:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BC3A:85 14     STA $0014 = #$00
+ 04:BC3C:86 15     STX $0015 = #$02
+ 04:BC3E:A5 18     LDA $0018 = #$00
+ 04:BC40:C5 14     CMP $0014 = #$00
+ 04:BC42:A5 19     LDA $0019 = #$00
+ 04:BC44:E5 15     SBC $0015 = #$02
+ 04:BC46:B0 03     BCS $BC4B
+ 04:BC48:4C 62 BC  JMP $BC62
+ 04:BC4B:A0 FE     LDY #$FE
+ 04:BC4D:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BC4F:A0 FC     LDY #$FC
+ 04:BC51:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BC53:A0 FF     LDY #$FF
+ 04:BC55:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BC57:A0 FD     LDY #$FD
+ 04:BC59:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BC5B:A0 FA     LDY #$FA
+ 04:BC5D:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BC5F:88        DEY
+ 04:BC60:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BC62:4C A1 BC  JMP $BCA1
+ 04:BC65:8A        TXA
+ 04:BC66:48        PHA
+ 04:BC67:A9 64     LDA #$64
+ 04:BC69:48        PHA
+ 04:BC6A:20 82 E3  JSR $E382
+ 
+ D1 D7 04
+ 
+ 04:BC70:86 09     STX $0009 = #$A0
+ 04:BC72:A5 08     LDA $0008 = #$05
+ 04:BC74:C9 32     CMP #$32
+ 04:BC76:A5 09     LDA $0009 = #$A0
+ 04:BC78:E9 00     SBC #$00
+ 04:BC7A:90 03     BCC $BC7F
+ 04:BC7C:4C 86 BC  JMP $BC86
+ 04:BC7F:84 18     STY $0018 = #$00
+ 04:BC81:86 19     STX $0019 = #$00
+ 04:BC83:4C 8A BC  JMP $BC8A
+ 04:BC86:86 18     STX $0018 = #$00
+ 04:BC88:86 19     STX $0019 = #$00
+ 04:BC8A:A5 18     LDA $0018 = #$00
+ 04:BC8C:D0 03     BNE $BC91
+ 04:BC8E:4C A1 BC  JMP $BCA1
+ 04:BC91:A0 FE     LDY #$FE
+ 04:BC93:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BC95:A0 FC     LDY #$FC
+ 04:BC97:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BC99:A0 FF     LDY #$FF
+ 04:BC9B:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BC9D:A0 FD     LDY #$FD
+ 04:BC9F:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BCA1:4C 3E BB  JMP $BB3E
+ 04:BCA4:A0 FC     LDY #$FC
+ 04:BCA6:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BCA8:85 08     STA $0008 = #$05
+ 04:BCAA:C8        INY
+ 04:BCAB:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BCAD:85 09     STA $0009 = #$A0
+ 04:BCAF:60        RTS -----------------------------------------
+====================================================
+FUNCTION $BCB0
+
+20 E3 E2 00 F7 FF
+
+ 04:BCB6:A0 0B     LDY #$0B
+ 04:BCB8:B1 04     LDA ($04),Y
+ 04:BCBA:C9 68     CMP #$68
+ 04:BCBC:D0 05     BNE $BCC3
+ 04:BCBE:C8        INY
+ 04:BCBF:B1 04     LDA ($04),Y
+ 04:BCC1:C9 70     CMP #$70
+ 04:BCC3:F0 03     BEQ $BCC8
+ 04:BCC5:4C 04 BD  JMP $BD04
+ 04:BCC8:AD 63 70  LDA $7063
+ 04:BCCB:85 18     STA $0018
+ 04:BCCD:86 19     STX $0019
+ 04:BCCF:A2 18     LDX #$18
+ 04:BCD1:20 DF E3  JSR $E3DF
+ 04:BCD4:48        PHA
+ 04:BCD5:A9 64     LDA #$64
+ 04:BCD7:48        PHA
+ 04:BCD8:20 82 E3  JSR $E382 ; RNG #$00-#$63
+
+ D1 D7 04
+
+ 04:BCDE:86 09     STX $0009
+ 04:BCE0:A2 18     LDX #$18
+ 04:BCE2:20 04 E4  JSR $E404
+ 04:BCE5:A5 08     LDA $0008
+ 04:BCE7:C5 18     CMP $0018
+ 04:BCE9:A5 09     LDA $0009
+ 04:BCEB:E5 19     SBC $0019
+ 04:BCED:90 03     BCC $BCF2
+ 04:BCEF:4C F9 BC  JMP $BCF9
+ 04:BCF2:84 18     STY $0018 = #$00
+ 04:BCF4:86 19     STX $0019 = #$00
+ 04:BCF6:4C FD BC  JMP $BCFD
+ 04:BCF9:86 18     STX $0018 = #$00
+ 04:BCFB:86 19     STX $0019 = #$00
+ 04:BCFD:A5 18     LDA $0018 = #$00
+ 04:BCFF:D0 03     BNE $BD04
+ 04:BD01:4C 0D BD  JMP $BD0D
+ 04:BD04:A9 01     LDA #$01
+ 04:BD06:85 18     STA $0018 = #$00
+ 04:BD08:86 19     STX $0019 = #$00
+ 04:BD0A:4C 11 BD  JMP $BD11
+ 04:BD0D:86 18     STX $0018 = #$00
+ 04:BD0F:86 19     STX $0019 = #$00
+ 04:BD11:A5 18     LDA $0018 = #$00
+ 04:BD13:A0 F7     LDY #$F7
+ 04:BD15:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BD17:8A        TXA
+ 04:BD18:A0 FA     LDY #$FA
+ 04:BD1A:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BD1C:C8        INY
+ 04:BD1D:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BD1F:A0 0B     LDY #$0B
+ 04:BD21:B1 04     LDA ($04),Y @ $059F = #$A6
+ 04:BD23:85 18     STA $0018 = #$00
+ 04:BD25:C8        INY
+ 04:BD26:B1 04     LDA ($04),Y @ $059F = #$A6
+ 04:BD28:85 19     STA $0019 = #$00
+ 04:BD2A:A1 18     LDA ($18,X) @ $3000 = #$B0
+ 04:BD2C:A0 FC     LDY #$FC
+ 04:BD2E:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BD30:A0 01     LDY #$01
+ 04:BD32:B1 18     LDA ($18),Y @ $0002 = #$9D
+ 04:BD34:A0 FD     LDY #$FD
+ 04:BD36:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BD38:A1 18     LDA ($18,X) @ $3000 = #$B0
+ 04:BD3A:C8        INY
+ 04:BD3B:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BD3D:A0 01     LDY #$01
+ 04:BD3F:B1 18     LDA ($18),Y @ $0002 = #$9D
+ 04:BD41:A0 FF     LDY #$FF
+ 04:BD43:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BD45:4C 60 BD  JMP $BD60
+ 04:BD48:A0 FC     LDY #$FC
+ 04:BD4A:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BD4C:85 18     STA $0018 = #$00
+ 04:BD4E:C8        INY
+ 04:BD4F:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BD51:85 19     STA $0019 = #$00
+ 04:BD53:A1 18     LDA ($18,X) @ $3000 = #$B0
+ 04:BD55:88        DEY
+ 04:BD56:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BD58:A0 01     LDY #$01
+ 04:BD5A:B1 18     LDA ($18),Y @ $0002 = #$9D
+ 04:BD5C:A0 FD     LDY #$FD
+ 04:BD5E:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BD60:A0 FC     LDY #$FC
+ 04:BD62:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BD64:C8        INY
+ 04:BD65:11 06     ORA ($06),Y @ $8033 = #$FD
+ 04:BD67:D0 03     BNE $BD6C
+ 04:BD69:4C A6 BE  JMP $BEA6
+ 04:BD6C:A0 0D     LDY #$0D
+ 04:BD6E:B1 04     LDA ($04),Y @ $059F = #$A6
+ 04:BD70:85 18     STA $0018 = #$00
+ 04:BD72:86 19     STX $0019 = #$00
+ 04:BD74:A5 18     LDA $0018 = #$00
+ 04:BD76:C9 06     CMP #$06
+ 04:BD78:D0 04     BNE $BD7E
+ 04:BD7A:A5 19     LDA $0019 = #$00
+ 04:BD7C:C9 00     CMP #$00
+ 04:BD7E:D0 03     BNE $BD83
+ 04:BD80:4C CC BD  JMP $BDCC
+ 04:BD83:A0 FD     LDY #$FD
+ 04:BD85:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BD87:48        PHA
+ 04:BD88:88        DEY
+ 04:BD89:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BD8B:48        PHA
+ 04:BD8C:A9 01     LDA #$01
+ 04:BD8E:85 18     STA $0018 = #$00
+ 04:BD90:86 19     STX $0019 = #$00
+ 04:BD92:A0 0D     LDY #$0D
+ 04:BD94:B1 04     LDA ($04),Y @ $059F = #$A6
+ 04:BD96:85 14     STA $0014 = #$00
+ 04:BD98:86 15     STX $0015 = #$02
+ 04:BD9A:A0 14     LDY #$14
+ 04:BD9C:A2 18     LDX #$18
+ 04:BD9E:A9 10     LDA #$10
+ 04:BDA0:20 3A E4  JSR $E43A
+ 04:BDA3:18        CLC
+ 04:BDA4:A5 10     LDA $0010 = #$96
+ 04:BDA6:69 24     ADC #$24
+ 04:BDA8:85 18     STA $0018 = #$00
+ 04:BDAA:A5 11     LDA $0011 = #$04
+ 04:BDAC:69 BF     ADC #$BF
+ 04:BDAE:85 19     STA $0019 = #$00
+ 04:BDB0:A1 18     LDA ($18,X) @ $3000 = #$B0
+ 04:BDB2:85 08     STA $0008 = #$05
+ 04:BDB4:B1 18     LDA ($18),Y @ $0002 = #$9D
+ 04:BDB6:85 09     STA $0009 = #$A0
+ 04:BDB8:20 8F E4  JSR $E48F
+ 
+ 04
+ 
+ 04:BDBC:86 09     STX $0009 = #$A0
+ 04:BDBE:A5 08     LDA $0008 = #$05
+ 04:BDC0:A0 F8     LDY #$F8
+ 04:BDC2:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BDC4:A5 09     LDA $0009 = #$A0
+ 04:BDC6:C8        INY
+ 04:BDC7:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BDC9:4C F3 BD  JMP $BDF3
+ 04:BDCC:A0 FC     LDY #$FC
+ 04:BDCE:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BDD0:85 18     STA $0018 = #$00
+ 04:BDD2:C8        INY
+ 04:BDD3:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BDD5:85 19     STA $0019 = #$00
+ 04:BDD7:A0 03     LDY #$03
+ 04:BDD9:B1 18     LDA ($18),Y @ $0002 = #$9D
+ 04:BDDB:48        PHA
+ 04:BDDC:88        DEY
+ 04:BDDD:B1 18     LDA ($18),Y @ $0002 = #$9D
+ 04:BDDF:48        PHA
+ 04:BDE0:20 82 E3  JSR $E382
+ 
+ 3B D4 04
+ 
+ 04:BDE6:86 09     STX $0009 = #$A0
+ 04:BDE8:A5 08     LDA $0008 = #$05
+ 04:BDEA:A0 F8     LDY #$F8
+ 04:BDEC:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BDEE:A5 09     LDA $0009 = #$A0
+ 04:BDF0:C8        INY
+ 04:BDF1:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BDF3:A0 F8     LDY #$F8
+ 04:BDF5:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BDF7:C9 FF     CMP #$FF
+ 04:BDF9:D0 05     BNE $BE00
+ 04:BDFB:C8        INY
+ 04:BDFC:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BDFE:C9 00     CMP #$00
+ 04:BE00:D0 03     BNE $BE05
+ 04:BE02:4C A3 BE  JMP $BEA3
+ 04:BE05:A9 1C     LDA #$1C
+ 04:BE07:85 18     STA $0018 = #$00
+ 04:BE09:86 19     STX $0019 = #$00
+ 04:BE0B:38        SEC
+ 04:BE0C:A0 FC     LDY #$FC
+ 04:BE0E:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BE10:E9 76     SBC #$76
+ 04:BE12:85 14     STA $0014 = #$00
+ 04:BE14:C8        INY
+ 04:BE15:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BE17:E9 71     SBC #$71
+ 04:BE19:85 15     STA $0015 = #$02
+ 04:BE1B:A0 14     LDY #$14
+ 04:BE1D:A2 18     LDX #$18
+ 04:BE1F:A9 10     LDA #$10
+ 04:BE21:20 23 E2  JSR $E223
+ 04:BE24:86 11     STX $0011 = #$04
+ 04:BE26:18        CLC
+ 04:BE27:A5 10     LDA $0010 = #$96
+ 04:BE29:69 31     ADC #$31
+ 04:BE2B:85 18     STA $0018 = #$00
+ 04:BE2D:A5 11     LDA $0011 = #$04
+ 04:BE2F:69 70     ADC #$70
+ 04:BE31:85 19     STA $0019 = #$00
+ 04:BE33:A1 18     LDA ($18,X) @ $3000 = #$B0
+ 04:BE35:85 14     STA $0014 = #$00
+ 04:BE37:86 15     STX $0015 = #$02
+ 04:BE39:A5 14     LDA $0014 = #$00
+ 04:BE3B:05 15     ORA $0015 = #$02
+ 04:BE3D:F0 03     BEQ $BE42
+ 04:BE3F:4C A3 BE  JMP $BEA3
+ 04:BE42:A0 FA     LDY #$FA
+ 04:BE44:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BE46:A0 F8     LDY #$F8
+ 04:BE48:D1 06     CMP ($06),Y @ $8033 = #$FD
+ 04:BE4A:A0 FB     LDY #$FB
+ 04:BE4C:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BE4E:A0 F9     LDY #$F9
+ 04:BE50:F1 06     SBC ($06),Y @ $8033 = #$FD
+ 04:BE52:90 03     BCC $BE57
+ 04:BE54:4C A3 BE  JMP $BEA3
+ 04:BE57:A0 FD     LDY #$FD
+ 04:BE59:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BE5B:48        PHA
+ 04:BE5C:88        DEY
+ 04:BE5D:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BE5F:48        PHA
+ 04:BE60:A9 A3     LDA #$A3
+ 04:BE62:48        PHA
+ 04:BE63:A9 E0     LDA #$E0
+ 04:BE65:48        PHA
+ 04:BE66:8A        TXA
+ 04:BE67:48        PHA
+ 04:BE68:A9 E0     LDA #$E0
+ 04:BE6A:48        PHA
+ 04:BE6B:8A        TXA
+ 04:BE6C:48        PHA
+ 04:BE6D:A9 02     LDA #$02
+ 04:BE6F:48        PHA
+ 04:BE70:20 82 E3  JSR $E382
+ 
+ 79 DD 0A
+ 
+ 04:BE76:A5 08     LDA $0008 = #$05
+ 04:BE78:D0 03     BNE $BE7D
+ 04:BE7A:4C 86 BE  JMP $BE86
+ 04:BE7D:A0 F7     LDY #$F7
+ 04:BE7F:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BE81:D0 03     BNE $BE86
+ 04:BE83:4C A3 BE  JMP $BEA3
+ 04:BE86:A0 F8     LDY #$F8
+ 04:BE88:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BE8A:A0 FA     LDY #$FA
+ 04:BE8C:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BE8E:88        DEY
+ 04:BE8F:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BE91:A0 FB     LDY #$FB
+ 04:BE93:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BE95:C8        INY
+ 04:BE96:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BE98:A0 FE     LDY #$FE
+ 04:BE9A:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BE9C:88        DEY
+ 04:BE9D:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BE9F:A0 FF     LDY #$FF
+ 04:BEA1:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BEA3:4C 48 BD  JMP $BD48
+ 04:BEA6:A0 FA     LDY #$FA
+ 04:BEA8:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BEAA:C8        INY
+ 04:BEAB:11 06     ORA ($06),Y @ $8033 = #$FD
+ 04:BEAD:F0 03     BEQ $BEB2
+ 04:BEAF:4C BA BE  JMP $BEBA
+ 04:BEB2:8A        TXA
+ 04:BEB3:A0 FE     LDY #$FE
+ 04:BEB5:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BEB7:C8        INY
+ 04:BEB8:91 06     STA ($06),Y @ $8033 = #$FD
+ 04:BEBA:A0 FE     LDY #$FE
+ 04:BEBC:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BEBE:85 08     STA $0008 = #$05
+ 04:BEC0:C8        INY
+ 04:BEC1:B1 06     LDA ($06),Y @ $8033 = #$FD
+ 04:BEC3:85 09     STA $0009 = #$A0
+ 04:BEC5:60        RTS -----------------------------------------
+================================================================
+DATA TABLE $BEC6
+Contains redirect address to main function
+
+BEC6 1C AC -> $AC1C
+================================================================
+TEXT STRINGS
+BEC8: .Press any button
+
+JUMP TABLE:
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F 
+BF00                                           C2 A0
+BF10 19 A1 58 A1 21 A2 9F A0 D4 A1 94 A1 5E A2 13 A0
+BF20 68 A0 F6 A0 82 A2 9F A2 BC A2 EC 99 F2 A2 59 A3
+
+$BF0E      
+00 $A0C2
+01 $A119 
+02 $A158 
+03 $A221 
+04 $A09F 
+05 $A1D4 
+06 $A194 
+07 $A25E 
+08 $A013 
+09 $A068 
+0A $A0F6 
+0B $A282 
+0C $A29F 
+0D $A2BC 
+0E $99EC - Tallies # of officers in City with combat skill???
+
+0F $A2F2 - Checks if City (1/2) needs to change its material supply or supply base status.
+           Returns #$01 if yes, else returns #$FF.
+10 $A359 - Finds the # of ships able to be built by city (1/2).
+           Returns the # of ships, or returns #$FF if no port.

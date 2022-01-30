@@ -1,0 +1,107 @@
+DEFAULT SETTING OF AB: F4
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8000 4C 2C 86
+
+8000 JMP $862C
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8000          20 09 E5 00 00 8D 10 60 3C 66 E9 1E EF
+8010 08 61 8D 11 E9 1E EF 04 CF
+
+FUNCTION $8003 (00 00) $8008-$8018
+8008 8D 10       / Push #$0010 to metastack          / (+2)
+800A 60          / Push #$0000 to metastack          / (+2)
+800B 3C          / Push preloaded 01/02 to metastack / (+2)
+800C 66          / Push #$0006 to metastack          / (+2)
+800D E9 1E EF 08 / Run function $EF1E                / (-8) Store #$10 values from given address to $0701-$0711 & #$FF to $0700
+8011 61          / Push #$0001 to metastack          / (+2)
+8012 8D 11       / Push #$0011 to metastack          / (+2)
+8014 E9 1E EF 04 / Run function $EF1E                / (-4) Wait 1 frame
+8018 CF          / Exit 
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8010                            20 09 E5 00 00 D6 36
+8020 80 60 8D 10 E9 1E EF 04 58 C0 D8 2F 80 41 CF 61
+8030 8D 11 E9 1E EF 04 0C D1 2C D0 D7 21 80 40 CF
+
+FUNCTION $8019 (00 00) $801E-$803E
+
+801E D6 36 80    / Jump to $8036
+
+8021 60          / Push #$0000 to metastack          / (+2)
+8022 8D 10       / Push #$0010 to metastack          / (+2)
+8024 E9 1E EF 04 / Run function $EF1E                / (-4) Transfer $9C to $66 (Controller 1 input)
+8028 58          / Store #$08 to MC  
+8029 C0          / Check if M8=MC                    /      Check if ONLY Start is being pressed
+802A D8 2F 80    / Jump to $802F if not
+802D 41          / Store #$01 to $0008
+802E CF          / Exit
+802F 61          / Push #$0001 to metastack          / (+2)
+8030 8D 11       / Push #$0011 to metastack          / (+2)
+8032 E9 1E EF 04 / Run function $EF1E                / (-4) Wait for 1 frame
+
+8036 0C          / Store preloaded 01/02 to M8 
+8037 D1          / Decrement M8
+8038 2C          / Store M8 to preloaded 01/02
+8039 D0          / Increment M8
+803A D7 21 80    / Jump to $8021 if not zero
+803D 40          / Store #$00 to $0008
+803E CF          / Exit
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8030                                              20
+8040 09 E5 FE FF 8E FF 00 E9 6F CF 02 61 8D 11 E9 1E
+8050 EF 04 AC 0B D0 8E F0 00 8E 2C 9A 8E C8 99 64 8D
+8060 19 6B 64 69 E9 1E EF 10 8E F0 00 8E C0 9A 8E 90
+8070 9A 62 8D 18 6F 64 69 E9 1E EF 10 8E F0 00 8E C6
+8080 99 8E C4 99 62 61 6F 64 69 E9 1E EF 10 8E F0 00
+8090 8E C6 99 8E C4 99 62 61 6F 64 69 E9 1E EF 10 45
+80A0 2B 8E F0 00 8E BE 99 8E BC 99 62 61 6F 3B 69 E9
+80B0 1E EF 10 8E F0 00 8E C2 99 8E C0 99 62 61 6F 0B
+80C0 D0 B3 69 E9 1E EF 10 0B D0 2B 0B 8B 12 C6 D7 A1
+80D0 80 8E F4 00 8E 28 A8 8E 0C A8 61 8D 1C 8D 19 62
+80E0 69 E9 1E EF 10 8E 97 94 E9 03 80 02 8D 12 67 E9
+80F0 BC C3 04 8E A7 94 E9 E9 C3 02 60 E9 F7 CD 02 8D
+8100 78 8D 11 E9 1E EF 04 60 8D 10 E9 1E EF 04 58 C1
+8110 D7 07 81 41 CF
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+8110                20 09 E5 D3 FF 8E FF 00 E9 6F CF
+8120 02 61 8D 11 E9 1E EF 04 AC 0B D0 8E F0 00 8E 2C
+8130 
+8140 
+8150 
+8160 
+8170 
+8180 
+8190 
+81A0 
+81B0 
+81C0 
+81D0 
+81E0 
+81F0 
+8200 
+8210 
+8220 
+8230 
+8240 
+8250 
+8260 02 8E 58 02 E9 19 80 02 D8 73 82 AC 3F 80 D8 73
+8270 82 41 CF 8D 12 67 E9 BC C3 04 8E 54 95 E9 E9 C3
+8280 02 8E F4 00 8E 28 A8 8E 0C A8 61 8D 1C 8D 19 62
+8290 69 E9 1E EF 10 60 E9 F7 CD 02 AC 27 CE D8 AE 82
+82A0 60 8D 10 E9 1E EF 04 58 C0 D8 9A 82 41 CF 40 CF 
+
+
+
+
+
+
+
+	 

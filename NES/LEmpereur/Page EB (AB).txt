@@ -1,0 +1,103 @@
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A000 4C 91 A7
+
+A000 JMP $A791
+
+ADDRESS IN ROM: 0x16010-0x1800F
+
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A000          20 09 E5 FA FF 61 3C E9 96 82 04 2B 61
+A010 0C D0 51 DA B3 E9 96 82 04 2A 0B 51 BE 1A C8 D8
+A020 26 A0 40 D6 33 A0 0A 51 BE 1B C8 D8 32 A0 42 D6
+A030 33 A0 41 29 09 CF
+
+FUNCTION $A003 (FA FF) $A008-$A035
+
+A008 61          / Push #$01 to metastack            / (+2)
+A009 3C          / Push preloaded 01/02 to metastack / (+2)
+A00A E9 96 82 04 / Run function $8296                / (-4)
+A00E 2B          / Store M8 to meta 01/02
+
+A00F 61          / Push #$01 to metastack            / (+2)
+A010 0C          / Store preloaded 01/02 to M8
+A011 D0          / Add #$01 to M8
+A012 51          / Store #$01 to MC
+A013 DA          / M8 AND MC
+A014 B3          / Push M8 to metastack              / (+2)
+A015 E9 96 82 04 / Run function $8296                / (-4)
+
+A019 
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A010 0C D0 51 DA B3 E9 96 82 04 2A 0B 51 BE 1A C8 D8
+A020 26 A0 40 D6 33 A0 0A 51 BE 1B C8 D8 32 A0 42 D6
+A030 33 A0 41 29 09 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A030                   20 09 E5 FE FF 40 D8 40 A0 CF
+A040 A5 3C 79 8C FF 00 C1 D8 7E A0 A5 3C 79 B3 E9 03
+A050 A0 02 2B 0B 8C 86 BC BB D3 A9 7F 78 A5 5A 7B B3
+A060 A5 7F 78 B4 C1 D8 7E A0 AC 27 CE D8 76 A0 AC 0F
+A070 CE 6A E9 52 C0 A5 7F 78 B3 E9 E4 CD 02 CF
+
+FUNCTION $A036 (FE FF) $A03B-$A07D
+
+A03B 40          / Store #$00 to M8
+A03C D8 40 A0    / Jump to $A040 if zero
+A03F CF          / Exit
+
+A040 A5 3C 79    / Store $793C to $0008
+A043 8C FF 00    / Store #$FF to MC
+A046 C1          / Check if M8 != MC
+A047 D8 7E A0    / Jump to $A07E if not
+
+A04A A5 3C 79    / Store $793C to $0008
+A04D B3          / Push M8 to metastack              / (+2)
+A04E E9 03 A0 02 / Run function $A003                / (-2)
+A052 2B          / Store M8 to meta 01/02
+
+A053 0B          / Store meta 01/02 to M8
+A054 8C 86 BC    / Store #$BC86 to MC
+A057 BB          / Add MC to M8
+A058 D3          / Replace M8 with 1-byte value
+A059 A9 7F 78    / Store $0008 to $787F
+A05C A5 5A 7B    / Store $7B5A to $0008
+A05F B3          / Push M8 to metastack              / (+2)
+A060 A5 7F 78    / Store $787F to M8                 
+A063 B4          / Pull 2 meta to MC                 / (-2)
+A064 C1          / Check if M8 is different than MC
+A065 D8 7E A0    / Jump to $A07E if not
+
+A068 AC 27 CE    / Run function $CE27
+A06B D8 76 A0    / Jump to $A076 if zero
+
+A06E AC 0F CE    / Run function $CE0F
+A071 6A          / Push #$0A to metastack            / (+2)
+A072 E9 
+
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A060 A5 7F 78 B4 C1 D8 7E A0 AC 27 CE D8 76 A0 AC 0F
+A070 CE 6A E9 52 C0 A5 7F 78 B3 E9 E4 CD 02 CF
+====================================================
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+A070                                              20
+A080 09 E5 F6 FF 0C 72 B0 29 09 7D D3 B3 63 09 75 D3
+A090 B3 E9 60 D4 04 5A B5 B4 BB 28 8D 10 60 39 E9 7A
+A0A0 D1 04 B3 E9 60 D4 04 D8 AF A0 4F CD 08 BB 28 8D
+A0B0 20 06 39 E9 7A D1 04 B3 E9 60 D4 04 D8 C8 A0 6F
+A0C0 DE F8 FF B3 E9 77 DE 04 08 8B 50 C8 D7 EA A0 8D
+A0D0 64 09 77 D3 B3 89 69 B4 BC B3 E9 D6 DC 04 B3 8D
+A0E0 64 E9 D1 D7 02 B4 C6 D7 EB A0 CF 0C 74 D3 5C DA
+A0F0 52 BE 27 37 E9 80 96 02 2A D8 7A A1 A5 34 79 51
+A100 C0 D8 09 A1 89 32 D6 0B A1 89 19 B3 09 79 B3 E9
+A110 B6 D3 04 3C E9 0D 81 02 37 3C E9 71 84 04 3A 39
+A120 E9 E9 96 04 07 5D B5 8C A2 7B BB 2B 0B 77 D3 D8
+A130 72 A1 0B 7C D3 52 DA D8 72 A1 60 3A AA D3 7C 8E
+A140 CC A2 8E E0 00 62 E9 79 DD 0C D8 72 A1 09 79 D3
+A150 8B 64 C8 D8 61 A1 09 79 B3 89 64 D4 3C E9 0D 81
+A160 02 0B 77 B3 D3 D1 D4 8D 64 61 0A 8F 1A B3 E9 3B
+A170 DE 06 39 8E 89 BC E9 DE 93 04 CF
+====================================================
+
+DATA TABLE $BC86

@@ -1,0 +1,154 @@
+================================================================
+FUNCTION $DAD8
+Title screen loop
+
+ 04:DAD8:20 F0 E5  JSR $E5F0 ; Initialize sprites?
+ 
+ 04:DADB:A9 81     LDA #$81
+ 04:DADD:20 B4 F6  JSR $F6B4
+ 
+ 04:DAE0:20 F0 E5  JSR $E5F0 ; Initialize sprites?
+ 
+ 04:DAE3:20 AF E4  JSR $E4AF
+ 04:DAE6:20 E1 DB  JSR $DBE1
+ 
+ 04:DAE9:A9 00     LDA #$00
+ 04:DAEB:8D 17 02  STA $0217
+ 04:DAEE:A9 00     LDA #$00
+ 04:DAF0:8D 03 02  STA $0203
+ 
+ 04:DAF3:A9 81     LDA #$81
+ 04:DAF5:8D 7A 06  STA $067A
+ 04:DAF8:8D 7C 06  STA $067C
+ 04:DAFB:20 E6 E5  JSR $E5E6
+ 04:DAFE:20 E5 E3  JSR $E3E5
+ 04:DB01:20 DE E5  JSR $E5DE
+ 04:DB04:A9 01     LDA #$01
+ 04:DB06:8D 9A 02  STA $029A
+ 04:DB09:20 01 E4  JSR $E401
+ 04:DB0C:20 3E E5  JSR $E53E
+ 04:DB0F:AD 9A 02  LDA $029A
+ 04:DB12:F0 09     BEQ $DB1D
+ 04:DB14:A5 3D     LDA $003D
+ 04:DB16:D0 F1     BNE $DB09
+ 04:DB18:A9 00     LDA #$00
+ 04:DB1A:8D 9A 02  STA $029A
+ 04:DB1D:A5 3D     LDA $003D
+ 04:DB1F:29 90     AND #$90  ; Check if A or Start is pressed
+ 04:DB21:D0 10     BNE $DB33 ; Advance to next screen if so
+ 
+ 04:DB23:AD 7C 06  LDA $067C
+ 04:DB26:D0 E1     BNE $DB09
+ 04:DB28:A9 00     LDA #$00
+ 04:DB2A:8D 7A 06  STA $067A
+ 04:DB2D:20 CC E5  JSR $E5CC
+ 04:DB30:A9 07     LDA #$07
+ 04:DB32:60        RTS -----------------------------------------
+ 04:DB33:20 95 DB  JSR $DB95 ; Set letter order to random
+ 04:DB36:20 CC E5  JSR $E5CC
+ 04:DB39:A9 02     LDA #$02
+ 04:DB3B:60        RTS -----------------------------------------
+================================================================
+FUNCTION $DB3C
+ 04:DB3C:AD 17 02  LDA $0217 = #$00
+ 04:DB3F:AA        TAX
+ 04:DB40:0A        ASL
+ 04:DB41:0A        ASL
+ 04:DB42:18        CLC
+ 04:DB43:6D 1A 02  ADC $021A = #$00
+ 04:DB46:A8        TAY
+ 04:DB47:BD 1E 02  LDA $021E,X @ $031D = #$00
+ 04:DB4A:D9 FC FA  CMP $FAFC,Y @ $FAFC = #$01
+ 04:DB4D:F0 13     BEQ $DB62
+ 04:DB4F:85 12     STA $0012 = #$00
+ 04:DB51:8A        TXA
+ 04:DB52:0A        ASL
+ 04:DB53:0A        ASL
+ 04:DB54:0A        ASL
+ 04:DB55:05 12     ORA $0012 = #$00
+ 04:DB57:AA        TAX
+ 04:DB58:BD 3F 02  LDA $023F,X @ $033E = #$00
+ 04:DB5B:8D 24 02  STA $0224 = #$00
+ 04:DB5E:BD 65 DB  LDA $DB65,X @ $DC64 = #$E4
+ 04:DB61:60        RTS -----------------------------------------
+ 04:DB62:A9 FF     LDA #$FF
+ 04:DB64:60        RTS -----------------------------------------
+================================================================
+DATA TABLE $DB65
+
+================================================================
+FUNCTION $DB95
+
+ 04:DB95:A2 2F     LDX #$2F    / Initializes letter order
+ 04:DB97:BD 0A DC  LDA $DC0A,X / by alphabetical list in ROM
+ 04:DB9A:9D 3F 02  STA $023F,X 
+ 04:DB9D:CA        DEX
+ 04:DB9E:10 F7     BPL $DB97
+ 
+ 04:DBA0:A2 05     LDX #$05    / Loop through each world
+ 04:DBA2:BD 04 DC  LDA $DC04,X
+ 04:DBA5:85 10     STA $0010   / Find the # of letters
+ 04:DBA7:8A        TXA
+ 04:DBA8:0A        ASL
+ 04:DBA9:0A        ASL
+ 04:DBAA:0A        ASL
+ 04:DBAB:18        CLC
+ 04:DBAC:69 3F     ADC #$3F
+ 04:DBAE:85 0E     STA $000E
+ 04:DBB0:A9 02     LDA #$02
+ 04:DBB2:69 00     ADC #$00
+ 04:DBB4:85 0F     STA $000F   / Find the corresponding letter list
+ 
+ 04:DBB6:A9 07     LDA #$07
+ 04:DBB8:85 11     STA $0011
+ 04:DBBA:A0 00     LDY #$00
+ 04:DBBC:20 3E E5  JSR $E53E
+ 
+ 04:DBBF:AD 08 02  LDA $0208   / RNG (high byte)
+ 04:DBC2:29 01     AND #$01
+ 04:DBC4:F0 0E     BEQ $DBD4
+ 04:DBC6:B1 0E     LDA ($0E),Y
+ 04:DBC8:48        PHA
+ 04:DBC9:C8        INY
+ 04:DBCA:B1 0E     LDA ($0E),Y
+ 04:DBCC:88        DEY
+ 04:DBCD:91 0E     STA ($0E),Y
+ 04:DBCF:C8        INY
+ 04:DBD0:68        PLA
+ 04:DBD1:91 0E     STA ($0E),Y
+ 04:DBD3:88        DEY
+ 
+ 04:DBD4:C8        INY
+ 04:DBD5:C4 10     CPY $0010
+ 04:DBD7:D0 E3     BNE $DBBC
+ 04:DBD9:C6 11     DEC $0011
+ 04:DBDB:D0 DD     BNE $DBBA
+ 04:DBDD:CA        DEX
+ 04:DBDE:10 C2     BPL $DBA2
+ 04:DBE0:60        RTS -----------------------------------------
+================================================================
+FUNCTION $E53E
+ 07:E53E:AD 07 02  LDA $0207
+ 07:E541:18        CLC
+ 07:E542:69 FD     ADC #$FD
+ 07:E544:85 0C     STA $000C
+ 07:E546:AD 08 02  LDA $0208
+ 07:E549:69 3F     ADC #$3F
+ 07:E54B:85 0D     STA $000D
+ 07:E54D:AD 08 02  LDA $0208
+ 07:E550:0E 07 02  ASL $0207
+ 07:E553:2A        ROL
+ 07:E554:0E 07 02  ASL $0207
+ 07:E557:2A        ROL
+ 07:E558:0E 07 02  ASL $0207
+ 07:E55B:2A        ROL
+ 07:E55C:8D 08 02  STA $0208
+ 07:E55F:AD 07 02  LDA $0207
+ 07:E562:18        CLC
+ 07:E563:65 0C     ADC $000C
+ 07:E565:8D 07 02  STA $0207
+ 07:E568:AD 08 02  LDA $0208
+ 07:E56B:65 0D     ADC $000D
+ 07:E56D:8D 08 02  STA $0208
+ 07:E570:60        RTS -----------------------------------------
+================================================================

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="theme.css">
+    <title>Mach Rider (NES) E Visual Disassembly</title>
+</head>
+
+<body>
+    <h1>
+        Mach Rider (NES) E<br>Visual Disassembly
+    </h1>
+<script> 
+
+var NESColorWeb = ["#7C7C7C","#0000FC","#0000BC","#4428BC","#940084","#A80020","#A81000","#881400","#503000","#007800","#006800","#005800","#004058","#000000","#000000","#000000",
+                   "#BCBCBC","#0078F8","#0058F8","#6844FC","#D800CC","#E40058","#F83800","#E45C10","#AC7C00","#00B800","#00A800","#00A844","#008888","#000000","#000000","#000000",
+                   "#F8F8F8","#3CBCFC","#6888FC","#9878F8","#F878F8","#F85898","#F87858","#FCA044","#F8B800","#B8F818","#58D854","#58F898","#00E8D8","#787878","#000000","#000000",
+                   "#FCFCFC","#A4E4FC","#B8B8F8","#D8B8F8","#F8B8F8","#F8A4C0","#F0D0B0","#FCE0A8","#F8D878","#D8F878","#B8F8B8","#B8F8D8","#00FCFC","#F8D8F8","#000000","#000000"];
+
+function brightness(color){
+    var rgb = color.substring(4, color.length-1)
+         .replace(/ /g, '')
+         .split(',');
+         for (var i=0;i<3;i++){
+             rgb[i]=parseInt(rgb[i]);
+         }
+         console.log(rgb);
+         return (299*rgb[0]+587*rgb[1]+114*rgb[2])/1000;
+}
+			   
+function convNESToWeb(palette) {
+	var i;
+	for (i=0;i<palette.length;i++) {
+		palette[i]=NESColorWeb[palette[i]];
+	}
+}
+
+function tableCreate(rows, columns, id) {
+  var body = document.getElementsByTagName('body')[0];
+  var tbl = document.createElement('table');
+  tbl.id = id;
+  tbl.style.width = '100%';
+  tbl.setAttribute('border', '1');
+  var tbdy = document.createElement('tbody');
+  for (var i = 0; i < rows; i++) {
+    var tr = document.createElement('tr');
+    for (var j = 0; j < columns; j++) {
+        var td = document.createElement('td');
+        td.height = 20;
+        td.width = 100;
+        tr.appendChild(td)
+    }
+    tbdy.appendChild(tr);
+  }
+  tbl.appendChild(tbdy);
+  body.appendChild(tbl)
+}
+
+var paletteTables = [ [0x18,0x29,0x08,0x37,0x18,0x0F,0x01,0x21],
+                      [0x1B,0x2A,0x01,0x30,0x1B,0x13,0x06,0x21],
+                      [0x18,0x38,0x09,0x30,0x18,0x0F,0x30,0x12],
+                      [0x31,0x27,0x03,0x0F,0x31,0x37,0x10,0x11],
+                      [0x1B,0x02,0x10,0x30,0x1B,0x37,0x16,0x21],
+                      [0x1B,0x19,0x37,0x30,0x1B,0x37,0x16,0x21],
+                      [0x1C,0x2A,0x0C,0x0F,0x1C,0x16,0x37,0x21],
+                      [0x27,0x1B,0x17,0x36,0x27,0x01,0x31,0x34],
+                      [0x18,0x38,0x0A,0x30,0x18,0x23,0x04,0x31],
+                      [0x10,0x27,0x1C,0x0F,0x10,0x30,0x19,0x21],
+                      [0x0C,0x08,0x1C,0x30,0x0C,0x0F,0x26,0x06],
+                      [0x39,0x17,0x11,0x30,0x39,0x0F,0x0F,0x11],
+                      [0x18,0x35,0x0C,0x30,0x18,0x0F,0x03,0x31],
+                      [0x00,0x34,0x0C,0x30,0x00,0x0F,0x06,0x14],
+                      [0x00,0x2C,0x1C,0x30,0x00,0x0F,0x0C,0x02],
+                      [0x1C,0x00,0x0F,0x30,0x1C,0x0F,0x22,0x10],
+                      [0x1C,0x0A,0x0F,0x30,0x1C,0x0F,0x36,0x00],
+                      [0x1A,0x00,0x08,0x30,0x1A,0x12,0x0F,0x37],
+                      [0x00,0x10,0x08,0x30,0x00,0x30,0x00,0x0F],
+                      [0x18,0x19,0x08,0x30,0x18,0x17,0x37,0x0C] ];
+
+for (var i=0;i<paletteTables.length;i++)
+{
+    var curTable = paletteTables[i];
+    
+    convNESToWeb(curTable);
+    console.log(curTable);
+
+    tableCreate(1,1,"paletteTable"+i+"Header");
+    var x = document.getElementById("paletteTable"+i+"Header").rows[0].cells;
+    x[0].innerHTML = "Palette "+i;
+    
+    tableCreate(1,8,"paletteTable"+i);
+
+    for (var j=0;j<curTable.length;j++){
+        var x = document.getElementById("paletteTable"+i).rows[0].cells;
+        x[j].style.backgroundColor = curTable[j];
+        if (brightness(x[j].style.backgroundColor) > 123){
+            x[j].id ="lightBG";
+        }
+        x[j].innerHTML = curTable[j];
+    }
+}
+
+
+
+</script>
+
+</body>
+</html>

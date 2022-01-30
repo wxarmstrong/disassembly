@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="mermaid.min.js"></script>
+		<script src="gamedata.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.mermaid{
+
+}
+
+#sidenav {
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 0px;
+  color:white;
+}
+
+#sidenav h2,h3,h4{
+text-align: center;
+}
+
+#sidenav a {
+  text-decoration: none;
+  font-size: 15px;
+  color: #818181;
+  display: block;
+}
+
+#sidenav a:hover {
+  color: #f1f1f1;
+}
+
+#main h1 {
+width: 100%;
+background-color: #909090;
+padding-top: 5px;
+padding-bottom: 5px;
+}
+
+#main h2 {
+width: 100%;
+background-color: #B0B0B0;
+padding-top: 5px;
+padding-bottom: 5px;
+}
+
+#main h3 {
+width: 100%;
+background-color: #D0D0D0;
+padding-top: 5px;
+padding-bottom: 5px;
+}
+
+#main {
+  margin-left: 160px; /* Same as the width of the sidenav */
+  text-align: center;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+	</head>
+	<body>
+
+		<div id="sidenav">
+
+		</div>
+
+		<div id="main">
+
+		</div>
+   
+	</body>
+
+	<script>
+	var opNames = [
+	"adc","and","asl","bcc","bcs", "beq","bit","bmi","bne","bpl", //0,5
+	"brk","bvc","bvs","clc","cld", "cli","clv","cmp","cpx","cpy", //10,15
+	"dec","dex","dey","inx","iny", "eor","inc","jmp","jsr","lda", //20,25
+	"nop","ldx","ldy","lsr","ora", "pha","php","pla","plp","rol", //30,35
+	"ror","rti","rts","sbc","sta", "stx","sty","sec","sed","sei", //40,45
+	"tax","tay","txa","tya","tsx", "txs"       
+	]
+	
+	var opData = [
+10,"Il", 34,"Ix", "No","No", "No","No", "No","No", 34,"Zp",  2,"Zp", "No","No", //00
+36,"Il", 34,"Im",  2,"Ac", "No","No", "No","No", 34,"Ab",  2,"Ab", "No","No",
+ 9,"Rl", 34,"Iy", "No","No", "No","No", "No","No", 34,"Zx",  2,"Zx", "No","No", //10
+13,"Il", 34,"Ay", "No","No", "No","No", "No","No", 34,"Ax",  2,"Ax", "No","No",
+28,"Iw",  1,"Ix", "No","No", "No","No",  6,"Zp",  1,"Zp", 39,"Zp", "No","No", //20
+38,"Il",  1,"Im", 39,"Ac", "No","No",  6,"Ab",  1,"Ab", 39,"Ab", "No","No",
+ 7,"Rl",  1,"Iy", "No","No", "No","No", "No","No",  1,"Zx", 39,"Zx", "No","No", //30
+47,"Il",  1,"Ay", "No","No", "No","No", "No","No",  1,"Ax", 39,"Ax", "No","No",
+41,"Il", 25,"Ix", "No","No", "No","No", "No","No", 25,"Zp", 33,"Zp", "No","No", //40
+35,"Il", 25,"Im", 33,"Ac", "No","No", 27,"Iw", 25,"Ab", 33,"Ab", "No","No",
+11,"Rl", 25,"Iy", "No","No", "No","No", "No","No", 25,"Zx", 33,"Zx", "No","No", //50
+15,"Il", 25,"Ay", "No","No", "No","No", "No","No", 25,"Ax", 33,"Ax", "No","No",
+42,"Il",  0,"Ix", "No","No", "No","No", "No","No",  0,"Zp", 40,"Zp", "No","No", //60
+37,"Il",  0,"Im", 40,"Ac", "No","No", 27,"In",  0,"Ab", 40,"Ab", "No","No",
+12,"Rl",  0,"Iy", "No","No", "No","No", "No","No",  0,"Zx", 40,"Zx", "No","No", //70
+49,"Il",  0,"Ay", "No","No", "No","No", "No","No",  0,"Ax", 40,"Ax", "No","No",
+"No","No", 44,"Ix", "No","No", "No","No", 46,"Zp", 44,"Zp", 45,"Zp", "No","No", //80
+22,"Il", "No","No", 52,"Il", "No","No", 46,"Ab", 44,"Ab", 45,"Ab", "No","No",
+ 3,"Rl", 44,"Iy", "No","No", "No","No", 46,"Zx", 44,"Zx", 45,"Zy", "No","No", //90
+53,"Il", 44,"Ay", 55,"Il", "No","No", "No","No", 44,"Ax", "No","No", "No","No",
+32,"Im", 29,"Ix", 31,"Im", "No","No", 32,"Zp", 29,"Zp", 31,"Zp", "No","No", //A0
+51,"Il", 29,"Im", 50,"Il", "No","No", 32,"Ab", 29,"Ab", 31,"Ab", "No","No",
+ 4,"Rl", 29,"Iy", "No","No", "No","No", 32,"Zx", 29,"Zx", 31,"Zy", "No","No", //B0
+16,"Il", 29,"Ay", 54,"Il", "No","No", 32,"Ax", 29,"Ax", 31,"Ay", "No","No",
+19,"Im", 17,"Ix", "No","No", "No","No", 19,"Zp", 17,"Zp", 20,"Zp", "No","No", //C0
+24,"Il", 17,"Im", 21,"Il", "No","No", 19,"Ab", 17,"Ab", 20,"Ab", "No","No",
+ 8,"Rl", 17,"Iy", "No","No", "No","No", "No","No", 17,"Zx", 20,"Zx", "No","No", //D0
+14,"Il", 17,"Ay", "No","No", "No","No", "No","No", 17,"Ax", 20,"Ax", "No","No",
+18,"Im", 43,"Ix", "No","No", "No","No", 18,"Zp", 43,"Zp", 26,"Zp", "No","No", //E0
+23,"Il", 43,"Im", 30,"Il", "No","No", 18,"Ab", 43,"Ab", 26,"Ab", "No","No",
+ 5,"Rl", 43,"Iy", "No","No", "No","No", "No","No", 43,"Zx", 26,"Zx", "No","No", //F0
+48,"Il", 43,"Ay", "No","No", "No","No", "No","No", 43,"Ax", 26,"Ax", "No","No"
+]
+
+var sideNav = document.getElementById("sidenav");
+var main = document.getElementById("main");
+
+printTitle();
+
+var header = [];
+extractHeader();
+
+var prgPages = header[4];
+var chrPages = header[5];
+
+var offsets = [];
+getOffsets();
+
+printSections();
+
+var PRG = [];
+var CHR = [];
+
+extractPRG();
+
+printPrgLabels();
+
+function printTitle(){
+	var titleHeader = document.createElement('h2');
+	titleHeader.innerHTML = "Navigation";
+	sideNav.appendChild(titleHeader);
+	
+	var titleHeader = document.createElement('h1');
+	titleHeader.innerHTML = title;
+	main.appendChild(titleHeader);
+}
+
+function extractHeader(){
+	for (var i=0;i<0x10;i++){
+		header[i]=parseInt("0x"+ROM.charAt(2*i)+ROM.charAt(2*i+1));
+	}
+}
+
+function getOffsets(){
+	for (var i=0;i<prgPages-1;i++){
+		offsets[i]=0x8000;
+	}
+	offsets[prgPages-1]=0xC000;
+}
+
+function printSections(){
+	if (prgPages>0){
+		var leftRegion = document.createElement('h3');
+		leftRegion.innerHTML = "PRG";
+		sideNav.appendChild(leftRegion);
+		var rightRegion = document.createElement('h2');
+		rightRegion.innerHTML = "PRG";
+		main.appendChild(rightRegion);
+		
+		for (var i=0;i<prgPages;i++){
+			var leftRegion = document.createElement('h4');
+			var pageStr = i.toString(10);
+			if (pageStr.length < 2){
+				pageStr = "0"+pageStr;
+			}
+			leftRegion.innerHTML = "Page "+pageStr;
+			leftRegion.id = "navPrg"+i;
+			sideNav.appendChild(leftRegion);
+			
+			var rightRegion = document.createElement('h3');
+			rightRegion.innerHTML = "Page "+pageStr;
+			rightRegion.id = "mainPrg"+i;
+			main.appendChild(rightRegion);
+		}
+	}
+	if (chrPages>0){
+		var leftRegion = document.createElement('h3');
+		leftRegion.innerHTML = "CHR";
+		sideNav.appendChild(leftRegion);
+		var rightRegion = document.createElement('h2');
+		rightRegion.innerHTML = "CHR";
+		main.appendChild(rightRegion);
+		
+		for (var i=0;i<chrPages;i++){
+			var leftRegion = document.createElement('h4');
+			var pageStr = i.toString(10);
+			if (pageStr.length < 2){
+				pageStr = "0"+pageStr;
+			}
+			leftRegion.innerHTML = "Page "+pageStr;
+			leftRegion.id = "navChr"+i;
+			sideNav.appendChild(leftRegion);
+			
+			var rightRegion = document.createElement('h3');
+			rightRegion.innerHTML = "Page "+pageStr;
+			rightRegion.id = "mainChr"+i;
+			main.appendChild(rightRegion);
+		}
+	}
+}
+
+function extractPRG(){
+	for (var h=0x10;h<0x4000*prgPages+0x10;h++){
+	PRG[h-0x10]=parseInt("0x"+ROM.charAt(2*h)+ROM.charAt(2*h+1));
+	}
+}
+
+function printPrgLabels(){
+	for (var i=0;i<prgLabels.length;i++){
+		var labelType = prgLabels[i][0];
+		var labelPage = prgLabels[i][1];
+		var labelBegin = prgLabels[i][2];
+		var labelEnd = prgLabels[i][3];
+		
+		
+		var destination = document.getElementById("navPrg"+labelPage);
+		
+		var leftRegion = document.createElement('a');
+		leftRegion.innerHTML = labelType + " $" + labelBegin.toString(16).toUpperCase();
+		leftRegion.href = "#prg"+labelPage+"_"+labelBegin.toString(16);
+		
+		destination.appendChild(leftRegion);
+		
+		var destination = document.getElementById("mainPrg"+labelPage);
+		
+		var rightRegion = document.createElement('h4');
+		rightRegion.innerHTML = labelType + " $" + labelBegin.toString(16).toUpperCase();
+		rightRegion.id = "prg"+labelPage+"_"+labelBegin.toString(16);
+		insertAfter(rightRegion,destination);
+		
+		var rightDiv = document.createElement('div');
+		
+		
+		switch (labelType){
+			case ("Function"): 	printFunction(rightDiv,labelPage,labelBegin,labelEnd);
+								break;
+		}
+		
+		insertAfter(rightDiv,rightRegion);
+	}
+}
+
+function printFunction(div,labelPage,labelStart,labelEnd){
+	div.className = "mermaid";
+	var rawAddress = 0x4000*labelPage + labelStart - offsets[labelPage];
+	console.log(rawAddress);
+	var curString = "graph TD;\n";
+	
+	for (var j=0;j<(labelEnd-labelStart+1);j++){
+			
+			var curByte = PRG[rawAddress+j];
+			var addMode = opData[curByte*2+1];
+			console.log(curByte);
+			byteName = opNames[opData[curByte*2]].toUpperCase();
+			console.log(byteName);
+			
+			curString = curString + (labelStart+j).toString(16).toUpperCase();
+			curString = curString + "[" + (labelStart+j).toString(16).toUpperCase() + ": " + byteName+" ";
+			
+			var prefix = "nil";
+			var destination = "nil";
+			var suffix = "nil";
+			var labelLook = "false";
+			
+			switch (addMode){
+			//Absolute
+				case ("Ab"): prefix = "$";
+							 destination = PRG[rawAddress+j+1]+256*PRG[rawAddress+j+2];
+							 j=j+2;
+							 labelLook = true;
+							 break;
+			//Accumulator		 
+				case ("Ac"): break;
+			//Absolute,X
+				case ("Ax"): prefix = "$";
+							 destination = PRG[rawAddress+j+1]+256*PRG[rawAddress+j+2];
+							 j=j+2;
+							 suffix = ",X";
+							 labelLook = true;
+							 break;
+			//Absolute,Y
+				case ("Ay"): prefix = "$";
+							 destination = PRG[rawAddress+j+1]+256*PRG[rawAddress+j+2];
+							 j=j+2;
+							 suffix = ",Y";
+							 labelLook = true;
+							 break;
+			//Implied
+				case ("Il"): break;
+			//Immediate
+				case ("Im"): prefix = "#$";
+							 destination = PRG[rawAddress+j+1];
+							 j=j+1;
+							 break;
+			//JSR/JMP				 
+				case ("Iw"): prefix = "$";
+				             destination = PRG[rawAddress+j+1]+256*PRG[rawAddress+j+2];
+						     j=j+2;
+							 labelLook = true;
+							 break;
+			//Indirect,X				 
+				case ("Ix"): prefix = "($";
+							 destination = PRG[rawAddress+j+1];
+							 suffix = ",X)";
+							 j=j+1;
+							 labelLook = true;
+				             break;
+			//Indirect,Y				 
+				case ("Iy"): prefix = "($";
+					         destination = PRG[rawAddress+j+1];
+							 suffix = "),Y";
+							 j=j+1;
+							 labelLook = true;
+							 break;
+			//Illegal				 
+				case ("No"): break;
+			//Relative	
+				case ("Rl"): prefix = "$";
+							 distance = PRG[rawAddress+j+1];
+							 console.log(distance);
+							 if (distance>0x80){
+								distance = distance-0x100;
+							 }
+							 console.log(distance);
+							 destination = labelStart+j+distance+2;
+							 console.log(destination);
+							 j=j+1;
+							 break;
+			//Zero Page				 
+				case ("Zp"): prefix = "$";
+					         destination = PRG[rawAddress+j+1];
+							 j=j+1;
+							 labelLook = true;
+							 break;
+							 
+				case ("Zx"): prefix = "$";
+					         destination = PRG[rawAddress+j+1];
+							 suffix = ",X";
+							 j=j+1;
+							 labelLook = true;
+							 break;
+				case ("Zy"): prefix = "$";
+					         destination = PRG[rawAddress+j+1];
+							 suffix = ",Y";
+							 j=j+1;
+							 labelLook = true;
+							 break;
+			}			
+			
+			if (prefix != "nil"){
+				curString = curString + prefix;
+			}
+			
+			if (destination != "nil"){	
+				destination = destination.toString(16).toUpperCase();
+				if (destination.length%2==1){
+					destination = "0"+destination;
+				}
+				curString = curString + destination;
+			}
+			
+			if (suffix != "nil"){
+				curString = curString + suffix;
+			}
+			
+			curString = curString + "]";
+			
+			if (j<(labelEnd-labelStart) && curByte!=0x4C && curByte!=0x60){
+				var curString = curString + "-->";
+				if (addMode == "Rl"){
+					curString = curString + "|F|";
+			    }
+				curString = curString +(labelStart+j+1).toString(16).toUpperCase();
+			}
+			
+			curString = curString +"\n";
+			
+			if (addMode == "Rl"){
+			curString = curString + (labelStart+j-1).toString(16).toUpperCase();
+			var curString = curString + "-->|T|"+destination;
+			curString = curString +"\n";
+			}
+			
+			if (curByte==0x4C){
+			curString = curString + (labelStart+j-2).toString(16).toUpperCase();
+			curString = curString + "-->";
+			curString = curString + destination;
+			curString = curString + "\n";
+			}
+			
+
+	}
+		div.innerHTML = curString;
+}
+
+function insertAfter(el, referenceNode) {
+    referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+}
+
+console.log(PRG);
+
+	</script>
+</html> 
+
