@@ -1,0 +1,18 @@
+0016      - Player 1 input
+
+0024/0025 - Screen x-pos?
+
+0068 - x-pos?
+
+0440 - y-pos?
+
+0450 - x-pos?
+
+04F0 - x-pos?
+
+0510 - y-pos?
+
+0560 - y-vel?
+
+
+

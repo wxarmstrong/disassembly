@@ -1,0 +1,9 @@
+$F183 - Object moves right 
+$F1A1 - Object moves left
+$F1BF - Object moves down
+$F1DF - Object moves up
+
+$F20E - Object moves up (different?)
+        Run if speed is greater than 0x7F pixels/frame?
+$F22E - Object moves up (identical to $F1DF)
+

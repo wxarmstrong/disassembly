@@ -1,0 +1,71 @@
+=================================================================
+FUNCTION $DAF8 
+ 01:DAF8:A2 00     LDX #$00
+ 01:DAFA:8E 11 40  STX DMC_RAW
+ 01:DAFD:A2 0F     LDX #$0F
+ 01:DAFF:8E 15 40  STX APU_STATUS
+ 01:DB02:A9 FE     LDA #$FE
+ 01:DB04:9D B6 01  STA $01B6,X ; Instrument data X
+ 01:DB07:CA        DEX
+ 01:DB08:10 FA     BPL $DB04
+ 01:DB0A:A9 FF     LDA #$FF
+ 01:DB0C:4C 0F DB  JMP $DB0F
+ 01:DB0F:AA        TAX
+ 01:DB10:30 33     BMI $DB45
+ 01:DB12:AD B3 01  LDA $01B3 = #$FF
+ 01:DB15:DD D9 DD  CMP $DDD9,X @ $DED8 = #$08
+ 01:DB18:B0 01     BCS $DB1B
+ 01:DB1A:60        RTS -----------------------------------------
+ 01:DB1B:BD D9 DD  LDA $DDD9,X @ $DED8 = #$08
+ 01:DB1E:8D B3 01  STA $01B3 = #$FF
+ 01:DB21:EC C8 07  CPX $07C8 = #$FF
+ 01:DB24:D0 01     BNE $DB27
+ 01:DB26:60        RTS -----------------------------------------
+ 01:DB27:8E C8 07  STX $07C8 = #$FF
+ 01:DB2A:BD 57 DE  LDA $DE57,X @ $DF56 = #$7B
+ 01:DB2D:85 2A     STA $002A = #$BB
+ 01:DB2F:BD 66 DE  LDA $DE66,X @ $DF65 = #$7F
+ 01:DB32:85 2B     STA $002B = #$E1
+ 01:DB34:BD 18 DE  LDA $DE18,X @ $DF17 = #$18
+ 01:DB37:8D B4 01  STA $01B4 = #$00
+ 01:DB3A:A9 10     LDA #$10
+ 01:DB3C:8D C9 07  STA $07C9 = #$10
+ 01:DB3F:A9 01     LDA #$01
+ 01:DB41:8D CA 07  STA $07CA = #$00
+ 01:DB44:60        RTS -----------------------------------------
+ 01:DB45:8E C8 07  STX $07C8 = #$FF
+ 01:DB48:E8        INX
+ 01:DB49:8E CA 07  STX $07CA = #$00
+ 01:DB4C:8E B3 01  STX $01B3 = #$FF
+ 01:DB4F:A9 30     LDA #$30
+ 01:DB51:8D CB 07  STA $07CB = #$30
+ 01:DB54:8D CF 07  STA $07CF = #$30
+ 01:DB57:8D D7 07  STA $07D7 = #$30
+ 01:DB5A:A9 00     LDA #$00
+ 01:DB5C:8D D3 07  STA $07D3 = #$00
+ 01:DB5F:8D D5 07  STA $07D5 = #$00
+ 01:DB62:8D D6 07  STA $07D6 = #$00
+ 01:DB65:60        RTS -----------------------------------------
+================================================================
+TABLE $DDD9
+     00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+DDD0                         28 28 28 28 28 28 28 28
+DDE0 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28 28
+
+FF 
+00 
+01 
+02 
+03 
+04  
+05 
+06 
+07 
+08 
+09 
+0A  
+0B 
+0C 
+0D 
+0E 
+0F 

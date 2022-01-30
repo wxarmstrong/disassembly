@@ -1,0 +1,76 @@
+$0006 = Controller 1 input
+
+$0019/$001A = board coordinates of placed piece
+
+$0026 = Frame counter 
+
+$002A = Audio timer
+
+$0031/$0032 = board coordinates
+
+$0036 = Horizontal position of cursor (#$0-#$7)
+$0037 = Vertical   position of cursor (#$0-#$7)
+
+TABLE AT #$3E
+
+$0043 = CPU Skill Level C
+
+$0046 = # of black tiles
+$0047 = # of white tiles
+
+$0050 = CPU Skill Level D
+$0051 = CPU Skill Level B
+$0052 = CPU Skill Level A
+
+Space codes:
+00 = Not accessible
+01 = Occupied by white
+02 = Occupied by black
+04 = White can play here
+08 = Black can play here
+0C = White+Black can play here
+
+Starting at A5???
+A5 A6 A7 A8 A9 AA AB AC AD AE 
+   -----------------------
+AE|AF B0 B1 B2 B3 B4 B5 B6|    
+B7|B8 B9 BA BB BC BD BE BF|       
+C0|C1 C2 C3 C4 C5 C6 C7 C8|     
+C9|CA CB CC CD CE CF D0 D1|     
+D2|D3 D4 D5 D6 D7 D8 D9 DA|  
+DB|DC DD DE DF E0 E1 E2 E3|    
+E4|E5 E6 E7 E8 E9 EA EB EC|    
+ED|EE EF F0 F1 F2 F3 F4 F5|       
+  -----------------------
+F6 F7 F8 F9 FA FB FC FD FE FF
+
+$011C = Frames passed  (white)
+$011D = Seconds passed (white)
+$011E = Minutes passed (white)
+
+$011F = Frames passed  (black)
+$0120 = Seconds passed (black)
+$0121 = Minutes passed (black)
+
+$0122 = CPU Level
+$0123 = Time Limit in minutes (#$FF = no limit)
+
+$01B8/0$1B9 = Instrument pitch
+
+$01BC/$01BD = Instrument pitch
+
+
+$0200 = Y-position of cursor?
+$0203 = X-position of cursor?
+
+$0204 = Y-position of cursor?
+$0207 = X-position of cursor?
+
+$0208 = Y-position of cursor?
+$020B = X-position of cursor?
+
+$020C = Y-position of cursor?
+$020F = X-position of cursor?
+
+
+
